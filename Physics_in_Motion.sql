@@ -231,6 +231,23 @@ CREATE INDEX `professor_rating_idx` ON `physics_in_motion`.`professor_lab_rating
 CREATE INDEX `lab_professor_rating_idx` ON `physics_in_motion`.`professor_lab_ratings` (`lab_id` ASC) VISIBLE;
 
 
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`quote_of_the_month`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`quote_of_the_month` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`quote_of_the_month` (
+  `quote_id` INT NOT NULL,
+  `date_posted` DATE NULL,
+  `author` VARCHAR(254) NULL,
+  `quote` VARCHAR(1000) NULL)
+ENGINE = InnoDB;
+
+CREATE INDEX `date_quote_posted` ON `physics_in_motion`.`quote_of_the_month` (`date_posted` ASC) INVISIBLE;
+
+CREATE INDEX `quote_author` ON `physics_in_motion`.`quote_of_the_month` (`author` ASC) VISIBLE;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
