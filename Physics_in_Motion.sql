@@ -68,12 +68,12 @@ DROP TABLE IF EXISTS `physics_in_motion`.`student` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student` (
   `student_id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(254) NOT NULL,
-  `last_name` VARCHAR(254) NOT NULL,
-  `school` VARCHAR(254) NOT NULL,
-  `user_name` VARCHAR(254) NOT NULL,
-  `password` VARCHAR(254) NOT NULL,
-  `email` VARCHAR(254) NOT NULL DEFAULT 'no email',
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `school` VARCHAR(45) NOT NULL,
+  `user_name` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL DEFAULT 'no email',
   PRIMARY KEY (`student_id`))
 ENGINE = InnoDB;
 
@@ -117,12 +117,12 @@ DROP TABLE IF EXISTS `physics_in_motion`.`professor` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor` (
   `professor_id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(254) NOT NULL,
-  `last_name` VARCHAR(254) NOT NULL,
-  `school` VARCHAR(254) NOT NULL,
-  `user_name` VARCHAR(254) NOT NULL,
-  `password` VARCHAR(254) NOT NULL,
-  `email` VARCHAR(254) NOT NULL DEFAULT 'no email',
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `school` VARCHAR(45) NOT NULL,
+  `user_name` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL DEFAULT 'no email',
   PRIMARY KEY (`professor_id`))
 ENGINE = InnoDB;
 
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_assignments` (
   `student_id` INT NOT NULL,
   `lab_id` INT NOT NULL,
   `professor_id` INT NOT NULL,
-  `lab_status` VARCHAR(245) NOT NULL,
+  `lab_status` VARCHAR(45) NOT NULL,
   `lab_points` INT NULL,
   `lab_grade` VARCHAR(3) NULL,
   PRIMARY KEY (`student_id`, `lab_id`, `professor_id`),
@@ -229,6 +229,23 @@ ENGINE = InnoDB;
 CREATE INDEX `professor_rating_idx` ON `physics_in_motion`.`professor_lab_ratings` (`professor_id` ASC) INVISIBLE;
 
 CREATE INDEX `lab_professor_rating_idx` ON `physics_in_motion`.`professor_lab_ratings` (`lab_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`quote_of_the_month`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`quote_of_the_month` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`quote_of_the_month` (
+  `quote_id` INT NOT NULL,
+  `date_posted` DATE NOT NULL,
+  `author` VARCHAR(254) NOT NULL,
+  `quote` VARCHAR(1000) NOT NULL,
+  `thoughts` VARCHAR(1000) NOT NULL,
+  PRIMARY KEY (`quote_id`))
+ENGINE = InnoDB;
+
+CREATE INDEX `date_quote_posted` ON `physics_in_motion`.`quote_of_the_month` (`date_posted` ASC) INVISIBLE;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
