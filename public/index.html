@@ -3,64 +3,127 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Physics in Motion</title>
+	
+	<meta name="Description" content="An interactive 3D Tutorial Lab experience for undergraduate students in Physics and Engineering. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of science tutorial. Not as game, but as truly visual, immersive, and hands on learning experience. The student will then analyze the collected data with interactive graphs and math calculations done inside the tutorial lab. Along the way, the automated mentor will explain topics to the students, give hints, and provide corrections as needed in the tutorial labs. Web pages for students and professors provide multiple services, including lists of assigned and completed tutorial labs, links to download lab summaries, and lists of frequent problems encountered by students.">
+	
+	<meta name="Keywords" content="physics in motion, physics, engineering, tutorial, lab, laboratory, activities, experiments, 3d, 3-D, interactive, mentor, mentored, math, calculations, graphs, sfsu">
+	
+	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
+	
 </head>
 <body>
-
+	
+<div class="wrapper">
+	 
 <header>
-	<div class="icon">3d icon for Physics in Motion (needed for all pages)</div>
-	<div class="logo"><h1>3d logo for Physics in Motion (needed for all pages)</h1></div>
-	<div class="login">login/logout/account links (needed for all pages)</div>
-</header>
-
-<section>
-	<aside>
-		<h3>Legal disclaimer (needed for all pages)</h3>
-		<p>
-		Graduate Project by Cheryl Nielsen for MS Computer Science at San Francisco State University, USA.  
-		This site is for demonstration purposes only.  Last updated November 15, 2018.
-		</p>
-	</aside>
+	<img class="header" src="images/logo 11 28 2018.png" alt="Small logo image for Physics in Motion"/>
 	
-	<nav>
-		<h3>
-		Informative navigation links
-		(needed for all pages)
-		</h3>
-		SFSU
-		CSC
-		GitHub
-		Wiki Pages
-		Etc.
+	<div class="header">
+		<h1>Physics in Motion</h1>
+		<blockquote>
+			<h3>An interactive 3D Tutorial Lab experience for undergraduate students in Physics and Engineering.</h3>
+		</blockquote>
+	</div>
+	
+	<nav class="header">
+		<p>login logout account links</p>
 	</nav>
+</header>
 	
-	<aside>
-		<h3>Quote of the Month</h3>
-		<q>
-		Shoot for the Moon. Even if you miss, you'll land among the stars.
-		</q>
-		- Les Brown
-		(poulated from the database)		
-	</aside>
+
+<aside class="quote column">
+	<h2>Quote of the Month</h2>
+	<blockquote>
+		<p>Shoot for the Moon. Even if you miss, you'll land among the stars.</p>
+		&#45; Les Brown
+	</blockquote>
+</aside>
+
+<section class="project-summary column">
+
+	<h1>Physics in Motion</h1>
+	<h2>Graduate Project for MS in Computer Science, San Francisco State University</h2>
+	<h2>by Cheryl Nielsen</h2>
+
+	<h3>Introduction</h3>
+
+	<p>
+	Many students drop out of classes in Physics and Engineering due to the high level of difficulty in understanding these topics. The online tutorials available are frequently static and unsatisfactory. The typical tutorial usually consists of reading material (like a textbook with hyperlinks) or videos (classroom lectures or simple animations). While this can be helpful, it still relies on the traditional rote memorization of a problem type and solution formula. I believe that a different approach is needed to make the material easier to understand.
+	</p>
+
+	<p>
+	I propose a project that uses today’s powerful interactive online 3D gaming technologies to create a new type of online science tutorial. Not for a game, but for the creation of a truly visual, immersive, and hands on learning experience. This will take the form of tutorial labs that let the student explore the topics being learned as a fully interactive experience.
+	</p>
+
+	<h3>Project Concept</h3>
+
+	<p>
+	This project consists of two parts: a website for supporting infrastructure, and the tutorial labs in Unity. The website has five main parts: a home page, tutorial lab information pages, student pages, Professor pages, and wiki pages. The home page has a brief summary of the project and its goals, project information links, a list of tutorial labs currently available, and login/logout. The tutorial lab information pages will have a description of the lab activity, a list of topics to be covered, prior knowledge required for the lab, and lab ratings. The wiki pages will contain project reports and documentation of the project code.
+	</p>
+
+	<p>
+	The student and Professor web pages will provide multiple services. The student pages include lists of assigned and completed tutorial labs, links to send a notice of lab completion to a Professor, and links to download lab summaries, data, graphs, etc. The Professor pages include lists of assigned tutorial labs, which labs each student has completed or incomplete, and a form to assign labs to students. The Professor will also have links to download lab summaries, and links to download a list of frequent problems encountered by students for a particular tutorial lab.
+	</p>
+
+	<p>
+	Three or four tutorial labs will be developed. They are Linear Motion and Collisions, Beginning RC Circuits, Vector Calculus of 3D Volumes and Surfaces, and the Photoelectric Effect from Quantum Mechanics. These tutorial labs will take full advantage of the power of 3D gaming technology available today. Each tutorial lab will be animated and fully interactive to make the topics more approachable, interesting, and informative, instead of intimidating and dry. In the tutorial labs the student will perform hands-on interactive experiments and activities directly related to the concepts they are trying to learn. Since the project is in 3D, the student will be able to move around to view lab events and graphs from multiple angles. Measurements in the tutorial labs will be collected electronically, as if in a standard industrial lab. The student
+	</p>
+
+	<p>
+	will be able to vary many parameters in each lab so they can observe the causes and effects of theirinteractions. Additional animations and closeups of what’s happening will be provided to enhance the student’s understanding. The student will then analyze the collected data with interactive graphs and math calculations done inside the tutorial. At the end of a tutorial lab, a summary will be provided including data, graphs, equations, and problems encountered.
+	</p>
+
+	<p>
+	Along the way, the automated mentor will explain topics, give hints, and provide corrections as needed. If the student asks for help during the tutorial lab, the automated mentor will highlight problem areas and offer hints. For math calculations, the automated mentor looks for errors as the student solves the equations. These errors, problems, and hints are later documented as reminders in the lab summary. If enough students encounter the same problem, error, or hint in a tutorial lab, it will be reported to the Professor as a topic that may need more help in the classroom.
+	</p>
+
+	<h3>Technologies</h3>
+	<p>
+	This project will involve the full stack development of a website, game server, interactive 3D graphics, and a secure database. All parts will be developed in a modular plug and play format. This will enable the code to have a life after the project is over, by enabling changes in implementation and the addition of more tutorial labs.
+	</p>
+
+	<h4>Client Side</h4>
+	<ul class="client-side">
+		<li>The web pages will be made with HTML 5, CSS 3, and JavaScript/jQuery.</li>
+		<li>The tutorial labs will be made with Unity 2018 and Visual Studio C# 2017.</li>
+		<li>The graphics will be made with Unity 2018, Adobe Creative Suite 2018, and Autodesk Maya 2018.</li>
+	</ul>
+
+	<h4>Server Side</h4>
+	<ul class="server-side">
+		<li>Server code will be PHP 7 for the web pages and Java 10 for the tutorial labs.</li>
+		<li>MS SQL Server 2017 will be the database for the tutorial labs.</li>
+		<li>MySQL 8 will be the database for the web site.</li>
+		<li>AWS will be the cloud service host for both the web pages and the tutorial labs.</li>
+	</ul>
+
 </section>
 
-	<article>
-	<h3>project summary</h3>
-	Using content from the project proposal.
-	</article>
-
-	
-	<nav>
-		<h3>navigation links and info for each lab</h3>
-		(poulated from the database)
+	<nav class="home-lab-list column">
+		<h2>Tutorial Labs Currently in Development</h2>
+		<ul>
+			<li>Short lab descriptions of 2 or 3 sentences each.</li>
+			<li>Status of the lab: available or in progress</li>
+			<li>Links to more detail about each tutorial lab.</li>
+			<li>Links to start each lab.</li>		
+		</ul>
 	</nav>
-
-<footer>
-	<h3>Legal disclaimer (needed for all pages)</h3>
-	<p>
-	Graduate Project by Cheryl Nielsen for MS Computer Science at San Francisco State University, USA.  
-	This site is for demonstration purposes only.  Last updated November 15, 2018.
+	
+	
+<footer class="legal">
+	
+	<h2>Legal disclaimer:</h2>
+	<p>This website is part of a Graduate Project by Cheryl Nielsen for an MS <a href="http://cs.sfsu.edu/">Computer Science</a> degree at <a href="http://www.sfsu.edu/">San Francisco State University</a>, USA. 
+	<br>
+	For more information about this project, see the <a href="https://github.com/cherylnielsen">GitHub code repository</a> and <a href="https://github.com/cherylnielsen/Physics-In-Motion-Website/wiki">Wiki pages</a>.
 	</p>
+	<p class="update-time">
+		Last updated November 28, 2018.
+	</p>
+	
 </footer>
 
+</div><!-- end div.wrapper -->
+	
 </body>
 </html>

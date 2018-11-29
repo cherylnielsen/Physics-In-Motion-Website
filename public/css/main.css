@@ -1,1 +1,62 @@
 @charset "ISO-8859-1";
+/* CSS Document */
+
+
+div.wrapper { 
+	background-color: antiquewhite;
+}
+
+header { 
+	display: inline-flex;
+	height: 200px;
+	min-width: 100%;
+	background-color: red;
+}
+
+img.header { 
+	float: left;
+	width: 200px; 
+	height: 200px; 
+}
+
+div.header {
+	float: left;
+	height: 200px;
+	padding: 0px 25px;
+	background-color: aquamarine; 
+}
+
+nav.header {
+	float: right;
+	width: 25%;
+	height: 190px;	
+	padding: 5px 20px;
+	background-color: cornflowerblue; 
+}
+
+aside.quote {
+	float: left;
+	width: 20%;
+	padding: 5px 1%;
+	background-color: aquamarine;
+}
+
+nav.home-lab-list {
+	float: right;
+	width: 24%;
+	padding: 5px 1%;
+	background-color: aquamarine;
+}
+
+section.project-summary {
+	float: left;
+	width: 50%;
+	padding: 5px 1%;
+	background-color: lightpink
+}
+
+footer.legal {  
+	clear: both;
+	padding: 5px 20px;
+	background-color: cornflowerblue;
+}
