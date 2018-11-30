@@ -1,7 +1,6 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
-
 div.wrapper { 
 	border: 2px double #03AA0D;
 	border-radius: 15px;
@@ -16,8 +15,8 @@ h2 {
 	font-size: 1em;
 }
 
-a#login, a#lab-list {
-	display: none;
+a#login, a#lab-list, a#bottom {
+	display: inline;
 }
 
 header.grid-container { 
@@ -31,17 +30,20 @@ header.grid-container {
 }
 
 img.large-logo {
-	height: 200%;
-	min-width: 275%;
 	grid-column: 1;
 	grid-row: 1;
+	height: 200%;
+	min-width: 400%;
 	padding: 5%;
 }
 
 nav.login {
-	grid-column: 4;
-	grid-row: 1 / span 2;
-	padding: 0 15px;
+	grid-column: 2 / span 3;
+	grid-row: 2;
+	padding: 0 4%;
+	position: relative;
+	top: 75px;
+	height: 100px;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
 	background-color: white;
@@ -49,13 +51,18 @@ nav.login {
 
 aside.quotes {
 	float: left;
-	width: 15%;
-	padding: 32px 0 32px 2.5%;
+	padding: 20px 4%;
+	width: 20%;
+}
+
+aside.quotes > h2 {
+	padding: 0 15px 0 0;
 }
 
 aside.quotes > div {
+	max-width: 100%;
 	padding: 0 15px;
-	margin-top: 20px;
+	margin-top: 30px;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
 	background-color: white;
@@ -63,14 +70,14 @@ aside.quotes > div {
 
 section.project-summary {
 	float: left;
-	width: 50%;
-	padding: 5px 2.5% 5px 2.5%;
+	width: 65%;
+	padding: 100px 0 5px 0;
 }
 
 section.home-lab-list {
 	float: right;
-	width: 25%;
-	padding: 5px 2.5% 25px 0;
+	width: 90%;
+	padding: 5px 5% 25px 0;
 }
 
 article.home-lab-list {

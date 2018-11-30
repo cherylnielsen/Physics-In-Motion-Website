@@ -9,6 +9,10 @@
 	<meta name="Keywords" content="physics in motion, physics, engineering, tutorial, lab, laboratory, activities, experiments, 3d, 3-D, interactive, mentor, mentored, math, calculations, graphs, sfsu">
 	
 	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/main-phone.css" rel="stylesheet" type="text/css" media="screen and (max-width: 600px)">
+	<link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
+		  media="screen and (min-width: 601px) and (max-width: 800px)">
+	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">
 	
 </head>
 <body>
@@ -17,12 +21,12 @@
 
 <header class="grid-container">
 	
-	<a href="index.html">
+	<a id="top" href="index.html">
 		<img class="large-logo" src="images/3D logo Physics in Motion 11 29 18 tilted up.png" alt="large logo for Physics in Motion"/>
 	</a>
 	
 	<nav class="login">
-		<p>login logout account links</p>
+		<p>login, logout, account links, <a id="login" href="index.html#lab-list">list of newest labs</a></p>
 	</nav>
 	
 </header>
@@ -32,7 +36,6 @@
 	
 	<div>
 	<h1>Quote of the Month</h1>
-	
 		<p>Shoot for the Moon. Even if you miss, you'll land among the stars.</p>
 		<p>&#45; Les Brown</p>
 	</div>
@@ -82,6 +85,8 @@
 </section>
 
 <section class="home-lab-list">
+	<a id="lab-list" href="index.html#top">return to top</a>
+	
 	<h1>Tutorial Labs Currently in Development</h1>
 	
 	<article class="home-lab-list">
@@ -120,6 +125,7 @@
 		<p>Link to start the lab.</p>
 	</article>
 	
+	<a id="bottom" href="index.html#top">return to top</a>
 </section>
 		
 <footer class="legal">

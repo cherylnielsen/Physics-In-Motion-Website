@@ -2,10 +2,11 @@
 /* CSS Document */
 
 
+
 div.wrapper { 
-	background-color: cornsilk;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
+	background-color: cornsilk;
 }
 
 h1 {
@@ -16,57 +17,64 @@ h2 {
 	font-size: 1em;
 }
 
+a#login, a#lab-list {
+	display: inline;
+}
+
 header.grid-container { 
 	min-width: 100%;
-	height: 151px;
+	height: 101px;
 	display: grid;
-	grid-template-columns: 25% 25% 20%;
+	grid-template-columns: 25% 25% 25% 25%;
 	grid-template-rows: 50% 50%;
 	border-bottom: 2px double #03AA0D;
 	border-bottom-right-radius: 15px;
 }
 
 img.large-logo {
-	height: 200%;
-	min-width: 275%;
-	grid-column: 1;
+	grid-column: 1 / span 4;
 	grid-row: 1;
-	padding: 5%;
+	height: 95px;
+	min-width: 400%;
+	padding: 10% 0 10% 10%;
 }
 
 nav.login {
-	grid-column: 4;
-	grid-row: 1 / span 2;
+	grid-column: 1 / span 4;
+	grid-row: 2;
 	padding: 0 15px;
+	position: relative;
+	top: 75px;
+	right: -5%;
+	width: 82%;
+	height: 100px;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
 	background-color: white;
 }
 
 aside.quotes {
-	float: left;
-	width: 10%;
-	padding: 32px 0 32px 2.5%;
+	padding: 125px 5% 0 5%;
+	width: 90%;
 }
 
 aside.quotes > div {
+	max-width: 95%;
 	padding: 0 15px;
-	margin-top: 20px;
+	margin: 20px 0;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
 	background-color: white;
 }
 
 section.project-summary {
-	float: left;
-	width: 55%;
-	padding: 5px 2.5% 5px 2.5%;
+	width: 90%;
+	padding: 5px 5%;
 }
 
 section.home-lab-list {
-	float: right;
-	width: 25%;
-	padding: 5px 2.5% 25px 0;
+	width: 90%;
+	padding: 25px 5%;
 }
 
 article.home-lab-list {
