@@ -15,15 +15,15 @@ h2 {
 	font-size: 1em;
 }
 
-a#login, a#lab-list, a#bottom {
+a#quotes, a#lab-list, a#bottom {
 	display: inline;
 }
 
 header.grid-container { 
 	min-width: 100%;
-	height: 151px;
+	height: 111px;
 	display: grid;
-	grid-template-columns: 25% 25% 20%;
+	grid-template-columns: 25% 25% 20% 30%;
 	grid-template-rows: 50% 50%;
 	border-bottom: 2px double #03AA0D;
 	border-bottom-right-radius: 15px;
@@ -37,21 +37,48 @@ img.large-logo {
 	padding: 5%;
 }
 
-nav.login {
+form.login {
 	grid-column: 2 / span 3;
 	grid-row: 2;
-	padding: 0 4%;
 	position: relative;
-	top: 75px;
-	height: 100px;
+	top: 55px;
+	height: 100px;	
+	text-align:justify;
+	padding: 5px 15px;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
 	background-color: white;
 }
 
+form.login > input {
+	margin: 5px;
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	font: 1em bolder; 
+}
+
+form.login > input#submit-login { 
+	padding: 2px 20px ;
+	background-color: #03AA0D;	
+	position: relative;
+	top: -30px;
+	left: 190px;
+}
+
+form.login > a#register {
+	position: relative;
+	top: -140px;
+	left: 195px;
+}
+
+form.login > a#forgot-login {
+	position: relative;
+	top: -95px;
+	left: 195px;
+}
+
 aside.quotes {
 	float: left;
-	padding: 20px 4%;
+	padding: 15px 4%;
 	width: 20%;
 }
 
@@ -62,7 +89,7 @@ aside.quotes > h2 {
 aside.quotes > div {
 	max-width: 100%;
 	padding: 0 15px;
-	margin-top: 30px;
+	margin-top: 20px;
 	border: 2px double #03AA0D;
 	border-radius: 15px;
 	background-color: white;
