@@ -1,101 +1,144 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
+/* remove preset brouser defaults */
+* {
+	margin: 0; 
+	padding: 0;
+}
 
+/* outermost container inside body */
 div.wrapper { 
-	border: 2px double #03AA0D;
+	border: 4px double #03AA0D;
 	border-radius: 15px;
 	background-color: cornsilk;
 }
 
-h1 {
-	font-size: 1.3em;
-}
-
-h2 {
-	font-size: 1em;
-}
-
-a#quotes, a#lab-list {
+/* Inner page link only shown on tablets, phones, 
+and other small screens. */
+a#lab-list {
 	display: none;
 }
 
-header.grid-container { 
+a {
+	display: inline-block;
+	font-weight: 900;	
+}
+
+a#nav-quote {
+	padding: 0.5em 1em;
+}
+
+h1 {
+	font-size: 1.3em;
+	margin: 1em;
+}
+
+h2 {
+	font-size: 1.1em;
+	margin: 1em;
+}
+
+p {
+	margin: 0.5em;
+}
+
+header{ 
 	min-width: 100%;
-	height: 156px;
-	display: grid;
-	grid-template-columns: 25% 25% 20% 30%;
-	grid-template-rows: 50% 50%;
-	border-bottom: 2px double #03AA0D;
-	border-bottom-right-radius: 15px;
+	height: 125px;
+	border-bottom: 4px double #03AA0D;
+	border-radius: 15px;
 }
 
 img.large-logo {
-	height: 200%;
-	min-width: 275%;
-	grid-column: 1;
-	grid-row: 1;
-	padding: 2%;
+	height: 170px;
+	width: 100%;
+	margin: 10px 30px 0 20px;
 }
+
+div.large-logo {
+	max-width: 70%;
+}
+
 
 form.login {
-	grid-column: 4;
-	grid-row: 1 / span 3;
-	border: 2px double #03AA0D;
+	border: 4px double #03AA0D;
 	border-radius: 15px;	
 	text-align: center;
-	background-color: white;
-	padding: 10px 0;
+	background-color: lightskyblue;
+	padding: 0.5em;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
-form.login > input {
-	margin: 5px;
+form.login > * {
 	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
-	font: 1em bolder; 
+	font-size: 1em;
+	font-weight: 600;
+	margin: 0.5em;
 }
 
 form.login > input#submit-login { 
-	padding: 2px 15px ;
+	font-size: 1.1em;
+	padding: 5px 25px ;
 	background-color: #03AA0D;
+	margin: 0.75em;
 }
 
-aside.quotes {
+input[type=checkbox] {
+	width: 1.5em; 
+	height: 1.5em;
+	margin: 0.5em;
+}
+
+aside.nav-quote {
 	float: left;
 	width: 15%;
-	padding: 50px 0 32px 2.5%;
+	padding: 0 0.5em 1em 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	background-color: lightskyblue;
+	margin: 50px 2% 2% 0;
 }
 
-aside.quotes > div {
-	padding: 0 15px;
-	margin-top: 20px;
-	border: 2px double #03AA0D;
-	border-radius: 15px;
-	background-color: white;
+nav.site > a {
+	display: inline-block;
+	padding: 1em;
+	border-bottom: 4px double #03AA0D;
+}
+
+div.quote {
+	margin: 0, 0.5em, 0.5em, 0.5em;
+	padding-top: 1em;
 }
 
 section.project-summary {
 	float: left;
-	width: 50%;
-	padding: 5px 2.5% 5px 2.5%;
+	width: 45%;
+	padding: 2% 0 2% 2%;	
 }
 
 section.home-lab-list {
 	float: right;
 	width: 25%;
-	padding: 45px 2.5% 25px 0;
+	padding: 2% 0 2% 2%;
+	margin-top: 135px;
+	position: relative;
+	right: -4px;
 }
 
 article.home-lab-list {
-	padding: 0 15px;
-	border: 2px double #03AA0D;
+	padding: 0 1em 1em 1em;
+	border: 4px double #03AA0D;
 	border-radius: 15px;
 	margin-bottom: 25px;
-	background-color: white;
+	background-color: lightskyblue;
 }
 
 footer.legal {  
 	clear: both;
-	padding: 5px 2.5%;
+	padding: 2%;
 	border-top: 2px double #03AA0D;
-	background-color: white;
+	background-color: lightskyblue;
 }
