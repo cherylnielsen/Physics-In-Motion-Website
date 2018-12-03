@@ -1,3 +1,30 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
+
+div.large-logo {
+	width: 55%;
+}
+
+a#lab-list {
+	display: inline-block;
+	padding: 0.5em 1em;
+}
+
+section.project-summary {
+	float: left;
+	width: 70%;
+	padding: 2% 0 2% 2%;
+}
+
+section.project-summary > h1 {
+	width: 45%;
+}
+
+section.home-lab-list {
+	float: none;
+	width: 70%;
+	padding: 2% 0 2% 0;
+	margin-top: 3em;
+	margin-left: 22%;	
+}

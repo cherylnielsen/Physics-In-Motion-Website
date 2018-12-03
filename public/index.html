@@ -10,10 +10,10 @@
 	
 	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
 	
-	<link href="css/main-phone.css" rel="stylesheet" type="text/css" media="screen and (max-width: 500px)">
-	
 	<link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
 		  media="screen and (min-width: 501px) and (max-width: 800px)">
+	
+	<link href="css/main-phone.css" rel="stylesheet" type="text/css" media="screen and (max-width: 500px)">
 	
 	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">
 	
@@ -25,11 +25,12 @@
 <header>
 	
 	<div class="large-logo">
-		<a id="home-top" href="index.html">
-			<img class="large-logo" src="images/3D logo Physics in Motion 11 29 18 tilted up.png" alt="large logo for Physics in Motion"/>
-		</a>
-	</div>
+		<a id="top" href="index.html"></a>
+		<!--background="images/3D logo Physics in Motion 12 2 18.png"
+			Used background instead of img because it was the only way to get correct automatic resizing of width when using a fixed hight in all of the tested brower types.-->	
+	</div>	
 	
+
 	<form class="login" method="post" action="">
 		
 		<input type="text" name="user-id" value="" placeholder="User ID">
@@ -52,7 +53,7 @@
 <aside class="nav-quote">
 	
 	<nav class="site">		
-		<a id="site" href="index.html#lab-list">Newest Tutorial Labs!<br></a>
+		<a id="site" href="index.html#lab-list">See Newest Tutorial Labs!<br></a>
 		<a href="">Tutorial Labs</a><br>
 		<a href="">Student Pages</a><br>
 		<a href="">Professor Pages</a><br>

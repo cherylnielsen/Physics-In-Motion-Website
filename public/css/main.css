@@ -11,7 +11,7 @@
 div.wrapper { 
 	border: 4px double #03AA0D;
 	border-radius: 15px;
-	background-color: cornsilk;
+	background-color: #FDFAEC;
 }
 
 /* Inner page link only shown on tablets, phones, 
@@ -44,28 +44,28 @@ p {
 }
 
 header{ 
-	min-width: 100%;
 	height: 125px;
 	border-bottom: 4px double #03AA0D;
 	border-radius: 15px;
 }
 
-img.large-logo {
-	height: 170px;
-	width: 100%;
-	margin: 10px 30px 0 20px;
-}
-
 div.large-logo {
-	max-width: 70%;
+	width: 70%;
+	height: 125px;
+	padding: 0.5% 1%;	
+	background: url("../images/3D logo Physics in Motion 12 2 18.png");
+	background-origin: content-box;
+	background-position: left, center;
+	background-repeat: no-repeat;
+	background-size:  100% 100%;
+	
 }
-
 
 form.login {
 	border: 4px double #03AA0D;
 	border-radius: 15px;	
 	text-align: center;
-	background-color: lightskyblue;
+	background-color: #A7DAFA;
 	padding: 0.5em;
 	position: absolute;
 	top: 0;
@@ -82,7 +82,8 @@ form.login > * {
 form.login > input#submit-login { 
 	font-size: 1.1em;
 	padding: 5px 25px ;
-	background-color: #03AA0D;
+	/*background-color: #03AA0D;*/
+	background-color:#03CA0D;
 	margin: 0.75em;
 }
 
@@ -98,14 +99,14 @@ aside.nav-quote {
 	padding: 0 0.5em 1em 1em;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
-	background-color: lightskyblue;
-	margin: 50px 2% 2% 0;
+	background-color: #A7DAFA;
+	margin: 0 2% 2% 0;
 }
 
 nav.site > a {
 	display: inline-block;
 	padding: 1em;
-	border-bottom: 4px double #03AA0D;
+	border-bottom: 4px double #01A209;
 }
 
 div.quote {
@@ -115,14 +116,14 @@ div.quote {
 
 section.project-summary {
 	float: left;
-	width: 45%;
-	padding: 2% 0 2% 2%;	
+	width: 50%;
+	padding: 2% 0 2% 2%;
 }
 
 section.home-lab-list {
 	float: right;
 	width: 25%;
-	padding: 2% 0 2% 2%;
+	padding: 2% 0 2% 0;
 	margin-top: 135px;
 	position: relative;
 	right: -4px;
@@ -133,12 +134,12 @@ article.home-lab-list {
 	border: 4px double #03AA0D;
 	border-radius: 15px;
 	margin-bottom: 25px;
-	background-color: lightskyblue;
+	background-color: #A7DAFA;
 }
 
 footer.legal {  
 	clear: both;
 	padding: 2%;
-	border-top: 2px double #03AA0D;
-	background-color: lightskyblue;
+	border-top: 4px double #03AA0D;
+	background-color: #A7DAFA;
 }
