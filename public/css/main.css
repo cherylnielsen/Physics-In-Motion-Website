@@ -12,7 +12,7 @@
 div.wrapper { 
 	border: 4px double #03AA0D;
 	border-radius: 15px;
-	background-color: #FDFAEC;
+	/* background-color: #FDFAEC; */
 }
 
 /* Inner page link only shown on tablets, phones, 
@@ -28,6 +28,12 @@ a {
 
 a#nav-quote {
 	padding: 0.5em 1em;
+}
+
+a#top {
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 
 h1 {
@@ -79,7 +85,7 @@ form.login > * {
 	margin: 0.5em;
 }
 
-form.login > input#submit-login { 
+input#submit-login { 
 	font-size: 1.1em;
 	padding: 5px 25px ;
 	/*background-color: #03AA0D;*/
@@ -101,6 +107,8 @@ aside.nav-quote {
 	border-radius: 15px;
 	background-color: #A7DAFA;
 	margin: 0 2% 2% 0;
+	position: relative;
+	left: -4px;
 }
 
 nav.site > a {

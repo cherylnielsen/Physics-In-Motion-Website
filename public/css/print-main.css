@@ -1,8 +1,11 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
-
+@import "main-tablet.css"
+	
 a, form.login {
 	display: none;
 }
+
+
 
