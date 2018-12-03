@@ -1,1 +1,145 @@
 @charset "ISO-8859-1";
+/* CSS Document */
+/* for all size screens */
+
+/* remove preset brouser defaults */
+* {
+	margin: 0; 
+	padding: 0;
+}
+
+/* outermost container inside body */
+div.wrapper { 
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	background-color: #FDFAEC;
+}
+
+/* Inner page link only shown on tablets, phones, 
+and other small screens. */
+a#lab-list {
+	display: none;
+}
+
+a {
+	display: inline-block;
+	font-weight: 900;	
+}
+
+a#nav-quote {
+	padding: 0.5em 1em;
+}
+
+h1 {
+	font-size: 1.3em;
+	margin: 1em;
+}
+
+h2 {
+	font-size: 1.1em;
+	margin: 1em;
+}
+
+p {
+	margin: 0.5em;
+}
+
+header{ 
+	height: 125px;
+	border-bottom: 4px double #03AA0D;
+	border-radius: 15px;
+}
+
+div.large-logo {
+	width: 70%;
+	height: 125px;
+	padding: 0.5% 1%;	
+	background: url("../images/3D logo Physics in Motion 12 2 18.png");
+	background-origin: content-box;
+	background-position: left, center;
+	background-repeat: no-repeat;
+	background-size:  100% 100%;	
+}
+
+form.login {
+	border: 4px double #03AA0D;
+	border-radius: 15px;	
+	text-align: center;
+	background-color: #A7DAFA;
+	padding: 0.5em;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+form.login > * {
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	font-size: 1em;
+	font-weight: 600;
+	margin: 0.5em;
+}
+
+form.login > input#submit-login { 
+	font-size: 1.1em;
+	padding: 5px 25px ;
+	/*background-color: #03AA0D;*/
+	background-color:#03CA0D;
+	margin: 0.75em;
+}
+
+input[type=checkbox] {
+	width: 1.5em; 
+	height: 1.5em;
+	margin: 0.5em;
+}
+
+aside.nav-quote {
+	float: left;
+	width: 15%;
+	padding: 0.5em 0.5em 1em 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	background-color: #A7DAFA;
+	margin: 0 2% 2% 0;
+}
+
+nav.site > a {
+	display: inline-block;
+	padding: 1em;
+	border-bottom: 4px double #01A209;
+}
+
+div.quote {
+	margin: 0, 0.5em, 0.5em, 0.5em;
+	padding-top: 0.5em;
+}
+
+section.project-summary {
+	float: left;
+	width: 50%;
+	padding: 2% 0 2% 2%;
+}
+
+section.home-lab-list {
+	float: right;
+	width: 25%;
+	padding: 2% 0 2% 0;
+	margin-top: 135px;
+	position: relative;
+	right: -4px;
+}
+
+article.home-lab-list {
+	padding: 0 1em 1em 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	margin-bottom: 25px;
+	background-color: #A7DAFA;
+}
+
+footer.legal {  
+	clear: both;
+	padding: 2%;
+	border-top: 4px double #03AA0D;
+	background-color: #A7DAFA;
+}

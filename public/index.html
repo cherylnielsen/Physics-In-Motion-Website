@@ -3,64 +3,161 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Physics in Motion</title>
+	
+	<meta name="Description" content="An interactive 3D Tutorial Lab experience for Students of Physics and Engineering. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of science tutorial. Not as game, but as truly visual, immersive, and hands on learning experience. The Student will then analyze the collected data with interactive graphs and math calculations done inside the tutorial lab. Along the way, the Automated Mentor will explain topics to the Students, give hints, and provide corrections as needed in the tutorial labs. Web pages for Students and professors provide multiple services, including lists of assigned and completed tutorial labs, links to download lab summaries, and lists of frequent problems encountered by Students.">
+	
+	<meta name="Keywords" content="physics in motion, physics, engineering, tutorial, lab, laboratory, activities, experiments, 3d, 3-D, interactive, mentor, mentored, math, calculations, graphs, sfsu">
+	
+	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
+	
+	<link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
+		  media="screen and (min-width: 601px) and (max-width: 950px)">
+	
+	<link href="css/main-phone.css" rel="stylesheet" type="text/css" media="screen and (max-width: 600px)">
+	
+	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">
+	
 </head>
 <body>
+	
+<div class="wrapper">
 
 <header>
-	<div class="icon">3d icon for Physics in Motion (needed for all pages)</div>
-	<div class="logo"><h1>3d logo for Physics in Motion (needed for all pages)</h1></div>
-	<div class="login">login/logout/account links (needed for all pages)</div>
-</header>
-
-<section>
-	<aside>
-		<h3>Legal disclaimer (needed for all pages)</h3>
-		<p>
-		Graduate Project by Cheryl Nielsen for MS Computer Science at San Francisco State University, USA.  
-		This site is for demonstration purposes only.  Last updated November 15, 2018.
-		</p>
-	</aside>
 	
-	<nav>
-		<h3>
-		Informative navigation links
-		(needed for all pages)
-		</h3>
-		SFSU
-		CSC
-		GitHub
-		Wiki Pages
-		Etc.
+	<div class="large-logo">
+		<a id="top" href="index.html"></a>
+		<!--background="images/3D logo Physics in Motion 12 2 18.png"
+			Used background instead of img because it was the only way to get correct automatic resizing of width when using a fixed hight in all of the tested brower types.-->	
+	</div>	
+	
+
+	<form class="login" method="post" action="">
+		
+		<input type="text" name="user-id" value="" placeholder="User ID">
+		<br>
+		<input type="text" name="user-password" value="" placeholder="Password">
+		<br>
+		<label><input type="checkbox" name="stay-signed-in" id="stay-signed-in" value="stay-signed-in" >&nbsp;Stay Signed In</label>
+			
+		<br>
+		<input type="submit" name="submit-login" id="submit-login" value="Sign In">		
+		<br>
+		<a id="forgot-login" href="">Forgot ID/Password?</a>
+		<br>
+		<a id="register" href="">Create Account</a>
+		
+	</form>
+	
+</header>
+	
+<aside class="nav-quote">
+	
+	<nav class="site">		
+		<a id="site" href="index.html#lab-list">See Newest Tutorial Labs!</a><br>
+		<a href="">Student Pages</a><br>
+		<a href="">Professor Pages</a><br>
+		<a href="">Tutorial Labs</a><br>
 	</nav>
 	
-	<aside>
-		<h3>Quote of the Month</h3>
-		<q>
-		Shoot for the Moon. Even if you miss, you'll land among the stars.
-		</q>
-		- Les Brown
-		(poulated from the database)		
-	</aside>
+	<div class="quote">
+		<h2>Quote of the Month</h2>
+			<p>Shoot for the Moon. Even if you miss, you'll land among the stars.</p>
+			<p>&#45; Les Brown</p>
+		<a id="nav-quote" href="">Previous Quotes</a>
+	</div>
+	
+</aside>
+
+	
+<section class="project-summary">
+	
+	<h1 class="project-summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
+	
+	<h2>Introduction</h2>
+	
+	<p>
+	Many Students drop out of classes in Physics and Engineering due to the high level of difficulty in understanding these topics. Often, attending lectures and reading textbooks is just not enough. A different approach is needed to make the material easier to understand. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of online science tutorial. Not for a game, but for the creation of visual, immersive, and hands on learning experiences in the form of tutorial labs that let the Student explore. The goal of Physics in Motion is a more intuitive understanding based on the firsthand experience of a subject.
+	</p>
+
+	<h2>Tutorial Labs</h2>
+		
+	<p>
+	Three or four proof of concept tutorial labs are being developed for Physics in Motion. They are Linear Motion and Collisions, Beginning RC Circuits, Vector Calculus of 3D Volumes and Surfaces, and the Photoelectric Effect from Quantum Mechanics. These tutorial labs will take full advantage of the power of 3D gaming technology available today. Each tutorial lab will be animated and fully interactive to make the topics more approachable, interesting, and informative. Student perform hands-on interactive experiments and activities directly related to the concepts they are trying to learn. Measurements in the tutorial labs will be collected electronically, as if in a standard industrial lab. The Student will then analyze the collected data with interactive graphs and math calculations done inside the tutorial lab. At the end of a tutorial lab, a summary will be provided including data, graphs, equations, and problems encountered.
+	</p>
+
+	<h2>Automated Mentor</h2>
+	
+	<p>
+	Along the way, the Automated Mentor will explain topics, give hints, and provide corrections as needed. If the Student asks for help during the tutorial lab, the Automated Mentor will highlight problem areas and offer hints. For math calculations, the Automated Mentor looks for errors as the Student solves the equations. These errors, problems, and hints are later documented as reminders in the lab summary. If enough Students encounter the same problem, error, or hint in a tutorial lab, it will be reported to the Professor as a topic that may need more help in the classroom.
+	</p>
+
+	<h2>Web Services</h2>
+	
+	<p>
+	 Loging in provides access to the Student and Professor services. The Student pages include lists of assigned and completed tutorial labs, links to send a notice of tutorial lab completion to a Professor, and links to download lab summaries. The Professor pages include lists of assigned tutorial labs, which labs each Student has completed or incomplete, and a form to assign labs to Students. The Professor also have links to download lab summaries, and lists of frequent problems encountered by Students for a particular tutorial lab. The tutorial lab information pages have a descriptions of the tutorial labs, topics to be covered, prior knowledge required, and tutorial lab ratings. 
+	</p>
+	
 </section>
 
-	<article>
-	<h3>project summary</h3>
-	Using content from the project proposal.
-	</article>
-
+<section class="home-lab-list">
+	<a id="lab-list" href="index.html#top">return to top</a>
 	
-	<nav>
-		<h3>navigation links and info for each lab</h3>
-		(poulated from the database)
-	</nav>
-
-<footer>
-	<h3>Legal disclaimer (needed for all pages)</h3>
-	<p>
-	Graduate Project by Cheryl Nielsen for MS Computer Science at San Francisco State University, USA.  
-	This site is for demonstration purposes only.  Last updated November 15, 2018.
+	<h1>Tutorial Labs: New or Currently in Development</h1>
+	
+	<article class="home-lab-list">
+		<h2>Tutorial Lab Titile One</h2>
+		<p>Short description of 2 or 3 sentences.</p>
+		<p>Status: in Development</p>
+		<p>Rating: not rated yet</p>
+		<p>Link to more detail about the tutorial lab.</p>
+		<p>Link to start the lab.</p>
+	</article>
+	
+	<article class="home-lab-list">
+		<h2>Tutorial Lab Titile Two</h2>
+		<p>Short description of 2 or 3 sentences.</p>
+		<p>Status: available or in progress</p>
+		<p>Lab rating</p>
+		<p>Link to more detail about the tutorial lab.</p>
+		<p>Link to start the lab.</p>
+	</article>
+	
+	<article class="home-lab-list">
+		<h2>Tutorial Lab Titile Three</h2>
+		<p>Short description of 2 or 3 sentences.</p>
+		<p>Status: available or in progress</p>
+		<p>Lab rating</p>
+		<p>Link to more detail about the tutorial lab.</p>
+		<p>Link to start the lab.</p>
+	</article>
+	
+	<article class="home-lab-list">
+		<h2>Tutorial Lab Titile Four</h2>
+		<p>Short description of 2 or 3 sentences.</p>
+		<p>Status: available or in progress</p>
+		<p>Lab rating</p>
+		<p>Link to more detail about the tutorial lab.</p>
+		<p>Link to start the lab.</p>
+	</article>
+	
+	<a id="bottom" href="index.html#top">return to top</a>
+</section>
+		
+<footer class="legal page-break">
+	
+	<h1>Legal disclaimer</h1>
+	<p>This website is part of a Graduate Project by Cheryl Nielsen for an MS <a href="http://cs.sfsu.edu/">Computer Science</a> degree at <a href="http://www.sfsu.edu/">San Francisco State University</a>, USA. 
+	<br>
+	For more information about Physics in Motion, see the <a href="https://github.com/cherylnielsen">GitHub code repository</a> and <a href="https://github.com/cherylnielsen/Physics-In-Motion-Website/wiki">Wiki pages</a>.
 	</p>
+	<p class="update-time">
+		
+		Last updated November 28, 2018.
+	</p>
+	
 </footer>
 
+</div><!-- end div.wrapper -->
+	
 </body>
 </html>
