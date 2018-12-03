@@ -1,5 +1,6 @@
 @charset "ISO-8859-1";
 /* CSS Document */
+/* for all size screens */
 
 /* remove preset brouser defaults */
 * {
@@ -57,8 +58,7 @@ div.large-logo {
 	background-origin: content-box;
 	background-position: left, center;
 	background-repeat: no-repeat;
-	background-size:  100% 100%;
-	
+	background-size:  100% 100%;	
 }
 
 form.login {
@@ -96,7 +96,7 @@ input[type=checkbox] {
 aside.nav-quote {
 	float: left;
 	width: 15%;
-	padding: 0 0.5em 1em 1em;
+	padding: 0.5em 0.5em 1em 1em;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
 	background-color: #A7DAFA;
@@ -111,7 +111,7 @@ nav.site > a {
 
 div.quote {
 	margin: 0, 0.5em, 0.5em, 0.5em;
-	padding-top: 1em;
+	padding-top: 0.5em;
 }
 
 section.project-summary {
