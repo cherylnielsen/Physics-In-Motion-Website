@@ -63,14 +63,14 @@ a#lab-list {
 	margin: 0;
 }
 
-section.project-summary {
+section.main-content {
 	float: none;
 	width: auto;
 	padding: 2%;
 	margin: 2%;
 }
 
-h1.project-summary {
+h1.summary {
 	width: 25%;
 	position: absolute;
 	top: 80px;

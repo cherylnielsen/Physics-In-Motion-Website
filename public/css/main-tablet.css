@@ -11,13 +11,13 @@ a#lab-list {
 	padding: 0.5em 1em;
 }
 
-section.project-summary {
+section.main-content {
 	float: left;
 	width: 70%;
 	padding: 2% 0 2% 2%;
 }
 
-h1.project-summary {
+h1.summary {
 	width: 30%;
 }
 
