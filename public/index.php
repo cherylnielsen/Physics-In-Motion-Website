@@ -23,15 +23,15 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('includes/header-login.html'); ?>
+	<?php include('html-includes/header.html'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">
-	<?php include('includes/nav-quote-aside.html'); ?>
+	<?php include('html-includes/nav-and-quote.html'); ?>
 </aside>
 	
 <section class="main-content">
-	<?php include('includes/project-summary.html'); ?>
+	<?php include('html-includes/project-summary.html'); ?>
 </section>
 
 <section class="home-lab-list">
@@ -41,7 +41,7 @@
 	
 	<div class="home-lab-list">
 		<article class="home-lab-list">
-			<h2>Tutorial Lab Titile Four</h2>
+			<h2>Tutorial Lab Title Four</h2>
 			<p>Short description of 2 or 3 sentences.</p>
 			<p>Status: available or in progress</p>
 			<p>Lab rating</p>
@@ -54,7 +54,7 @@
 </section>
 		
 <footer>
-	<?php include('includes/footer.html'); ?>
+	<?php include('html-includes/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->

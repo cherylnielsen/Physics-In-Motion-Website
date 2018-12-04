@@ -2,8 +2,8 @@
 /* CSS Document */
 
 @import "main-phone.css";
-	
-form.login {
+
+div.login {
 	display: none;
 }
 

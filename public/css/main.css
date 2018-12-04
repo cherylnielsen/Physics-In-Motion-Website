@@ -27,15 +27,19 @@ a {
 	font-weight: 900;	
 }
 
-a#nav-quote {
-	padding: 0.5em 1em;
-}
-
 a#top {
 	margin: 0;
 	height: inherit;
 	width: 150%;
 	text-decoration: none;
+}
+
+a#nav-quote {
+	margin: 0.5em 0;
+}
+
+a#bottom {
+	margin: 0 0 0.5em 1.5em;
 }
 
 h1 {
@@ -56,6 +60,8 @@ header{
 	height: 125px;
 	border-bottom: 4px double #03AA0D;
 	border-radius: 15px;
+	/* background-color: #FDFAEC; */
+	background-color: #A7DAFA;
 }
 
 div.large-logo {
@@ -73,46 +79,31 @@ h1.large-logo {
 	display: none;
 }
 
-form.login {
+
+div.login {
 	border: 4px double #03AA0D;
 	border-radius: 15px;	
 	text-align: center;
-	background-color: #A7DAFA;
 	padding: 0.5em;
 	position: absolute;
 	top: 0;
 	right: 0;
+	background-color: #A7DAFA;
 }
 
-form.login > * {
+div.login > * {
 	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
 	font-size: 1em;
 	font-weight: 600;
 	margin: 0.5em;
 }
 
-input#submit-login { 
-	font-size: 1.1em;
-	padding: 5px 25px ;
-	/*background-color: #03AA0D;*/
-	background-color:#03CA0D;
-	margin: 0.75em;
-}
-
-input[type=checkbox] {
-	width: 1.5em; 
-	height: 1.5em;
-	margin: 0.5em;
-}
-
 aside.nav-quote {
 	float: left;
 	width: 15%;
-	padding: 0.5em 0.5em 1em 1em;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
 	background-color: #A7DAFA;
-	margin: 0 2% 2% 0;
 	position: relative;
 	left: -4px;
 }
@@ -120,12 +111,16 @@ aside.nav-quote {
 nav.site > a {
 	display: inline-block;
 	padding: 1em;
+	width: auto;
 	border-bottom: 4px double #01A209;
 }
 
 div.quote {
-	margin: 0, 0.5em, 0.5em, 0.5em;
-	padding-top: 0.5em;
+	padding: 0.25em 1em 1em 1em;
+}
+
+div.quote > h2 {
+	margin: 1em 0;
 }
 
 section.main-content {
@@ -137,23 +132,28 @@ section.main-content {
 section.home-lab-list {
 	float: right;
 	width: 25%;
-	padding: 2% 0 2% 0;
-	margin-top: 135px;
+	padding: 0 0 2% 0;
 	position: relative;
 	right: -4px;
+	top: 138px;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	margin-bottom: 3em;
+	background-color: #A7DAFA;
 }
 
 article.home-lab-list {
 	padding: 0 1em 1em 1em;
-	border: 4px double #03AA0D;
-	border-radius: 15px;
+	border-top: 4px double #03AA0D;
+	border-bottom: 4px double #03AA0D;
 	margin-bottom: 25px;
-	background-color: #A7DAFA;
+	background-color: white;
 }
 
 footer {  
 	clear: both;
 	padding: 2%;
 	border-top: 4px double #03AA0D;
+	border-radius: 15px;
 	background-color: #A7DAFA;
 }
