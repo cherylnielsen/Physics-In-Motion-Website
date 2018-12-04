@@ -7,7 +7,7 @@
 	<meta name="Description" content="An interactive 3D Tutorial Lab experience for Students of Physics and Engineering. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of science tutorial. Not as game, but as truly visual, immersive, and hands on learning experience. The Student will then analyze the collected data with interactive graphs and math calculations done inside the tutorial lab. Along the way, the Automated Mentor will explain topics to the Students, give hints, and provide corrections as needed in the tutorial labs. Web pages for Students and professors provide multiple services, including lists of assigned and completed tutorial labs, links to download lab summaries, and lists of frequent problems encountered by Students.">
 	
 	<meta name="Keywords" content="physics in motion, physics, engineering, tutorial, lab, laboratory, activities, experiments, 3d, 3-D, interactive, mentor, mentored, math, calculations, graphs, sfsu">
-	
+		
 	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
 	
 	<link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
@@ -22,52 +22,13 @@
 	
 <div class="wrapper">
 
-<header>
-	
-	<div class="large-logo">
-		<a id="top" href="index.html"></a>
-		<!--background="images/3D logo Physics in Motion 12 2 18.png"
-			Used background instead of img because it was the only way to get correct automatic resizing of width when using a fixed hight in all of the tested brower types.-->	
-	</div>	
-	
-
-	<form class="login" method="post" action="">
-		
-		<input type="text" name="user-id" value="" placeholder="User ID">
-		<br>
-		<input type="text" name="user-password" value="" placeholder="Password">
-		<br>
-		<label><input type="checkbox" name="stay-signed-in" id="stay-signed-in" value="stay-signed-in" >&nbsp;Stay Signed In</label>
-			
-		<br>
-		<input type="submit" name="submit-login" id="submit-login" value="Sign In">		
-		<br>
-		<a id="forgot-login" href="">Forgot ID/Password?</a>
-		<br>
-		<a id="register" href="">Create Account</a>
-		
-	</form>
-	
+<header>	
+	<?php include ('includes/header-login.html'); ?>
 </header>
-	
-<aside class="nav-quote">
-	
-	<nav class="site">		
-		<a id="site" href="index.html#lab-list">See Newest Tutorial Labs!</a><br>
-		<a href="">Student Pages</a><br>
-		<a href="">Professor Pages</a><br>
-		<a href="">Tutorial Labs</a><br>
-	</nav>
-	
-	<div class="quote">
-		<h2>Quote of the Month</h2>
-			<p>Shoot for the Moon. Even if you miss, you'll land among the stars.</p>
-			<p>&#45; Les Brown</p>
-		<a id="nav-quote" href="">Previous Quotes</a>
-	</div>
-	
-</aside>
 
+<aside class="nav-quote" id="nav-quote">
+	<?php include ('includes/nav-quote-aside.html'); ?>
+</aside>
 	
 <section class="project-summary">
 	
@@ -76,7 +37,7 @@
 	<h2>Introduction</h2>
 	
 	<p>
-	Many Students drop out of classes in Physics and Engineering due to the high level of difficulty in understanding these topics. Often, attending lectures and reading textbooks is just not enough. A different approach is needed to make the material easier to understand. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of online science tutorial. Not for a game, but for the creation of visual, immersive, and hands on learning experiences in the form of tutorial labs that let the Student explore. The goal of Physics in Motion is a more intuitive understanding based on the firsthand experience of a subject.
+	Many Students drop out of classes in Physics and Engineering due to the high level of difficulty in understanding these topics. Often, attending lectures and reading textbooks is just not enough. A different approach is needed to make the material easier to understand. Physics in Motion uses today's powerful interactive online 3D gaming technologies to create a new type of online science tutorial. Not for a game, but for the creation of visual, immersive, and hands on learning experiences in the form of tutorial labs that let the Student explore. The goal of Physics in Motion is a more intuitive understanding based on the firsthand experience of a subject.
 	</p>
 
 	<h2>Tutorial Labs</h2>
@@ -104,57 +65,22 @@
 	
 	<h1>Tutorial Labs: New or Currently in Development</h1>
 	
-	<article class="home-lab-list">
-		<h2>Tutorial Lab Titile One</h2>
-		<p>Short description of 2 or 3 sentences.</p>
-		<p>Status: in Development</p>
-		<p>Rating: not rated yet</p>
-		<p>Link to more detail about the tutorial lab.</p>
-		<p>Link to start the lab.</p>
-	</article>
-	
-	<article class="home-lab-list">
-		<h2>Tutorial Lab Titile Two</h2>
-		<p>Short description of 2 or 3 sentences.</p>
-		<p>Status: available or in progress</p>
-		<p>Lab rating</p>
-		<p>Link to more detail about the tutorial lab.</p>
-		<p>Link to start the lab.</p>
-	</article>
-	
-	<article class="home-lab-list">
-		<h2>Tutorial Lab Titile Three</h2>
-		<p>Short description of 2 or 3 sentences.</p>
-		<p>Status: available or in progress</p>
-		<p>Lab rating</p>
-		<p>Link to more detail about the tutorial lab.</p>
-		<p>Link to start the lab.</p>
-	</article>
-	
-	<article class="home-lab-list">
-		<h2>Tutorial Lab Titile Four</h2>
-		<p>Short description of 2 or 3 sentences.</p>
-		<p>Status: available or in progress</p>
-		<p>Lab rating</p>
-		<p>Link to more detail about the tutorial lab.</p>
-		<p>Link to start the lab.</p>
-	</article>
+	<div class="home-lab-list">
+		<article class="home-lab-list">
+			<h2>Tutorial Lab Titile Four</h2>
+			<p>Short description of 2 or 3 sentences.</p>
+			<p>Status: available or in progress</p>
+			<p>Lab rating</p>
+			<p>Link to more detail about the tutorial lab.</p>
+			<p>Link to start the lab.</p>
+		</article>
+	</div>
 	
 	<a id="bottom" href="index.html#top">return to top</a>
 </section>
 		
-<footer class="legal page-break">
-	
-	<h1>Legal disclaimer</h1>
-	<p>This website is part of a Graduate Project by Cheryl Nielsen for an MS <a href="http://cs.sfsu.edu/">Computer Science</a> degree at <a href="http://www.sfsu.edu/">San Francisco State University</a>, USA. 
-	<br>
-	For more information about Physics in Motion, see the <a href="https://github.com/cherylnielsen">GitHub code repository</a> and <a href="https://github.com/cherylnielsen/Physics-In-Motion-Website/wiki">Wiki pages</a>.
-	</p>
-	<p class="update-time">
-		
-		Last updated November 28, 2018.
-	</p>
-	
+<footer>
+	<?php include ('includes/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->
