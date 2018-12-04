@@ -31,9 +31,10 @@ a#nav-quote {
 }
 
 a#top {
-	position: absolute;
-	top: 0;
-	right: 0;
+	margin: 0;
+	height: inherit;
+	width: 150%;
+	text-decoration: none;
 }
 
 h1 {
@@ -65,6 +66,10 @@ div.large-logo {
 	background-position: left, center;
 	background-repeat: no-repeat;
 	background-size:  100% 100%;	
+}
+
+h1.large-logo {
+	display: none;
 }
 
 form.login {
