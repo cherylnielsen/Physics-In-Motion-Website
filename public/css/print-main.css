@@ -9,10 +9,16 @@ div.login {
 
 h1.large-logo {
 	display: inline-block;
+	position: absolute;
+	top: -50;
+	right: 0;
 }
 
 aside.nav-quote {
-	margin-top: 100px;
+	margin: auto;
+	position: relative;
+	top: 0;
+	left: 0;
 }
 
 h1.summary {

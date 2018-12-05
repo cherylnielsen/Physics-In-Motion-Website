@@ -65,7 +65,7 @@ header{
 }
 
 div.large-logo {
-	width: 70%;
+	width: 80%;
 	height: 125px;
 	padding: 0.5% 1%;	
 	background: url("../images/3D logo Physics in Motion 12 2 18.png");
@@ -79,6 +79,12 @@ h1.large-logo {
 	display: none;
 }
 
+h1.summary {
+	margin: 2em 0 0 0;	
+	width: 60%;
+	position: relative;
+	left: 3%;
+}
 
 div.login {
 	border: 4px double #03AA0D;
@@ -89,12 +95,14 @@ div.login {
 	top: 0;
 	right: 0;
 	background-color: #A7DAFA;
+	font-size: 1em;
+	font-weight: 600;
+	height: 108px;
+	margin: 1px;
 }
 
 div.login > * {
-	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
-	font-size: 1em;
-	font-weight: 600;
+	display: inline-block;
 	margin: 0.5em;
 }
 
@@ -133,9 +141,7 @@ section.home-lab-list {
 	float: right;
 	width: 25%;
 	padding: 0 0 2% 0;
-	position: relative;
-	right: -4px;
-	top: 138px;
+	
 	border: 4px double #03AA0D;
 	border-radius: 15px;
 	margin-bottom: 3em;

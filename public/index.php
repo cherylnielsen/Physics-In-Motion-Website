@@ -29,7 +29,10 @@
 <aside class="nav-quote" id="nav-quote">
 	<?php include('html-includes/nav-and-quote.html'); ?>
 </aside>
-	
+
+<h1 class="summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
+
+
 <section class="main-content">
 	<?php include('html-includes/project-summary.html'); ?>
 </section>
