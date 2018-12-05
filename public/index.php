@@ -23,11 +23,11 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('html-includes/header.html'); ?>
+	<?php include('html-includes/templates/header.html'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">
-	<?php include('html-includes/nav-and-quote.php'); ?>
+	<?php include('html-includes/templates/nav-and-quote.php'); ?>
 </aside>
 
 <h1 class="summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
@@ -37,10 +37,10 @@
 	<?php include('html-includes/project-summary.html'); ?>
 </section>
 
-<?php include('html-includes/new-labs-list.php'); ?>	
+<?php include('html-includes/templates/new-labs-list.php'); ?>	
 		
 <footer>
-	<?php include('html-includes/footer.html'); ?>
+	<?php include('html-includes/templates/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->
