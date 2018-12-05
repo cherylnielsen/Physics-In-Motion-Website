@@ -17,33 +17,40 @@ a {
 	padding: 0;
 }
 
-form.login {
+div.login {
 	position: absolute;
 	top: 82px;
-	right: 0;	
+	right: 4px;	
+	height: 90;
+	padding: 0 1em 0.5em 1em;
 }
 
-form.login > * {
-	margin: 0.25em;
+h1.summary {
+	width: 50%;
+	font-size: 1.1em;
+	position: absolute;
+	right: 0;
+	top: 62px;
 }
 
 aside.nav-quote {
+	clear: both;
 	float: none;
-	width: 60%;
-	margin: 2% 0;
-	margin-top: 240px;
+	width: auto;
+	margin: auto;
 	position: relative;
-	left: -4px;
+	top: 123px;
+	left: 0;
+	padding: 2%;
 }
 
-a#nav-quote {
+a#quote-link {
 	padding: 0;
 }
 
 div.quote {
-	padding-top: 0.5em;
-	margin: 0;
-	width: auto;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
 }
 
 div.quote > * {
@@ -51,36 +58,42 @@ div.quote > * {
 	padding: 0;
 }
 
+
 nav.site > a {
 	display: inline-block;
 	padding: 0;
 	border-bottom: none;
 }
 
-a#lab-list {
+a#new-labs {
 	display: inline;
 	padding: 0;
 	margin: 0;
 }
 
 section.main-content {
+	clear: both;
 	float: none;
 	width: auto;
 	padding: 2%;
-	margin: 2%;
+	margin: auto;
+	position: relative;
+	top: 120px;
 }
 
-h1.summary {
-	width: 25%;
-	position: absolute;
-	top: 80px;
-	left: 10px;
-	font-size: 1.1em;
-}
-
-section.home-lab-list {
+section.new-labs {
+	clear: both;
 	float: none;
 	width: auto;
-	padding: 2%;
-	margin: 2%;
+	padding: 2% 0 2% 0;
+	margin: auto;
+	position: relative;
+	top: 120px;
+	right: 0;
+}
+
+footer {  
+	position: relative;
+	top: 120px;
+	border: 4px double #03AA0D;
 }

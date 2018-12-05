@@ -18,7 +18,7 @@ div.wrapper {
 
 /* Inner page link only shown on tablets, phones, 
 and other small screens. */
-a#lab-list {
+a#new-labs {
 	display: none;
 }
 
@@ -27,15 +27,19 @@ a {
 	font-weight: 900;	
 }
 
-a#nav-quote {
-	padding: 0.5em 1em;
-}
-
 a#top {
 	margin: 0;
 	height: inherit;
 	width: 150%;
 	text-decoration: none;
+}
+
+a#quote-link {
+	margin: 0.5em 0;
+}
+
+a#bottom {
+	margin: 0 0 0.5em 1.5em;
 }
 
 h1 {
@@ -56,10 +60,12 @@ header{
 	height: 125px;
 	border-bottom: 4px double #03AA0D;
 	border-radius: 15px;
+	/* background-color: #FDFAEC; */
+	background-color: #A7DAFA;
 }
 
 div.large-logo {
-	width: 70%;
+	width: 80%;
 	height: 125px;
 	padding: 0.5% 1%;	
 	background: url("../images/3D logo Physics in Motion 12 2 18.png");
@@ -73,46 +79,39 @@ h1.large-logo {
 	display: none;
 }
 
-form.login {
+h1.summary {
+	margin: 2em 0 0 0;	
+	width: 60%;
+	position: relative;
+	left: 3%;
+}
+
+div.login {
 	border: 4px double #03AA0D;
 	border-radius: 15px;	
 	text-align: center;
-	background-color: #A7DAFA;
-	padding: 0.5em;
+	padding: 0.5em 1em 0.5em 1em;
 	position: absolute;
 	top: 0;
 	right: 0;
-}
-
-form.login > * {
-	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	background-color: #A7DAFA;
 	font-size: 1em;
 	font-weight: 600;
-	margin: 0.5em;
+	height: 109px;
+	margin: 1px;
 }
 
-input#submit-login { 
-	font-size: 1.1em;
-	padding: 5px 25px ;
-	/*background-color: #03AA0D;*/
-	background-color:#03CA0D;
-	margin: 0.75em;
-}
-
-input[type=checkbox] {
-	width: 1.5em; 
-	height: 1.5em;
+div.login > * {
+	display: inline-block;
 	margin: 0.5em;
 }
 
 aside.nav-quote {
 	float: left;
 	width: 15%;
-	padding: 0.5em 0.5em 1em 1em;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
 	background-color: #A7DAFA;
-	margin: 0 2% 2% 0;
 	position: relative;
 	left: -4px;
 }
@@ -120,12 +119,16 @@ aside.nav-quote {
 nav.site > a {
 	display: inline-block;
 	padding: 1em;
+	width: auto;
 	border-bottom: 4px double #01A209;
 }
 
 div.quote {
-	margin: 0, 0.5em, 0.5em, 0.5em;
-	padding-top: 0.5em;
+	padding: 1em 1em 1em 1em;
+}
+
+div.quote > h2 {
+	margin: 0 0 1em 0;
 }
 
 section.main-content {
@@ -134,26 +137,29 @@ section.main-content {
 	padding: 2% 0 2% 2%;
 }
 
-section.home-lab-list {
+section.new-labs {
 	float: right;
 	width: 25%;
-	padding: 2% 0 2% 0;
-	margin-top: 135px;
-	position: relative;
-	right: -4px;
-}
-
-article.home-lab-list {
-	padding: 0 1em 1em 1em;
+	padding: 0 0 2% 0;
+	
 	border: 4px double #03AA0D;
 	border-radius: 15px;
-	margin-bottom: 25px;
+	margin-bottom: 3em;
 	background-color: #A7DAFA;
+}
+
+article.new-labs {
+	padding: 0 1em 1em 1em;
+	border-top: 4px double #03AA0D;
+	border-bottom: 4px double #03AA0D;
+	margin-bottom: 25px;
+	background-color: white;
 }
 
 footer {  
 	clear: both;
 	padding: 2%;
 	border-top: 4px double #03AA0D;
+	border-radius: 15px;
 	background-color: #A7DAFA;
 }

@@ -23,38 +23,31 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('includes/header-login.html'); ?>
+	<?php include('html-includes/header.html'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">
-	<?php include('includes/nav-quote-aside.html'); ?>
+	<?php include('html-includes/nav-and-quote.php'); ?>
 </aside>
-	
+
+<h1 class="summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
+
+
 <section class="main-content">
-	<?php include('includes/project-summary.html'); ?>
+	<?php include('html-includes/project-summary.html'); ?>
 </section>
 
-<section class="home-lab-list">
-	<a id="lab-list" href="index.php">return to top</a>
+<section class="new-labs">
+	<a id="new-labs" href="index.php">return to top</a>	
+	<h1>Tutorial Labs: New or Currently in Development</h1>	
 	
-	<h1>Tutorial Labs: New or Currently in Development</h1>
-	
-	<div class="home-lab-list">
-		<article class="home-lab-list">
-			<h2>Tutorial Lab Titile Four</h2>
-			<p>Short description of 2 or 3 sentences.</p>
-			<p>Status: available or in progress</p>
-			<p>Lab rating</p>
-			<p>Link to more detail about the tutorial lab.</p>
-			<p>Link to start the lab.</p>
-		</article>
-	</div>
+	<?php include('html-includes/new-labs-list.php'); ?>	
 	
 	<a id="bottom" href="index.php">return to top</a>
 </section>
 		
 <footer>
-	<?php include('includes/footer.html'); ?>
+	<?php include('html-includes/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->

@@ -3,10 +3,10 @@
 /* changes to css for medium size screens */
 
 div.large-logo {
-	width: 50%;
+	width: 70%;
 }
 
-a#lab-list {
+a#new-labs {
 	display: inline-block;
 	padding: 0.5em 1em;
 }
@@ -17,14 +17,13 @@ section.main-content {
 	padding: 2% 0 2% 2%;
 }
 
-h1.summary {
-	width: 30%;
-}
-
-section.home-lab-list {
+section.new-labs {
+	clear: both;
 	float: none;
-	width: 70%;
+	width: auto;
 	padding: 2% 0 2% 0;
-	margin-top: 3em;
-	margin-left: 22%;	
+	margin: auto;
+	position: relative;
+	top: 0;
+	right: 0;
 }
