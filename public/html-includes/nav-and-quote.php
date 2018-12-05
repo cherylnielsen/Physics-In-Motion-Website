@@ -5,7 +5,7 @@ echo
 	<a href="index.php">Home Page</a><br>
 	<a href="">Student Pages</a><br>
 	<a href="">Professor Pages</a><br>
-	<a href="">Tutorial Labs</a><br>
+	<a href="tutorial-labs.php">Tutorial Labs</a><br>
 	<a id="site" href="index.php#new-labs">See the Newest Tutorial Labs!</a><br>
 </nav>';
 
