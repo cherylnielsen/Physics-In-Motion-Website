@@ -21,7 +21,8 @@ div.login {
 	position: absolute;
 	top: 82px;
 	right: 4px;	
-	height: auto;
+	height: 90;
+	padding: 0 1em 0.5em 1em;
 }
 
 h1.summary {
@@ -38,12 +39,12 @@ aside.nav-quote {
 	width: auto;
 	margin: auto;
 	position: relative;
-	top: 90px;
+	top: 123px;
 	left: 0;
 	padding: 2%;
 }
 
-a#nav-quote {
+a#quote-link {
 	padding: 0;
 }
 
@@ -64,7 +65,7 @@ nav.site > a {
 	border-bottom: none;
 }
 
-a#lab-list {
+a#new-labs {
 	display: inline;
 	padding: 0;
 	margin: 0;
@@ -77,22 +78,22 @@ section.main-content {
 	padding: 2%;
 	margin: auto;
 	position: relative;
-	top: 30px;
+	top: 120px;
 }
 
-section.home-lab-list {
+section.new-labs {
 	clear: both;
 	float: none;
 	width: auto;
 	padding: 2% 0 2% 0;
 	margin: auto;
 	position: relative;
-	top: 30px;
+	top: 120px;
 	right: 0;
 }
 
 footer {  
 	position: relative;
-	top: 30px;
+	top: 120px;
 	border: 4px double #03AA0D;
 }

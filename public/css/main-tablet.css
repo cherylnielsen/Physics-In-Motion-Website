@@ -6,7 +6,7 @@ div.large-logo {
 	width: 70%;
 }
 
-a#lab-list {
+a#new-labs {
 	display: inline-block;
 	padding: 0.5em 1em;
 }
@@ -17,7 +17,7 @@ section.main-content {
 	padding: 2% 0 2% 2%;
 }
 
-section.home-lab-list {
+section.new-labs {
 	clear: both;
 	float: none;
 	width: auto;
