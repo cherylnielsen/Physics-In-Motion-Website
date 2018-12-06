@@ -10,7 +10,7 @@
 		
 	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
 	
-	<link href="css/full-tutorial-lab-list.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/login-forms.css" rel="stylesheet" type="text/css" media="screen">
 	
 	<link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
 		  media="screen and (min-width: 601px) and (max-width: 950px)">
@@ -25,22 +25,24 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('html-includes/header.html'); ?>
+	<?php include('html-includes/templates/header.html'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">
-	<?php include('html-includes/nav-and-quote.php'); ?>
+	<?php include('html-includes/templates/nav-and-quote.php'); ?>
 </aside>
 
 <h1 class="summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
 
 <section class="main-content">
-	<?php include('html-includes/login-form.php'); ?>
+	<?php 
+		include('html-includes/login-form.html');
+	?>
 </section>
 
 
 <footer>
-	<?php include('html-includes/footer.html'); ?>
+	<?php include('html-includes/templates/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->

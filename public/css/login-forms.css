@@ -1,0 +1,61 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+
+
+h1.summary {
+	width: 70%;
+	position: relative;
+	left: 5%;
+}
+
+h1.form {
+	margin: 1em 0 0 0;
+}
+
+a {
+	display: inline-block;
+	font-weight: 900;	
+	margin: 0.5em 0;
+}
+	
+section.main-content {
+	float: left;
+	width: auto;
+	padding: 0 2%;
+	margin-bottom: 2em;	
+}
+
+form {
+	float: left;
+}
+
+form > * {
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	margin: 0.5em;
+}
+
+input[type=text] {
+	margin: 0.5em 0;
+	width: 25em;
+}
+
+input[type=submit] { 
+	font-size: 1em;
+	padding: 5px 25px ;
+	background-color:#03CA0D;
+	margin: 0.75em 0;
+}
+
+input[type=checkbox] {
+	width: 1.5em; 
+	height: 1.5em;
+	margin: 0.5em 0;
+}
+
+@media screen and (max-width: 600px) {
+	div.quote {
+		display: none;
+	}
+}
+
