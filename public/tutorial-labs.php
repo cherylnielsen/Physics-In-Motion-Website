@@ -25,20 +25,20 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('html-includes/templates/header.html'); ?>
+	<?php include('html-includes/home/header.html'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">
-	<?php include('html-includes/templates/nav-and-quote.php'); ?>
+	<?php include('html-includes/home/nav-and-quote.php'); ?>
 </aside>
 
 <section class="main-content">
-	<?php include('html-includes/full-tutorial-lab-list.php'); ?>
+	<?php include('html-includes/labs/full-tutorial-lab-list.php'); ?>
 </section>
 
 
 <footer>
-	<?php include('html-includes/templates/footer.html'); ?>
+	<?php include('html-includes/home/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->
