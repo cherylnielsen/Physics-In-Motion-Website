@@ -15,15 +15,28 @@ if($result)
 		
 		echo
 		'<article class="labs">
-			<img src=" images/labs/' . $row['web_link'] . '.png" alt="image of the lab">
-			<h1 class="lab-status">' . $row['lab_status'] . '!</h1>
-			<p>' . $row['short_description'] . '</p>';
+			<img src=" images/labs/' . $row['web_link'] . '.png" alt="image of the lab">';
 			
-		echo '<p><a id="unity-link" href="">Start this lab now.</a></p>
+		$status = $row['lab_status'];
+		switch(	$status )
+		{
+			case 'In Development':
+				echo'<h1 class="development-status">' . $status . '!</h1>';
+				break;
+			case 'New':
+				echo'<h1 class="new-status">' . $status . '!</h1>';
+				break;
+		}
+					
+		echo'<p>' . $row['short_description'] . '</p>
+		<h2>Rating: to be determined</h2>
+		<p><a id="unity-link" href="">Start this lab now.</a></p>
 		</article>';
 		
 		echo 
 		'<section class="lab-details">
+		<h2>Average time to complete</h2>
+		<p>to be determined</p>
 		<h2>Prerequisites</h2>
 		<p>to be determined</p>
 		<h2>Key Topics</h2>
@@ -45,7 +58,7 @@ else
 	echo '<p> Oops! </p><br><p>' . mysqli_error($db_connection) . '</p>';
 }
 
-echo '<br><a id="bottom" href="tutorial-labs.php">return to top</a>';
+echo '<br><a id="bottom" href="#top">return to top</a>';
 mysqli_close($db_connection);
 
 ?>
