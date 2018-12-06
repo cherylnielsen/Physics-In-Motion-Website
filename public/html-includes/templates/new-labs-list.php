@@ -13,12 +13,12 @@ if($result)
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 	{
 		echo
-		'<article class="new-labs">
+		'<hr><article class="new-labs">
 			<h2>' . $row['lab_name'] . '</h2>
 			<h2 class="lab-status">' . $row['lab_status'] . '!</h2>
 			<p>' . $row['short_description'] . '</p>
 			<p><a href="">Learn More</a></p>
-		</article>';
+		</article><hr>';
 	}
 	
 	mysqli_free_result($result);		

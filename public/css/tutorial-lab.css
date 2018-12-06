@@ -18,7 +18,7 @@ section.main-content > h1 {
 section.main-content {
 	float: left;
 	width: 80%;
-	padding: 0 0 2% 2%;
+	padding: 2%;
 	margin-bottom: 2em;	
 }
 
@@ -32,6 +32,10 @@ article.labs > img {
 }
 
 
-h2.lab-status {
+h2.lab-status, h1.lab-status{
 	color: #03AA0D;
+}
+
+section.lab-details {
+	padding-left: 1em;
 }

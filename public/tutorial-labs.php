@@ -10,7 +10,7 @@
 		
 	<link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
 	
-	<link href="css/full-tutorial-lab-list.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/tutorial-lab.css" rel="stylesheet" type="text/css" media="screen">
 	
 	<link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
 		  media="screen and (min-width: 601px) and (max-width: 950px)">
@@ -31,8 +31,6 @@
 <aside class="nav-quote" id="nav-quote">
 	<?php include('html-includes/templates/nav-and-quote.php'); ?>
 </aside>
-
-<h1 class="summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
 
 <section class="main-content">
 	<?php include('html-includes/full-tutorial-lab-list.php'); ?>

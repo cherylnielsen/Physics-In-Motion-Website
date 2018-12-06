@@ -12,11 +12,12 @@ if($result)
 	{
 		echo
 		'<article class="labs">
-			<img src=" images/' . $row['web_link'] . '.png" alt="image of the lab">
-			<h2>' . $row['lab_name'] . '</h2>
+			<img src=" images/labs/' . $row['web_link'] . '.png" alt="image of the lab">
+			<h2>Tutorial ' . $row['lab_id'] . ': ' . $row['lab_name'] . '</h2>
 			<h2 class="lab-status">' . $row['lab_status'] . '!</h2>
-			<p>' . $row['short_description'] . '</p>
-			<p><a href="">Learn More</a></p>
+			<p>' . $row['short_description'] . '</p>';
+			
+		echo '<p><a href="tutorial-information.php?num=' . $row['lab_id'] . '&lab=' . $row['web_link'] . '">Learn More</a></p>
 		</article>';
 	}
 	
@@ -28,7 +29,6 @@ else
 }
 
 echo '<br><a id="bottom" href="tutorial-labs.php">return to top</a>';
-
 mysqli_close($db_connection);
 
 ?>
