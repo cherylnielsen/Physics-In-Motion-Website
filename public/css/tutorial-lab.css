@@ -32,8 +32,12 @@ article.labs > img {
 }
 
 
-h2.lab-status, h1.lab-status{
+.development-status {
 	color: #03AA0D;
+}
+
+.new-status {
+	color: red;
 }
 
 section.lab-details {

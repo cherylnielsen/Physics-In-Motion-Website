@@ -1,7 +1,6 @@
 <?php
 
-$web_link = $_GET["lab"];
-$lab_id = $_GET["num"];
+$professor_id = $_GET["num"];
 
 require('../private/database-access.php');
 $query = 'select * from tutorial_lab where lab_id =' . $lab_id . '';
@@ -19,11 +18,14 @@ if($result)
 			<h1 class="lab-status">' . $row['lab_status'] . '!</h1>
 			<p>' . $row['short_description'] . '</p>';
 			
-		echo '<p><a id="unity-link" href="">Start this lab now.</a></p>
+		echo '<h2>Rating: to be determined</h2>
+		<p><a id="unity-link" href="">Start this lab now.</a></p>
 		</article>';
 		
 		echo 
 		'<section class="lab-details">
+		<h2>Average time to complete</h2>
+		<p>to be determined</p>
 		<h2>Prerequisites</h2>
 		<p>to be determined</p>
 		<h2>Key Topics</h2>
@@ -35,7 +37,6 @@ if($result)
 		<h2>Instructions</h2>
 		<p>to be determined</p>
 		</section>';
-		
 	}
 	
 	mysqli_free_result($result);		
@@ -45,7 +46,7 @@ else
 	echo '<p> Oops! </p><br><p>' . mysqli_error($db_connection) . '</p>';
 }
 
-echo '<br><a id="bottom" href="tutorial-labs.php">return to top</a>';
+echo '<br><a id="bottom" href="#top">return to top</a>';
 mysqli_close($db_connection);
 
 ?>
