@@ -1,0 +1,41 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+
+h1.summary {
+	width: 70%;
+	position: relative;
+	left: 6%;
+}
+
+section.main-content > h1 {
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	padding: 1em;
+	background-color: #A7DAFA;
+	text-align: center;
+}
+
+section.main-content {
+	float: left;
+	width: 80%;
+	padding: 2%;
+	margin-bottom: 2em;	
+}
+
+article.labs {
+	padding: 0 1em 1em 1em;
+	border-bottom: 4px double #03AA0D;
+}
+
+article.labs > img {
+	height: 200px;
+}
+
+
+h2.lab-status, h1.lab-status{
+	color: #03AA0D;
+}
+
+section.lab-details {
+	padding-left: 1em;
+}

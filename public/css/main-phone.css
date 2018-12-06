@@ -30,7 +30,8 @@ h1.summary {
 	font-size: 1.1em;
 	position: absolute;
 	right: 0;
-	top: 62px;
+	top: 90px;
+	margin: 0.5em;
 }
 
 aside.nav-quote {

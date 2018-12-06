@@ -2,11 +2,11 @@
 
 echo
 '<nav class="site">		
-	<a href="index.php">Home Page</a><br>
-	<a href="">Student Pages</a><br>
-	<a href="">Professor Pages</a><br>
-	<a href="">Tutorial Labs</a><br>
-	<a id="site" href="index.php#new-labs">See the Newest Tutorial Labs!</a><br>
+	<a href="index.php">Home Page</a><hr>
+	<a href="">Student Pages</a><hr>
+	<a href="">Professor Pages</a><hr>
+	<a href="tutorial-labs.php">Tutorial Labs</a><hr>
+	<a id="site" href="index.php#new-labs">See the Newest Tutorial Labs!</a><hr>
 </nav>';
 
 require('../private/database-access.php');
