@@ -36,6 +36,9 @@
 	<?php include('html-includes/labs/lab-info.php'); ?>
 </section>
 
+<!--
+<?php include('html-includes/labs/lab-info-aside.php'); ?>	
+-->
 
 <footer>
 	<?php include('html-includes/home/footer.html'); ?>
