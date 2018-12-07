@@ -2,9 +2,9 @@
 
 echo
 '<nav class="site">		
-	<a href="index.php">Home Page</a><hr>
-	<a href="">Student Pages</a><hr>
-	<a href="">Professor Pages</a><hr>
+	<a href="index.php">Home Page </a><hr>
+	<a href="student.php">Student Pages</a><hr>
+	<a href="professor.php">Professor Pages</a><hr>
 	<a href="tutorial-labs.php">Tutorial Labs</a><hr>
 	<a id="site" href="index.php#new-labs">See the Newest Tutorial Labs!</a><hr>
 </nav>';

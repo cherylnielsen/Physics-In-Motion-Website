@@ -17,7 +17,7 @@ section.main-content > h1 {
 
 section.main-content {
 	float: left;
-	width: 80%;
+	width: 50%;
 	padding: 2%;
 	margin-bottom: 2em;	
 }
@@ -38,26 +38,6 @@ article.labs > img {
 
 .new-status {
 	color: red;
-}
-
-section.lab-details {
-	padding-left: 1em;
-}
-
-section.lab-info-aside {
-	float: right;
-	width: 25%;
-	padding: 0;
-	border: 4px double #03AA0D;
-	border-radius: 15px;
-	margin-bottom: 3em;
-	background-color: #A7DAFA;
-}
-
-article.lab-info-aside {
-	padding: 1em;
-	margin-bottom: 0;
-	background-color: white;
 }
 
 @media screen and (max-width: 600px) {

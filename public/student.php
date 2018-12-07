@@ -25,22 +25,20 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('html-includes/header.html'); ?>
+	<?php include('html-includes/home/header.html'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">
-	<?php include('html-includes/nav-and-quote.php'); ?>
+	<?php include('html-includes/home/nav-and-quote.php'); ?>
 </aside>
 
-<h1 class="summary">An interactive 3D Tutorial Lab experience for Students of Physics and Engineering.</h1>
-
 <section class="main-content">
-	<?php include('html-includes/student-info.php'); ?>
+	<?php include('html-includes/assignments/student-info.php'); ?>
 </section>
 
 
 <footer>
-	<?php include('html-includes/footer.html'); ?>
+	<?php include('html-includes/home/footer.html'); ?>
 </footer>
 
 </div><!-- end div.wrapper -->

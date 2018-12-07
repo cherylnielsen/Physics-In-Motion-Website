@@ -99,12 +99,13 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignments` (
   `professor_id` INT UNSIGNED NOT NULL,
   `student_id` INT UNSIGNED NOT NULL,
   `lab_id` INT UNSIGNED NOT NULL,
-  `due_date` DATETIME NOT NULL,
-  `lab_points` INT NULL,
+  `date_assigned` DATETIME NOT NULL,
+  `date_due` DATETIME NOT NULL,
+  `lab_points` INT NOT NULL,
   `date_started` DATETIME NULL,
-  `date_completed` DATETIME NULL,
-  `total_time_spent` INT NULL,
-  `added_instructions` BLOB NULL,
+  `date_submitted` DATETIME NULL,
+  `total_time_spent` DOUBLE NULL,
+  `additional_instructions` MEDIUMTEXT NULL,
   PRIMARY KEY (`assignment_id`, `professor_id`, `student_id`, `lab_id`),
   CONSTRAINT `student_id`
     FOREIGN KEY (`student_id`)
@@ -139,13 +140,13 @@ DROP TABLE IF EXISTS `physics_in_motion`.`student_homework` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_homework` (
   `assignment_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `lab_summary` BLOB NULL,
-  `data` BLOB NULL,
-  `graphs` BLOB NULL,
-  `math` BLOB NULL,
-  `errors` BLOB NULL,
-  `report` BLOB NULL,
-  `chat_session` BLOB NULL,
+  `lab_summary` MEDIUMTEXT NULL,
+  `lab_data` MEDIUMTEXT NULL,
+  `lab_graphs` BLOB NULL,
+  `lab_math` BLOB NULL,
+  `lab_errors` MEDIUMTEXT NULL,
+  `lab_report` MEDIUMTEXT NULL,
+  `chat_session` MEDIUMTEXT NULL,
   PRIMARY KEY (`assignment_id`),
   CONSTRAINT `homework_assignment_id`
     FOREIGN KEY (`assignment_id`)
@@ -183,9 +184,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notifications` (
   `assignment_id` INT UNSIGNED NOT NULL,
   `notice_type` VARCHAR(45) NOT NULL,
   `date_sent` DATETIME NOT NULL,
-  `sent_from` VARCHAR(45) NOT NULL,
-  `sent_to` VARCHAR(45) NOT NULL,
-  `message_text` VARCHAR(1000) NOT NULL,
+  `notice_text` VARCHAR(1000) NOT NULL,
   PRIMARY KEY (`notice_id`, `assignment_id`),
   CONSTRAINT `notice_assignment_id`
     FOREIGN KEY (`assignment_id`)
