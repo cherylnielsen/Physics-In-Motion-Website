@@ -21,9 +21,9 @@ $result_notices = mysqli_query($db_connection, $query);
 
 if($result)
 {
-	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+	while ($row = mysqli_fetch_array($result_labs, MYSQLI_ASSOC))
 	{
-		echo '<h1>Hello ' . $row['first_name'] . ': ' . $row['last_name'] . '</h1>';
+		echo '<h1>Hello ' . $row['first_name'] . ' ' . $row['last_name'] . '!</h1>';
 		
 		echo
 		'<article class="labs">
