@@ -90,11 +90,11 @@ CREATE UNIQUE INDEX `professor_id_UNIQUE` ON `physics_in_motion`.`professor` (`p
 
 
 -- -----------------------------------------------------
--- Table `physics_in_motion`.`assignments`
+-- Table `physics_in_motion`.`assignment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`assignments` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`assignment` ;
 
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignments` (
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment` (
   `assignment_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `professor_id` INT UNSIGNED NOT NULL,
   `student_id` INT UNSIGNED NOT NULL,
@@ -102,35 +102,32 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignments` (
   `date_assigned` DATETIME NOT NULL,
   `date_due` DATETIME NOT NULL,
   `lab_points` INT NOT NULL,
-  `date_started` DATETIME NULL,
-  `date_submitted` DATETIME NULL,
-  `total_time_spent` DOUBLE NULL,
-  `additional_instructions` MEDIUMTEXT NULL,
+  `added_instructions` MEDIUMTEXT NULL,
   PRIMARY KEY (`assignment_id`, `professor_id`, `student_id`, `lab_id`),
-  CONSTRAINT `student_id`
+  CONSTRAINT `assignment_student_id`
     FOREIGN KEY (`student_id`)
     REFERENCES `physics_in_motion`.`student` (`student_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `professor_id`
+  CONSTRAINT `assignment_professor_id`
     FOREIGN KEY (`professor_id`)
     REFERENCES `physics_in_motion`.`professor` (`professor_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `lab_id`
+  CONSTRAINT `assignment_lab_id`
     FOREIGN KEY (`lab_id`)
     REFERENCES `physics_in_motion`.`tutorial_lab` (`lab_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `student_id_idx` ON `physics_in_motion`.`assignments` (`student_id` ASC) VISIBLE;
+CREATE INDEX `student_id_idx` ON `physics_in_motion`.`assignment` (`student_id` ASC) VISIBLE;
 
-CREATE INDEX `professor_id_idx` ON `physics_in_motion`.`assignments` (`professor_id` ASC) VISIBLE;
+CREATE INDEX `professor_id_idx` ON `physics_in_motion`.`assignment` (`professor_id` ASC) VISIBLE;
 
-CREATE INDEX `lab_id_idx` ON `physics_in_motion`.`assignments` (`lab_id` ASC) VISIBLE;
+CREATE INDEX `lab_id_idx` ON `physics_in_motion`.`assignment` (`lab_id` ASC) VISIBLE;
 
-CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`assignments` (`assignment_id` ASC) VISIBLE;
+CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`assignment` (`assignment_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -140,22 +137,33 @@ DROP TABLE IF EXISTS `physics_in_motion`.`student_homework` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_homework` (
   `assignment_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `student_id` INT UNSIGNED NOT NULL,
   `lab_summary` MEDIUMTEXT NULL,
   `lab_data` MEDIUMTEXT NULL,
   `lab_graphs` BLOB NULL,
   `lab_math` BLOB NULL,
   `lab_errors` MEDIUMTEXT NULL,
-  `lab_report` MEDIUMTEXT NULL,
   `chat_session` MEDIUMTEXT NULL,
-  PRIMARY KEY (`assignment_id`),
+  `lab_report` BLOB NULL,
+  `date_started` DATETIME NULL,
+  `date_submitted` DATETIME NULL,
+  `total_time` DOUBLE NULL,
+  PRIMARY KEY (`assignment_id`, `student_id`),
   CONSTRAINT `homework_assignment_id`
     FOREIGN KEY (`assignment_id`)
-    REFERENCES `physics_in_motion`.`assignments` (`assignment_id`)
+    REFERENCES `physics_in_motion`.`assignment` (`assignment_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `homework_student_id`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `physics_in_motion`.`student` (`student_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`student_homework` (`assignment_id` ASC) VISIBLE;
+
+CREATE INDEX `homework_student_id_idx` ON `physics_in_motion`.`student_homework` (`student_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -175,27 +183,27 @@ CREATE UNIQUE INDEX `quote_id_UNIQUE` ON `physics_in_motion`.`quote_of_the_month
 
 
 -- -----------------------------------------------------
--- Table `physics_in_motion`.`notifications`
+-- Table `physics_in_motion`.`notice`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`notifications` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`notice` ;
 
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notifications` (
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice` (
   `notice_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `assignment_id` INT UNSIGNED NOT NULL,
   `notice_type` VARCHAR(45) NOT NULL,
   `date_sent` DATETIME NOT NULL,
-  `notice_text` VARCHAR(1000) NOT NULL,
+  `notice_text` VARCHAR(1000) NULL,
   PRIMARY KEY (`notice_id`, `assignment_id`),
   CONSTRAINT `notice_assignment_id`
     FOREIGN KEY (`assignment_id`)
-    REFERENCES `physics_in_motion`.`assignments` (`assignment_id`)
+    REFERENCES `physics_in_motion`.`assignment` (`assignment_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `notice_id_UNIQUE` ON `physics_in_motion`.`notifications` (`notice_id` ASC) VISIBLE;
+CREATE UNIQUE INDEX `notice_id_UNIQUE` ON `physics_in_motion`.`notice` (`notice_id` ASC) VISIBLE;
 
-CREATE INDEX `assignment_id_idx` ON `physics_in_motion`.`notifications` (`assignment_id` ASC) VISIBLE;
+CREATE INDEX `assignment_id_idx` ON `physics_in_motion`.`notice` (`assignment_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
