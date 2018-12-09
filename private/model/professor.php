@@ -9,10 +9,11 @@ class professor {
 	private $user_name;
 	private $password;
 	private $email;
+	private $date_joined;
 	
 	public function professor() {}
 	
-	public function professor($professor_id, $first_name, $last_name, $school, $user_name, $password, $email)
+	public function professor($professor_id, $first_name, $last_name, $school, $user_name, $password, $email, $date_joined)
 	{
 		$this->professor_id = $professor_id
 		$this->first_name = $first_name;
@@ -21,9 +22,10 @@ class professor {
 		$this->user_name = $user_name;
 		$this->password = $password;
 		$this->email = $email;
+		$this->date_joined = $date_joined;
 	}
 
-	public function initialize($professor_id, $first_name, $last_name, $school, $user_name, $password, $email)
+	public function initialize($professor_id, $first_name, $last_name, $school, $user_name, $password, $email, $date_joined)
 	{
 		$this->professor_id = $professor_id
 		$this->first_name = $first_name;
@@ -32,6 +34,7 @@ class professor {
 		$this->user_name = $user_name;
 		$this->password = $password;
 		$this->email = $email;
+		$this->date_joined = $date_joined;
 	}
 	
 	public function get_professor_id()
@@ -104,7 +107,15 @@ class professor {
 		$this->email = $email;
 	}
 	
-	
+	public function date_joined()
+	{
+		return $this->date_joined;
+	}
+
+	public function date_joined($date_joined)
+	{
+		$this->date_joined = $date_joined;
+	}
 }
 
 ?>

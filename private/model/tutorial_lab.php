@@ -13,9 +13,9 @@ class tutorial_lab {
 	private $key_equations;
 	private $instructions;
 	
-	public function quote_of_the_month() {}
+	public function tutorial_lab() {}
 	
-	public function quote_of_the_month($lab_id, $lab_name, $web_link, $lab_status, $short_description)
+	public function tutorial_lab($lab_id, $lab_name, $web_link, $lab_status, $short_description)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
@@ -24,7 +24,7 @@ class tutorial_lab {
 		$this->short_description = $short_description;
 	}
 	
-	public function quote_of_the_month($lab_id, $lab_name, $web_link, $lab_status, $short_description, $long_description, $prerequisites, $key_topics, $key_equations, $instructions)
+	public function tutorial_lab($lab_id, $lab_name, $web_link, $lab_status, $short_description, $long_description, $prerequisites, $key_topics, $key_equations, $instructions)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
@@ -38,16 +38,16 @@ class tutorial_lab {
 		$this->instructions = $instructions;
 	}
 	
-	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $short_description)
+	public function initialize_short($lab_id, $lab_name, $web_link, $lab_status, $short_description)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
 		$this->web_link = $web_link;
 		$this->lab_status = $lab_status;
 		$this->short_description = $short_description;
-	}
-
-	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $short_description, $long_description, $prerequisites, $key_topics, $key_equations, $instructions)
+	}	
+	
+	public function initialize_long($lab_id, $lab_name, $web_link, $lab_status, $short_description, $long_description, $prerequisites, $key_topics, $key_equations, $instructions)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
@@ -60,6 +60,7 @@ class tutorial_lab {
 		$this->key_equations = $key_equations;
 		$this->instructions = $instructions;
 	}
+	
 	
 	public function get_lab_id()
 	{

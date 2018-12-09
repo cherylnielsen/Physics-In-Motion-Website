@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab` (
   `lab_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `lab_name` VARCHAR(254) NOT NULL,
   `web_link` VARCHAR(254) NOT NULL,
-  `lab_status` VARCHAR(45) NOT NULL,
+  `lab_status` VARCHAR(254) NOT NULL,
   `short_description` VARCHAR(1000) NOT NULL,
   `long_description` BLOB NULL,
   `prerequisites` VARCHAR(1000) NULL,
   `key_topics` VARCHAR(1000) NULL,
-  `key_equations` BLOB NULL,
+  `key_equations` VARCHAR(1000) NULL,
   `instructions` BLOB NULL,
   PRIMARY KEY (`lab_id`))
 ENGINE = InnoDB;
@@ -50,12 +50,13 @@ DROP TABLE IF EXISTS `physics_in_motion`.`student` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student` (
   `student_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `school` VARCHAR(45) NOT NULL,
-  `user_name` VARCHAR(45) NOT NULL,
-  `user_password` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(254) NOT NULL,
+  `last_name` VARCHAR(254) NOT NULL,
+  `school` VARCHAR(254) NOT NULL,
+  `user_name` VARCHAR(254) NOT NULL,
+  `user_password` VARCHAR(254) NOT NULL,
+  `email` VARCHAR(254) NOT NULL,
+  `date_joined` TIMESTAMP NOT NULL,
   PRIMARY KEY (`student_id`))
 ENGINE = InnoDB;
 
@@ -73,12 +74,13 @@ DROP TABLE IF EXISTS `physics_in_motion`.`professor` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor` (
   `professor_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `school` VARCHAR(45) NOT NULL,
-  `user_name` VARCHAR(45) NOT NULL,
-  `user_password` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(254) NOT NULL,
+  `last_name` VARCHAR(254) NOT NULL,
+  `school` VARCHAR(254) NOT NULL,
+  `user_name` VARCHAR(254) NOT NULL,
+  `user_password` VARCHAR(254) NOT NULL,
+  `email` VARCHAR(254) NOT NULL,
+  `date_joined` TIMESTAMP NOT NULL,
   PRIMARY KEY (`professor_id`))
 ENGINE = InnoDB;
 
@@ -87,6 +89,30 @@ CREATE UNIQUE INDEX `user_name_UNIQUE` ON `physics_in_motion`.`professor` (`user
 CREATE UNIQUE INDEX `email_UNIQUE` ON `physics_in_motion`.`professor` (`email` ASC) VISIBLE;
 
 CREATE UNIQUE INDEX `professor_id_UNIQUE` ON `physics_in_motion`.`professor` (`professor_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`homework`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`homework` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
+  `homework_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lab_summary` BLOB NULL,
+  `lab_data` BLOB NULL,
+  `lab_graphs` BLOB NULL,
+  `lab_math` BLOB NULL,
+  `lab_errors` BLOB NULL,
+  `chat_session` BLOB NULL,
+  `lab_report` BLOB NULL,
+  `date_time_started` DATETIME NULL,
+  `date_time_paused` DATETIME NULL,
+  `date_time_submitted` DATETIME NULL,
+  `total_time` INT NULL,
+  PRIMARY KEY (`homework_id`))
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `homework_id_UNIQUE` ON `physics_in_motion`.`homework` (`homework_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -99,71 +125,43 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment` (
   `professor_id` INT UNSIGNED NOT NULL,
   `student_id` INT UNSIGNED NOT NULL,
   `lab_id` INT UNSIGNED NOT NULL,
-  `date_assigned` DATETIME NOT NULL,
+  `homework_id` INT UNSIGNED NOT NULL,
+  `date_assigned` TIMESTAMP NOT NULL,
   `date_due` DATETIME NOT NULL,
   `lab_points` INT NOT NULL,
-  `added_instructions` MEDIUMTEXT NULL,
-  PRIMARY KEY (`assignment_id`, `professor_id`, `student_id`, `lab_id`),
-  CONSTRAINT `assignment_student_id`
-    FOREIGN KEY (`student_id`)
-    REFERENCES `physics_in_motion`.`student` (`student_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  `added_instructions` BLOB NULL,
+  PRIMARY KEY (`assignment_id`, `professor_id`, `student_id`, `lab_id`, `homework_id`),
   CONSTRAINT `assignment_professor_id`
     FOREIGN KEY (`professor_id`)
     REFERENCES `physics_in_motion`.`professor` (`professor_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `assignment_student_id`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `physics_in_motion`.`student` (`student_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `assignment_lab_id`
     FOREIGN KEY (`lab_id`)
     REFERENCES `physics_in_motion`.`tutorial_lab` (`lab_id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `assignment_homework_id`
+    FOREIGN KEY (`homework_id`)
+    REFERENCES `physics_in_motion`.`homework` (`homework_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-CREATE INDEX `student_id_idx` ON `physics_in_motion`.`assignment` (`student_id` ASC) VISIBLE;
-
-CREATE INDEX `professor_id_idx` ON `physics_in_motion`.`assignment` (`professor_id` ASC) VISIBLE;
-
-CREATE INDEX `lab_id_idx` ON `physics_in_motion`.`assignment` (`lab_id` ASC) VISIBLE;
 
 CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`assignment` (`assignment_id` ASC) VISIBLE;
 
+CREATE INDEX `assignment_professor_id_idx` ON `physics_in_motion`.`assignment` (`professor_id` ASC) VISIBLE;
 
--- -----------------------------------------------------
--- Table `physics_in_motion`.`student_homework`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`student_homework` ;
+CREATE INDEX `assignment_student_id_idx` ON `physics_in_motion`.`assignment` (`student_id` ASC) VISIBLE;
 
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_homework` (
-  `assignment_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `student_id` INT UNSIGNED NOT NULL,
-  `lab_summary` MEDIUMTEXT NULL,
-  `lab_data` MEDIUMTEXT NULL,
-  `lab_graphs` BLOB NULL,
-  `lab_math` BLOB NULL,
-  `lab_errors` MEDIUMTEXT NULL,
-  `chat_session` MEDIUMTEXT NULL,
-  `lab_report` BLOB NULL,
-  `date_started` DATETIME NULL,
-  `date_submitted` DATETIME NULL,
-  `total_time` DOUBLE NULL,
-  PRIMARY KEY (`assignment_id`, `student_id`),
-  CONSTRAINT `homework_assignment_id`
-    FOREIGN KEY (`assignment_id`)
-    REFERENCES `physics_in_motion`.`assignment` (`assignment_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `homework_student_id`
-    FOREIGN KEY (`student_id`)
-    REFERENCES `physics_in_motion`.`student` (`student_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE INDEX `assignment_lab_id_idx` ON `physics_in_motion`.`assignment` (`lab_id` ASC) VISIBLE;
 
-CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`student_homework` (`assignment_id` ASC) VISIBLE;
-
-CREATE INDEX `homework_student_id_idx` ON `physics_in_motion`.`student_homework` (`student_id` ASC) VISIBLE;
+CREATE INDEX `assignment_homework_id_idx` ON `physics_in_motion`.`assignment` (`homework_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -174,7 +172,7 @@ DROP TABLE IF EXISTS `physics_in_motion`.`quote_of_the_month` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`quote_of_the_month` (
   `quote_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `date_posted` DATE NOT NULL,
-  `author` VARCHAR(45) NOT NULL,
+  `author` VARCHAR(254) NOT NULL,
   `quote` VARCHAR(1000) NOT NULL,
   PRIMARY KEY (`quote_id`))
 ENGINE = InnoDB;
@@ -190,8 +188,8 @@ DROP TABLE IF EXISTS `physics_in_motion`.`notice` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice` (
   `notice_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `assignment_id` INT UNSIGNED NOT NULL,
-  `notice_type` VARCHAR(45) NOT NULL,
-  `date_sent` DATETIME NOT NULL,
+  `notice_type` VARCHAR(254) NOT NULL,
+  `date_sent` TIMESTAMP NOT NULL,
   `notice_text` VARCHAR(1000) NULL,
   PRIMARY KEY (`notice_id`, `assignment_id`),
   CONSTRAINT `notice_assignment_id`
@@ -215,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_lab_rating` (
   `rating_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `lab_id` INT UNSIGNED NOT NULL,
   `student_id` INT UNSIGNED NOT NULL,
-  `date_posted` DATETIME NOT NULL,
+  `date_posted` TIMESTAMP NOT NULL,
   `lab_rating` INT NOT NULL,
   `comments` VARCHAR(1000) NULL,
   PRIMARY KEY (`rating_id`, `lab_id`, `student_id`),
@@ -247,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor_lab_rating` (
   `rating_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `lab_id` INT UNSIGNED NOT NULL,
   `professor_id` INT UNSIGNED NOT NULL,
-  `date_posted` DATETIME NOT NULL,
+  `date_posted` TIMESTAMP NOT NULL,
   `lab_rating` INT NOT NULL,
   `comments` VARCHAR(1000) NULL,
   PRIMARY KEY (`rating_id`, `lab_id`, `professor_id`),

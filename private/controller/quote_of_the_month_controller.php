@@ -18,7 +18,7 @@ class quote_of_the_month_controller {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				// pushes each quote_of_the_month object onto the end of the array
+				// pushes each object onto the end of the array
 				$quote_array[] = new quote_of_the_month($row['quote_id'], $row['date_posted'], $row['author'], $row['quote']);
 			}
 			mysqli_free_result($result);		
@@ -29,7 +29,7 @@ class quote_of_the_month_controller {
 		}
 
 		mysqli_close($db_connection);
-		return quote_array;
+		return $quote_array;
 
 	}
 
@@ -46,7 +46,7 @@ class quote_of_the_month_controller {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				// pushes each quote_of_the_month object onto the end of the array
-				$quoted->initialize($row['quote_id'], $row['date_posted'], $row['author'], $row['quote']);
+				$quoted = new quote_of_the_month($row['quote_id'], $row['date_posted'], $row['author'], $row['quote']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -56,7 +56,7 @@ class quote_of_the_month_controller {
 		}
 
 		mysqli_close($db_connection);
-		return quoted;
+		return $quoted;
 
 	}
 
@@ -78,6 +78,32 @@ class quote_of_the_month_controller {
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 			echo '<p>New quote could not be saved.</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $sucess;
+		
+	}
+	
+
+	public function update_quote($quote_id, $date_posted, $author, $quote_text)
+	{
+		$sucess = true;
+		// The quote_id is not included, because it is set automatically by the database.
+		$query = 'update quote_of_the_month set date_posted = $date_posted, author = $author, quote = $quote_text 
+					where quote_id = $quote_id';
+				
+		$result = mysqli_query($db_connection, $query);
+
+		if($result)
+		{
+			mysqli_free_result($result);		
+		}
+		else
+		{
+			$sucess = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+			echo '<p>Quote could not be updated.</p>';
 		}
 
 		mysqli_close($db_connection);

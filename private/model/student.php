@@ -9,10 +9,11 @@ class student {
 	private $user_name;
 	private $password;
 	private $email;
+	private $date_joined;
 	
 	public function student() {}
 	
-	public function student($student_id, $first_name, $last_name, $school, $user_name, $password, $email)
+	public function student($student_id, $first_name, $last_name, $school, $user_name, $password, $email, $date_joined)
 	{
 		$this->student_id = $student_id;
 		$this->first_name = $first_name;
@@ -21,9 +22,10 @@ class student {
 		$this->user_name = $user_name;
 		$this->password = $password;
 		$this->email = $email;
+		$this->date_joined = $date_joined;
 	}
 	
-	public function initialize($student_id, $first_name, $last_name, $school, $user_name, $password, $email)
+	public function initialize($student_id, $first_name, $last_name, $school, $user_name, $password, $email, $date_joined)
 	{
 		$this->student_id = $student_id;
 		$this->first_name = $first_name;
@@ -32,6 +34,7 @@ class student {
 		$this->user_name = $user_name;
 		$this->password = $password;
 		$this->email = $email;
+		$this->date_joined = $date_joined;
 	}
 	
 	public function get_student_id()
@@ -104,6 +107,15 @@ class student {
 		$this->email = $email;
 	}
 	
+	public function date_joined()
+	{
+		return $this->date_joined;
+	}
+
+	public function date_joined($date_joined)
+	{
+		$this->date_joined = $date_joined;
+	}
 	
 }
 
