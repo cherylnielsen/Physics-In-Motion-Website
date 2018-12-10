@@ -28,7 +28,7 @@ if($result)
 			
 		echo '<p>' . $row['short_description'] . '</p>
 		<h2>Rating: to be determined</h2>
-		<p><a href="tutorial-information.php?num=' . $row['lab_id'] . '&lab=' . $row['web_link'] . '">Learn More</a></p>
+		<p><a href="tutorial-information-page.php?num=' . $row['lab_id'] . '&lab=' . $row['web_link'] . '">Learn More</a></p>
 		</article>';
 	}
 	

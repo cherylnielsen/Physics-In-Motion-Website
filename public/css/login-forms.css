@@ -35,7 +35,7 @@ form > * {
 	margin: 0.5em;
 }
 
-input[type=text] {
+input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 25em;
 }
