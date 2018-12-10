@@ -1,16 +1,16 @@
 <?php
 
 require_once('../database-access.php');
-require_once('../model/student.php');
+require_once('../model/Student.php');
 
-class student_controller {
+class Student_controller {
 
-	public function student_controller() {}
-
+	public function Student_controller() {}
+	//Student ($student_id, $user_id, $first_name, $last_name, $school_type, $school_name)
 
 	public function get_student_by_id($student_id)
 	{
-		$student = new student();
+		$student = new Student();
 		$query = 'select * from student where student_id = $student_id';
 		$result = mysqli_query($db_connection, $query);
 
@@ -18,7 +18,8 @@ class student_controller {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$student->initialize($row['student_id'], $row['first_name'], $row['last_name'], $row['school'], $row['user_name'], $row['user_password'], $row['email'], $row['date_joined']);
+				$student->initialize($row['student_id'], $row['user_id'], $row['first_name'], $row['last_name'], 
+				$row['school_type'], $row['school_name']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -34,17 +35,18 @@ class student_controller {
 	}
 
 
-	public function get_student_by_login($user_name, $password)
+	public function get_student_by_user_id($user_id)
 	{
-		$student = new student();		
-		$query = 'select * from student where (user_name = $user_name) AND (user_password = $user_password)';
+		$student = new Student();		
+		$query = 'select * from student where user_id = $user_id';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$student->initialize($row['student_id'], $row['first_name'], $row['last_name'], $row['school'], $row['user_name'], $row['user_password'], $row['email'], $row['date_joined']);
+				$student->initialize($row['student_id'], $row['user_id'], $row['first_name'], $row['last_name'], 
+				$row['school_type'], $row['school_name']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -52,22 +54,23 @@ class student_controller {
 		{
 			$student = null;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>Student not found. Please double check spelling and capitalization, and try again.</p>';
+			echo '<p>Student not found.</p>';
 		}
 
 		mysqli_close($db_connection);
 		return student;
 
 	}
+	
 
-
-	public function update_student($student_id, $first_name, $last_name, $school, $user_name, $user_password, $email)
+	public function update_student($student)
 	{
 		$sucess = true;
-		// The student_id and date_joined should not be changed.
-		$query = 'update student set first_name = $first_name, last_name = $last_name, school = $school, 
-					user_name = $user_name, user_password = $user_password, email = $email
-					where student_id = $student_id';
+		
+		// The student_id and user_id should not be changed.
+		$query = 'update student set first_name = $student->first_name, last_name = $student->last_name, school_type = $student->school_type, school_name = $student->school_name 
+		where student_id = $student->student_id';
+		
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -87,16 +90,18 @@ class student_controller {
 	}
 
 
-	public function save_new_student($first_name, $last_name, $school, $user_name, $user_password, $email)
+	public function save_new_student($student)
 	{
 		$sucess = true;
+		
 		// The student_id is not included, because it is set automatically by the database.
-		$query = 'insert into student (first_name, last_name, school, user_name, user_password, email) 
-				values($first_name, $last_name, $school, $user_name, $user_password, $email, now())';
+		$query = 'insert into student (user_id, first_name, last_name, school_type, school_name) 
+				values($user_id, $first_name, $last_name, $school_type, $school_name)';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
+			$student->student_id = mysql_insert_id();
 			mysqli_free_result($result);		
 		}
 		else

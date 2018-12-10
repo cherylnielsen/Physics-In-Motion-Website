@@ -1,42 +1,43 @@
 <?php
 
-class assignment {
+class Assignment {
 	
 	private $assignment_id;
 	private $professor_id;
 	private $student_id;
 	private $lab_id;	
-	private $homework_id;
 	private $date_assigned;
 	private $date_due;
-	private $lab_points;
+	private $date_submited;
+	private $total_time;	
 	private $added_instructions;
 	
-	public function assignment() {}
 	
-	public function assignment($assignment_id, $professor_id, $student_id, $lab_id, $homework_id, $date_assigned, $date_due, $lab_points, $added_instructions)
+	public function Assignment() {}
+	
+	public function Assignment($assignment_id, $professor_id, $student_id, $lab_id, $date_assigne, $date_due, $date_submited, $total_time, $added_instructions)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->professor_id = $professor_id;
 		$this->student_id = $student_id;
-		$this->lab_id = $lab_id;
-		$this->homework_id = $homework_id;		
+		$this->lab_id = $lab_id;	
 		$this->date_assigned = $date_assigned;
-		$this->date_due = $date_due;
-		$this->lab_points = $lab_points;
+		$this->date_due = $date_due;	
+		$this->date_submited $date_submited;
+		$this->total_time $total_time;
 		$this->added_instructions = $added_instructions;
 	}
 
-	public function initialize($assignment_id, $professor_id, $student_id, $lab_id, $homework_id, $date_assigned, $date_due, $lab_points, $added_instructions)
+	public function initialize($assignment_id, $professor_id, $student_id, $lab_id, $date_assigne, $date_due, $date_submited, $total_time, $added_instructions)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->professor_id = $professor_id;
 		$this->student_id = $student_id;
-		$this->lab_id = $lab_id;
-		$this->homework_id = $homework_id;	
+		$this->lab_id = $lab_id;		
 		$this->date_assigned = $date_assigned;
-		$this->date_due = $date_due;
-		$this->lab_points = $lab_points;
+		$this->date_due = $date_due;	
+		$this->date_submited $date_submited;
+		$this->total_time $total_time;
 		$this->added_instructions = $added_instructions;
 	}
 	
@@ -79,16 +80,6 @@ class assignment {
 	{
 		$this->lab_id = $lab_id;
 	}
-		
-	public function get_homework_id()
-	{
-		return $this->homework_id;
-	}
-
-	public function set_homework_id($homework_id)
-	{
-		$this->homework_id = $homework_id;
-	}
 	
 	public function get_date_assigned()
 	{
@@ -109,15 +100,25 @@ class assignment {
 	{
 		$this->date_due = $date_due;
 	}
-	
-	public function get_lab_points()
+		
+	public function get_date_submited()
 	{
-		return $this->lab_points;
+		return $this->date_submited;
 	}
 
-	public function set_lab_points($lab_points)
+	public function set_date_submited($date_submited)
 	{
-		$this->lab_points = $lab_points;
+		$this->date_submited = $date_submited;
+	}
+	
+	public function get_total_time()
+	{
+		return $this->total_time;
+	}
+
+	public function set_total_time($total_time)
+	{
+		$this->total_time = $total_time;
 	}
 	
 	public function get_added_instructions()
@@ -129,8 +130,7 @@ class assignment {
 	{
 		$this->added_instructions = $added_instructions;
 	}
-		
-		
+	
 }
 
 ?>

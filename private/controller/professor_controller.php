@@ -1,16 +1,16 @@
 <?php
 
 require_once('../database-access.php');
-require_once('../model/professor.php');
+require_once('../model/Professor.php');
 
-class professor_controller {
+class Professor_controller {
 
-	public function professor_controller() {}
-
+	public function Professor_controller() {}
+	//Student ($professor_id, $user_id, $first_name, $last_name, $school_type, $school_name)
 
 	public function get_professor_by_id($professor_id)
 	{
-		$professor = new professor();
+		$professor = new Professor();
 		$query = 'select * from professor where professor_id = $professor_id';
 		$result = mysqli_query($db_connection, $query);
 
@@ -18,7 +18,8 @@ class professor_controller {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$professor->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school'], $row['user_name'], $row['user_password'], $row['email'], $row['date_joined']);
+				$professor->initialize($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], 
+				$row['school_type'], $row['school_name']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -34,17 +35,18 @@ class professor_controller {
 	}
 
 
-	public function get_professor_by_login($user_name, $password)
+	public function get_professor_by_user_id($user_id)
 	{
-		$professor = new professor();		
-		$query = 'select * from professor where (user_name = $user_name) AND (user_password = $user_password)';
+		$professor = new Professor();		
+		$query = 'select * from professor where user_id = $user_id';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$professor->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school'], $row['user_name'], $row['user_password'], $row['email'], , $row['date_joined']);
+				$professor->initialize($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], 
+				$row['school_type'], $row['school_name']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -52,22 +54,23 @@ class professor_controller {
 		{
 			$professor = null;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>Professor not found. Please double check spelling and capitalization, and try again.</p>';
+			echo '<p>Student not found.</p>';
 		}
 
 		mysqli_close($db_connection);
 		return professor;
 
 	}
+	
 
-
-	public function update_professor($professor_id, $first_name, $last_name, $school, $user_name, $user_password, $email)
+	public function update_professor($professor)
 	{
 		$sucess = true;
-		// The professor_id and date_joined should not be changed.
-		$query = 'update professor set first_name = $first_name, last_name = $last_name, school = $school, 
-					user_name = $user_name, user_password = $user_password, email = $email
-					where professor_id = $professor_id';
+		
+		// The professor_id and user_id should not be changed.
+		$query = 'update professor set first_name = $professor->first_name, last_name = $professor->last_name, school_type = $professor->school_type, school_name = $professor->school_name 
+		where professor_id = $professor->professor_id';
+		
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -87,16 +90,18 @@ class professor_controller {
 	}
 
 
-	public function save_new_professor($first_name, $last_name, $school, $user_name, $user_password, $email)
+	public function save_new_professor($professor)
 	{
 		$sucess = true;
+		
 		// The professor_id is not included, because it is set automatically by the database.
-		$query = 'insert into professor (first_name, last_name, school, user_name, user_password, email) 
-				values($first_name, $last_name, $school, $user_name, $user_password, $email, now())';
+		$query = 'insert into professor (user_id, first_name, last_name, school_type, school_name) 
+				values($user_id, $first_name, $last_name, $school_type, $school_name)';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
+			$professor->professor_id = mysql_insert_id();
 			mysqli_free_result($result);		
 		}
 		else

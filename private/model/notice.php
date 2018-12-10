@@ -1,6 +1,6 @@
 <?php
 
-class notice {
+class Notice {
 	
 	private $notice_id;
 	private $assignment_id;
@@ -8,9 +8,9 @@ class notice {
 	private $date_sent;
 	private $notice_text;
 	
-	public function notice() {}
+	public function Notice() {}
 	
-	public function notice($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
+	public function Notice($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
 	{
 		$this->notice_id = $notice_id;
 		$this->assignment_id = $assignment_id;

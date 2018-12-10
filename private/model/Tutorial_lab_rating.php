@@ -1,36 +1,36 @@
 <?php
 
-class professor_lab_rating {
+class Tutorial_lab_rating {
 	
 	private $rating_id;
 	private $lab_id;
-	private $professor_id;
+	private $user_id;
 	private $date_posted;
 	private $lab_rating;
 	private $comments;
 	
-	public function professor_lab_rating() {}
+	public function Tutorial_lab_rating() {}
 	
-	public function professor_lab_rating($rating_id, $lab_id, $professor_id, $date_posted, $lab_rating, $comments)
+	public function Tutorial_lab_rating($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
 	{
 		$this->rating_id = $rating_id;
 		$this->lab_id = $lab_id;
-		$this->professor_id = $professor_id;
+		$this->user_id = $user_id;
+		$this->date_posted = $date_posted;
+		$this->lab_rating = $lab_rating;
+		$this->comments = $comments;
+	}
+	
+	public function initialize($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
+	{
+		$this->rating_id = $rating_id;
+		$this->lab_id = $lab_id;
+		$this->user_id = $user_id;
 		$this->date_posted = $date_posted;
 		$this->lab_rating = $lab_rating;
 		$this->comments = $comments;
 	}
 
-	public function initialize($rating_id, $lab_id, $professor_id, $date_posted, $lab_rating, $comments)
-	{
-		$this->rating_id = $rating_id;
-		$this->lab_id = $lab_id;
-		$this->professor_id = $professor_id;
-		$this->date_posted = $date_posted;
-		$this->lab_rating = $lab_rating;
-		$this->comments = $comments;
-	}
-	
 	public function get_rating_id()
 	{
 		return $this->rating_id;
@@ -51,14 +51,14 @@ class professor_lab_rating {
 		$this->lab_id = $lab_id;
 	}
 	
-	public function get_professor_id()
+	public function get_user_id()
 	{
-		return $this->professor_id;
+		return $this->user_id;
 	}
 
-	public function set_professor_id($professor_id)
+	public function set_user_id($user_id)
 	{
-		$this->professor_id = $professor_id;
+		$this->user_id = $user_id;
 	}
 	
 	public function get_date_posted()

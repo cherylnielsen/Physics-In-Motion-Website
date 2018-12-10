@@ -1,40 +1,35 @@
 <?php
 
-class student {
+class Student {
 	
 	private $student_id;
+	private $user_id;	
 	private $first_name;
 	private $last_name;
-	private $school;
-	private $user_name;
-	private $password;
-	private $email;
-	private $date_joined;
+	private $school_type;
+	private $school_name;
 	
-	public function student() {}
 	
-	public function student($student_id, $first_name, $last_name, $school, $user_name, $password, $email, $date_joined)
+	public function Student() {}
+	
+	public function Student($student_id, $user_id, $first_name, $last_name, $school_type, $school_name)
 	{
-		$this->student_id = $student_id;
+		$this->student_id = $student_id
+		$this->user_id = $user_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
-		$this->school = $school;
-		$this->user_name = $user_name;
-		$this->password = $password;
-		$this->email = $email;
-		$this->date_joined = $date_joined;
+		$this->school_type = $school_type;
+		$this->school_name = $school_name;
 	}
-	
-	public function initialize($student_id, $first_name, $last_name, $school, $user_name, $password, $email, $date_joined)
+
+	public function initialize($student_id, $user_id, $first_name, $last_name, $school_type, $school_name)
 	{
-		$this->student_id = $student_id;
+		$this->student_id = $student_id
+		$this->user_id = $user_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
-		$this->school = $school;
-		$this->user_name = $user_name;
-		$this->password = $password;
-		$this->email = $email;
-		$this->date_joined = $date_joined;
+		$this->school_type = $school_type;
+		$this->school_name = $school_name;
 	}
 	
 	public function get_student_id()
@@ -46,7 +41,17 @@ class student {
 	{
 		$this->student_id = $student_id;
 	}
+	
+	public function get_user_id()
+	{
+		return $this->user_id;
+	}
 
+	public function set_user_id($user_id)
+	{
+		$this->user_id = $user_id;
+	}
+	
 	public function get_first_name()
 	{
 		return $this->first_name;
@@ -67,55 +72,26 @@ class student {
 		$this->last_name = $last_name;
 	}
 	
-	public function get_school()
+	public function get_school_type()
 	{
-		return $this->school;
+		return $this->school_type;
 	}
 
-	public function set_school($school)
+	public function set_school_type($school_type)
 	{
-		$this->school = $school;
+		$this->school_type = $school_type;
 	}
 	
-	public function get_user_name()
+	public function get_school_name()
 	{
-		return $this->user_name;
+		return $this->school_name;
 	}
 
-	public function set_user_name($user_name)
+	public function set_school_name($school_name)
 	{
-		$this->user_name = $user_name;
+		$this->school_name = $school_name;
 	}
 	
-	public function get_password()
-	{
-		return $this->password;
-	}
-
-	public function set_password($password)
-	{
-		$this->password = $password;
-	}
-	
-	public function get_email()
-	{
-		return $this->email;
-	}
-
-	public function set_email($email)
-	{
-		$this->email = $email;
-	}
-	
-	public function date_joined()
-	{
-		return $this->date_joined;
-	}
-
-	public function date_joined($date_joined)
-	{
-		$this->date_joined = $date_joined;
-	}
 	
 }
 

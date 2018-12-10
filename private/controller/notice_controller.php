@@ -1,12 +1,12 @@
 <?php
 
 require_once('../database-access.php');
-require_once('../model/notice.php');
+require_once('../model/Notice.php');
 
-class notice_controller {
+class Notice_controller {
 
-	public function notice_controller() {}
-
+	public function Notice_controller() {}
+	//($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
 
 	public function get_by_assignment_id($assignment_id)
 	{
@@ -19,8 +19,7 @@ class notice_controller {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				// pushes each object onto the end of the array
-				$notice_array[] = new notice($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
-				
+				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);				
 			}
 			mysqli_free_result($result);		
 		}
@@ -35,12 +34,10 @@ class notice_controller {
 	}
 	
 	
-	public function get_by_student_id($student_id)
+	public function get_by_notice_id($notice_id)
 	{
 		$notice_array = array();
-		
-		$query = 'select * from notice where assignment_id in 
-					(select assignment_id from assignment where student_id = $student_id);';
+		$query = 'select * from notice where notice_id = $notice_id';
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -49,8 +46,7 @@ class notice_controller {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				// pushes each object onto the end of the array
-				$notice_array[] = new notice($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
-				
+				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -65,16 +61,19 @@ class notice_controller {
 	}
 
 
-	public function save_new_notice($assignment_id, $notice_type, $notice_text)
+	public function save_new_notice($notice)
 	{
 		$sucess = true;
+		
 		// The notice_id is not included, because it is set automatically by the database.
 		$query = 'insert into notice (assignment_id, notice_type, date_sent, notice_text) 
-				values($assignment_id, $notice_type, now(), $notice_text)';
+				values($notice->assignment_id, $notice->notice_type, now(), $notice->notice_text)';
+				
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
+			$notice->notice_id = mysql_insert_id();
 			mysqli_free_result($result);		
 		}
 		else
@@ -93,7 +92,6 @@ class notice_controller {
 	public function delete_old_notice($notice_id)
 	{
 		$sucess = true;
-		// The notice_id is not included, because it is set automatically by the database.
 		$query = 'delete * from notice where notice_id = $notice_id';
 		$result = mysqli_query($db_connection, $query);
 

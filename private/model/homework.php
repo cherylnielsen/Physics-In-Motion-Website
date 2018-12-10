@@ -1,8 +1,9 @@
 <?php
 
-class student_homework {
+class Homework {
 	
 	private $homework_id;
+	private $assignment_id;
 	private $lab_summary;
 	private $lab_data;
 	private $lab_graphs;
@@ -10,18 +11,14 @@ class student_homework {
 	private $lab_errors;
 	private $chat_session;
 	private $lab_report;
-	private $date_time_started;
-	private $date_time_paused;
-	private $date_time_submited;
-	private $total_time;
 		
 		
-	public function student_homework() {}
+	public function Homework() {}
 	
-	
-	public function student_homework($homework_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report, $date_time_started, $date_time_paused, $date_time_submited, $total_time)
+	public function Homework($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 	{
 		$this->homework_id $homework_id;
+		$this->assignment_id $assignment_id;
 		$this->lab_summary $lab_summary;
 		$this->lab_data $lab_data;
 		$this->lab_graphs $lab_graphs;
@@ -29,16 +26,12 @@ class student_homework {
 		$this->lab_errors $lab_errors;
 		$this->chat_session $chat_session;
 		$this->lab_report $lab_report;
-		$this->date_time_started $date_time_started;
-		$this->date_time_paused $date_time_paused;
-		$this->date_time_submited $date_time_submited;
-		$this->total_time $total_time;
 	}
 	
-	public function initialize($homework_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report, $date_time_started, $date_time_paused, $date_time_submited, $total_time)
+	public function initialize($homework_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 	{
 		$this->homework_id $homework_id;
-		$this->student_id $student_id;
+		$this->assignment_id $assignment_id;
 		$this->lab_summary $lab_summary;
 		$this->lab_data $lab_data;
 		$this->lab_graphs $lab_graphs;
@@ -46,10 +39,6 @@ class student_homework {
 		$this->lab_errors $lab_errors;
 		$this->chat_session $chat_session;
 		$this->lab_report $lab_report;
-		$this->date_time_started $date_time_started;
-		$this->date_time_paused $date_time_paused;
-		$this->date_time_submited $date_time_submited;
-		$this->total_time $total_time;
 	}
 	
 	
@@ -61,6 +50,26 @@ class student_homework {
 	public function set_homework_id($homework_id)
 	{
 		$this->homework_id = $homework_id;
+	}
+	
+	public function get_assignment_id()
+	{
+		return $this->assignment_id;
+	}
+
+	public function set_assignment_id($assignment_id)
+	{
+		$this->assignment_id = $assignment_id;
+	}
+	
+	public function get_added_instructions()
+	{
+		return $this->added_instructions;
+	}
+
+	public function set_added_instructions($added_instructions)
+	{
+		$this->added_instructions = $added_instructions;
 	}
 	
 	public function get_lab_summary()
@@ -131,38 +140,7 @@ class student_homework {
 	public function set_lab_report($lab_report)
 	{
 		$this->lab_report = $lab_report;
-	}
-	
-	public function get_date_started()
-	{
-		return $this->date_started;
-	}
-
-	public function set_date_started($date_started)
-	{
-		$this->date_started = $date_started;
-	}
-	
-	public function get_date_submited()
-	{
-		return $this->date_submited;
-	}
-
-	public function set_date_submited($date_submited)
-	{
-		$this->date_submited = $date_submited;
-	}
-	
-	public function get_total_time()
-	{
-		return $this->total_time;
-	}
-
-	public function set_total_time($total_time)
-	{
-		$this->total_time = $total_time;
-	}
-	
+	}	
 	
 }
 

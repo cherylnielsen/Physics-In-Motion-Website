@@ -1,28 +1,28 @@
 <?php
 
-class quote_of_the_month {
+class Quote {
 	
 	private $quote_id;
 	private $date_posted;
 	private $author;
-	private $quote;
+	private $quote_text;
 	
-	public function quote_of_the_month() {}
+	public function Quote() {}
 	
-	public function quote_of_the_month($quote_id, $date_posted, $author, $quote)
+	public function Quote($quote_id, $date_posted, $author, $quote_text)
 	{
 		$this->quote_id = $quote_id;
 		$this->date_posted = $date_posted;
 		$this->author = $author;
-		$this->quote = $quote;
+		$this->quote_text = $quote_text;
 	}
 
-	public function initialize($quote_id, $date_posted, $author, $quote)
+	public function initialize($quote_id, $date_posted, $author, $quote_text)
 	{
 		$this->quote_id = $quote_id;
 		$this->date_posted = $date_posted;
 		$this->author = $author;
-		$this->quote = $quote;
+		$this->quote_text = $quote_text;
 	}
 	
 	public function get_quote_id()
@@ -55,14 +55,14 @@ class quote_of_the_month {
 		$this->author = $author;
 	}
 	
-	public function get_quote()
+	public function get_quote_text()
 	{
-		return $this->quote;
+		return $this->quote_text;
 	}
 
-	public function set_quote($quote)
+	public function set_quote_text($quote_text)
 	{
-		$this->quote = $quote;
+		$this->quote_text = $quote_text;
 	}
 	
 }

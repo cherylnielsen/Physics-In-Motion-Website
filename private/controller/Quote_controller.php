@@ -1,17 +1,17 @@
 <?php
 
 require_once('../database-access.php');
-require_once('../model/quote_of_the_month.php');
+require_once('../model/Quote.php');
 
-class quote_of_the_month_controller {
+class Quote_controller {
 
-	public function quote_of_the_month_controller() {}
-
+	public function Quote_controller() {}
+	//Quote ($quote_id, $date_posted, $author, $quote_text)
 
 	public function get_all_quotes()
 	{
 		$quote_array = array();
-		$query = 'select * from quote_of_the_month';
+		$query = 'select * from quote';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -19,7 +19,7 @@ class quote_of_the_month_controller {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				// pushes each object onto the end of the array
-				$quote_array[] = new quote_of_the_month($row['quote_id'], $row['date_posted'], $row['author'], $row['quote']);
+				$quote_array[] = new Quote($row['quote_id'], $row['date_posted'], $row['author'], $row['quote_text']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -36,17 +36,16 @@ class quote_of_the_month_controller {
 
 	public function get_current_quote()
 	{
-		$quoted = new quote_of_the_month();
-		$query = 'select * from quote_of_the_month 
-		where (MONTH(date_posted) = MONTH(NOW())) AND (YEAR(date_posted) = YEAR(NOW()))';
+		$quoted = new Quote();
+		$query = 'select * from quote where (MONTH(date_posted) = MONTH(NOW())) AND (YEAR(date_posted) = YEAR(NOW()))';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				// pushes each quote_of_the_month object onto the end of the array
-				$quoted = new quote_of_the_month($row['quote_id'], $row['date_posted'], $row['author'], $row['quote']);
+				// pushes each object onto the end of the array
+				$quoted = new Quote($row['quote_id'], $row['date_posted'], $row['author'], $row['quote_text']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -61,17 +60,18 @@ class quote_of_the_month_controller {
 	}
 
 
-	public function save_new_quote($date_posted, $author, $quote_text)
+	public function save_new_quote($quote)
 	{
 		$sucess = true;
-		// The quote_id is not included, because it is set automatically by the database.
-		$query = 'insert into quote_of_the_month (date_posted, author, quote) 
-				values($date_posted, $author, $quote_text)';
+		// The quote_id is set automatically by the database.
+		$query = 'insert into quote (date_posted, author, quote_text) 
+				values($quote->date_posted, $quote->author, $quote->quote_text)';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			mysqli_free_result($result);		
+			$quote->quote_id = mysql_insert_id();
+			mysqli_free_result($result);					
 		}
 		else
 		{
@@ -86,12 +86,12 @@ class quote_of_the_month_controller {
 	}
 	
 
-	public function update_quote($quote_id, $date_posted, $author, $quote_text)
+	public function update_quote($quote)
 	{
 		$sucess = true;
-		// The quote_id is not included, because it is set automatically by the database.
-		$query = 'update quote_of_the_month set date_posted = $date_posted, author = $author, quote = $quote_text 
-					where quote_id = $quote_id';
+		// The quote_id should not be changed.
+		$query = 'update quote set date_posted = $quote->date_posted, author = $quote->author, 
+					quote = $quote->quote_text where quote_id = $quote->quote_id';
 				
 		$result = mysqli_query($db_connection, $query);
 
