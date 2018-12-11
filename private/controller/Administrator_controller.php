@@ -1,74 +1,76 @@
 <?php
 
-require_once('../database-access.php');
-require_once('../model/Administrator.php');
 
-class Administrator_controller {
+class Administrator_controller extends DatabaseController {
 
-	public function Administrator_controller() {}
-	//Student ($administrator_id, $user_id, $first_name, $last_name, $admin_type)
+	public function __construct() {}
+	//Student ($administrator_id, $user_id, $first_name, $last_name, $admin_type, $email)
 
-	public function get_administrator_by_id($administrator_id)
+	public function get_by_id($id_number, $id_type)
 	{
-		$administrator = new Administrator();
-		$query = 'select * from administrator where administrator_id = $administrator_id';
+		$admin_array = array();
+		$admin_array[] = get_group_by_attribute($id_number, $id_type);
+		return $admin_array;
+	}
+	
+
+	public function get_by_attribute($attribute, $attribute_type)
+	{
+		$admin_array = array();
+		$query = 'select * from administrator where $attribute_type = $attribute';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$administrator->initialize($row['administrator_id'], $row['user_id'], $row['first_name'], 
-				$row['last_name'], $row['admin_type']);
+				$admin_array[] = new Administrator($row['administrator_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			$administrator = null;
 		}
 
 		mysqli_close($db_connection);
-		return administrator;
+		return $admin_array;
 
 	}
-
-
-	public function get_administrator_by_user_id($user_id)
+	
+	
+	public function get_all()
 	{
-		$administrator = new Administrator();		
-		$query = 'select * from administrator where user_id = $user_id';
+		$admin_array = array();
+		$query = 'select * from administrator';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$administrator->initialize($row['administrator_id'], $row['user_id'], $row['first_name'], 
-				$row['last_name'], $row['admin_type']);
+				// pushes each object onto the end of the array
+				$admin_array[] = new Administrator($row['administrator_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
-			$administrator = null;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>Student not found.</p>';
 		}
 
 		mysqli_close($db_connection);
-		return administrator;
+		return $admin_array;
 
 	}
 	
 
-	public function update_administrator($administrator)
+	public function update($administrator)
 	{
 		$sucess = true;
 		
 		// The administrator_id and user_id should not be changed.
-		$query = 'update administrator set first_name = $administrator->first_name, last_name = $administrator->last_name, admin_type = $administrator->admin_type 
+		$query = 'update administrator set first_name = $administrator->first_name, last_name = $administrator->last_name, admin_type = $administrator->admin_type, email = $administrator->email 
 		where administrator_id = $administrator->administrator_id';
 		
 		$result = mysqli_query($db_connection, $query);
@@ -90,13 +92,13 @@ class Administrator_controller {
 	}
 
 
-	public function save_new_administrator($administrator)
+	public function save_new($administrator)
 	{
 		$sucess = true;
 		
 		// The administrator_id is not included, because it is set automatically by the database.
-		$query = 'insert into administrator (user_id, first_name, last_name, admin_type) 
-				values($user_id, $first_name, $last_name, $admin_type)';
+		$query = 'insert into administrator (user_id, first_name, last_name, admin_type, email) 
+				values($administrator->user_id, $administrator->first_name, $administrator->last_name, $administrator->admin_type, $administrator->email)';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)

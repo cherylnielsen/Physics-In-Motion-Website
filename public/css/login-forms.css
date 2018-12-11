@@ -3,13 +3,14 @@
 
 
 h1.summary {
-	width: 70%;
+	width: 50%;
 	position: relative;
-	left: 5%;
+	left: 2.5;
 }
 
 h1.form {
-	margin: 1em 0 0 0;
+	margin: 1.5%;
+	padding: 5% 0 0 1%;	
 }
 
 a {
@@ -35,6 +36,18 @@ form > * {
 	margin: 0.5em;
 }
 
+fieldset {
+	display: block;
+	padding: 1em;
+	margin-bottom: 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+}
+
+legend {
+	font-size: 1em;
+}
+	
 input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 25em;
@@ -44,9 +57,8 @@ input[type=submit] {
 	font-size: 1em;
 	padding: 5px 25px ;
 	background-color:#03CA0D;
-	margin: 0.75em 0;
+	margin: 0.75em 0.5em;
 }
-
 input[type=checkbox] {
 	width: 1.5em; 
 	height: 1.5em;

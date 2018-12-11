@@ -2,14 +2,11 @@
 <h1 class="form">Sign In:</h1>
 <form class="login" method="post" action="private/login-action.php">
 
-	<div class="text-form">
+	<fieldset class="login-form">
 		<label>User ID<br><input type="text" name="user-id" value=""></label>
 		<br>
 		<label>Password<br><input type="password" name="user-password" value=""></label>
 		<br>
-	</div>
-	
-	<div class="input-login-form">
 		<label><input type="checkbox" name="stay-signed-in" id="stay-signed-in" value="stay-signed-in" >&nbsp;Stay Signed In</label>
 		<br>
 		<input type="submit" name="submit-login" id="submit-login" value="Sign In">		
@@ -17,6 +14,6 @@
 		<a id="forgot-login" href="">Forgot ID / Password?</a>
 		<br>
 		<a id="register" href="">Create Account</a>
-	</div>
+	</fieldset>
 	
 </form>

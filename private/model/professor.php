@@ -6,29 +6,29 @@ class Professor {
 	private $user_id;
 	private $first_name;
 	private $last_name;
-	private $school_type;
 	private $school_name;
+	private $email; 
 	
-	public function Professor() {}
+	public function __construct() {}
 	
-	public function Professor($professor_id, $user_id, $first_name, $last_name, $school_type, $school_name)
+	public function Professor($professor_id, $user_id, $first_name, $last_name, $school_name, $email)
 	{
-		$this->professor_id = $professor_id
+		$this->professor_id = $professor_id;
 		$this->user_id = $user_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
-		$this->school_type = $school_type;
 		$this->school_name = $school_name;
+		$this->email = $email;
 	}
 
-	public function initialize($professor_id, $user_id, $first_name, $last_name, $school_type, $school_name)
+	public function initialize($professor_id, $user_id, $first_name, $last_name, $school_name, $email)
 	{
-		$this->professor_id = $professor_id
+		$this->professor_id = $professor_id;
 		$this->user_id = $user_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
-		$this->school_type = $school_type;
 		$this->school_name = $school_name;
+		$this->email = $email;
 	}
 	
 	public function get_professor_id()
@@ -71,16 +71,6 @@ class Professor {
 		$this->last_name = $last_name;
 	}
 	
-	public function get_school_type()
-	{
-		return $this->school_type;
-	}
-
-	public function set_school_type($school_type)
-	{
-		$this->school_type = $school_type;
-	}
-	
 	public function get_school_name()
 	{
 		return $this->school_name;
@@ -91,6 +81,15 @@ class Professor {
 		$this->school_name = $school_name;
 	}
 	
+	public function get_email()
+	{
+		return $this->email;
+	}
+
+	public function set_email($email)
+	{
+		$this->email = $email;
+	}
 	
 }
 

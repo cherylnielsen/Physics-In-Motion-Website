@@ -13,9 +13,9 @@ class Tutorial_lab {
 	private $long_description;
 	private $instructions;
 	
-	public function Tutorial_lab() {}
+	public function __construct() {}
 	
-	public function Tutorial_lab($lab_id, $lab_name, $web_link, $lab_status, $short_description)
+	public function Tutorial_lab($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
@@ -23,31 +23,9 @@ class Tutorial_lab {
 		$this->lab_status = $lab_status;
 		$this->short_description = $short_description;
 	}
+
 	
-	public function tutorial_lab($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
-	{
-		$this->lab_id = $lab_id;
-		$this->lab_name = $lab_name;
-		$this->web_link = $web_link;
-		$this->lab_status = $lab_status;
-		$this->short_description = $short_description;
-		$this->prerequisites = $prerequisites;
-		$this->key_topics = $key_topics;
-		$this->key_equations = $key_equations;
-		$this->long_description = $long_description;
-		$this->instructions = $instructions;
-	}
-	
-	public function initialize_short($lab_id, $lab_name, $web_link, $lab_status, $short_description)
-	{
-		$this->lab_id = $lab_id;
-		$this->lab_name = $lab_name;
-		$this->web_link = $web_link;
-		$this->lab_status = $lab_status;
-		$this->short_description = $short_description;
-	}	
-	
-	public function initialize_long($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
+	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;

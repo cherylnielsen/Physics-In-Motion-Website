@@ -8,7 +8,7 @@ class Notice {
 	private $date_sent;
 	private $notice_text;
 	
-	public function Notice() {}
+	public function __construct() {}
 	
 	public function Notice($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
 	{

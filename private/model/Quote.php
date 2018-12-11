@@ -7,7 +7,7 @@ class Quote {
 	private $author;
 	private $quote_text;
 	
-	public function Quote() {}
+	public function __construct() {}
 	
 	public function Quote($quote_id, $date_posted, $author, $quote_text)
 	{

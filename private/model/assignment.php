@@ -13,7 +13,7 @@ class Assignment {
 	private $added_instructions;
 	
 	
-	public function Assignment() {}
+	public function __construct() {}
 	
 	public function Assignment($assignment_id, $professor_id, $student_id, $lab_id, $date_assigne, $date_due, $date_submited, $total_time, $added_instructions)
 	{
@@ -23,8 +23,8 @@ class Assignment {
 		$this->lab_id = $lab_id;	
 		$this->date_assigned = $date_assigned;
 		$this->date_due = $date_due;	
-		$this->date_submited $date_submited;
-		$this->total_time $total_time;
+		$this->date_submited = $date_submited;
+		$this->total_time = $total_time;
 		$this->added_instructions = $added_instructions;
 	}
 
@@ -36,8 +36,8 @@ class Assignment {
 		$this->lab_id = $lab_id;		
 		$this->date_assigned = $date_assigned;
 		$this->date_due = $date_due;	
-		$this->date_submited $date_submited;
-		$this->total_time $total_time;
+		$this->date_submited = $date_submited;
+		$this->total_time = $total_time;
 		$this->added_instructions = $added_instructions;
 	}
 	

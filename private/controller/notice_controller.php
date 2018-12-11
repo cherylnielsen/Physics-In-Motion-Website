@@ -1,17 +1,23 @@
 <?php
 
-require_once('../database-access.php');
-require_once('../model/Notice.php');
 
-class Notice_controller {
+class Notice_controller extends DatabaseController {
 
-	public function Notice_controller() {}
+	public function __construct() {}
 	//($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
 
-	public function get_by_assignment_id($assignment_id)
+	public function get_by_id($id_number, $id_type)
 	{
 		$notice_array = array();
-		$query = 'select * from notice where assignment_id = $assignment_id';
+		$notice_array[] = get_group_by_attribute($id_number, $id_type);
+		return $notice_array;
+	}
+	
+	
+	public function get_by_attribute($attribute, $attribute_type)
+	{
+		$notice_array = array();
+		$query = 'select * from notice where $attribute_type = $attribute';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -19,7 +25,32 @@ class Notice_controller {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				// pushes each object onto the end of the array
-				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);				
+				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);		
+			}
+			mysqli_free_result($result);		
+		}
+		else
+		{
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $notice_array;
+	}
+	
+
+	public function get_all()
+	{
+		$notice_array = array();
+		$query = 'select * from notice';
+		$result = mysqli_query($db_connection, $query);
+
+		if($result)
+		{
+			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			{
+				// pushes each object onto the end of the array
+				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);		
 			}
 			mysqli_free_result($result);		
 		}
@@ -34,34 +65,32 @@ class Notice_controller {
 	}
 	
 	
-	public function get_by_notice_id($notice_id)
+	public function update($professor)
 	{
-		$notice_array = array();
-		$query = 'select * from notice where notice_id = $notice_id';
+		$sucess = true;
+		
+		// The notice_id should not be changed.
+		$query = 'update notice set first_name = $notice->assignment_id, $notice->notice_type, now(), $notice->notice_text where notice_id = $notice->professor_id';
 		
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			{
-				// pushes each object onto the end of the array
-				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);
-			}
 			mysqli_free_result($result);		
 		}
 		else
-		{
+		{ 
+			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
+			echo '<p>The notice could not be updated.</p>';
 		}
 
 		mysqli_close($db_connection);
-		return $notice_array;
+		return $sucess;
 
 	}
-
-
-	public function save_new_notice($notice)
+	
+	public function save_new($notice)
 	{
 		$sucess = true;
 		
@@ -89,29 +118,6 @@ class Notice_controller {
 	}
 	
 	
-	public function delete_old_notice($notice_id)
-	{
-		$sucess = true;
-		$query = 'delete * from notice where notice_id = $notice_id';
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			mysqli_free_result($result);		
-		}
-		else
-		{
-			$sucess = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>Notice could not be deleted.</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $sucess;
-		
-	}
-
-
 }
 
 ?>
