@@ -14,18 +14,10 @@ class Tutorial_lab {
 	private $instructions;
 	
 	public function __construct() {}
-	
-	public function Tutorial_lab($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
-	{
-		$this->lab_id = $lab_id;
-		$this->lab_name = $lab_name;
-		$this->web_link = $web_link;
-		$this->lab_status = $lab_status;
-		$this->short_description = $short_description;
-	}
 
 	
-	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
+	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, 
+	$key_equations, $long_description, $instructions)
 	{
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
@@ -72,7 +64,7 @@ class Tutorial_lab {
 	
 	public function get_lab_status()
 	{
-		return $this->lab_name;
+		return $this->lab_status;
 	}
 
 	public function set_lab_status($lab_status)

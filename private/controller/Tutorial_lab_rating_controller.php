@@ -6,18 +6,18 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 	public function __construct() {}
 	//($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
 	
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$rating_array = array();
-		$rating_array[] = get_by_attribute($id_number, $id_type);
+		$rating_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $rating_array;
 	}
 	
 	
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$rating_array = array();
-		$query = 'select * from tutorial_lab_rating where $attribute_type = $attribute';
+		$query = 'select * from tutorial_lab_rating where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -39,7 +39,7 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 	}
 	
 	
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$rating_array = array();
 		$query = 'select * from quote';
@@ -65,7 +65,7 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 	}
 	
 	
-	public function update($rating)
+	public function update($rating, $db_connection)
 	{
 		$sucess = true;
 		// The rating_id should not be changed.
@@ -90,7 +90,7 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 	}
 
 
-	public function save_new($rating)
+	public function save_new($rating, $db_connection)
 	{
 		$sucess = true;
 		// The rating_id is not included, because it is set automatically by the database.

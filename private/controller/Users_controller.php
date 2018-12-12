@@ -7,18 +7,18 @@ class Users_controller extends DatabaseController {
 	//Users ($user_id, $user_name, $user_password)
 
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$user_array = array();
-		$user_array[] = get_group_by_attribute($id_number, $id_type);
+		$user_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $user_array;
 	}
 	
 	
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$user_array = array();
-		$query = 'select * from users where $attribute_type = $attribute';
+		$query = 'select * from users where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -40,7 +40,7 @@ class Users_controller extends DatabaseController {
 	}
 	
 	
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$user_array = array();
 		$query = 'select * from users';
@@ -66,7 +66,7 @@ class Users_controller extends DatabaseController {
 	}
 	
 
-	public function get_by_login($user_name, $user_password)
+	public function get_by_login($user_name, $user_password, $db_connection)
 	{
 		$user = new Users();		
 		$query = 'select * from users where (user_name = $user_name) AND (user_password = $user_password)';
@@ -93,7 +93,7 @@ class Users_controller extends DatabaseController {
 	}
 
 
-	public function save_new($user)
+	public function save_new($user, $db_connection)
 	{
 		$sucess = true;
 		// The user_id is set automatically by the database.
@@ -120,7 +120,7 @@ class Users_controller extends DatabaseController {
 	}
 	
 
-	public function update($user)
+	public function update($user, $db_connection)
 	{
 		$sucess = true;
 		// The user_id should not be changed.

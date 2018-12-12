@@ -6,26 +6,27 @@ class Tutorial_lab_controller extends DatabaseController {
 	public function __construct() {}
 	//($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
 	
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$lab_array = array();
-		$lab_array[] = get_group_by_attribute($id_number, $id_type);
+		$lab_array = get_by_attribute($id_number, $id_type, $db_connection);
 		return $lab_array;
 	}
 	
 	
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$lab_array = array();
-		$query = 'select * from tutorial_lab where $attribute_type = $attribute';
+		$query = "select * from tutorial_lab where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				// pushes each object onto the end of the array
-				$lab_array[] = new Tutorial_lab($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['instructions'], $row['long_description']);
+				$lab = new Tutorial_lab();
+				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['long_description'], $row['instructions']);
+				$lab_array[] = $lab;
 			}
 			mysqli_free_result($result);		
 		}
@@ -39,18 +40,19 @@ class Tutorial_lab_controller extends DatabaseController {
 	}
 	
 	
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$lab_array = array();
-		$query = 'select * from administrator';
+		$query = "select * from tutorial_lab";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				// pushes each object onto the end of the array
-				$lab_array[] = new Tutorial_lab($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['instructions'], $row['long_description']);
+				$lab = new Tutorial_lab();
+				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['long_description'], $row['instructions']);
+				$lab_array[] = $lab;
 			}
 			mysqli_free_result($result);		
 		}
@@ -65,7 +67,7 @@ class Tutorial_lab_controller extends DatabaseController {
 	}
 	
 	
-	public function update($tutorial_lab)
+	public function update($tutorial_lab, $db_connection)
 	{
 		$sucess = true;
 		// The lab_id should not be changed.
@@ -91,7 +93,7 @@ class Tutorial_lab_controller extends DatabaseController {
 	}
 
 
-	public function save_new($tutorial_lab)
+	public function save_new($tutorial_lab, $db_connection)
 	{
 		$sucess = true;
 		// The lab_id is not included, because it is set automatically by the database.

@@ -6,17 +6,17 @@ class Homework_controller extends DatabaseController {
 	//($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$homework_array = array();
-		$homework_array[] = get_group_by_attribute($id_number, $id_type);
+		$homework_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $homework_array;
 	}
 	
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$homework_array = array();
-		$query = 'select * from homework where $attribute_type = $attribute';
+		$query = 'select * from homework where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -38,7 +38,7 @@ class Homework_controller extends DatabaseController {
 	}
 	
 
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$homework_array = array();
 		$query = 'select * from homework';
@@ -64,7 +64,7 @@ class Homework_controller extends DatabaseController {
 	}
 	
 	
-	public function update($homework)
+	public function update($homework, $db_connection)
 	{
 		$sucess = true;
 		
@@ -91,7 +91,7 @@ class Homework_controller extends DatabaseController {
 	}
 	
 	
-	public function save_new($homework)
+	public function save_new($homework, $db_connection)
 	{
 		$sucess = true;
 		

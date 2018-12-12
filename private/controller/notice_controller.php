@@ -6,18 +6,18 @@ class Notice_controller extends DatabaseController {
 	public function __construct() {}
 	//($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$notice_array = array();
-		$notice_array[] = get_group_by_attribute($id_number, $id_type);
+		$notice_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $notice_array;
 	}
 	
 	
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$notice_array = array();
-		$query = 'select * from notice where $attribute_type = $attribute';
+		$query = 'select * from notice where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -39,7 +39,7 @@ class Notice_controller extends DatabaseController {
 	}
 	
 
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$notice_array = array();
 		$query = 'select * from notice';
@@ -65,7 +65,7 @@ class Notice_controller extends DatabaseController {
 	}
 	
 	
-	public function update($professor)
+	public function update($professor, $db_connection)
 	{
 		$sucess = true;
 		
@@ -90,7 +90,7 @@ class Notice_controller extends DatabaseController {
 
 	}
 	
-	public function save_new($notice)
+	public function save_new($notice, $db_connection)
 	{
 		$sucess = true;
 		

@@ -2,11 +2,11 @@
 
 abstract class DatabaseController
 {
-	abstract public function get_by_id($id_number, $id_type);
-	abstract public function get_by_attribute($attribute, $attribute_type);
-	abstract public function get_all();
-	abstract public function update($db_type);
-	abstract public function save_new($db_type);
+	abstract public function get_by_id($id_number, $id_type, $db_connection);
+	abstract public function get_by_attribute($attribute_value, $attribute_type, $db_connection);
+	abstract public function get_all($db_connection);
+	abstract public function update($db_type, $db_connection);
+	abstract public function save_new($db_type, $db_connection);
 	
 }
 

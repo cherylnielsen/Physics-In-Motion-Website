@@ -1,6 +1,5 @@
 <?php
 
-
 require_once('controller/DatabaseController.php');
 
 // The models for each data_type of the database tables
@@ -36,7 +35,6 @@ class MasterDatabaseController
 	
 	public function getController($data_type)
 	{
-		$data_type = strtolower(trim($data_type));
 		$control;
 		
 		switch($data_type)
@@ -79,29 +77,22 @@ class MasterDatabaseController
 	
 	
 	public function get_by_id($id_number, $id_type, $data_type)
-	{
-		$attribute = strtolower(trim($attribute));
-		$attribute_type = strtolower(trim($attribute_type));
-		$data_type = strtolower(trim($data_type));
-		
+	{		
 		$group_array = array();		
-		$group_array[] = get_by_attribute($id_number, $id_type, $data_type);
+		$group_array = get_by_attribute($id_number, $id_type, $data_type);
 		return $group_array;
 	}
 	
 	
-	public function get_by_attribute($attribute, $attribute_type, $data_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $data_type)
 	{
-		$attribute = strtolower(trim($attribute));
-		$attribute_type = strtolower(trim($attribute_type));
-		$data_type = strtolower(trim($data_type));
-		
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
 		$group_array = array();
-		$control = getController($data_type);
+		$control = $this->getController($data_type);
 		
 		if(!is_null($control))
 		{
-			$group_array[] = control.get_group_by_attribute($id_number, $id_type, $data_type);
+			$group_array = $control->get_by_attribute($attribute_value, $attribute_type, $db_connection);
 		}
 		
 		return $group_array;
@@ -109,14 +100,14 @@ class MasterDatabaseController
 	
 	
 	public function get_all($data_type)
-	{
-		$data_type = strtolower(trim($data_type));
+	{	
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
 		$group_array = array();
-		$control = getController($data_type);
+		$control = $this->getController($data_type);
 		
 		if(!is_null($control))
 		{
-			$group_array[] = control.get_all($data_type);
+			$group_array = $control->get_all($db_connection);
 		}
 		
 		return $group_array;		
@@ -125,13 +116,13 @@ class MasterDatabaseController
 	
 	public function update($data_type)
 	{
-		$data_type = strtolower(trim($data_type));
-		$control = getController($data_type);
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
 		$status;
+		$control = $this->getController($data_type);
 		
 		if(!is_null($control))
 		{
-			$status = control.update($data_type);
+			$status = $control->update($data_type, $db_connection);
 		}
 		
 		return $status;		
@@ -140,27 +131,25 @@ class MasterDatabaseController
 	
 	public function save_new($data_type)
 	{
-		$data_type = strtolower(trim($data_type));
-		$control = getController($data_type);
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
 		$status;
+		$control = $this->getController($data_type);
 		
 		if(!is_null($control))
 		{
-			$status = control.save_new($data_type);
+			$status = $control->save_new($data_type, $db_connection);
 		}
 		
 		return $status;	
 	}
 	
 	
-	public function get_by_login($user_name, $user_password)
+	public function get_users_by_login($user_name, $user_password)
 	{
-		$user_name = strtolower(trim($user_name));
-		$user_password = strtolower(trim($user_password));
-		
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
 		$user;
 		$control = new Users_controller();
-		$user = $control->get_by_login($user_name, $user_password);
+		$user = $control->get_by_login($user_name, $user_password, $db_connection);
 				
 		return $user;
 	}
@@ -168,11 +157,10 @@ class MasterDatabaseController
 	
 	public function get_quote_of_the_month()
 	{
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
 		$quote;
 		$control = new Quote_controller();
-		$quote = $control->get_quote_of_the_month();
-		
-		echo '<p>' . $quote->get_author() . '</p>';
+		$quote = $control->get_quote_of_the_month($db_connection);
 		
 		return $quote;
 	}

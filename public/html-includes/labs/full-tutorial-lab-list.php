@@ -1,21 +1,25 @@
 <?php
 
-echo '<h1>Tutorial Labs Currently Available</h1>';
-	
-require('../private/database-access.php');
-$query = 'select * from tutorial_lab';
-$result = mysqli_query($db_connection, $query);
 
-if($result)
-{
-	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+$data_type = "tutorial_lab";
+$labs = array();
+$labs = $mdb_control->get_all($data_type);
+$length_labs = count($labs);
+
+echo '<h1>Tutorial Labs Currently Available</h1>';
+
+if((!is_null($labs)) AND ($length_labs > 0))
+{	
+	for($i = 0; $i < $length_labs; $i++) 
 	{
+		$lab = $labs[$i];
+		
 		echo
 		'<article class="labs">
-			<img src=" images/labs/' . $row['web_link'] . '.png" alt="image of the lab">
-			<h2>Tutorial ' . $row['lab_id'] . ': ' . $row['lab_name'] . '</h2>';
+			<img src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+			<h2>Tutorial ' . $lab->get_lab_id() . ': ' . $lab->get_lab_name() . '</h2>';
 			
-		$status = $row['lab_status'];
+		$status = $lab->get_lab_status();
 		switch(	$status )
 		{
 			case 'In Development':
@@ -26,20 +30,20 @@ if($result)
 				break;
 		}
 			
-		echo '<p>' . $row['short_description'] . '</p>
+		echo '<p>' . $lab->get_short_description() . '</p>
 		<h2>Rating: to be determined</h2>
-		<p><a href="tutorial-information-page.php?num=' . $row['lab_id'] . '&lab=' . $row['web_link'] . '">Learn More</a></p>
+		<p><a href="tutorial-information-page.php?num=' . $lab->get_lab_id() . '&lab=' . $lab->get_web_link() . '">Learn More</a></p>
 		</article>';
 	}
 	
-	mysqli_free_result($result);		
+	
 }
 else
 {
-	echo '<p> Oops! </p><br><p>' . mysqli_error($db_connection) . '</p>';
+	echo '<p> Oops! Error: no labs found.</p>';
 }
 
 echo '<br><a id="bottom" href="#top">return to top</a>';
-mysqli_close($db_connection);
+
 
 ?>

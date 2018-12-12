@@ -6,18 +6,18 @@ class Administrator_controller extends DatabaseController {
 	public function __construct() {}
 	//Student ($administrator_id, $user_id, $first_name, $last_name, $admin_type, $email)
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$admin_array = array();
-		$admin_array[] = get_group_by_attribute($id_number, $id_type);
+		$admin_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $admin_array;
 	}
 	
 
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$admin_array = array();
-		$query = 'select * from administrator where $attribute_type = $attribute';
+		$query = 'select * from administrator where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -39,7 +39,7 @@ class Administrator_controller extends DatabaseController {
 	}
 	
 	
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$admin_array = array();
 		$query = 'select * from administrator';
@@ -65,7 +65,7 @@ class Administrator_controller extends DatabaseController {
 	}
 	
 
-	public function update($administrator)
+	public function update($administrator, $db_connection)
 	{
 		$sucess = true;
 		
@@ -92,7 +92,7 @@ class Administrator_controller extends DatabaseController {
 	}
 
 
-	public function save_new($administrator)
+	public function save_new($administrator, $db_connection)
 	{
 		$sucess = true;
 		

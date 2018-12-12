@@ -6,18 +6,18 @@ class Student_controller extends DatabaseController{
 	public function __construct() {}
 	//Student ($student_id, $user_id, $first_name, $last_name, $school_name, $email)
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$student_array = array();
-		$student_array[] = get_group_by_attribute($id_number, $id_type);
+		$student_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $student_array;
 	}
 
 
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$student_array = array();
-		$query = 'select * from student where $attribute_type = $attribute';
+		$query = 'select * from student where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -39,7 +39,7 @@ class Student_controller extends DatabaseController{
 	}
 
 
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$student_array = array();
 		$query = 'select * from student';
@@ -65,7 +65,7 @@ class Student_controller extends DatabaseController{
 	}
 	
 	
-	public function update($student)
+	public function update($student, $db_connection)
 	{
 		$sucess = true;
 		
@@ -92,7 +92,7 @@ class Student_controller extends DatabaseController{
 	}
 
 
-	public function save_new($student)
+	public function save_new($student, $db_connection)
 	{
 		$sucess = true;
 		

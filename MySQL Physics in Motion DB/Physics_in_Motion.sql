@@ -66,23 +66,20 @@ CREATE UNIQUE INDEX `login_name_UNIQUE` ON `physics_in_motion`.`users` (`user_na
 DROP TABLE IF EXISTS `physics_in_motion`.`student` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student` (
-  `student_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT UNSIGNED NOT NULL,
+  `student_id` INT UNSIGNED NOT NULL,
   `first_name` VARCHAR(254) NOT NULL,
   `last_name` VARCHAR(254) NOT NULL,
   `school_name` VARCHAR(254) NOT NULL,
   `email` VARCHAR(254) NOT NULL,
-  PRIMARY KEY (`student_id`, `user_id`),
+  PRIMARY KEY (`student_id`),
   CONSTRAINT `student_user_id`
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`student_id`)
     REFERENCES `physics_in_motion`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `student_id_UNIQUE` ON `physics_in_motion`.`student` (`student_id` ASC) VISIBLE;
-
-CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`student` (`user_id` ASC) VISIBLE;
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `physics_in_motion`.`student` (`email` ASC) VISIBLE;
 
@@ -93,23 +90,20 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `physics_in_motion`.`student` (`email` ASC
 DROP TABLE IF EXISTS `physics_in_motion`.`professor` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor` (
-  `professor_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT UNSIGNED NOT NULL,
+  `professor_id` INT UNSIGNED NOT NULL,
   `first_name` VARCHAR(254) NOT NULL,
   `last_name` VARCHAR(254) NOT NULL,
   `school_name` VARCHAR(254) NOT NULL,
   `email` VARCHAR(254) NOT NULL,
-  PRIMARY KEY (`professor_id`, `user_id`),
+  PRIMARY KEY (`professor_id`),
   CONSTRAINT `professor_user_id`
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`professor_id`)
     REFERENCES `physics_in_motion`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `professor_id_UNIQUE` ON `physics_in_motion`.`professor` (`professor_id` ASC) VISIBLE;
-
-CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`professor` (`user_id` ASC) VISIBLE;
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `physics_in_motion`.`professor` (`email` ASC) VISIBLE;
 
@@ -162,8 +156,7 @@ CREATE INDEX `assignment_lab_id_idx` ON `physics_in_motion`.`assignment` (`lab_i
 DROP TABLE IF EXISTS `physics_in_motion`.`homework` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
-  `homework_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `assignment_id` INT UNSIGNED NOT NULL,
+  `homework_id` INT UNSIGNED NOT NULL,
   `lab_summary` BLOB NULL,
   `lab_data` BLOB NULL,
   `lab_graphs` BLOB NULL,
@@ -171,17 +164,15 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
   `lab_errors` BLOB NULL,
   `chat_session` BLOB NULL,
   `lab_report` BLOB NULL,
-  PRIMARY KEY (`homework_id`, `assignment_id`),
+  PRIMARY KEY (`homework_id`),
   CONSTRAINT `homework_assignment_id`
-    FOREIGN KEY (`assignment_id`)
+    FOREIGN KEY (`homework_id`)
     REFERENCES `physics_in_motion`.`assignment` (`assignment_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `homework_id_UNIQUE` ON `physics_in_motion`.`homework` (`homework_id` ASC) VISIBLE;
-
-CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`homework` (`assignment_id` ASC) VISIBLE;
+CREATE UNIQUE INDEX `assignment_id_UNIQUE` ON `physics_in_motion`.`homework` (`homework_id` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -264,23 +255,20 @@ CREATE INDEX `rating_user_id_idx` ON `physics_in_motion`.`tutorial_lab_rating` (
 DROP TABLE IF EXISTS `physics_in_motion`.`administrator` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator` (
-  `admin_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT UNSIGNED NOT NULL,
+  `admin_id` INT UNSIGNED NOT NULL,
   `first_name` VARCHAR(254) NOT NULL,
   `last_name` VARCHAR(254) NOT NULL,
   `admin_type` VARCHAR(254) NOT NULL,
   `email` VARCHAR(254) NOT NULL,
-  PRIMARY KEY (`admin_id`, `user_id`),
-  CONSTRAINT `administrator_user_id`
-    FOREIGN KEY (`user_id`)
+  PRIMARY KEY (`admin_id`),
+  CONSTRAINT `admin_user_id`
+    FOREIGN KEY (`admin_id`)
     REFERENCES `physics_in_motion`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `student_id_UNIQUE` ON `physics_in_motion`.`administrator` (`admin_id` ASC) VISIBLE;
-
-CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`administrator` (`user_id` ASC) VISIBLE;
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `physics_in_motion`.`administrator` (`email` ASC) VISIBLE;
 

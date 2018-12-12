@@ -7,18 +7,18 @@ class Assignment_controller extends DatabaseController {
 	//($assignment_id, $professor_id, $student_id, $lab_id, $date_assigne, $date_due, $date_submited, $total_time, $added_instructions)
 
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$assignment_array = array();
-		$assignment_array[] = get_group_by_attribute($id_number, $id_type);
+		$assignment_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $assignment_array;
 	}
 
 
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$assignment_array = array();
-		$query = 'select * from assignment where $attribute_type = $attribute';
+		$query = 'select * from assignment where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -41,7 +41,7 @@ class Assignment_controller extends DatabaseController {
 	}
 	
 
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$assignment_array = array();
 		$query = 'select * from assignment';
@@ -67,7 +67,7 @@ class Assignment_controller extends DatabaseController {
 
 	}
 	
-	public function update($assignment)
+	public function update($assignment, $db_connection)
 	{
 		$sucess = true;
 		// The assignment_id should not be changed.
@@ -93,7 +93,7 @@ class Assignment_controller extends DatabaseController {
 	}
 
 
-	public function save_new($assignment)
+	public function save_new($assignment, $db_connection)
 	{
 		$sucess = true;
 		// The assignment_id is not included, because it is set automatically by the database.

@@ -6,17 +6,17 @@ class Professor_controller extends DatabaseController{
 	public function __construct() {}
 	//Professor ($professor_id, $user_id, $first_name, $last_name, $school_name, $email)
 
-	public function get_by_id($id_number, $id_type)
+	public function get_by_id($id_number, $id_type, $db_connection)
 	{
 		$professor_array = array();
-		$professor_array[] = get_group_by_attribute($id_number, $id_type);
+		$professor_array[] = get_by_attribute($id_number, $id_type, $db_connection);
 		return $professor_array;
 	}
 	
-	public function get_by_attribute($attribute, $attribute_type)
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$professor_array = array();
-		$query = 'select * from professor where $attribute_type = $attribute';
+		$query = 'select * from professor where $attribute_type = $attribute_value';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -38,7 +38,7 @@ class Professor_controller extends DatabaseController{
 	}
 	
 	
-	public function get_all()
+	public function get_all($db_connection)
 	{
 		$professor_array = array();
 		$query = 'select * from professor';
@@ -63,7 +63,7 @@ class Professor_controller extends DatabaseController{
 
 	}
 	
-	public function update($professor)
+	public function update($professor, $db_connection)
 	{
 		$sucess = true;
 		
@@ -90,7 +90,7 @@ class Professor_controller extends DatabaseController{
 	}
 
 
-	public function save_new($professor)
+	public function save_new($professor, $db_connection)
 	{
 		$sucess = true;
 		
