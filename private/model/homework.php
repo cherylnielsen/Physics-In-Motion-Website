@@ -13,32 +13,32 @@ class Homework {
 	private $lab_report;
 		
 		
-	public function Homework() {}
+	public function __construct() {}
 	
 	public function Homework($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 	{
-		$this->homework_id $homework_id;
-		$this->assignment_id $assignment_id;
-		$this->lab_summary $lab_summary;
-		$this->lab_data $lab_data;
-		$this->lab_graphs $lab_graphs;
-		$this->lab_math $lab_math;
-		$this->lab_errors $lab_errors;
-		$this->chat_session $chat_session;
-		$this->lab_report $lab_report;
+		$this->homework_id = $homework_id;
+		$this->assignment_id = $assignment_id;
+		$this->lab_summary = $lab_summary;
+		$this->lab_data = $lab_data;
+		$this->lab_graphs = $lab_graphs;
+		$this->lab_math = $lab_math;
+		$this->lab_errors = $lab_errors;
+		$this->chat_session = $chat_session;
+		$this->lab_report = $lab_report;
 	}
 	
 	public function initialize($homework_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 	{
-		$this->homework_id $homework_id;
-		$this->assignment_id $assignment_id;
-		$this->lab_summary $lab_summary;
-		$this->lab_data $lab_data;
-		$this->lab_graphs $lab_graphs;
-		$this->lab_math $lab_math;
-		$this->lab_errors $lab_errors;
-		$this->chat_session $chat_session;
-		$this->lab_report $lab_report;
+		$this->homework_id = $homework_id;
+		$this->assignment_id = $assignment_id;
+		$this->lab_summary = $lab_summary;
+		$this->lab_data = $lab_data;
+		$this->lab_graphs = $lab_graphs;
+		$this->lab_math = $lab_math;
+		$this->lab_errors = $lab_errors;
+		$this->chat_session = $chat_session;
+		$this->lab_report = $lab_report;
 	}
 	
 	

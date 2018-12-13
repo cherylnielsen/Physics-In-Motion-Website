@@ -3,33 +3,21 @@
 class Student {
 	
 	private $student_id;
-	private $user_id;	
 	private $first_name;
 	private $last_name;
-	private $school_type;
 	private $school_name;
+	private $email; 
 	
 	
-	public function Student() {}
-	
-	public function Student($student_id, $user_id, $first_name, $last_name, $school_type, $school_name)
-	{
-		$this->student_id = $student_id
-		$this->user_id = $user_id;
-		$this->first_name = $first_name;
-		$this->last_name = $last_name;
-		$this->school_type = $school_type;
-		$this->school_name = $school_name;
-	}
+	public function __construct() {}
 
-	public function initialize($student_id, $user_id, $first_name, $last_name, $school_type, $school_name)
+	public function initialize($student_id, $first_name, $last_name, $school_name, $email)
 	{
-		$this->student_id = $student_id
-		$this->user_id = $user_id;
+		$this->student_id = $student_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
-		$this->school_type = $school_type;
 		$this->school_name = $school_name;
+		$this->email = $email;
 	}
 	
 	public function get_student_id()
@@ -40,16 +28,6 @@ class Student {
 	public function set_student_id($student_id)
 	{
 		$this->student_id = $student_id;
-	}
-	
-	public function get_user_id()
-	{
-		return $this->user_id;
-	}
-
-	public function set_user_id($user_id)
-	{
-		$this->user_id = $user_id;
 	}
 	
 	public function get_first_name()
@@ -90,6 +68,16 @@ class Student {
 	public function set_school_name($school_name)
 	{
 		$this->school_name = $school_name;
+	}
+	
+	public function get_email()
+	{
+		return $this->email;
+	}
+
+	public function set_email($email)
+	{
+		$this->email = $email;
 	}
 	
 	

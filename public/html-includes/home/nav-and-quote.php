@@ -1,5 +1,7 @@
 <?php
 
+$quote = $mdb_control->get_quote_of_the_month();
+
 echo
 '<nav class="site">		
 	<a href="index.php">Home Page </a><hr>
@@ -9,34 +11,20 @@ echo
 	<a id="site" href="index.php#new-labs">See the Newest Tutorial Labs!</a><hr>
 </nav>';
 
-require('../private/database-access.php');
-
-$query = 'select * from quote where quote_id = 101';
-
-$result = mysqli_query($db_connection, $query);
-
-if($result)
+if(!is_null($quote))
 {
-	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-	{
-		echo
-		'<div class="quote">
-			<h2 id="quote-title">Quote of the Month</h2>';
-		
-		echo	'<q id="quote">' . $row['quote_text'] . '</q>' .
-				'<p id="quote-author">&#45; ' . $row['author'] . 
-				'</p>
-			<a id="quote-link" href="">Previous Quotes</a>
-		</div>';
-	}
-	
-	mysqli_free_result($result);		
+	echo
+		"<div class='quote'>
+			<h2 id='quote-title'>Quote of the Month</h2>
+			<q id='quote'>" . $quote->get_quote_text() . "</q>
+				<p id='quote-author'>&#45;" . $quote->get_author() . "</p>
+			<a id='quote-link' href=''>Previous Quotes</a>
+		</div>";
 }
 else
 {
-	echo '<p>' . mysqli_error($db_connection) . '</p>';
+	echo '<p> Opps: error! </p>';
 }
 
-mysqli_close($db_connection);
 
 ?>

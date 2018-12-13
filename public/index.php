@@ -17,6 +17,11 @@
 	
 	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">
 	
+	<?php 
+		require_once('../private/MasterDatabaseController.php'); 
+		$mdb_control = new MasterDatabaseController();
+	?>
+	
 </head>
 <body>
 	
@@ -36,7 +41,7 @@
 	<?php include('html-includes/home/project-summary.html'); ?>
 </section>
 
-<?php include('html-includes/home/new-labs-list.php'); ?>	
+<?php include('html-includes/labs/new-labs-list.php'); ?>	
 		
 <footer>
 	<?php include('html-includes/home/footer.html'); ?>

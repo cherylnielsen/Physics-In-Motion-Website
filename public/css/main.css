@@ -52,6 +52,8 @@ h2 {
 	margin: 1em;
 }
 
+
+
 p {
 	margin: 0.5em;
 }
@@ -139,7 +141,7 @@ div.quote > h2 {
 section.main-content {
 	float: left;
 	width: 50%;
-	padding: 0 0 2% 2%;
+	padding: 1% 0 2% 2%;
 	position: relative;
 	top: -30px;
 }
@@ -152,6 +154,8 @@ section.new-labs {
 	border-radius: 15px;
 	margin-bottom: 3em;
 	background-color: #A7DAFA;
+	position: relative;
+	top: -90px;
 }
 
 article.new-labs {
@@ -159,6 +163,15 @@ article.new-labs {
 	margin-bottom: 0;
 	background-color: white;
 }
+
+h1.development-status {
+	color: #03AA0D;
+}
+
+h1.new-status {
+	color: red;
+}
+
 
 footer {  
 	clear: both;

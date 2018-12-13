@@ -1,22 +1,21 @@
 
 <h1 class="form">Sign In:</h1>
-<form class="login" method="post" action="private/login-action.php">
 
-	<div class="text-form">
-		<label>User ID<br><input type="text" name="user-id" value=""></label>
+<form class="login" method="POST" action="login-page.php">
+
+	<fieldset class="login-form">
+		<label>User Name <br><input type="text" name="username" value="" required></label>
 		<br>
-		<label>Password<br><input type="password" name="user-password" value=""></label>
+		<label>Password <br><input type="password" name="password" value="" required></label>
 		<br>
-	</div>
-	
-	<div class="input-login-form">
-		<label><input type="checkbox" name="stay-signed-in" id="stay-signed-in" value="stay-signed-in" >&nbsp;Stay Signed In</label>
+		<label><input type="checkbox" name="stay" value="stay" >&nbsp;Stay Signed In</label>
 		<br>
-		<input type="submit" name="submit-login" id="submit-login" value="Sign In">		
+		<input type="submit" name="submit" value="Sign In">		
 		<br>
-		<a id="forgot-login" href="">Forgot ID / Password?</a>
+		<a id="forgot_login" href="">Forgot ID / Password?</a>
 		<br>
 		<a id="register" href="">Create Account</a>
-	</div>
+	</fieldset>
 	
 </form>
+

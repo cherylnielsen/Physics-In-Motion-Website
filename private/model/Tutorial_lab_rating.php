@@ -9,7 +9,7 @@ class Tutorial_lab_rating {
 	private $lab_rating;
 	private $comments;
 	
-	public function Tutorial_lab_rating() {}
+	public function __construct() {}
 	
 	public function Tutorial_lab_rating($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
 	{

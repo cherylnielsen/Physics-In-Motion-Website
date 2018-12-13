@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Physics in Motion: Tutorial Labs</title>
+	<title>Physics in Motion: User Sign In</title>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of science tutorial. Not as game, but as truly visual, immersive, and hands on learning experience. The Student can analyze the collected data with interactive graphs and math calculations done inside the tutorial lab. Along the way, the Automated Mentor will explain topics and give hints. Web pages for Students and professors provide multiple additional services.">
 	
@@ -18,6 +18,12 @@
 	<link href="css/main-phone.css" rel="stylesheet" type="text/css" media="screen and (max-width: 600px)">
 	
 	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">
+	
+	<?php 
+		require_once('../private/database-access.php'); 
+		require_once('../private/MasterDatabaseController.php'); 
+		$mdb_control = new MasterDatabaseController();
+	?>
 	
 </head>
 <body>
@@ -36,7 +42,8 @@
 
 <section class="main-content">
 	<?php 
-		include('html-includes/login/login-form.html');
+		include('../private/action/login-action.php');
+		include('html-includes/login/login-form.html');		
 	?>
 </section>
 

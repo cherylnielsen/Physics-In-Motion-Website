@@ -1,75 +1,73 @@
 <?php
 
-require_once('../database-access.php');
-require_once('../model/Professor.php');
 
-class Professor_controller {
+class Professor_controller extends DatabaseController{
 
-	public function Professor_controller() {}
-	//Student ($professor_id, $user_id, $first_name, $last_name, $school_type, $school_name)
+	public function __construct() {}
+	//Professor ($professor_id, $first_name, $last_name, $school_name, $email)
 
-	public function get_professor_by_id($professor_id)
+
+	
+	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
-		$professor = new Professor();
-		$query = 'select * from professor where professor_id = $professor_id';
+		$professor_array = array();
+		$query = "select * from professor where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$professor->initialize($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], 
-				$row['school_type'], $row['school_name']);
+				$professor = new Professor();
+				$professor->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				// pushes each object onto the end of the array
+				$professor_array[] = $professor;
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			$professor = null;
 		}
 
 		mysqli_close($db_connection);
-		return professor;
-
+		return $professor_array;
 	}
-
-
-	public function get_professor_by_user_id($user_id)
+	
+	
+	public function get_all($db_connection)
 	{
-		$professor = new Professor();		
-		$query = 'select * from professor where user_id = $user_id';
+		$professor_array = array();
+		$query = 'select * from professor';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$professor->initialize($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], 
-				$row['school_type'], $row['school_name']);
+				$professor = new Professor();
+				$professor->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				// pushes each object onto the end of the array
+				$professor_array[] = $professor;
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
-			$professor = null;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>Student not found.</p>';
 		}
 
 		mysqli_close($db_connection);
-		return professor;
+		return $professor_array;
 
 	}
 	
-
-	public function update_professor($professor)
+	public function update($professor, $db_connection)
 	{
 		$sucess = true;
 		
-		// The professor_id and user_id should not be changed.
-		$query = 'update professor set first_name = $professor->first_name, last_name = $professor->last_name, school_type = $professor->school_type, school_name = $professor->school_name 
-		where professor_id = $professor->professor_id';
+		// The professor_id must match the user_id, and should not be changed.
+		$query = 'update professor set first_name = $professor->first_name, last_name = $professor->last_name, school_name = $professor->school_name, email = $professor->email where professor_id = $professor->professor_id';
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -90,18 +88,18 @@ class Professor_controller {
 	}
 
 
-	public function save_new_professor($professor)
+	public function save_new($professor, $db_connection)
 	{
 		$sucess = true;
 		
-		// The professor_id is not included, because it is set automatically by the database.
-		$query = 'insert into professor (user_id, first_name, last_name, school_type, school_name) 
-				values($user_id, $first_name, $last_name, $school_type, $school_name)';
+		// The professor_id must match the user_id.
+		$query = 'insert into professor (professor_id, first_name, last_name, school_name, email) 
+				values($professor->professor_id, $professor->first_name, $professor->last_name, $professor->school_name, $professor->email )';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$professor->professor_id = mysql_insert_id();
+			$professor->set_professor_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

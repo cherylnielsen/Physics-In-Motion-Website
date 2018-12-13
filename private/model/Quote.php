@@ -7,15 +7,7 @@ class Quote {
 	private $author;
 	private $quote_text;
 	
-	public function Quote() {}
-	
-	public function Quote($quote_id, $date_posted, $author, $quote_text)
-	{
-		$this->quote_id = $quote_id;
-		$this->date_posted = $date_posted;
-		$this->author = $author;
-		$this->quote_text = $quote_text;
-	}
+	public function __construct() {}
 
 	public function initialize($quote_id, $date_posted, $author, $quote_text)
 	{
