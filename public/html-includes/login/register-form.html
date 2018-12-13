@@ -1,19 +1,17 @@
 
 <h1 class="form">Create Account:</h1>
-<p class="form-errors" id="form-errors">
-</p>
 
-<form class="register" method="post" action="../private/action/register-action.php">
+<form class="register" method="post" action="register-page.php">
 
 	<fieldset class="personal-info">
     <legend>&nbsp; Personal Information: &nbsp;</legend>
-		<label>First Name<br><input type="text" name="first-name" value="" required></label>
+		<label>First Name<br><input type="text" name="first_name" value="" required></label>
 		<br>
-		<label>Last Name<br><input type="text" name="last-name" value="" required></label>
+		<label>Last Name<br><input type="text" name="last_name" value="" required></label>
 		<br>
 		<label>Email<br><input type="email" name="email" value="" required></label>
 		<br>
-		<label>Confirm Email<br><input type="email" name="email-confirm" value="" required></label>
+		<label>Confirm Email<br><input type="email" name="email_confirm" value="" required></label>
 		<br>
 	</fieldset>
 	
@@ -21,23 +19,23 @@
     <legend>&nbsp; School Information: &nbsp;</legend>
 		<label>School<br><input type="text" name="school" value="" required></label>
 		<br>
-		<label><input type="radio" name="account-type" value="">&nbsp;Student</label>
+		<label><input type="radio" name="account_type" value="">&nbsp;Student</label>
 		<br>
-		<label><input type="radio" name="account-type" value="">&nbsp;Professor</label>
+		<label><input type="radio" name="account_type" value="">&nbsp;Professor</label>
 		<br>
 	</fieldset>
 	
 	<fieldset class="login-info">
     <legend>&nbsp; Sign In Information: &nbsp;</legend>
-		<label>User Name<br><input type="text" name="user-name" value="" required></label>
+		<label>User Name<br><input type="text" name="username" value="" required></label>
 		<br>
 		<label>Password<br>(minimum 8 characters, at least one letter and one number)<br>
-		<input type="password" name="user-password" value="" required></label>
+		<input type="password" name="password" value="" required></label>
 		<br>
-		<label>Confirm Password<br><input type="password" name="user-password-confirm" value="" required></label>
+		<label>Confirm Password<br><input type="password" name="password_confirm" value="" required></label>
 		<br>
 	</fieldset>
 	
-	<input type="submit" name="submit-register" id="submit-register" value="Create Account">		
+	<input type="submit" name="register" id="register" value="Create Account">		
 	
 </form>

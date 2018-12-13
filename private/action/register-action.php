@@ -1,43 +1,64 @@
 <?php
 
-
-If($_SERVER['REQUEST_METHOD'] =='POST')
-{
-	$user_name = trim($_POST['user_name']);
-	$password = trim($_POST['password']);
-	$errors = array();
-
-	if(empty($user_name))
-	{
-		$user_name = null;
-		$errors[] = 'Please enter user name.';
-	}
-	else if(is_numeric($user_name))
-	{
-		$user_name = null;
-		$errors[] = 'User name cannot be a number.';
-	}
+require_once('login-utilities.php'); 
 	
-	if(empty($password))
+If($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+	$login_utility = new LoginUtilities();
+	
+	
+	
+	
+	
+	$username = $login_utility->validate_username($_POST['username'], $db_connection);
+	$password = $login_utility->validate_password($_POST['password'], $db_connection);
+
+	if(is_null($username) || is_null($password))
 	{
-		$user_name = null;
-		$errors[] = 'Please enter password.';
+		echo'<div class="form-errors">
+		<p><em>Error: Please enter user name and password.</em></p></div>';
 	}
-	else if(is_numeric($password))
+	else
 	{
-		$user_name = null;
-		$errors[] = 'Password cannot be a number.';
-	}
-		
-	if(!empty($errors))
-	{
-		echo'<div class="form-errors"><p><em>Errors:</em></p><ul>';
-		foreach($errors as $e)
+		$user = $login_utility->authenticate_login($username, $password, $mdb_control);
+
+		if(is_null($user) && empty($user->get_user_id()))
 		{
-			echo "<li><em>$e</em></li>";
+			echo'<div class="form-errors">
+			<p><em>Error: User name or password not found. Please check spelling and try again.</em></p></div>';
 		}
-		echo'</ul></div>';
+		else
+		{
+			$user_id = $user->get_user_id();	
+			$user_type = $user->get_user_type();
+			$first;
+			$last;			
+			$user_info = array();
+			$user_info = $login_utility->get_user_info($user_id, $user_type, $mdb_control);		
+			$length = count($user_info);
+
+			if((!is_null($user_info)) AND ($length > 0))
+			{	
+				for($i = 0; $i < $length; $i++) 
+				{	
+					$info = $user_info[$i];
+					$first = $info->get_first_name();
+					$last = $info->get_last_name();
+				}
+			}
+			
+			session_start();
+			$_SESSION['user_id'] = $user_id;
+			$_SESSION['user_type'] = $user_type;
+			$_SESSION['first_name'] = $first;
+			$_SESSION['last_name'] = $last;
+			
+			
+		}	
 	}
 }
+
+
+
 
 ?>
