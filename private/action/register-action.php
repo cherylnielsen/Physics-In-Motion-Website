@@ -21,22 +21,21 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$email = $login_utility->validate_email($_POST['email']);
 	$email_confirm = $login_utility->validate_email($_POST['email_confirm']);
 	
+	if(strcmp($email, $email_confirm) != 0)
+	{
+		$form_errors[] = 'The emails do not match.';
+	}
+	
 	$str_error = $login_utility->validate_email_format($email);
 	if(!is_null($str_error))
 	{
-		$error_array[] = $str_error;
+		$form_errors[] = $str_error;
 	}
 	
 	$str_error = $login_utility->validate_email_format($email_confirm);
 	if(!is_null($str_error))
 	{
-		$error_array[] = $str_error;
-	}
-	
-	if(0 != strcmp($email, $email_confirm))
-	{
-		$error_array[] = 'The emails do not match.';
-		$email_ok = false;
+		$form_errors[] = $str_error;
 	}
 	
 	
@@ -45,17 +44,17 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$school = $login_utility->validate_input($_POST['school'], $db_connection);
 	$username = $login_utility->validate_input($_POST['username'], $db_connection);
 	
-	if(!isset($first_name) || !isset($last_name))
+	if(is_null($first_name) || is_null($last_name))
 	{ 	
 		$form_errors[] = 'Enter first and last name.';
 	}
 	
-	if(!isset($school)) 
+	if(is_null($school)) 
 	{ 	
 		$form_errors[] = 'Enter school name.';
 	}
 	
-	if(!isset($username)) 
+	if(is_null($username)) 
 	{ 	
 		$form_errors[] = 'Enter user name.';
 	}
@@ -73,7 +72,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$password = $login_utility->validate_input($_POST['password'], $db_connection);
 	$password_confirm = $login_utility->validate_input($_POST['password_confirm'], $db_connection);
 	
-	if((!isset($password)) || (!isset($password_confirm)))
+	if((is_null($password)) || (is_null($password_confirm)))
 	{ 	
 		$form_errors[] = 'Enter password.';
 	}
@@ -106,7 +105,10 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	if(count($form_errors) == 0)
 	{
 		// save data to the database and redirect to the login page
-		echo'<div class="form-errors"><p><em>Yes, no errors!</em></p></div>';
+		//echo'<div class="form-errors"><p><em>Yes, no errors!</em></p></div>';
+		
+		
+		
 	}
 	else
 	{

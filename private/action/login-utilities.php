@@ -60,7 +60,7 @@ class LoginUtilities
 		else 
 		{
 			// checks that email string is properly formated
-			if (filter_var($email, FILTER_VALIDATE_EMAIL))
+			if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
 			{
 				$error = 'The email format is not valid.';
 			}			
