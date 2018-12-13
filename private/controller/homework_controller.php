@@ -6,25 +6,20 @@ class Homework_controller extends DatabaseController {
 	//($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 
 
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$homework_array = array();
-		$homework_array[] = get_by_attribute($id_number, $id_type, $db_connection);
-		return $homework_array;
-	}
-	
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$homework_array = array();
-		$query = 'select * from homework where $attribute_type = $attribute_value';
+		$query = "select * from homework where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$homework = new Homework();
+				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
 				// pushes each object onto the end of the array
-				$homework_array[] = new Homework($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
+				$homework_array[] = $homework;
 			}
 			mysqli_free_result($result);		
 		}
@@ -48,8 +43,10 @@ class Homework_controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$homework = new Homework();
+				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
 				// pushes each object onto the end of the array
-				$homework_array[] = new Homework($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
+				$homework_array[] = $homework;
 			}
 			mysqli_free_result($result);		
 		}
@@ -102,7 +99,7 @@ class Homework_controller extends DatabaseController {
 
 		if($result)
 		{
-			$homework->homework_id = mysql_insert_id();
+			$homework->set_homework_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

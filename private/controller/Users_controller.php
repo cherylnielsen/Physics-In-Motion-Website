@@ -4,29 +4,24 @@
 class Users_controller extends DatabaseController {
 
 	public function __construct() {}
-	//Users ($user_id, $user_name, $user_password)
+	//Users ($user_id, $user_name, $user_password, $user_type)
 
-
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$user_array = array();
-		$user_array[] = get_by_attribute($id_number, $id_type, $db_connection);
-		return $user_array;
-	}
 	
 	
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$user_array = array();
-		$query = 'select * from users where $attribute_type = $attribute_value';
+		$query = "select * from users where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$the_user = new Users();
+				$the_user->initialize($row['user_id'], $row['user_name'], $row['user_password'], $row['user_type']);
 				// pushes each object onto the end of the array
-				$user_array[] = new Users($row['user_id'], $row['user_name'], $row['user_password']);
+				$user_array[] = $the_user;
 			}
 			mysqli_free_result($result);		
 		}
@@ -50,8 +45,10 @@ class Users_controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$the_user = new Users();
+				$the_user->initialize($row['user_id'], $row['user_name'], $row['user_password'], $row['user_type']);
 				// pushes each object onto the end of the array
-				$user_array[] = new Users($row['user_id'], $row['user_name'], $row['user_password']);
+				$user_array[] = $the_user;
 			}
 			mysqli_free_result($result);		
 		}
@@ -69,7 +66,7 @@ class Users_controller extends DatabaseController {
 	public function get_by_login($user_name, $user_password, $db_connection)
 	{
 		$user = new Users();		
-		$query = 'select * from users where (user_name = $user_name) AND (user_password = $user_password)';
+		$query = "select * from users where (user_name = '$user_name') AND (user_password = '$user_password')";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -77,7 +74,7 @@ class Users_controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$user->initialize($row['user_id'], $row['user_name'], $row['user_password']);
+				$user->initialize($row['user_id'], $row['user_name'], $row['user_password'], $row['user_type']);
 			}
 			mysqli_free_result($result);		
 		}
@@ -97,14 +94,14 @@ class Users_controller extends DatabaseController {
 	{
 		$sucess = true;
 		// The user_id is set automatically by the database.
-		$query = 'insert into users (user_name, user_password) 
-				values($user->user_name, $user->user_password)';
+		$query = 'insert into users (user_name, user_password, user_type) 
+				values($user->user_name, $user->user_password, $user->user_type)';
 		
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$user->user_id = mysql_insert_id();
+			$user->set_user_id(mysql_insert_id());
 			mysqli_free_result($result);					
 		}
 		else
@@ -115,8 +112,7 @@ class Users_controller extends DatabaseController {
 		}
 
 		mysqli_close($db_connection);
-		return $sucess;
-		
+		return $sucess;		
 	}
 	
 
@@ -125,7 +121,7 @@ class Users_controller extends DatabaseController {
 		$sucess = true;
 		// The user_id should not be changed.
 		$query = 'update users set user_name = $user->user_name, user_password = $user->user_password, 
-		 where user_id = $user->user_id';
+		 user_type = $user->user_type where user_id = $user->user_id';
 				
 		$result = mysqli_query($db_connection, $query);
 
@@ -141,8 +137,7 @@ class Users_controller extends DatabaseController {
 		}
 
 		mysqli_close($db_connection);
-		return $sucess;
-		
+		return $sucess;		
 	}
 
 }

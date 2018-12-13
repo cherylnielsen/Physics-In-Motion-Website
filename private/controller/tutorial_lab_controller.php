@@ -6,12 +6,6 @@ class Tutorial_lab_controller extends DatabaseController {
 	public function __construct() {}
 	//($lab_id, $lab_name, $web_link, $lab_status, $short_description, $prerequisites, $key_topics, $key_equations, $long_description, $instructions)
 	
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$lab_array = array();
-		$lab_array = get_by_attribute($id_number, $id_type, $db_connection);
-		return $lab_array;
-	}
 	
 	
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
@@ -25,7 +19,8 @@ class Tutorial_lab_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$lab = new Tutorial_lab();
-				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['long_description'], $row['instructions']);
+				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], 
+				$row['key_topics'], $row['key_equations'], $row['long_description'], $row['instructions']);
 				$lab_array[] = $lab;
 			}
 			mysqli_free_result($result);		
@@ -51,7 +46,8 @@ class Tutorial_lab_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$lab = new Tutorial_lab();
-				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['long_description'], $row['instructions']);
+				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['short_description'], $row['prerequisites'], 
+				$row['key_topics'], $row['key_equations'], $row['long_description'], $row['instructions']);
 				$lab_array[] = $lab;
 			}
 			mysqli_free_result($result);		
@@ -104,7 +100,7 @@ class Tutorial_lab_controller extends DatabaseController {
 
 		if($result)
 		{
-			$tutorial_lab->lab_id = mysql_insert_id();
+			$tutorial_lab->set_lab_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

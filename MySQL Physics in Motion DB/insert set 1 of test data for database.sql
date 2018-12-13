@@ -11,11 +11,11 @@ select * from quote;
 
 /*  users  */
 
-insert into users (user_id, user_name, user_password)
-values (101, "s1name", "s1password"), 
-(102, "s2name", "s2password"), 
-(103, "p1name", "p1password"), 
-(104, "p2name", "p2password");
+insert into users (user_id, user_name, user_password, user_type)
+values (101, "s1name", "s1password", "student"), 
+(102, "s2name", "s2password", "student"), 
+(103, "p1name", "p1password", "professor"), 
+(104, "p2name", "p2password", "professor");
 
 select * from users;
 

@@ -20,6 +20,7 @@
 	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">
 	
 	<?php 
+		require_once('../private/database-access.php'); 
 		require_once('../private/MasterDatabaseController.php'); 
 		$mdb_control = new MasterDatabaseController();
 	?>
@@ -41,7 +42,8 @@
 
 <section class="main-content">
 	<?php 
-		include('html-includes/login/login-form.html');
+		include('../private/action/login-action.php');
+		include('html-includes/login/login-form.html');		
 	?>
 </section>
 

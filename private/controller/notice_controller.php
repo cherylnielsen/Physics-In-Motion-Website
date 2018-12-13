@@ -6,26 +6,22 @@ class Notice_controller extends DatabaseController {
 	public function __construct() {}
 	//($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
 
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$notice_array = array();
-		$notice_array[] = get_by_attribute($id_number, $id_type, $db_connection);
-		return $notice_array;
-	}
 	
 	
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$notice_array = array();
-		$query = 'select * from notice where $attribute_type = $attribute_value';
+		$query = "select * from notice where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$notice = new Notice();
+				$notice->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
 				// pushes each object onto the end of the array
-				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);		
+				$notice_array[] = $notice;	
 			}
 			mysqli_free_result($result);		
 		}
@@ -49,8 +45,10 @@ class Notice_controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$notice = new Notice();
+				$notice->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
 				// pushes each object onto the end of the array
-				$notice_array[] = new Notice($row['notice_id'], $row['assignment_id'], $row['date_sent'], $row['notice_text']);		
+				$notice_array[] = $notice;	
 			}
 			mysqli_free_result($result);		
 		}
@@ -102,7 +100,7 @@ class Notice_controller extends DatabaseController {
 
 		if($result)
 		{
-			$notice->notice_id = mysql_insert_id();
+			$notice->set_notice_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

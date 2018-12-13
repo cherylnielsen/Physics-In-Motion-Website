@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`users` (
   `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(45) NOT NULL,
   `user_password` VARCHAR(45) NOT NULL,
+  `user_type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
 

@@ -9,18 +9,11 @@ class Quote_controller extends DatabaseController {
 	//Quote ($quote_id, $date_posted, $author, $quote_text)
 
 
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$quote_array = array();
-		$quote_array[] = get_by_attribute($id_number, $id_type);
-		return $quote_array;
-	}
-
 
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$quote_array = array();
-		$query = 'select * from quote where $attribute_type = $attribute_value';
+		$query = "select * from quote where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -107,7 +100,7 @@ class Quote_controller extends DatabaseController {
 
 		if($result)
 		{
-			$quote->quote_id = mysql_insert_id();
+			$quote->set_quote_id(mysql_insert_id());
 			mysqli_free_result($result);					
 		}
 		else

@@ -4,27 +4,24 @@
 class Professor_controller extends DatabaseController{
 
 	public function __construct() {}
-	//Professor ($professor_id, $user_id, $first_name, $last_name, $school_name, $email)
+	//Professor ($professor_id, $first_name, $last_name, $school_name, $email)
 
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$professor_array = array();
-		$professor_array[] = get_by_attribute($id_number, $id_type, $db_connection);
-		return $professor_array;
-	}
+
 	
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$professor_array = array();
-		$query = 'select * from professor where $attribute_type = $attribute_value';
+		$query = "select * from professor where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$professor = new Professor();
+				$professor->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
 				// pushes each object onto the end of the array
-				$professor_array[] = new Professor($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				$professor_array[] = $professor;
 			}
 			mysqli_free_result($result);		
 		}
@@ -48,8 +45,10 @@ class Professor_controller extends DatabaseController{
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$professor = new Professor();
+				$professor->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
 				// pushes each object onto the end of the array
-				$professor_array[] = new Professor($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				$professor_array[] = $professor;
 			}
 			mysqli_free_result($result);		
 		}
@@ -67,9 +66,8 @@ class Professor_controller extends DatabaseController{
 	{
 		$sucess = true;
 		
-		// The professor_id and user_id should not be changed.
-		$query = 'update professor set first_name = $professor->first_name, last_name = $professor->last_name, school_name = $professor->school_name, email = $professor->email
-		where professor_id = $professor->professor_id';
+		// The professor_id must match the user_id, and should not be changed.
+		$query = 'update professor set first_name = $professor->first_name, last_name = $professor->last_name, school_name = $professor->school_name, email = $professor->email where professor_id = $professor->professor_id';
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -94,14 +92,14 @@ class Professor_controller extends DatabaseController{
 	{
 		$sucess = true;
 		
-		// The professor_id is not included, because it is set automatically by the database.
-		$query = 'insert into professor (user_id, first_name, last_name, school_name, email) 
-				values($professor->user_id, $professor->first_name, $professor->last_name, $professor->school_name, $professor->email )';
+		// The professor_id must match the user_id.
+		$query = 'insert into professor (professor_id, first_name, last_name, school_name, email) 
+				values($professor->professor_id, $professor->first_name, $professor->last_name, $professor->school_name, $professor->email )';
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$professor->professor_id = mysql_insert_id();
+			$professor->set_professor_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

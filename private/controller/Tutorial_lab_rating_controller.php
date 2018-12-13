@@ -6,26 +6,21 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 	public function __construct() {}
 	//($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
 	
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$rating_array = array();
-		$rating_array[] = get_by_attribute($id_number, $id_type, $db_connection);
-		return $rating_array;
-	}
-	
 	
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$rating_array = array();
-		$query = 'select * from tutorial_lab_rating where $attribute_type = $attribute_value';
+		$query = "select * from tutorial_lab_rating where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$rating = new Tutorial_lab_rating();
+				$rating->initialize($row['rating_id'], $row['lab_id'], $row['user_id'], $row['date_posted'], $row['lab_rating'], $row['comments']);
 				// pushes each object onto the end of the array
-				$rating_array[] = new Tutorial_lab_rating($row['rating_id'], $row['lab_id'], $row['user_id'], $row['date_posted'], $row['lab_rating'], $row['comments']);
+				$rating_array[] = $rating;
 			}
 			mysqli_free_result($result);		
 		}
@@ -49,8 +44,10 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
+				$rating = new Tutorial_lab_rating();
+				$rating->initialize($row['rating_id'], $row['lab_id'], $row['user_id'], $row['date_posted'], $row['lab_rating'], $row['comments']);
 				// pushes each object onto the end of the array
-				$rating_array[] = new Tutorial_lab_rating($row['rating_id'], $row['lab_id'], $row['user_id'], $row['date_posted'], $row['lab_rating'], $row['comments']);
+				$rating_array[] = $rating;
 			}
 			mysqli_free_result($result);		
 		}
@@ -100,7 +97,7 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 
 		if($result)
 		{
-			$rating->rating_id = mysql_insert_id();
+			$rating->set_rating_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

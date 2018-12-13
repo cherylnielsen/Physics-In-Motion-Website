@@ -7,27 +7,21 @@ class Assignment_controller extends DatabaseController {
 	//($assignment_id, $professor_id, $student_id, $lab_id, $date_assigne, $date_due, $date_submited, $total_time, $added_instructions)
 
 
-	public function get_by_id($id_number, $id_type, $db_connection)
-	{
-		$assignment_array = array();
-		$assignment_array[] = get_by_attribute($id_number, $id_type, $db_connection);
-		return $assignment_array;
-	}
-
-
 	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
 	{
 		$assignment_array = array();
-		$query = 'select * from assignment where $attribute_type = $attribute_value';
+		$query = "select * from assignment where $attribute_type = '$attribute_value'";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				// pushes each object onto the end of the array
-				$assignment_array[] = new Assignment($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], 
+				$assignment = new Assignment();
+				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], 
 				$row['date_submited'], $row['total_time'], $row['added_instructions']);
+				// pushes each object onto the end of the array
+				$assignment_array[] = $assignment;
 			}
 			mysqli_free_result($result);		
 		}
@@ -51,9 +45,11 @@ class Assignment_controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				// pushes each object onto the end of the array
-				$assignment_array[] = new Assignment($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], 
+				$assignment = new Assignment();
+				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], 
 				$row['date_submited'], $row['total_time'], $row['added_instructions']);
+				// pushes each object onto the end of the array
+				$assignment_array[] = $assignment;
 			}
 			mysqli_free_result($result);		
 		}
@@ -103,7 +99,7 @@ class Assignment_controller extends DatabaseController {
 
 		if($result)
 		{
-			$assignment->assignment_id = mysql_insert_id();
+			$assignment->set_assignment_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

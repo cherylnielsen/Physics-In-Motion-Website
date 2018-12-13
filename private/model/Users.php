@@ -6,21 +6,14 @@ class Users {
 	private $user_name;
 	private $user_password;
 	
-	
 	public function __construct() {}
-	
-	public function Users($user_id, $user_name, $user_password)
-	{
-		$this->user_id = $user_id;
-		$this->user_name = $user_name;
-		$this->user_password = $user_password;
-	}
 
-	public function initialize($user_id, $user_name, $user_password)
+	public function initialize($user_id, $user_name, $user_password, $user_type)
 	{
 		$this->user_id = $user_id;
 		$this->user_name = $user_name;
 		$this->user_password = $user_password;
+		$this->user_type = $user_type;
 	}
 	
 	public function get_user_id()
@@ -53,7 +46,15 @@ class Users {
 		$this->user_password = $user_password;
 	}
 	
-	
+	public function get_user_type()
+	{
+		return $this->user_type;
+	}
+
+	public function set_user_type($user_type)
+	{
+		$this->user_type = $user_type;
+	}
 	
 }
 

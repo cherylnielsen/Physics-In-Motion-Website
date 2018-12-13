@@ -33,6 +33,13 @@ class MasterDatabaseController
 	
 	public function __construct() {}
 	
+	private function get_db_connection()
+	{
+		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') 
+					OR die (mysqli_connect_error());
+		return $db_connection;
+	}
+	
 	public function getController($data_type)
 	{
 		$control;
@@ -74,19 +81,11 @@ class MasterDatabaseController
 		return $control;
 		
 	}
-	
-	
-	public function get_by_id($id_number, $id_type, $data_type)
-	{		
-		$group_array = array();		
-		$group_array = get_by_attribute($id_number, $id_type, $data_type);
-		return $group_array;
-	}
-	
+
 	
 	public function get_by_attribute($attribute_value, $attribute_type, $data_type)
 	{
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
+		$db_connection = $this->get_db_connection();
 		$group_array = array();
 		$control = $this->getController($data_type);
 		
@@ -101,7 +100,7 @@ class MasterDatabaseController
 	
 	public function get_all($data_type)
 	{	
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
+		$db_connection = $this->get_db_connection();
 		$group_array = array();
 		$control = $this->getController($data_type);
 		
@@ -116,7 +115,7 @@ class MasterDatabaseController
 	
 	public function update($data_type)
 	{
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
+		$db_connection = $this->get_db_connection();
 		$status;
 		$control = $this->getController($data_type);
 		
@@ -131,7 +130,7 @@ class MasterDatabaseController
 	
 	public function save_new($data_type)
 	{
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
+		$db_connection = $this->get_db_connection();
 		$status;
 		$control = $this->getController($data_type);
 		
@@ -146,7 +145,7 @@ class MasterDatabaseController
 	
 	public function get_users_by_login($user_name, $user_password)
 	{
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
+		$db_connection = $this->get_db_connection();
 		$user;
 		$control = new Users_controller();
 		$user = $control->get_by_login($user_name, $user_password, $db_connection);
@@ -157,7 +156,7 @@ class MasterDatabaseController
 	
 	public function get_quote_of_the_month()
 	{
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') OR die (mysqli_connect_error());
+		$db_connection = $this->get_db_connection();
 		$quote;
 		$control = new Quote_controller();
 		$quote = $control->get_quote_of_the_month($db_connection);
