@@ -24,7 +24,7 @@
 		echo
 		'<div class="login">
 			<p class="welcome">Hello  ' .$_SESSION["first_name"] . '</p><br>
-			<a id="logout" href="logout-action.php">Sign Out</a>			
+			<a id="logout" href="html-includes/login/logout.php">Sign Out</a>			
 		</div>';
 	}
 	

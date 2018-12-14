@@ -18,7 +18,7 @@ class Administrator_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
-				$admin->initialize($row['administrator_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
+				$admin->initialize($row['admin_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
 				// pushes each object onto the end of the array
 				$admin_array[] = $admin;
 			}
@@ -46,7 +46,7 @@ class Administrator_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
-				$admin->initialize($row['administrator_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
+				$admin->initialize($row['admin_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
 				// pushes each object onto the end of the array
 				$admin_array[] = $admin;
 			}
@@ -66,9 +66,13 @@ class Administrator_controller extends DatabaseController {
 	public function update($administrator, $db_connection)
 	{
 		$sucess = true;
+		$first = $administrator->get_first_name();
+		$last = $administrator->get_last_name();
+		$school = $administrator->get_school_name();
+		$email = $administrator->get_email();
 		
-		// The administrator_id must match the user_id and should not be changed.
-		$query = 'update administrator set first_name = $administrator->first_name, last_name = $administrator->last_name, admin_type = $administrator->admin_type, email = $administrator->email where administrator_id = $administrator->administrator_id';
+		// The admin_id must match the user_id and should not be changed.
+		$query = "update professor set first_name = '$first', last_name = '$last', school_name = '$school', email = '$email' where admin_id = '$id'";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -89,18 +93,22 @@ class Administrator_controller extends DatabaseController {
 	}
 
 
-	public function save_new($administrator, $db_connection)
+	public function save_new(&$administrator, $db_connection)
 	{
 		$sucess = true;
+		$id = $administrator->get_admin_id();
+		$first = $administrator->get_first_name();
+		$last = $administrator->get_last_name();
+		$school = $administrator->get_school_name();
+		$email = $administrator->get_email();
 		
 		// The administrator_id must match the user_id.
-		$query = 'insert into administrator (user_id, first_name, last_name, admin_type, email) 
-				values($administrator->user_id, $administrator->first_name, $administrator->last_name, $administrator->admin_type, $administrator->email)';
+		$query = "insert into administrator (admin_id, first_name, last_name, admin_type, email) 
+				values('$id', '$first', '$last', '$school', '$email')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$administrator->set_administrator_id(mysql_insert_id());
 			mysqli_free_result($result);		
 		}
 		else

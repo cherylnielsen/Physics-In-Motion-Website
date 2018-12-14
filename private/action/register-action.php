@@ -6,8 +6,19 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$login_utility = new LoginUtilities();
 	$form_errors = array();
+	$account_type = null;
+		
+	// validate and sanitize first name and last name
+	$firstname = $login_utility->validate_name($_POST['first_name'], "First", $form_errors, $db_connection);
+	$lastname = $login_utility->validate_name($_POST['last_name'], "Last", $form_errors, $db_connection);
 	
-	// account_type is a radio button set so no input validation needed
+	// validate and preprocess email
+	$email = $login_utility->validate_emails($_POST['email'], $_POST['email_confirm'], $form_errors);
+	
+	// validate and sanitize school name
+	$school = $login_utility->validate_name($_POST['school'], "School", $form_errors, $db_connection);
+	
+	// The account_type is a radio button set, so no sanitizing or validation is needed.
 	if(!isset($_POST['account_type'])) 
 	{ 	
 		$form_errors[] = 'Enter student or professor.';
@@ -16,117 +27,70 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$account_type = $_POST['account_type'];
 	}
-
-	// validate and preprocess emails	
-	$email = $login_utility->validate_email($_POST['email']);
-	$email_confirm = $login_utility->validate_email($_POST['email_confirm']);
+		
+	// validate and preprocess password and user name
+	$username = $login_utility->validate_passwords("username", $_POST['username'], $_POST['username_confirm'], 
+				$form_errors, $db_connection);
+	$password = $login_utility->validate_passwords("password", $_POST['password'], $_POST['password_confirm'], 
+				$form_errors, $db_connection);
 	
-	if(strcmp($email, $email_confirm) != 0)
+	$found = $login_utility->duplicate_username_test($username, $db_connection, $mdb_control);
+	
+	
+	if($found)
 	{
-		$form_errors[] = 'The emails do not match.';
+		$form_errors[] = 'User name is already in use. Please try again';
 	}
 	
-	$str_error = $login_utility->validate_email_format($email);
-	if(!is_null($str_error))
+	if(isset($_POST['account_type']))
 	{
-		$form_errors[] = $str_error;
-	}
-	
-	$str_error = $login_utility->validate_email_format($email_confirm);
-	if(!is_null($str_error))
-	{
-		$form_errors[] = $str_error;
-	}
-	
-	
-	$first_name = $login_utility->validate_input($_POST['first_name'], $db_connection);
-	$last_name = $login_utility->validate_input($_POST['last_name'], $db_connection);
-	$school = $login_utility->validate_input($_POST['school'], $db_connection);
-	$username = $login_utility->validate_input($_POST['username'], $db_connection);
-	
-	if(is_null($first_name) || is_null($last_name))
-	{ 	
-		$form_errors[] = 'Enter first and last name.';
-	}
-	
-	if(is_null($school)) 
-	{ 	
-		$form_errors[] = 'Enter school name.';
-	}
-	
-	if(is_null($username)) 
-	{ 	
-		$form_errors[] = 'Enter user name.';
-	}
-	
-	if (!(preg_match("/^[a-zA-Z ]*$/",$first_name)) || (!preg_match("/^[a-zA-Z ]*$/",$last_name)))
-	{
-		$form_errors[] = 'First and last name can only contain letters and spaces.';
-	}
-	
-	if (!preg_match("/^[a-zA-Z ]*$/",$school))
-	{
-		$form_errors[] = 'School names can only contain letters and spaces.';
-	}
-	
-	$password = $login_utility->validate_input($_POST['password'], $db_connection);
-	$password_confirm = $login_utility->validate_input($_POST['password_confirm'], $db_connection);
-	
-	if((is_null($password)) || (is_null($password_confirm)))
-	{ 	
-		$form_errors[] = 'Enter password.';
-	}
-	else
-	{
-		if(0 != strcmp($password, $password_confirm))
+		$duplicate = $login_utility->duplicate_email_test($email, $account_type, $db_connection, $mdb_control);
+		
+		if($duplicate)
 		{
-			$form_errors[] = 'The passwords do not match.';
+			$form_errors[] = 'Email is already in use. Please try again';
 		}
-		else
+		
+		if($duplicate && $found)
 		{
-			// compare password to reg expression
-			//(min 1 letter & 1 number & 8 char long)
-			if(strlen($password) < 8)
-			{
-				$form_errors[] = 'The password contains less than 8 characters.';
-			}		
-			if(!preg_match("/[a-zA-Z]+/",$password))
-			{
-				$form_errors[] = 'The password must contains at least one letter.';
-			}
-			if(!preg_match("/[0-9]+/",$password))
-			{
-				$form_errors[] = 'The password must contains at least one number.';
-			}
+			$form_errors[] = 'User may already exist, try again or <a id="sign-in" href="login-page.php">Sign In</a> or <a id="forgot_login" href="">Forgot ID / Password?</a>';
 		}
 	}
 	
-	
-	if(count($form_errors) == 0)
+	if(count($form_errors) != 0)
 	{
-		// save data to the database and redirect to the login page
-		//echo'<div class="form-errors"><p><em>Yes, no errors!</em></p></div>';
-		
-		
-		
-	}
-	else
-	{
-		//display errors
-		echo'<div class="form-errors"><p><em>Errors:</em></p>';
+		// display errors
+		echo'<div class="form-errors"><p>Errors:</p>';
 				
 		foreach($form_errors as $str)
 		{
-			echo "$str <br>";
+			echo "<p> $str </p>";
 		}
 		
 		echo '</div>';
 	}
 	
+	if(count($form_errors) == 0)
+	{
+		// Save the data to the database and redirect to the login page
+		$ok = $login_utility->register_new_user($firstname, $lastname, $email, $school, 
+				$account_type, $username, $password, $db_connection, $mdb_control);
+				
+		if($ok) 
+		{
+			$url = "login-page.php";
+			header("Location: $url");
+			exit();
+		}
+		else
+		{
+			echo'<div class="form-errors"><p>Sorry, we goofed!:</p>
+				<p>Registration could not be saved. Please try again later.</p></div>';
+		}
+		
+	}
+	
 
 }
-
-
-
 
 ?>

@@ -19,15 +19,18 @@
     <legend>&nbsp; School Information: &nbsp;</legend>
 		<label>School<br><input type="text" name="school" value="" required></label>
 		<br>
-		<label><input type="radio" name="account_type" value="">&nbsp;Student</label>
+		<label><input type="radio" name="account_type" value="student">&nbsp;Student</label>
 		<br>
-		<label><input type="radio" name="account_type" value="">&nbsp;Professor</label>
+		<label><input type="radio" name="account_type" value="professor">&nbsp;Professor</label>
 		<br>
 	</fieldset>
 	
 	<fieldset class="login-info">
     <legend>&nbsp; Sign In Information: &nbsp;</legend>
-		<label>User Name<br><input type="text" name="username" value="" required></label>
+		<label>User Name<br>(minimum 8 characters, at least one letter and one number)<br>
+		<input type="text" name="username" value="" required></label>
+		<br>
+		<label>Confirm User Name<br><input type="text" name="username_confirm" value="" required></label>
 		<br>
 		<label>Password<br>(minimum 8 characters, at least one letter and one number)<br>
 		<input type="password" name="password" value="" required></label>
