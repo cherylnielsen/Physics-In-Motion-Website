@@ -89,7 +89,7 @@ class Tutorial_lab_controller extends DatabaseController {
 	}
 
 
-	public function save_new($tutorial_lab, $db_connection)
+	public function save_new(&$tutorial_lab, $db_connection)
 	{
 		$sucess = true;
 		// The lab_id is not included, because it is set automatically by the database.
@@ -100,7 +100,7 @@ class Tutorial_lab_controller extends DatabaseController {
 
 		if($result)
 		{
-			$tutorial_lab->set_lab_id(mysql_insert_id());
+			$tutorial_lab->set_lab_id(mysql_insert_id($db_connection));
 			mysqli_free_result($result);		
 		}
 		else

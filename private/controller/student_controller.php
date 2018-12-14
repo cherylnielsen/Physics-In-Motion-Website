@@ -66,10 +66,13 @@ class Student_controller extends DatabaseController{
 	public function update($student, $db_connection)
 	{
 		$sucess = true;
+		$first = $student->get_first_name();
+		$last = $student->get_last_name();
+		$school = $student->get_school_name();
+		$email = $student->get_email();
 		
 		// The student_id should not be changed. The student_id must match user_id.
-		$query = 'update student set first_name = $student->first_name, last_name = $student->last_name, school_name = $student->school_name, email = $student->email  
-		where student_id = $student->student_id';
+		$query = "update student set first_name = '$first', last_name = '$last', school_name = '$school', email = '$email' where student_id = '$id'";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -90,22 +93,21 @@ class Student_controller extends DatabaseController{
 	}
 
 
-	public function save_new($student, $db_connection)
+	public function save_new(&$student, $db_connection)
 	{
 		$sucess = true;
+		$id = $student->get_student_id();
+		$first = $student->get_first_name();
+		$last = $student->get_last_name();
+		$school = $student->get_school_name();
+		$email = $student->get_email();
 		
 		// The student_id must match user_id.
-		$query = 'insert into student (student_id, first_name, last_name, school_name, email) 
-				values($student->student_id, $student->first_name, last_name = $student->last_name, 
-				school_name = $student->school_name, email = $student->email)';
+		$query = "insert into student (student_id, first_name, last_name, school_name, email) 
+				values('$id', '$first', '$last', '$school', '$email')";
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
-		{
-			$student->set_student_id(mysql_insert_id());
-			mysqli_free_result($result);		
-		}
-		else
+		if(!$result)
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';

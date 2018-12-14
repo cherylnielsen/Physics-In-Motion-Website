@@ -4,7 +4,7 @@
 class Notice_controller extends DatabaseController {
 
 	public function __construct() {}
-	//($notice_id, $assignment_id, $notice_type, $date_sent, $notice_text)
+	//($notice_id, $notice_type, $date_sent, $notice_text)
 
 	
 	
@@ -19,7 +19,7 @@ class Notice_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				$notice->initialize($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
 				// pushes each object onto the end of the array
 				$notice_array[] = $notice;	
 			}
@@ -46,7 +46,7 @@ class Notice_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['professor_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				$notice->initialize($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
 				// pushes each object onto the end of the array
 				$notice_array[] = $notice;	
 			}
@@ -66,9 +66,12 @@ class Notice_controller extends DatabaseController {
 	public function update($professor, $db_connection)
 	{
 		$sucess = true;
+		$assignment_id = $notice->get_assignment_id();
+		$notice_type = $notice->get_notice_type();
+		$notice_text = $notice->get_notice_text();
 		
 		// The notice_id should not be changed.
-		$query = 'update notice set first_name = $notice->assignment_id, $notice->notice_type, now(), $notice->notice_text where notice_id = $notice->professor_id';
+		$query = "update notice set assignment_id = '$assignment_id', notice_type = '$notice_type', date_sent = 'now()', notice_text = '$notice_text' where notice_id = '$notice_id'";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -88,19 +91,23 @@ class Notice_controller extends DatabaseController {
 
 	}
 	
-	public function save_new($notice, $db_connection)
+	
+	public function save_new(&$notice, $db_connection)
 	{
 		$sucess = true;
+		$assignment_id = $notice->get_assignment_id();
+		$notice_type = $notice->get_notice_type();
+		$notice_text = $notice->get_notice_text();
 		
 		// The notice_id is not included, because it is set automatically by the database.
-		$query = 'insert into notice (assignment_id, notice_type, date_sent, notice_text) 
-				values($notice->assignment_id, $notice->notice_type, now(), $notice->notice_text)';
+		$query = "insert into notice (assignment_id, notice_type, date_sent, notice_text) 
+				values('$assignment_id', '$notice_type', 'now()', '$notice_text')";
 				
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$notice->set_notice_id(mysql_insert_id());
+			$notice->set_notice_id(mysql_insert_id($db_connection));
 			mysqli_free_result($result);		
 		}
 		else

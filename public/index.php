@@ -28,7 +28,7 @@
 <div class="wrapper">
 
 <header>	
-	<?php include('html-includes/home/header.html'); ?>
+	<?php include('html-includes/home/header.php'); ?>
 </header>
 
 <aside class="nav-quote" id="nav-quote">

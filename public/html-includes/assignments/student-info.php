@@ -13,6 +13,7 @@ require('../private/database-access.php');
 **/
 
 $student_id = 101;
+$assignment_id = 101;
 $first_name = "firstname";
 $last_name = "lastname";
 
@@ -21,15 +22,11 @@ $homework_array = array();
 $has_homework = array(); 
 $notice_array = array();
 
-$table_headings = array();
-$table_headings['Assignments'] = ('assignment id', 'profesor', 'tutorial lab', 'due date', 'points', 'started', 'submitted', 'hours', 'additional instructions');
-$table_headings['Homework'] = ('assignment id', 'summary', 'data', 'graphs', 'math', 'errors', 'full report', 'chat session');
-$table_headings['Notices'] = ('notice id', 'assignment id', 'type', 'date', 'text');
 
 
 echo '<h1>Hello ' . $first_name . ' ' . $last_name . '!</h1>';
 
-$query = 'select * from assignments where student_id =' . $student_id . '';
+$query = "select * from assignment where student_id = $student_id ";
 $result = mysqli_query($db_connection, $query);
 
 if($result)
@@ -37,15 +34,7 @@ if($result)
 	/* the assignment set */
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 	{
-		$lab_name = "";
-		$profesor_name = "";
-		$has_additional_instructions = "";
-		
-		$line = '<tr><td>' . $row['assignment_id'] . '</td><td>' . $row['profesor_id'] . '</td><td>' . $profesor_name . '</td><td>' . $row['lab_id'] . '</td><td>' . $lab_name . '</td><td>' . $row['date_assigned'] . '</td><td>' . $row['date_due'] . '</td><td>' . $row['lab_points'] . '</td><td>' . $row['date_started'] . '</td><td>' . $row['date_submitted'] . '</td><td>' . $row['total_time_spent'] . ' hours</td><td>' . $row['additional_instructions'] . '</td></tr>';
-		
-		$id = $row['assignment_id'];
-		array_push($assignment_array, $line);	
-		array_push($has_homework, $id => false);
+		echo '<p> an assignment was found </p>';
 	}
 	
 	mysqli_free_result($result);		
@@ -56,7 +45,7 @@ else
 }
 
 
-$query = 'select * from student_homework where student_id =' . $student_id . '';
+$query = "select * from homework where homework_id = $assignment_id ";
 $result = mysqli_query($db_connection, $query);
 
 if($result)
@@ -64,11 +53,7 @@ if($result)
 	/* the homework set */
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 	{
-		$line = '<tr><td>' . $row['assignment_id'] . '</td><td>' . $row['profesor_id'] . '</td><td>' . $row['lab_id'] . '</td><td>' . $row['date_assigned'] . '</td><td>' . $row['date_due'] . '</td><td>' . $row['lab_points'] . '</td><td>' . $row['date_started'] . '</td><td>' . $row['date_submitted'] . '</td><td>' . $row['total_time_spent'] . ' hours</td><td>' . $row['additional_instructions'] . '</td></tr>';
-		
-		$id = $row['assignment_id'];
-		array_push($homework_array, $line);	
-		$has_homework[$id] => true;
+		echo '<p> a homework was found </p>';
 	}
 	
 	mysqli_free_result($result);		
@@ -79,19 +64,14 @@ else
 }
 
 
-
-
-
-$query = 'select * from notifications where student_id =' . $student_id . '';
+$query = "select * from notice where assignment_id = $assignment_id ";
 $result = mysqli_query($db_connection, $query);
 
 if($result)
 {
 	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 	{
-		$line = '<tr><td>' . $row['assignment_id'] . '</td><td>' . $row['profesor_id'] . '</td><td>' . $row['lab_id'] . '</td><td>' . $row['date_assigned'] . '</td><td>' . $row['date_due'] . '</td><td>' . $row['lab_points'] . '</td><td>' . $row['date_started'] . '</td><td>' . $row['date_submitted'] . '</td><td>' . $row['total_time_spent'] . ' hours</td><td>' . $row['additional_instructions'] . '</td></tr>';
-		
-		array_push($notice_array, $line);				
+			echo '<p> a notice was found </p>';
 	}
 	
 	mysqli_free_result($result);		

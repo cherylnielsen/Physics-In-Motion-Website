@@ -90,27 +90,27 @@ class Users_controller extends DatabaseController {
 	}
 
 
-	public function save_new($user, $db_connection)
+	public function save_new(&$user, $db_connection)
 	{
+		$name = $user->get_user_name();
+		$pw = $user->get_user_password();
+		$str = $user->get_user_type();
 		$sucess = true;
 		// The user_id is set automatically by the database.
-		$query = 'insert into users (user_name, user_password, user_type) 
-				values($user->user_name, $user->user_password, $user->user_type)';
+		$query = "insert into users (user_name, user_password, user_type) 
+				values('$name', '$pw', '$str')";
 		
 		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			$user->set_user_id(mysql_insert_id());
-			mysqli_free_result($result);					
-		}
-		else
+		$id = mysqli_insert_id($db_connection);
+		$user->set_user_id($id);			
+		
+		if(!$result)
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 			echo '<p>New user could not be saved.</p>';
 		}
-
+	
 		mysqli_close($db_connection);
 		return $sucess;		
 	}
@@ -119,9 +119,14 @@ class Users_controller extends DatabaseController {
 	public function update($user, $db_connection)
 	{
 		$sucess = true;
+		$name = $user->get_user_name();
+		$pw = $user->get_user_password();
+		$str = $user->get_user_type();
+		$id = $user->get_user_id();
+		
 		// The user_id should not be changed.
-		$query = 'update users set user_name = $user->user_name, user_password = $user->user_password, 
-		 user_type = $user->user_type where user_id = $user->user_id';
+		$query = "update users set user_name = '$name', user_password = '$pw', 
+		 user_type = '$str' where user_id = '$id'";
 				
 		$result = mysqli_query($db_connection, $query);
 

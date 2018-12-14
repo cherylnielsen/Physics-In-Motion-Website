@@ -88,11 +88,7 @@ class MasterDatabaseController
 		$db_connection = $this->get_db_connection();
 		$group_array = array();
 		$control = $this->getController($data_type);
-		
-		if(!is_null($control))
-		{
-			$group_array = $control->get_by_attribute($attribute_value, $attribute_type, $db_connection);
-		}
+		$group_array = $control->get_by_attribute($attribute_value, $attribute_type, $db_connection);
 		
 		return $group_array;
 	}
@@ -103,41 +99,29 @@ class MasterDatabaseController
 		$db_connection = $this->get_db_connection();
 		$group_array = array();
 		$control = $this->getController($data_type);
-		
-		if(!is_null($control))
-		{
-			$group_array = $control->get_all($db_connection);
-		}
+		$group_array = $control->get_all($db_connection);
 		
 		return $group_array;		
 	}
 	
 	
-	public function update($data_type)
+	public function update($db_row_data, $data_type)
 	{
 		$db_connection = $this->get_db_connection();
 		$status;
 		$control = $this->getController($data_type);
-		
-		if(!is_null($control))
-		{
-			$status = $control->update($data_type, $db_connection);
-		}
+		$status = $control->update($db_row_data, $db_connection);
 		
 		return $status;		
 	}
 	
 	
-	public function save_new($data_type)
+	public function save_new(&$db_row_data, $data_type)
 	{
 		$db_connection = $this->get_db_connection();
 		$status;
 		$control = $this->getController($data_type);
-		
-		if(!is_null($control))
-		{
-			$status = $control->save_new($data_type, $db_connection);
-		}
+		$status = $control->save_new($db_row_data, $db_connection);
 		
 		return $status;	
 	}

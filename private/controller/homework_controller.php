@@ -88,7 +88,7 @@ class Homework_controller extends DatabaseController {
 	}
 	
 	
-	public function save_new($homework, $db_connection)
+	public function save_new(&$homework, $db_connection)
 	{
 		$sucess = true;
 		

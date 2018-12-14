@@ -18,8 +18,7 @@ class Assignment_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$assignment = new Assignment();
-				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], 
-				$row['date_submited'], $row['total_time'], $row['added_instructions']);
+				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], $row['date_submited'], $row['total_time'], $row['added_instructions']);
 				// pushes each object onto the end of the array
 				$assignment_array[] = $assignment;
 			}
@@ -46,8 +45,7 @@ class Assignment_controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$assignment = new Assignment();
-				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], 
-				$row['date_submited'], $row['total_time'], $row['added_instructions']);
+				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], $row['date_submited'], $row['total_time'], $row['added_instructions']);
 				// pushes each object onto the end of the array
 				$assignment_array[] = $assignment;
 			}
@@ -66,9 +64,20 @@ class Assignment_controller extends DatabaseController {
 	public function update($assignment, $db_connection)
 	{
 		$sucess = true;
+		
+		$assignment_id = $assignment->get_assignment_id();
+		$professor_id = $assignment->get_professor_id();
+		$student_id = $assignment->get_student_id();
+		$lab_id = $assignment->get_lab_id();
+		$date_assigned = $assignment->get_date_assigned();
+		$date_due = $assignment->get_date_due();
+		$date_submited = $assignment->get_date_submited();
+		$total_time = $assignment->get_total_time();
+		$added_instructions = $assignment->get_added_instructions();
+		
 		// The assignment_id should not be changed.
-		$query = 'update assignment set professor_id = $assignment->professor_id, student_id = $assignment->student_id, lab_id = $assignment->lab_id, date_assigned = $assignment->date_assigned, date_due = $assignment->date_due, date_submited = $assignment->date_submited, total_time = $assignment->total_time, added_instructions = $assignment->added_instructions
-					where assignment_id = $assignment_id';
+		$query = "update assignment set professor_id = '$professor_id', student_id = '$student_id', lab_id = '$lab_id', date_assigned = '$date_assigned', date_due = '$date_due', date_submited = '$date_submited', total_time = '$total_time', added_instructions = '$added_instructions'
+					where assignment_id = '$assignment_id'";
 					
 		$result = mysqli_query($db_connection, $query);
 
@@ -89,17 +98,27 @@ class Assignment_controller extends DatabaseController {
 	}
 
 
-	public function save_new($assignment, $db_connection)
+	public function save_new(&$assignment, $db_connection)
 	{
 		$sucess = true;
+		
+		$professor_id = $assignment->get_professor_id();
+		$student_id = $assignment->get_student_id();
+		$lab_id = $assignment->get_lab_id();
+		$date_assigned = $assignment->get_date_assigned();
+		$date_due = $assignment->get_date_due();
+		$date_submited = $assignment->get_date_submited();
+		$total_time = $assignment->get_total_time();
+		$added_instructions = $assignment->get_added_instructions();
+		
 		// The assignment_id is not included, because it is set automatically by the database.
-		$query = 'insert into assignment (professor_id, student_id, lab_id, date_assigned, date_due, date_submited, total_time) values (professor_id = $assignment->professor_id, student_id = $assignment->student_id, lab_id = $assignment->lab_id, date_assigned = $assignment->date_assigned, date_due = $assignment->date_due, date_submited = $assignment->date_submited, total_time = $assignment->total_time, added_instructions = $assignment->added_instructions)';
+		$query = "insert into assignment (professor_id, student_id, lab_id, date_assigned, date_due, date_submited, total_time) values (professor_id = '$professor_id', student_id = '$student_id', lab_id = '$lab_id', date_assigned = '$date_assigned', date_due = '$date_due', date_submited = '$date_submited', total_time = '$total_time', added_instructions = '$added_instructions')";
 		
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$assignment->set_assignment_id(mysql_insert_id());
+			$assignment->set_assignment_id(mysql_insert_id($db_connection));
 			mysqli_free_result($result);		
 		}
 		else

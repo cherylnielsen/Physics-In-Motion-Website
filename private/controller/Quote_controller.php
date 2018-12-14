@@ -90,17 +90,21 @@ class Quote_controller extends DatabaseController {
 	}
 
 
-	public function save_new($quote, $db_connection)
+	public function save_new(&$quote, $db_connection)
 	{
 		$sucess = true;
+		$date = $quote->get_date_posted();
+		$author = $quote->get_author();
+		$text = $quote->get_quote_text();
+		
 		// The quote_id is set automatically by the database.
-		$query = 'insert into quote (date_posted, author, quote_text) 
-				values($quote->date_posted, $quote->author, $quote->quote_text)';
+		$query = "insert into quote (date_posted, author, quote_text) 
+				values('$date', '$author', '$text')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
-			$quote->set_quote_id(mysql_insert_id());
+			$quote->set_quote_id(mysql_insert_id($db_connection));
 			mysqli_free_result($result);					
 		}
 		else
@@ -119,9 +123,14 @@ class Quote_controller extends DatabaseController {
 	public function update($quote, $db_connection)
 	{
 		$sucess = true;
+		$date = $quote->get_date_posted();
+		$author = $quote->get_author();
+		$text = $quote->get_quote_text();
+		$id = $quote->get_quote_id();
+		
 		// The quote_id should not be changed.
-		$query = 'update quote set date_posted = $quote->date_posted, author = $quote->author, 
-					quote = $quote->quote_text where quote_id = $quote->quote_id';
+		$query = "update quote set date_posted = '$date', author = '$author', 
+					quote = '$text' where quote_id = '$id'";
 				
 		$result = mysqli_query($db_connection, $query);
 
