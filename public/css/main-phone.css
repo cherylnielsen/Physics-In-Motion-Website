@@ -2,99 +2,70 @@
 /* CSS Document */
 /* changes to css for phone size screens */
 
+@media screen and (max-width: 600px) {
 
-header{ 
-	height: 75px;
-}
+	header{ 
+		height: 108px;
+	}
 
-div.large-logo {
-	width: 100%;
-	height: 75px;
-}
+	div.logo {
+		width: 60%;
+		height: 108px;
+	}
 
-a {
-	margin: 0.25em;
-	padding: 0;
-}
+	a {
+		margin: 0.25em;
+		padding: 0;
+	}
 
-div.login {
-	position: absolute;
-	top: 82px;
-	right: 4px;	
-	height: 90;
-	padding: 0 1em 0.5em 1em;
-}
+	div.login {
+		position: absolute;
+		top: 0;
+		right: 0;		
+		padding: 0.5em 1em 0 1em;
+	}
 
-h1.summary {
-	width: 50%;
-	font-size: 1.1em;
-	position: absolute;
-	right: 0;
-	top: 90px;
-	margin: 0.5em;
-}
+	aside.nav-quote {
+		clear: both;
+		float: none;
+		width: auto;
+		margin: auto;
+		left: 0;
+		padding: 2%;
+		border-left: none;
+		border-right: none;
+	}
 
-aside.nav-quote {
-	clear: both;
-	float: none;
-	width: auto;
-	margin: auto;
-	position: relative;
-	top: 123px;
-	left: 0;
-	padding: 2%;
-}
+	div.quote {
+		display: none;
+	}
 
-a#quote-link {
-	padding: 0;
-}
+	nav.navigation > a {
+		display: inline-block;
+		padding: 0;
+	}
 
-div.quote {
-	border: 4px double #03AA0D;
-	border-radius: 15px;
-}
-
-div.quote > * {
-	margin: 0.5em;
-	padding: 0;
-}
-
-
-nav.site > a {
+	a#new-labs {
 	display: inline-block;
-	padding: 0;
-	border-bottom: none;
+	margin: 0.5em 0 0 1.5em;
 }
 
-a#new-labs {
-	display: inline;
-	padding: 0;
-	margin: 0;
-}
+	section.main-content {
+		clear: both;
+		float: none;
+		width: auto;
+		padding: 2% 4% 6% 4%;
+	}
 
-section.main-content {
-	clear: both;
-	float: none;
-	width: auto;
-	padding: 2%;
-	margin: auto;
-	position: relative;
-	top: 120px;
-}
+	section.new-labs {
+		clear: both;
+		float: none;
+		width: auto;
+		padding: 2% 0 2% 0;		
+		position: relative;
+		right: 0;
+		border-left: none;
+		border-right: none;
+	}
 
-section.new-labs {
-	clear: both;
-	float: none;
-	width: auto;
-	padding: 2% 0 2% 0;
-	margin: auto;
-	position: relative;
-	top: 120px;
-	right: 0;
-}
-
-footer {  
-	position: relative;
-	top: 120px;
-	border: 4px double #03AA0D;
 }

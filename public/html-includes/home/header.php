@@ -3,12 +3,10 @@
 	session_start();
 
 	echo
-	'<div class="large-logo">	
+	'<div class="logo">	
 		<a id="top" href="index.php"><h1>&nbsp;</h1></a>
-		<!--background="images/3D logo Physics in Motion 12 2 18.png"
-			Used background instead of img because it was the only way to get correct automatic resizing of width when using a fixed hight in all of the tested brower types.-->
-			
-		<h1 class="large-logo">Physics in Motion</h2><!-- for print view only-->
+		<h1 class="logo-print-view">Physics in Motion</h1><!-- text for print view only-->
+		<!--Used background image instead of img tag because it was the only way to get correct automatic resizing of width when using a fixed hight in all of the tested brower types.-->
 	</div>';
 	
 	if(!isset($_SESSION['user_id']))
@@ -23,7 +21,7 @@
 	{
 		echo
 		'<div class="login">
-			<p class="welcome">Hello  ' .$_SESSION["first_name"] . '</p><br>
+			<p class="welcome">Hello  ' .$_SESSION["first_name"] . ' ' .$_SESSION["last_name"] . '</p><br>
 			<a id="logout" href="html-includes/login/logout.php">Sign Out</a>			
 		</div>';
 	}

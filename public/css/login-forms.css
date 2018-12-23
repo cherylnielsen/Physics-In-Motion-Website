@@ -5,12 +5,28 @@
 h1.summary {
 	width: 50%;
 	position: relative;
-	left: 2.5;
+	left: 1.5em;
+}
+
+@media screen and (max-width: 950px) {
+	h1.summary {
+		width: 80%;
+		position: relative;
+		left: 1em;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	h1.summary {
+		width: 80%;
+		position: relative;
+		left: 0.5em;
+	}
 }
 
 h1.form {
 	margin: 1.5%;
-	padding: 5% 0 0 1%;	
+	padding: 0 0 0 1%;	
 }
 
 a {
@@ -28,6 +44,7 @@ section.main-content {
 
 form {
 	float: left;
+	padding-bottom: 1em;
 }
 
 form > * {
@@ -80,9 +97,4 @@ input[type=checkbox] {
 	margin: 0.5em 0;
 }
 
-@media screen and (max-width: 600px) {
-	div.quote {
-		display: none;
-	}
-}
 

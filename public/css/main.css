@@ -27,13 +27,6 @@ a {
 	font-weight: 900;	
 }
 
-a#top {
-	margin: 0;
-	height: inherit;
-	width: 150%;
-	text-decoration: none;
-}
-
 a#quote-link {
 	margin: 0.5em;
 }
@@ -52,10 +45,16 @@ h2 {
 	margin: 1em;
 }
 
-
-
 p {
-	margin: 0.5em;
+	margin: 0.5em 0;
+}
+
+a#top {
+	margin: 0;
+	padding: 0;
+	height: 115px;
+	width: 150%;
+	text-decoration: none;
 }
 
 header{ 
@@ -66,26 +65,31 @@ header{
 	background-color: #A7DAFA;
 }
 
-div.large-logo {
+div.logo {
 	width: 80%;
 	height: 125px;
 	padding: 0.5% 1%;	
 	background: url("../images/3D logo Physics in Motion 12 2 18.png");
 	background-origin: content-box;
-	background-position: left, center;
+	background-position: left center;
 	background-repeat: no-repeat;
 	background-size:  100% 100%;	
 }
 
 
-h1.large-logo {
+h1.logo-print-view {
 	display: none;
 }
 
+div.logo-summary {
+	position: absolute;
+	top: 80px;
+	
+}
+
 h1.summary {
-	width: 60%;
 	position: relative;
-	left: 3%;
+	right: 2.5%;
 }
 
 div.login {
@@ -127,11 +131,12 @@ aside.nav-quote {
 	left: -4px;
 }
 
-nav.site > a {
+nav.navigation > a {
 	display: inline-block;
 	padding: 1em;
 	width: 80%;
 }
+
 
 hr {
 	border-style: solid;
@@ -149,22 +154,23 @@ div.quote > h2 {
 
 section.main-content {
 	float: left;
-	width: 50%;
-	padding: 1% 0 2% 2%;
-	position: relative;
-	top: -30px;
+	width: 55%;
+	padding: 1% 0 0 2%;
 }
 
+section.main-content > ul {
+	padding-left: 1em;
+}
+	
 section.new-labs {
 	float: right;
 	width: 25%;
-	padding: 0 0 2% 0;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
-	margin-bottom: 3em;
+	padding-bottom: 1em;
 	background-color: #A7DAFA;
 	position: relative;
-	top: -90px;
+	right: -4px;
 }
 
 article.new-labs {
