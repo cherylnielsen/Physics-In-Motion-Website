@@ -2,15 +2,14 @@
 /* CSS Document */
 
 
-h1.summary {
-	width: 50%;
+h1.logo-statement {
 	position: relative;
-	left: 2.5;
+	left: 3%;
 }
 
 h1.form {
 	margin: 1.5%;
-	padding: 5% 0 0 1%;	
+	padding: 0 0 0 1%;	
 }
 
 a {
@@ -21,13 +20,14 @@ a {
 	
 section.main-content {
 	float: left;
-	width: auto;
-	padding: 0 2%;
+	width: 50%;
+	padding: 0 0 0 5%;
 	margin-bottom: 2em;	
 }
 
 form {
-	float: left;
+	width: auto;
+	padding-bottom: 1em;
 }
 
 form > * {
@@ -50,7 +50,7 @@ legend {
 	
 input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
-	width: 25em;
+	width: 96%;
 	padding: 0.5em;
 }
 
@@ -80,9 +80,40 @@ input[type=checkbox] {
 	margin: 0.5em 0;
 }
 
-@media screen and (max-width: 600px) {
-	div.quote {
-		display: none;
+
+@media screen and (max-width: 950px) {
+	
+	h1.logo-statement {
+		width: 80%;
+		position: relative;
+		left: 3%;
 	}
+	
+	section.main-content {
+		width: 70%;
+		padding: 0 0 0 5%;
+	}
+
 }
+
+
+@media screen and (max-width: 600px) {
+	
+	h1.logo-statement {
+		width: 80%;
+		position: relative;
+		left: 3%;
+	}
+	
+	section.main-content {
+		width: 90%;
+		padding: 0 0 0 5%;	
+	}
+	
+}
+
+
+
+
+
 

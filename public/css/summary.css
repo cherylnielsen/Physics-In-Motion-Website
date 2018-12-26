@@ -1,0 +1,60 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+/* for all size screens */
+
+h1.logo-statement {
+	position: relative;
+	right: 3%;
+}
+
+.grid-container {
+  display: grid;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-template-columns: auto;
+}
+
+img.summary {
+	display: block;
+	height: 200px;
+	width: 300px;
+	border: 4px double #03AA0D;
+}
+
+img.right {
+	/*justify-self: end;*/
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
+img.left {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+article.summary > div {
+	padding: 20px 0;
+}
+
+h1.summary {
+	margin: 0 1em 1em 0;
+}
+
+ul {
+	margin-left: 1em;
+}
+
+@media screen and (max-width: 950px) {
+	h1.logo-statement {
+		width: 80%;
+		position: relative;
+		left: 3%;
+	}
+	
+	.grid-container {
+	  display: block;
+	  
+	}
+	
+}
+

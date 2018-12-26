@@ -7,11 +7,10 @@ div.login {
 	display: none;
 }
 
-h1.large-logo {
+h1.logo-print-view {
 	display: inline-block;
 	position: absolute;
-	top: -50;
-	right: 0;
+	top: 0;
 }
 
 aside.nav-quote {
