@@ -8,6 +8,6 @@ update tutorial_lab set short_description = "Experiment with DC circuits using r
 
 update tutorial_lab set short_description = "Vary inclines, masses, and friction, while collecting and analyzing data on distance, time, and velocity. Topics include linear motion, collisions, and conservation of linear momentum." where lab_id = 103;
 
-update tutorial_lab set short_description = "Light shining on metal causes the release of electrons which are detected as current. But the data broke Classical Physics theory about the behavior of light. The famous experiment that lead to the Nobel Prize for Einstein and the discovery of Quantum Physics." where lab_id = 104;
+update tutorial_lab set short_description = "Light shining on metal causes the release of electrons which are detected as current. But the data broke Classical Physics theory about the behavior of light. The famous experiment that lead to the Nobel Prize for Einstein." where lab_id = 104;
 
 select * from tutorial_lab;

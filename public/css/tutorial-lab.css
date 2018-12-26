@@ -1,36 +1,108 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
-h1.summary {
-	width: 70%;
-	position: relative;
-	left: 6%;
-}
-
-section.main-content > h1 {
-	border: 4px double #03AA0D;
-	border-radius: 15px;
-	padding: 1em;
-	background-color: #A7DAFA;
+h1.logo-statement, h1.labs {
 	text-align: center;
 }
 
+/*
+h1.labs {
+	border: 4px double #03AA0D;
+	border-radius: 15px;
+	padding: 0.5em;
+	background-color: #A7DAFA;
+	text-align: center;
+	width: 100%;
+}
+*/
 section.main-content {
 	float: left;
 	width: 80%;
-	padding: 2%;
-	margin-bottom: 2em;	
+	margin-bottom: 2em;		
+}
+
+.grid-container {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  grid-template-columns: auto auto auto auto;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 1200px) {
+	.grid-container {
+	  grid-template-columns: auto auto auto;	  
+	}
+}
+
+@media screen and (max-width: 950px) {
+	.grid-container {
+	  grid-template-columns: auto auto;	  
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.grid-container {
+	  display: block;	  
+	}
+}
+
+.grid-lab-info {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  grid-template-columns: auto auto;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 1200px) {
+	.grid-lab-info {
+	  grid-template-columns: auto;	  
+	}
+}
+
+@media screen and (max-width: 950px) {
+	.grid-lab-info {
+	  display: block;  
+	}
+}
+
+img.labs {
+	height: 100px;
+	margin-bottom: 0.5em;
+}
+
+img.lab-info {
+	height: 200px;
+	padding:  1.5em 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
 }
 
 article.labs {
-	padding: 0 1em 1em 1em;
-	border-bottom: 4px double #03AA0D;
+	padding: 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
 }
 
-article.labs > img {
-	height: 200px;
+article.lab-info {
+	padding: 1em;
+	border: 4px double #03AA0D;
+	border-radius: 15px;
 }
 
+article.labs > h1,  article.labs > h2 {
+	margin: 0 0 0.5em 0;
+	text-align: center;
+}
+
+a.labs {
+	margin: 0.5em 0;
+}
+
+a#bottom {
+	display: block;
+}
 
 .development-status {
 	color: #03AA0D;
@@ -40,24 +112,6 @@ article.labs > img {
 	color: red;
 }
 
-section.lab-details {
-	padding-left: 1em;
-}
 
-section.lab-info-aside {
-	float: right;
-	width: 25%;
-	padding: 0;
-	border: 4px double #03AA0D;
-	border-radius: 15px;
-	margin-bottom: 3em;
-	background-color: #A7DAFA;
-}
-
-article.lab-info-aside {
-	padding: 1em;
-	margin-bottom: 0;
-	background-color: white;
-}
 
 

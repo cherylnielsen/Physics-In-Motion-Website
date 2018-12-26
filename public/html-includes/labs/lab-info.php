@@ -9,61 +9,72 @@ $attribute_value = $lab_id;
 $labs = array();
 $labs = $mdb_control->get_by_attribute($attribute_value, $attribute_type, $data_type);
 
-$length_labs = count($labs);
-
-if((!is_null($labs)) AND ($length_labs > 0))
+if((!is_null($labs)) AND (count($labs) > 0))
 {	
-	for($i = 0; $i < $length_labs; $i++) 
+	$lab = array();
+	$lab = $labs[0];
+	
+	echo '<h1 class="labs">Tutorial ' . $lab->get_lab_id() . ' : ' . $lab->get_lab_name() . '</h1>';
+	
+	echo
+	'<div class="grid-lab-info">
+	<img class="lab-info" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+	<article class="lab-info">';
+		
+	$status = $lab->get_lab_status();
+	switch(	$status )
 	{
-		$lab = $labs[$i];
-		
-		echo '<h1>Tutorial ' . $lab->get_lab_id() . ': ' . $lab->get_lab_name() . '</h1>';
-		
-		echo
-		'<article class="labs">
-			<img src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">';
-			
-		$status = $lab->get_lab_status();
-		switch(	$status )
-		{
-			case 'In Development':
-				echo'<h1 class="development-status">' . $status . '!</h1>';
-				break;
-			case 'New':
-				echo'<h1 class="new-status">' . $status . '!</h1>';
-				break;
-		}
-					
-		echo'<p>' . $lab->get_short_description() . '</p>
-		<h2>Rating: to be determined</h2>
-		<p><a id="unity-link" href="">Start this lab now.</a></p>
-		</article>';
-		
-		echo 
-		'<section class="lab-details">
-		<h2>Average time to complete</h2>
-		<p>to be determined</p>
+		case 'In Development':
+			echo'<h1 class="development-status">' . $status . '!</h1>';
+			break;
+		case 'New':
+			echo'<h1 class="new-status">' . $status . '!</h1>';
+			break;
+	}
+				
+	echo'<p>' . $lab->get_short_description() . '</p>
+	<h2>Average time to complete: ??</h2>
+	<h2>Student Rating: ??</h2>
+	<h2>Professor Rating: ??</h2>	
+	<p><a id="unity-link" href="">Start this lab now!</a></p>
+	</article>';
+	
+	echo 
+	'<article class="lab-info">
 		<h2>Prerequisites</h2>
 		<p>to be determined</p>
 		<h2>Key Topics</h2>
 		<p>to be determined</p>
+	</article>';
+	
+	echo 
+	'<article class="lab-info">
 		<h2>Key Equations</h2>
 		<p>to be determined</p>
+	</article>';
+	
+	echo 
+	'<img class="lab-info" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+	<img class="lab-info" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">';
+	
+	echo 
+	'<article class="lab-info">
 		<h2>Discription</h2>
 		<p>to be determined</p>
+	</article>';
+	
+	echo 
+	'<article class="lab-info">
 		<h2>Instructions</h2>
 		<p>to be determined</p>
-		</section>';
-		
-	}
-		
+	</article>';
+	
+	echo '</div><a id="bottom" href="#top">return to top</a>';
 }
 else
 {
 	echo '<h2>Oops! Lab could not be found.</h2>';
 }
-
-echo '<br><a id="bottom" href="#top">return to top</a>';
 
 
 ?>

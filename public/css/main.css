@@ -37,17 +37,18 @@ a#bottom {
 
 h1 {
 	font-size: 1.3em;
-	margin: 1em;
+	margin: 0.5em 0;
 }
 
 h2 {
 	font-size: 1.1em;
-	margin: 1em;
+	margin: 0.5em 0;
 }
 
 p {
 	margin: 0.5em 0;
 }
+
 
 a#top {
 	margin: 0;
@@ -87,11 +88,6 @@ div.logo-summary {
 	
 }
 
-h1.summary {
-	position: relative;
-	right: 2.5%;
-}
-
 div.login {
 	border: 4px double #03AA0D;
 	border-radius: 15px;	
@@ -111,7 +107,6 @@ div.login > * {
 	display: inline-block;
 	margin: 0.5em;
 }
-
 
 input[type=button] {
 	font-family: "Times New Roman", "serif";
@@ -155,13 +150,9 @@ div.quote > h2 {
 section.main-content {
 	float: left;
 	width: 55%;
-	padding: 1% 0 0 2%;
+	padding: 0 0 1% 2%;
 }
 
-section.main-content > ul {
-	padding-left: 1em;
-}
-	
 section.new-labs {
 	float: right;
 	width: 25%;
@@ -186,7 +177,6 @@ h1.development-status {
 h1.new-status {
 	color: red;
 }
-
 
 footer {  
 	clear: both;

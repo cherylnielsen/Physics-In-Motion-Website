@@ -6,7 +6,8 @@ $labs = array();
 $labs = $mdb_control->get_all($data_type);
 $length_labs = count($labs);
 
-echo '<h1>Tutorial Labs Currently Available</h1>';
+echo '<h1 class="labs">Explore our Tutorial Labs!</h1>
+	<div class="grid-container">';
 
 if((!is_null($labs)) AND ($length_labs > 0))
 {	
@@ -16,7 +17,7 @@ if((!is_null($labs)) AND ($length_labs > 0))
 		
 		echo
 		'<article class="labs">
-			<img src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+			
 			<h2>Tutorial ' . $lab->get_lab_id() . ': ' . $lab->get_lab_name() . '</h2>';
 			
 		$status = $lab->get_lab_status();
@@ -30,9 +31,11 @@ if((!is_null($labs)) AND ($length_labs > 0))
 				break;
 		}
 			
-		echo '<p>' . $lab->get_short_description() . '</p>
-		<h2>Rating: to be determined</h2>
-		<p><a href="tutorial-information-page.php?num=' . $lab->get_lab_id() . '&lab=' . $lab->get_web_link() . '">Learn More</a></p>
+		echo '<img class="labs" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+		<p>' . $lab->get_short_description() . '</p>
+		<h2>Student Rating: ??</h2>
+		<h2>Professor Rating: ??</h2>
+		<a class="labs" href="tutorial-information-page.php?num=' . $lab->get_lab_id() . '&lab=' . $lab->get_web_link() . '">Learn More</a>
 		</article>';
 	}
 	
@@ -43,7 +46,7 @@ else
 	echo '<p> Oops! Error: no labs found.</p>';
 }
 
-echo '<br><a id="bottom" href="#top">return to top</a>';
+echo '</div><br><a id="bottom" href="#top">return to top</a>';
 
 
 ?>

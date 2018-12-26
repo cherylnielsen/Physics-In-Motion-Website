@@ -3,13 +3,14 @@
 $quote = $mdb_control->get_quote_of_the_month();
 
 echo
-'<nav class="navigation">		
-	<a id="home" href="index.php">Home Page</a><hr>
-	<a href="student-page.php">Student Pages</a><hr>
-	<a href="professor-page.php">Professor Pages</a><hr>
-	<a href="tutorial-labs-page.php">Tutorial Labs</a><hr>
-	<a id="navigation" href="index.php#new-labs">See the Newest Tutorial Labs!</a><hr>
-</nav>';
+'<aside class="nav-quote">
+	<nav class="navigation">		
+		<a id="home" href="index.php">Home Page</a><hr>
+		<a href="student-page.php">Student Pages</a><hr>
+		<a href="professor-page.php">Professor Pages</a><hr>
+		<a href="tutorial-labs-page.php">Tutorial Labs</a><hr>
+		<a id="navigation" href="index.php#new-labs">See the Newest Tutorial Labs!</a><hr>
+	</nav>';
 
 if(!is_null($quote))
 {
@@ -26,5 +27,5 @@ else
 	echo '<p> Opps: error! </p>';
 }
 
-
+echo '</aside>';
 ?>

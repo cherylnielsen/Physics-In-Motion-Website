@@ -15,14 +15,16 @@ section.main-content {
 	float: left;
 	width: 70%;
 	padding: 2% 0 2% 2%;
+	margin-bottom: 1em;
 }
 
 section.new-labs {
 	clear: both;
-	float: right;
-	width: 85%;
-	padding: 2% 0 2% 0;
-	margin: auto;
+	float: none;
+	width: auto;
+	padding: 2% 0 2% 0;		
 	position: relative;
-	right: -4px;
+	right: 0;
+	border-left: none;
+	border-right: none;
 }
