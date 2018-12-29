@@ -5,43 +5,18 @@ class LoginUtilities
 	
 	public function __construct() {}
 	
-	public function sanitize_input($data_input, $db_connection)
+	public function sanitize_input($data_input)
 	{
-		if(isset($data_input))
-		{		
-			$data_input = trim($data_input);
-			$data_input = filter_var($data_input, FILTER_SANITIZE_STRING);		
-			$data_input = mysqli_real_escape_string($db_connection, $data_input);
-		}
-		else
-		{
-			$data_input = null;	
-		}
+		if(!isset($data_input)) { return null; }
 		
-		if(strlen($data_input) == 0)
-		{				
-			$data_input = null;				
-		}
+		$data_input = trim($data_input);
+		$data2 = strip_tags($data_input);	
+		$data2 = stripslashes($data2);
+		$data2 = htmlspecialchars($data2);
+		if(strlen($data2) == 0) { return null; }
 		
-		return $data_input;
-	}
-
-	public function sanitize_email($email)
-	{
-		if(isset($email))
-		{		
-			$email = trim($email);	
-			
-			if(strlen($email) > 0)
-			{
-				$email = filter_var($email, FILTER_SANITIZE_EMAIL);				
-				return $email;				
-			}
-
-			return null;
-		}
+		return $data2;
 		
-		return null;
 	}
 	
 	
@@ -59,6 +34,7 @@ class LoginUtilities
 		}
 		else 
 		{
+			$email2 = filter_var($email, FILTER_SANITIZE_EMAIL);	
 			// checks that email string is properly formated
 			if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
 			{
@@ -73,25 +49,21 @@ class LoginUtilities
 	public function validate_emails($email, $email_confirm, &$form_errors)
 	{	
 		$email_error = null;
-		$email = $this->sanitize_email($_POST['email']);
-		$email_confirm = $this->sanitize_email($_POST['email_confirm']);
+		$email = $this->sanitize_input($email);
+		$email_confirm = $this->sanitize_input($email_confirm);
 		
-		if(strcmp($email, $email_confirm) != 0)
+		$err1 = $this->check_email_format($email);
+		$err2 = $this->check_email_format($email_confirm);
+		
+		if(!is_null($err1)) { $form_errors[] = $err1; }	
+		
+		if(!is_null($err2)) { $form_errors[] = $err2; }
+		
+		if(isset($email) && isset($email_confirm))
 		{
-			$form_errors[] = 'The emails do not match.';
-		}
-		else
-		{
-			$err1 = $this->check_email_format($email);
-			$err2 = $this->check_email_format($email_confirm);
-			
-			if(!is_null($err1))
-			{ 
-				$form_errors[] = $err1; 
-			}			
-			else if(!is_null($err2))
-			{ 
-				$form_errors[] = $err2; 
+			if(strcmp($email, $email_confirm) != 0)
+			{
+				$form_errors[] = 'The emails do not match.';
 			}
 		}
 		
@@ -99,14 +71,14 @@ class LoginUtilities
 	}
 	
 	
-	public function validate_name($name, $type, &$form_errors, $db_connection)
+	public function validate_name($name, $type, &$form_errors)
 	{
-		$name = $this->sanitize_input($name, $db_connection);
+		$name = $this->sanitize_input($name);
 		$name_error = null;
 		
 		if(is_null($name)) 
 		{ 	
-			$form_errors[] = "Enter $type name.";
+			$form_errors[] = "Enter $type";
 		}
 		else
 		{
@@ -120,15 +92,14 @@ class LoginUtilities
 	}
 	
 	
-	public function validate_passwords($type, $password, $password_confirm, &$form_errors, $db_connection)
+	public function validate_passwords($type, $password, $password_confirm, &$form_errors)
 	{
-		$pw_error = array();
-		$password = $this->sanitize_input($password, $db_connection);
-		$password_confirm = $this->sanitize_input($password_confirm, $db_connection);
+		$password = $this->sanitize_input($password);
+		$password_confirm = $this->sanitize_input($password_confirm);
 		
 		if((is_null($password)) || (is_null($password_confirm)))
 		{ 	
-			$form_errors[] = "Enter $type.";
+			$form_errors[] = "Enter $type";
 		}
 		else
 		{
@@ -152,12 +123,11 @@ class LoginUtilities
 				{
 					$form_errors[] = "The $type must contains at least one number.";
 				}
+				if(!preg_match("/[ ]+/",$password))
+				{
+					$form_errors[] = "The $type cannot have spaces.";
+				}
 			}
-		}
-		
-		if(count($pw_error) == 0)
-		{
-			$pw_error = null;
 		}
 		
 		return $password;

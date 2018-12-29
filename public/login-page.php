@@ -13,6 +13,7 @@
 	?>
 	
 	<link href="css/login-forms.css" rel="stylesheet" type="text/css" media="screen">
+	<script src="javascript/login-form.js" ></script>
 	
 </head>
 <body>

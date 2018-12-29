@@ -13,7 +13,7 @@ $labs_indevelopment = $mdb_control->get_by_attribute($attribute_value, $attribut
 		
 echo '<section class="new-labs">
 	<a id="new-labs" href="index.php">return to top</a>	
-	<h1>Tutorial Labs: New or Currently in Development</h1>';
+	<h1 class="new-labs">Tutorial Labs: New or Currently in Development</h1>';
 
 $length_labs_new = count($labs_new);
 

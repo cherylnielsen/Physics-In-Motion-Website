@@ -4,20 +4,24 @@
 
 h1.logo-statement {
 	position: relative;
-	left: 3%;
+	left: 1.5%;
 }
 
-h1.form {
-	margin: 1.5%;
-	padding: 0 0 0 1%;	
+h1.form, h2.form {
+	margin: 0.5em 0.5em 0.5em 0;
 }
+
+span {
+	color: red;
+}
+	
 
 a {
 	display: inline-block;
 	font-weight: 900;	
 	margin: 0.5em 0;
 }
-	
+
 section.main-content {
 	float: left;
 	width: 50%;
@@ -38,10 +42,11 @@ form > * {
 
 fieldset {
 	display: block;
-	padding: 1em;
+	padding: 0 1em 1em 1em;
 	margin-bottom: 1em;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
+	background-color: #A7DAFA;
 }
 
 legend {
@@ -52,23 +57,22 @@ input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.5em;
-}
-
-em {
-	color: red;
+	border: 1px solid #03AA0D;
+	border-radius: 5px;
+	
 }
 
 .form-errors {
-	padding-top: 1em;
 	color: red;
 	font-weight: 900;
+	margin: 0 5em;
 }
 
 ul {
 	padding-left: 2em;
 }
 
-input[type=submit] { 
+input[type=submit], input[type=button] { 
 	font-size: 1em;
 	padding: 5px 25px ;
 	background-color:#03CA0D;

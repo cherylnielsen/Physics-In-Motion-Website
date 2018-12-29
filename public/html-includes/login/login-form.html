@@ -1,19 +1,22 @@
 
-<h1 class="form">Sign In:</h1>
+<div class="form-errors" id="login_errors"></div>
 
-<form class="login" method="POST" action="login-page.php">
-
-	<fieldset class="login-form">
-		<label>User Name <br><input type="text" name="username" value="" required></label>
+<form id="loginform" action="login-page.php" method="POST" >
+	
+	<fieldset>
+		<h2 class="form">Sign In:</h2>
+		<label>User Name <br><input type="text" name="username" id="username"
+			value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" 
+			autofocus required></label>
 		<br>
-		<label>Password <br><input type="password" name="password" value="" required></label>
-		<br>
-		<input type="submit" name="submit" value="Sign In">		
+		<label>Password <br><input type="password" name="password" id="password" 
+			value="" required></label>
+		<br>		
+		<input type="submit" value="Sign In">		
 		<br>
 		<a id="forgot_login" href="">Forgot ID / Password?</a>
 		<br>
-		<a id="register" href="">Create Account</a>
+		<a href="register-page.php">Create Account</a>
 	</fieldset>
 	
 </form>
-

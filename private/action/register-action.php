@@ -9,14 +9,14 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$account_type = null;
 		
 	// validate and sanitize first name and last name
-	$firstname = $login_utility->validate_name($_POST['first_name'], "First", $form_errors, $db_connection);
-	$lastname = $login_utility->validate_name($_POST['last_name'], "Last", $form_errors, $db_connection);
+	$firstname = $login_utility->validate_name($_POST['first_name'], "First", $form_errors);
+	$lastname = $login_utility->validate_name($_POST['last_name'], "Last", $form_errors);
 	
 	// validate and preprocess email
 	$email = $login_utility->validate_emails($_POST['email'], $_POST['email_confirm'], $form_errors);
 	
 	// validate and sanitize school name
-	$school = $login_utility->validate_name($_POST['school'], "School", $form_errors, $db_connection);
+	$school = $login_utility->validate_name($_POST['school'], "School", $form_errors);
 	
 	// The account_type is a radio button set, so no sanitizing or validation is needed.
 	if(!isset($_POST['account_type'])) 

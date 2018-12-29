@@ -1,0 +1,47 @@
+/* javascript for login form */
+
+
+function validate()
+{
+	var ok = true;
+	var name = document.getElementById("username").value;
+	var pw = document.getElementById("password").value;
+	var error_message = document.getElementById("login_errors");
+	var action_message = document.getElementById("action_errors");	
+	var errors = "";
+	
+	error_message.innerHTML = "";
+	action_message.innerHTML = "";
+		
+	name = name.trim();
+	pw = pw.trim();
+	
+	
+	if ((name.length < 1) || (pw.length < 1))
+	{
+		ok = false;
+		errors += "Enter user name and password.<br>";
+	}	
+	else if ((name.length < 8) || (pw.length < 8))
+	{
+		ok = false;
+		errors += "User name and password must have at least 8 characters.<br>";
+	}
+	
+	if(!ok)
+	{
+		error_message.innerHTML = "Error: " + errors;
+	}
+	
+	return ok;
+}
+
+function init()
+{
+	var theform = document.getElementById("loginform");	
+	theform.onsubmit = validate;
+}
+
+document.addEventListener( "DOMContentLoaded" , init , false ) ;
+
+

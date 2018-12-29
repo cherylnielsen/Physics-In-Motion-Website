@@ -3,8 +3,7 @@
 /* for all size screens */
 
 h1.logo-statement {
-	position: relative;
-	right: 3%;
+	padding: 1em 0.25em;
 }
 
 .grid-container {
@@ -19,6 +18,7 @@ img.summary {
 	height: 200px;
 	width: 300px;
 	border: 4px double #03AA0D;
+	border-radius: 15px;
 }
 
 img.right {

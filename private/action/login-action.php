@@ -5,18 +5,18 @@ require_once('login-utilities.php');
 If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$login_utility = new LoginUtilities();
-	$username = $login_utility->sanitize_input($_POST['username'], $db_connection);
-	$password = $login_utility->sanitize_input($_POST['password'], $db_connection);
-
+	$username = $login_utility->sanitize_input($_POST['username']);
+	$password = $login_utility->sanitize_input($_POST['password']);
+	
+	echo'<div class="form-errors" id="action_errors">';
+	
 	if(is_null($username) || is_null($password))
 	{
-		echo'<div class="form-errors">
-		<p><em>Error: Please enter user name and password.</em></p></div>';
+		echo'<p>Error: Please enter user name and password.</p>';
 	}
 	else if (empty($username) || empty($password))
 	{
-		echo'<div class="form-errors">
-		<p><em>Error: Please enter user name and password.</em></p></div>';
+		echo'<p>Error: Please enter user name and password.</p>';
 	}
 	else
 	{
@@ -25,8 +25,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 
 		if(!$ok)
 		{
-			echo'<div class="form-errors">
-			<p><em>Error: User name or password not found. Please check spelling and try again.</em></p></div>';
+			echo'<p>Error: User name or password not found. <br> Please check spelling and try again.</p>';
 		}
 		else
 		{
@@ -57,9 +56,9 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 
 	}
+	
+	echo'</div>';
 }
-
-
 
 
 ?>

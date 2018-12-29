@@ -1,7 +1,7 @@
 <?php
 
 	session_start();
-
+	
 	echo
 	'<header>
 		<div class="logo">	
@@ -13,19 +13,20 @@
 	if(!isset($_SESSION['user_id']))
 	{
 		echo
-		'<div class="login">
-			<a id="sign-in" href="login-page.php">Sign In</a><br>
-			<a id="register" href="register-page.php">Create Account</a>		
+		'<div class="sign-in">
+			<a href="login-page.php">Sign In</a><br>
+			<a href="register-page.php">Create Account</a>		
 		</div>';
 	}
 	else
 	{
 		echo
-		'<div class="login">
+		'<div class="sign-in">
 			<p class="welcome">Hello  ' .$_SESSION["first_name"] . ' ' .$_SESSION["last_name"] . '</p><br>
-			<a id="logout" href="html-includes/login/logout.php">Sign Out</a>			
+			<a href="html-includes/login/logout.php">Sign Out</a>			
 		</div>';
 	}
 	
 	echo '</header>';
 ?>
+
