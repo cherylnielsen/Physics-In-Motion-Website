@@ -1,44 +1,87 @@
 
-<h1 class="form">Create Account:</h1>
 
-<form class="register" method="post" action="register-page.php">
+<form id="registerform" method="post" action="register-page.php">
 
-	<fieldset class="personal-info">
-    <legend>&nbsp; Personal Information: &nbsp;</legend>
-		<label>First Name<br><input type="text" name="first_name" value="" required></label>
+	<fieldset class="personal-info" id="personal-info">
+		<h1 class="form">Create Account <span>- all fields required</span>:</h1>
+		<h2>Personal Information:</h2>
+		<label>First Name<br><input type="text" name="first_name" id="first_name"
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['first_name']; ?>" 
+			autofocus required></label>
 		<br>
-		<label>Last Name<br><input type="text" name="last_name" value="" required></label>
+		<label>Last Name<br><input type="text" name="last_name" id="last_name"
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['last_name']; ?>" required></label>
 		<br>
-		<label>Email<br><input type="email" name="email" value="" required></label>
+		<label>Email<br><input type="email" name="email" id="email"
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['email']; ?>" required></label>
 		<br>
-		<label>Confirm Email<br><input type="email" name="email_confirm" value="" required></label>
-		<br>
-	</fieldset>
-	
-	<fieldset class="school-info">
-    <legend>&nbsp; School Information: &nbsp;</legend>
-		<label>School<br><input type="text" name="school" value="" required></label>
-		<br>
-		<label><input type="radio" name="account_type" value="student">&nbsp;Student</label>
-		<br>
-		<label><input type="radio" name="account_type" value="professor">&nbsp;Professor</label>
+		<label>Confirm Email<br><input type="email" name="email_confirm" id="email_confirm" 
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['email_confirm']; ?>" required></label>
 		<br>
 	</fieldset>
 	
-	<fieldset class="login-info">
-    <legend>&nbsp; Sign In Information: &nbsp;</legend>
-		<label>User Name<br>(minimum 8 characters, at least one letter and one number)<br>
-		<input type="text" name="username" value="" required></label>
+	<fieldset class="school-info" id="school-info">
+		<h2>School Information:</h2>
+		<label>School<br><input type="text" name="school" id="school"
+			value="<?php if (isset($_POST['school'])) echo $_POST['school']; ?>" required></label>
 		<br>
-		<label>Confirm User Name<br><input type="text" name="username_confirm" value="" required></label>
+		<?php if(!isset($_POST['account_type'])) 
+			{
+				echo
+				'<label><input type="radio" name="account_type" value="student" required>&nbsp;Student</label>
+				<br>
+				<label><input type="radio" name="account_type" value="professor" v>&nbsp;Professor</label>
+				<br>';
+			}
+			else
+			{
+				switch ($_POST['account_type'])
+				{
+					case "student":
+					echo
+						'<label><input type="radio" name="account_type" value="student" 
+						checked required>&nbsp;Student</label>
+						<br>
+						<label><input type="radio" name="account_type" value="professor" 
+						required>&nbsp;Professor</label>
+						<br>';
+					break;
+					case "professor":
+					echo
+						'<label><input type="radio" name="account_type" value="student"
+						required>&nbsp;Student</label>
+						<br>
+						<label><input type="radio" name="account_type" value="professor" 
+						checked required>&nbsp;Professor</label>
+						<br>';
+					break;
+				}
+			}
+		?>
+			
+	</fieldset>
+	
+	
+	<fieldset class="login-info" id="login-info">
+		<h2>Sign In Information:</h2>
+		<label>User Name<br>Requires a minimum of 8 characters, at least one letter and one number, <br>
+							no spaces or &#60; or &#62; or &#47 or &#92; slashes.<br>
+		<input type="text" name="username" id="username"
+			value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>"required></label>
 		<br>
-		<label>Password<br>(minimum 8 characters, at least one letter and one number)<br>
-		<input type="password" name="password" value="" required></label>
+		<label>Confirm User Name<br><input type="text" name="username_confirm" id="username_confirm"
+			value="<?php if (isset($_POST['username_confirm'])) echo $_POST['username_confirm']; ?>"required></label>
 		<br>
-		<label>Confirm Password<br><input type="password" name="password_confirm" value="" required></label>
+		<label>Password<br>Requires a minimum of 8 characters, at least one letter and one number, <br>
+							no spaces or &#60; or &#62; or &#47 or &#92; slashes.<br>
+		<input type="password" name="password" id="password"
+			value=""required></label>
+		<br>
+		<label>Confirm Password<br><input type="password" name="password_confirm" id="password_confirm"
+			value=""required></label>
 		<br>
 	</fieldset>
 	
-	<input type="submit" name="register" id="register" value="Create Account">		
+	<input type="submit" value="Create Account">		
 	
 </form>

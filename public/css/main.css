@@ -88,7 +88,7 @@ div.logo-summary {
 	
 }
 
-div.login {
+div.sign-in {
 	border: 4px double #03AA0D;
 	border-radius: 15px;	
 	text-align: center;
@@ -103,7 +103,7 @@ div.login {
 	margin: 1px;
 }
 
-div.login > * {
+div.sign-in > * {
 	display: inline-block;
 	margin: 0.5em;
 }
@@ -168,6 +168,10 @@ article.new-labs {
 	padding: 1em;
 	margin-bottom: 0;
 	background-color: white;
+}
+
+h1.new-labs {
+	padding: 0.5em 1em;
 }
 
 h1.development-status {
