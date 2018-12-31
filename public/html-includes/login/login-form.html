@@ -7,10 +7,11 @@
 		<h2 class="form">Sign In:</h2>
 		<label>User Name <br><input type="text" name="username" id="username"
 			value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" 
-			autofocus required></label>
+			autofocus required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W]).{8,}"></label>
 		<br>
 		<label>Password <br><input type="password" name="password" id="password" 
-			value="" required></label>
+			value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>" 
+			required pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W]).{8,}"></label>
 		<br>		
 		<input type="submit" value="Sign In">		
 		<br>

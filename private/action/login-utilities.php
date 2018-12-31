@@ -82,9 +82,9 @@ class LoginUtilities
 		}
 		else
 		{
-			if (!preg_match("/^[a-zA-Z ]*$/",$name))
+			if (!preg_match("/^[a-zA-Z0-9 -_\'\.]*$/",$name))
 			{
-				$form_errors[] = "$type names can only contain letters and spaces.";
+				$form_errors[] = "$type names can only contain letters, numbers, or _ - .' and spaces.";
 			}
 		}
 		
@@ -123,7 +123,7 @@ class LoginUtilities
 				{
 					$form_errors[] = "The $type must contains at least one number.";
 				}
-				if(!preg_match("/[ ]+/",$password))
+				if (preg_match("/\\s/", $password))
 				{
 					$form_errors[] = "The $type cannot have spaces.";
 				}
@@ -180,7 +180,7 @@ class LoginUtilities
 	}
 	
 	
-	public function duplicate_email_test($email, $account_type, $db_connection, $mdb_control)
+	public function duplicate_email_test($email, $account_type, $mdb_control)
 	{
 		$duplicate = false;
 		$data = $mdb_control->get_by_attribute($email, "email", $account_type);
@@ -194,7 +194,7 @@ class LoginUtilities
 	}
 	
 	
-	public function duplicate_username_test($user_name, $db_connection, $mdb_control)
+	public function duplicate_username_test($user_name, $mdb_control)
 	{
 		$duplicate = false;
 		$data = $mdb_control->get_by_attribute($user_name, "user_name", "users");
@@ -209,7 +209,7 @@ class LoginUtilities
 	
 	
 	public function register_new_user($firstname, $lastname, $email, $school, 
-				$account_type, $username, $password, $db_connection, $mdb_control)
+						$account_type, $username, $password, $mdb_control)
 	{
 		$user = new Users();
 		$user->initialize(null, $username, $password, $account_type);

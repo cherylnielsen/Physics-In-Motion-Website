@@ -1,6 +1,5 @@
 <?php
 
-require('../private/database-access.php');
 
 
 /**
@@ -11,6 +10,8 @@ require('../private/database-access.php');
  - Links to send a Notice of Lab Completion to a Professor that assigned a lab.
  - Links to rate completed labs.
 **/
+
+$db_connection = $mdb_control->get_db_connection();
 
 $student_id = 101;
 $assignment_id = 101;

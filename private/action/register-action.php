@@ -29,12 +29,12 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	}
 		
 	// validate and preprocess password and user name
-	$username = $login_utility->validate_passwords("username", $_POST['username'], $_POST['username_confirm'], 
-				$form_errors, $db_connection);
-	$password = $login_utility->validate_passwords("password", $_POST['password'], $_POST['password_confirm'], 
-				$form_errors, $db_connection);
+	$username = $login_utility->validate_passwords("username", $_POST['username'], 
+						$_POST['username_confirm'], $form_errors);
+	$password = $login_utility->validate_passwords("password", $_POST['password'], 
+						$_POST['password_confirm'], $form_errors);
 	
-	$found = $login_utility->duplicate_username_test($username, $db_connection, $mdb_control);
+	$found = $login_utility->duplicate_username_test($username, $mdb_control);
 	
 	
 	if($found)
@@ -44,7 +44,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	
 	if(isset($_POST['account_type']))
 	{
-		$duplicate = $login_utility->duplicate_email_test($email, $account_type, $db_connection, $mdb_control);
+		$duplicate = $login_utility->duplicate_email_test($email, $account_type, $mdb_control);
 		
 		if($duplicate)
 		{
@@ -74,7 +74,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		// Save the data to the database and redirect to the login page
 		$ok = $login_utility->register_new_user($firstname, $lastname, $email, $school, 
-				$account_type, $username, $password, $db_connection, $mdb_control);
+				$account_type, $username, $password, $mdb_control);
 				
 		if($ok) 
 		{

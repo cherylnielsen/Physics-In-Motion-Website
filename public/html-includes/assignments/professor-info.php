@@ -1,8 +1,11 @@
 <?php
 
+
+$db_connection = $mdb_control->get_db_connection();
+
 $professor_id = 101;
 
-require('../private/database-access.php');
+
 $query = 'select * from professor where professor_id =' . $professor_id . '';
 $result = mysqli_query($db_connection, $query);
 

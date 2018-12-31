@@ -21,12 +21,8 @@ function validate()
 	{
 		ok = false;
 		errors += "Enter user name and password.<br>";
+		document.getElementById("username").
 	}	
-	else if ((name.length < 8) || (pw.length < 8))
-	{
-		ok = false;
-		errors += "User name and password must have at least 8 characters.<br>";
-	}
 	
 	if(!ok)
 	{
@@ -38,8 +34,9 @@ function validate()
 
 function init()
 {
-	var theform = document.getElementById("loginform");	
-	theform.onsubmit = validate;
+	var theform = document.getElementById("registerform");	
+	
+	theform.onsubmit = validate;	
 }
 
 document.addEventListener( "DOMContentLoaded" , init , false ) ;

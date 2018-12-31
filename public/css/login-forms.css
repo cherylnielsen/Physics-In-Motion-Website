@@ -53,23 +53,23 @@ legend {
 	font-size: 1em;
 }
 	
+ul {
+	padding-left: 2em;
+}
+
 input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.5em;
-	border: 1px solid #03AA0D;
+	border: 2px solid #03AA0D;
 	border-radius: 5px;
-	
+	background-color: lightyellow;	
 }
 
-.form-errors {
-	color: red;
-	font-weight: 900;
-	margin: 0 5em;
-}
-
-ul {
-	padding-left: 2em;
+input[type=checkbox] {
+	width: 1.5em; 
+	height: 1.5em;
+	margin: 0.5em 0;
 }
 
 input[type=submit], input[type=button] { 
@@ -78,10 +78,20 @@ input[type=submit], input[type=button] {
 	background-color:#03CA0D;
 	margin: 0.75em 0.5em;
 }
-input[type=checkbox] {
-	width: 1.5em; 
-	height: 1.5em;
-	margin: 0.5em 0;
+
+input:invalid {
+	border: 2px solid red;
+	background-color: #ffd4d4;
+}
+
+input[type=radio]:invalid {
+	outline: 3px solid red;
+}
+
+.form-errors {
+	color: red;
+	font-weight: 900;
+	margin: 0 5em;
 }
 
 
