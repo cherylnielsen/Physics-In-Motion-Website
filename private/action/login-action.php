@@ -8,7 +8,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$username = $login_utility->sanitize_input($_POST['username']);
 	$password = $login_utility->sanitize_input($_POST['password']);
 	
-	echo'<div class="form-errors" id="action_errors">';
+	echo'<div class="form-errors" id="action_errors">PHP';
 	
 	if(is_null($username) || is_null($password))
 	{

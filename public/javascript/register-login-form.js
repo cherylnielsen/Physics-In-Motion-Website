@@ -265,7 +265,7 @@ function validate()
 	// if errors were found
 	if(errors.length > 0)
 	{
-		document.getElementById("login_errors").innerHTML = "Errors: <br>" + errors;
+		document.getElementById("login_errors").innerHTML = "Errors: JAVASCRIPT<br>" + errors;
 		return false;
 	}
 	

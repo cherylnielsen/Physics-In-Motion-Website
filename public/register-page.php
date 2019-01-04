@@ -10,8 +10,8 @@
 
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
 	
-	<link href="css/login-forms.css" rel="stylesheet" type="text/css" media="screen">
-	<script src="javascript/register-form.js" ></script>
+	<link href="css/register-login-form.css" rel="stylesheet" type="text/css" media="screen">
+	<script src="javascript/register-login-form.js" ></script>
 	
 </head>
 <body>	
