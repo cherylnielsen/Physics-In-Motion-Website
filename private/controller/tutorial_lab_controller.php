@@ -89,7 +89,7 @@ class Tutorial_lab_controller extends DatabaseController {
 	}
 
 
-	public function save_new(&$tutorial_lab, $db_connection)
+	public function save_new($tutorial_lab, $db_connection)
 	{
 		$sucess = true;
 		// The lab_id is not included, because it is set automatically by the database.

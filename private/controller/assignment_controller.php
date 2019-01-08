@@ -98,7 +98,7 @@ class Assignment_controller extends DatabaseController {
 	}
 
 
-	public function save_new(&$assignment, $db_connection)
+	public function save_new($assignment, $db_connection)
 	{
 		$sucess = true;
 		

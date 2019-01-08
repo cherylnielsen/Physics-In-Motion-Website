@@ -93,7 +93,7 @@ class Student_controller extends DatabaseController{
 	}
 
 
-	public function save_new(&$student, $db_connection)
+	public function save_new($student, $db_connection)
 	{
 		$sucess = true;
 		$id = $student->get_student_id();

@@ -92,7 +92,7 @@ class Notice_controller extends DatabaseController {
 	}
 	
 	
-	public function save_new(&$notice, $db_connection)
+	public function save_new($notice, $db_connection)
 	{
 		$sucess = true;
 		$assignment_id = $notice->get_assignment_id();
@@ -122,7 +122,7 @@ class Notice_controller extends DatabaseController {
 		
 	}
 	
-	
 }
+
 
 ?>

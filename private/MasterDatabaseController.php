@@ -33,7 +33,7 @@ class MasterDatabaseController
 	
 	public function __construct() {}
 	
-	private function get_db_connection()
+	public function get_db_connection()
 	{
 		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') 
 					OR die (mysqli_connect_error());
@@ -105,23 +105,23 @@ class MasterDatabaseController
 	}
 	
 	
-	public function update($db_row_data, $data_type)
+	public function update($data, $data_type)
 	{
 		$db_connection = $this->get_db_connection();
 		$status;
 		$control = $this->getController($data_type);
-		$status = $control->update($db_row_data, $db_connection);
+		$status = $control->update($data, $db_connection);
 		
 		return $status;		
 	}
 	
 	
-	public function save_new(&$db_row_data, $data_type)
+	public function save_new($data, $data_type)
 	{
 		$db_connection = $this->get_db_connection();
 		$status;
 		$control = $this->getController($data_type);
-		$status = $control->save_new($db_row_data, $db_connection);
+		$status = $control->save_new($data, $db_connection);
 		
 		return $status;	
 	}

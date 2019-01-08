@@ -2,21 +2,20 @@
 
 class LoginUtilities
 {
-	
 	public function __construct() {}
 	
 	public function sanitize_input($data_input)
 	{
 		if(!isset($data_input)) { return null; }
 		
+		// The following 4 lines are safety measures recommended by w3schools.com
 		$data_input = trim($data_input);
 		$data2 = strip_tags($data_input);	
 		$data2 = stripslashes($data2);
-		$data2 = htmlspecialchars($data2);
+		//$data2 = htmlspecialchars($data2, ENT_QUOTES);
 		if(strlen($data2) == 0) { return null; }
 		
 		return $data2;
-		
 	}
 	
 	
@@ -34,7 +33,6 @@ class LoginUtilities
 		}
 		else 
 		{
-			$email2 = filter_var($email, FILTER_SANITIZE_EMAIL);	
 			// checks that email string is properly formated
 			if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
 			{
@@ -49,9 +47,12 @@ class LoginUtilities
 	public function validate_emails($email, $email_confirm, &$form_errors)
 	{	
 		$email_error = null;
+		
+		// tests for zero length and other errors
 		$email = $this->sanitize_input($email);
 		$email_confirm = $this->sanitize_input($email_confirm);
 		
+		// tests for zero length and other errors
 		$err1 = $this->check_email_format($email);
 		$err2 = $this->check_email_format($email_confirm);
 		
@@ -73,8 +74,8 @@ class LoginUtilities
 	
 	public function validate_name($name, $type, &$form_errors)
 	{
+		// tests for zero length and other errors
 		$name = $this->sanitize_input($name);
-		$name_error = null;
 		
 		if(is_null($name)) 
 		{ 	
@@ -82,9 +83,9 @@ class LoginUtilities
 		}
 		else
 		{
-			if (!preg_match("/^[a-zA-Z0-9 -_\'\.]*$/",$name))
+			if (!preg_match("/^[a-zA-Z0-9 \-\'\.]+$/", $name))
 			{
-				$form_errors[] = "$type names can only contain letters, numbers, or _ - .' and spaces.";
+				$form_errors[] = "$type names can only contain letters, numbers, or - .' and spaces.";
 			}
 		}
 		
@@ -115,13 +116,21 @@ class LoginUtilities
 				{
 					$form_errors[] = "The $type must contain at least 8 characters.";
 				}		
-				if(!preg_match("/[a-zA-Z]+/",$password))
+				if(!preg_match("/[A-Z]+/",$password))
 				{
-					$form_errors[] = "The $type must contains at least one letter.";
+					$form_errors[] = "The $type must contains at least one uppercase letter.";
+				}
+				if(!preg_match("/[a-z]+/",$password))
+				{
+					$form_errors[] = "The $type must contains at least one lowercase letter.";
 				}
 				if(!preg_match("/[0-9]+/",$password))
 				{
 					$form_errors[] = "The $type must contains at least one number.";
+				}
+				if(!preg_match("/\\W/",$password))
+				{
+					$form_errors[] = "The $type must contains at least one non-alphanumeric character.";
 				}
 				if (preg_match("/\\s/", $password))
 				{
@@ -140,7 +149,12 @@ class LoginUtilities
 		
 		if(!is_null($username) && (!is_null($password)))
 		{
-			$user = $mdb_control->get_users_by_login($username, $password);
+			// escape user input variables for quote marks, etc.
+			$db_con = $mdb_control->get_db_connection();
+			$name_escaped = mysqli_real_escape_string($db_con, $username);
+			$pw_escaped = mysqli_real_escape_string($db_con, $password);
+			// find in the database
+			$user = $mdb_control->get_users_by_login($name_escaped, $pw_escaped);
 		}
 		else
 		{
@@ -175,6 +189,8 @@ class LoginUtilities
 	{
 		$user = array();
 		$attribute = $user_type . '_id';		
+		// No escape needed as user_id and user_type, because
+		// they do not come from user input strings.
 		$user = $mdb_control->get_by_attribute($user_id, $attribute, $user_type);		
 		return $user;		
 	}
@@ -183,7 +199,11 @@ class LoginUtilities
 	public function duplicate_email_test($email, $account_type, $mdb_control)
 	{
 		$duplicate = false;
-		$data = $mdb_control->get_by_attribute($email, "email", $account_type);
+		// escape user input variables for quote marks, etc.
+		$db_con = $mdb_control->get_db_connection();
+		$email_escaped = mysqli_real_escape_string($db_con, $email);
+		// find in the database
+		$data = $mdb_control->get_by_attribute($email_escaped, "email", $account_type);
 		
 		if((!is_null($data)) AND (count($data) > 0))
 		{
@@ -197,7 +217,11 @@ class LoginUtilities
 	public function duplicate_username_test($user_name, $mdb_control)
 	{
 		$duplicate = false;
-		$data = $mdb_control->get_by_attribute($user_name, "user_name", "users");
+		// escape user input variables for quote marks, etc.
+		$db_con = $mdb_control->get_db_connection();
+		$name_escaped = mysqli_real_escape_string($db_con, $user_name);
+		// find in the database
+		$data = $mdb_control->get_by_attribute($name_escaped, "user_name", "users");
 		
 		if((!is_null($data)) AND (count($data) > 0))
 		{
@@ -211,11 +235,23 @@ class LoginUtilities
 	public function register_new_user($firstname, $lastname, $email, $school, 
 						$account_type, $username, $password, $mdb_control)
 	{
+		// escape user input variables for quote marks, etc.
+		// account_type dose not need escaping
+		$db_con = $mdb_control->get_db_connection();
+		$username = mysqli_real_escape_string($db_con, $username);
+		$password = mysqli_real_escape_string($db_con, $password);
+		$firstname = mysqli_real_escape_string($db_con, $firstname);
+		$lastname = mysqli_real_escape_string($db_con, $lastname);
+		$email = mysqli_real_escape_string($db_con, $email);
+		$school = mysqli_real_escape_string($db_con, $school);
+		
+		// save login as user
 		$user = new Users();
 		$user->initialize(null, $username, $password, $account_type);
 		$ok = $mdb_control->save_new($user, "users");
 		$person = null;
 		
+		// save user as student or professor
 		if($ok) 
 		{
 			$user_id = $user->get_user_id();
@@ -227,23 +263,19 @@ class LoginUtilities
 					$person->initialize($user_id, $firstname, $lastname, $school, $email);
 					$ok = $mdb_control->save_new($person, "student");
 					break;
+					
 				case "professor":
 					$person = new Professor();
 					$person->initialize($user_id, $firstname, $lastname, $school, $email);
 					$ok = $mdb_control->save_new($person, "professor");
 					break;
 			}
-			
-			if(!$ok)
-			{
-				// add code to remove new User from db
-			}
 		}
 		
 		return $ok;
 	}
 	
-
+	
 }
 
 ?>

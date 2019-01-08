@@ -16,96 +16,6 @@ function clearOldErrors()
 			list.elements[i].classList.remove("invalid");
 		}
 	}
-	
-}
-
-
-function isPasswordPattern(data)
-{
-	var ok = true;
-	data = data.trim();
-	
-	// minimum length is at least 8 characters
-	// cannot contain white space
-	
-	var pattern = /\s/;
-	ok = !(pattern.test(data));
-
-	if(ok)
-	{
-		// It must have at least: one numerical digit, one lowercase letter,
-		// one uppercase letter, and one non-alphanumeric character.		
-		var pattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W]).{8,}/;
-		ok = pattern.test(data);
-	}
-	
-	return ok;
-}
-
-
-function isEmailPattern(data)
-{
-	var ok = true;
-	data = data.trim();
-	
-	// cannot contain white space
-	pattern = /\s/;
-	ok = !(pattern.test(data));
-	
-	if(ok)
-	{
-		// \S+ matches any 1 or more non-whitespaces
-		// Email has at least one @ and at least one period, in that order.
-		var pattern = /^\S+@\S+\.\S+$/;
-		ok = pattern.test(data);		
-	}
-	
-	if(ok)
-	{
-		// cannot start with a period or @
-		pattern = /^[\.@]/;
-		ok = !(pattern.test(data));
-	}
-	
-	if(ok)
-	{
-		// cannot end with a period or @
-		pattern = /[\.@]$/;
-		ok = !(pattern.test(data));
-	}
-	
-	if(ok)
-	{
-		// cannot have consecutively repeating periods anywhere
-		pattern = /\.\.+/;
-		ok = !(pattern.test(data));
-	}
-	
-	if(ok)
-	{
-		// cannot have a second @ anywhere in the string
-		pattern = /@\S*@+/;
-		ok = !(pattern.test(data));
-	}
-	
-	if(ok)
-	{
-		// cannot have period right before the @ sign
-		pattern = /\.@/;
-		ok = !(pattern.test(data));
-	}
-	
-	if(ok)
-	{
-		// cannot have period right after the @ sign
-		pattern = /@\./;
-		ok = !(pattern.test(data));
-	}
-	
-	
-	
-	return ok;
-	
 }
 
 
@@ -123,49 +33,112 @@ function isNamePattern(data)
 }
 
 
-
-function compairMatches(errors, list, data_array, data_type)
+function isPasswordPattern(data)
 {
 	var ok = true;
+	data = data.trim();
 	
-	if(data_array.length === 4)
+	// cannot contain white space	
+	var pattern = /\s/;
+	ok = !(pattern.test(data));
+
+	if(ok)
 	{
-		if(data_array[0].localeCompare(data_array[2]) === 0)
-		{
-			errors += data_type + " do not match.";
-			ok = false;
-			
-			if(!list.elements[data_array[1]].classList.contains("invalid") )
-			{
-				list.elements[data_array[1]].classList.add("invalid");
-			}
-			
-			if (!list.elements[data_array[3]].classList.contains("invalid") )
-			{
-				list.elements[data_array[3]].classList.add("invalid");
-			}
-		}
-	}
-	else
-	{
-		ok = false;
+		// It must have at least: one numerical digit, one lowercase letter,
+		// one uppercase letter, and at least 8 characters in length.		
+		var pattern = /(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}/;
+		ok = pattern.test(data);
 	}
 	
 	return ok;
+}
+
+
+function isEmailPattern(data)
+{
+	var ok = true;
+	
+	/****
+		patterns are regular expressions	
+		Email cannot contain white space
+		Email cannot start with a period or @
+		Email cannot end with a period or @
+		Email cannot have consecutively repeating periods anywhere
+		Email cannot have a second @ anywhere in the string
+		Email cannot have period right before the @ sign
+		Email cannot have period right after the @ sign
+	****/
+	var neg_patterns = [ /\s/, /^[\.@]/, /[\.@]$/, /\.\.+/, /@\S*@+/, /\.@/, /@\./ ]
+	
+	/***
+		\S+ matches any 1 or more non-whitespaces
+		Email has at least one @ and at least one period, in that order.
+	**/
+	var pos_pattern = /^\S+@\S+\.\S+$/;
+	
+	data = data.trim();
+	ok = pos_pattern.test(data);
+	
+	if(ok)
+	{
+		var i;
+		for (i = 0; i < neg_patterns.length; i++)
+		{
+			neg_patterns[i].test(data);
+			ok = neg_patterns.test(data);
+			if(!ok) { return false; }
+		}
+	}
+	
+	return ok;
+}
+
+
+function validateMatches(theform, errors)
+{
+	var email = theform.getElementsByName("email");
+	var email_confirm = theform.getElementsByName("email_confirm");
+	var name = theform.getElementsByName("email");
+	var name_confirm = theform.getElementsByName("email_confirm");
+	var pw = theform.getElementsByName("email");
+	var pw_confirm = theform.getElementsByName("email_confirm");
+	
+	
+	if(email.localeCompare(email_confirm) !== 0)
+	{
+		email.classList.add("invalid");
+		email_confirm.classList.add("invalid");
+		errors.push("Emails do not match.");
+	}
+	
+	if(name.localeCompare(name_confirm) !== 0)
+	{
+		name.classList.add("invalid");
+		name_confirm.classList.add("invalid");
+		errors.push("User Names do not match.");
+	}
+	
+	if(pw.localeCompare(pw_confirm) !== 0)
+	{
+		pw.classList.add("invalid");
+		pw_confirm.classList.add("invalid");
+		errors.push("Passwords do not match.");
+	}
 	
 }
 
 
-function validate()
+function validateRegistration(theform, errors)
 {
-	clearOldErrors();
-	var errors = "";	
-	
-	var theform = document.forms;
 	var list = theform.getElementsByTagName("input");
-	
 	var name, name_replaced, value, i;
-	var emails = [], passwords = [], usernames = [];
+	
+	var email = "";
+	var email2 = "";
+	var pw = "";
+	var pw2 = "";
+	var uname = "";
+	var uname2 = "";
 	
 	for (i = 0; i < list.length; i++)
 	{	
@@ -176,7 +149,7 @@ function validate()
 		
 		if(value.length < 1)
 		{
-			errors += "Please enter " + name_replaced + ". <br>"; 
+			errors.push("Please enter " + name_replaced + "."); 
 			list.elements[i].classList.add("invalid");
 		}
 		else
@@ -186,92 +159,106 @@ function validate()
 				case "first_name":
 				case "last_name":
 				case "school":
+				
 					if(!isNamePattern(value))
 					{ 
-						errors += "Invalid name_replaced, please check spelling. <br>"; 
+						errors.push("Invalid name_replaced, please check spelling."); 
 						list.elements[i].classList.add("invalid");
-					}
+					}					
 					break;
 					
 				case "email":
 				case "email_confirm":
+					
 					if(!isEmailPattern(value)) 
 					{ 
-						errors += "Invalid name_replaced address, please check spelling. <br>"; 
+						errors.push("Invalid name_replaced, please check spelling."); 
 						list.elements[i].classList.add("invalid");
-					}
-					else
-					{
-						emails.push(value);
-						email_index.push(i);
 					}
 					break;
 					
 				case "username":
 				case "username_confirm":
+					
 					if(!isPasswordPattern(value)) 
 					{ 
-						errors += "Invalid name_replaced address, please check list of requirements. <br>"; 
+						errors.push("Invalid name_replaced, please check list of requirements."); 
 						list.elements[i].classList.add("invalid");
-					}
-					else
-					{
-						usernames.push(value);
-						username_index.push(i);
-					}
+					}					
 					break;
 					
 				case "password":
 				case "password_confirm":
+					
 					if(!isPasswordPattern(value)) 
 					{ 
-						errors += "Invalid name_replaced address, please check list of requirements. <br>"; 
+						errors.push("Invalid name_replaced, please check list of requirements."); 
 						list.elements[i].classList.add("invalid");
 					}
-					else
-					{
-						passwords.push(value);
-						password_index.push(i);
-					}
 					break;
-					
 			}
-		}
-		
+		}		
 	} // end for loop
 	
-	var ok = compairMatches(errors, list, emails, "Emails");
-	var ok1 = compairMatches(errors, list, passwords, "Passwords");
-	var ok2 = compairMatches(errors, list, usernames, "User Names");
+}
+
+
+function validateLogin(theform, errors)
+{
+	var pw1 = theform.getElementsByName("username");
+	var name1 = theform.getElementsByName("password");
 	
-	if(ok1 && ok2)
+	if(!isPasswordPattern(username))
 	{
-		if(usernames[0].localeCompare(passwords[0]) === 0)
-		{
-			errors += "Password cannot match User Name.";
-			if(!list.elements[passwords[1]].classList.contains("invalid") )
-			{
-				list.elements[passwords[1]].classList.add("invalid");
-			}
-			
-			if (!list.elements[passwords[3]].classList.contains("invalid") )
-			{
-				list.elements[passwords[3]].classList.add("invalid");
-			}
-		}
+		pw1.classList.add("invalid");
+		errors.push("Invalid password format.");
 	}
 	
+	if(!isPasswordPattern(username))
+	{
+		name1.classList.add("invalid");
+		errors.push("Invalid password format.");
+	}
+	
+}
+
+
+function validate()
+{
+	clearOldErrors();
+	
+	var errors = [];	
+	var theform = document.forms;
+	var formtype = theform.getAttribute("id");
+	
+	if(id.localeCompare("loginform") === 0)
+	{
+		validateRegistration(theform, errors);
+		validateMatches(theform, errors);
+	}
+	else
+	{
+		validateLogin(theform, errors);
+	}
 	
 	// if errors were found
 	if(errors.length > 0)
 	{
-		document.getElementById("login_errors").innerHTML = "Errors: JAVASCRIPT<br>" + errors;
+		var i;
+		var str = "";
+		
+		for(i = 0; i < errors.length; i++)
+		{
+			str += errors[i] + " <br>"
+		}
+		
+		document.getElementById("form_errors").innerHTML = "Errors: JAVASCRIPT <br>" + str;
+		
 		return false;
 	}
 	
 	return true;
 }
-
 
 
 function init()

@@ -91,7 +91,7 @@ class Tutorial_lab_rating_controller extends DatabaseController {
 	}
 
 
-	public function save_new(&$rating, $db_connection)
+	public function save_new($rating, $db_connection)
 	{
 		$sucess = true;
 		$lab_id = $rating->get_lab_id();
