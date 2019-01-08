@@ -1,16 +1,19 @@
 
-<div class="form-errors" id="login_errors"></div>
+<div class="form-errors" id="form_errors"></div>
 
 <form id="loginform" action="login-page.php" method="POST" >
 	
 	<fieldset>
 		<h2 class="form">Sign In:</h2>
-		<label>User Name <br><input type="text" name="username" id="username"
-			value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" 
-			autofocus required></label>
+		<label>User Name <br><input type="text" name="username" id="username" 
+		autofocus required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" 
+		value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" >
+		</label>
 		<br>
 		<label>Password <br><input type="password" name="password" id="password" 
-			value="" required></label>
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" 
+			value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>" >
+		</label>
 		<br>		
 		<input type="submit" value="Sign In">		
 		<br>

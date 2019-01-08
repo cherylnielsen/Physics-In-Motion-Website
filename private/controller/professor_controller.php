@@ -92,7 +92,7 @@ class Professor_controller extends DatabaseController{
 	}
 
 
-	public function save_new(&$professor, $db_connection)
+	public function save_new($professor, $db_connection)
 	{
 		$sucess = true;
 		$id = $professor->get_professor_id();

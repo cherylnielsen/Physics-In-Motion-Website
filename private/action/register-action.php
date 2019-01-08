@@ -29,26 +29,32 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	}
 		
 	// validate and preprocess password and user name
-	$username = $login_utility->validate_passwords("username", $_POST['username'], $_POST['username_confirm'], 
-				$form_errors, $db_connection);
-	$password = $login_utility->validate_passwords("password", $_POST['password'], $_POST['password_confirm'], 
-				$form_errors, $db_connection);
+	$username = $login_utility->validate_passwords("username", $_POST['username'], 
+						$_POST['username_confirm'], $form_errors);
+	$password = $login_utility->validate_passwords("password", $_POST['password'], 
+						$_POST['password_confirm'], $form_errors);
 	
-	$found = $login_utility->duplicate_username_test($username, $db_connection, $mdb_control);
+	// test for duplicate email or username in the database
 	
-	
-	if($found)
+	if(count($form_errors) == 0)
 	{
-		$form_errors[] = 'User name is already in use. Please try again';
-	}
-	
-	if(isset($_POST['account_type']))
-	{
-		$duplicate = $login_utility->duplicate_email_test($email, $account_type, $db_connection, $mdb_control);
+		$duplicate = false;
 		
-		if($duplicate)
+		$found = $login_utility->duplicate_username_test($username, $mdb_control);
+		
+		if($found)
 		{
-			$form_errors[] = 'Email is already in use. Please try again';
+			$form_errors[] = 'User name is already in use. Please try again';
+		}
+		
+		if(isset($_POST['account_type']))
+		{
+			$duplicate = $login_utility->duplicate_email_test($email, $account_type, $mdb_control);
+			
+			if($duplicate)
+			{
+				$form_errors[] = 'Email is already in use. Please try again';
+			}
 		}
 		
 		if($duplicate && $found)
@@ -57,10 +63,11 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 	}
 	
+	
 	if(count($form_errors) != 0)
 	{
 		// display errors
-		echo'<div class="form-errors"><p>Errors:</p>';
+		echo'<div class="form-errors"><p>Errors PHP:</p>';
 				
 		foreach($form_errors as $str)
 		{
@@ -69,12 +76,11 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		
 		echo '</div>';
 	}
-	
-	if(count($form_errors) == 0)
+	else
 	{
 		// Save the data to the database and redirect to the login page
 		$ok = $login_utility->register_new_user($firstname, $lastname, $email, $school, 
-				$account_type, $username, $password, $db_connection, $mdb_control);
+				$account_type, $username, $password, $mdb_control);
 				
 		if($ok) 
 		{

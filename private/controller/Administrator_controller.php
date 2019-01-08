@@ -93,7 +93,7 @@ class Administrator_controller extends DatabaseController {
 	}
 
 
-	public function save_new(&$administrator, $db_connection)
+	public function save_new($administrator, $db_connection)
 	{
 		$sucess = true;
 		$id = $administrator->get_admin_id();

@@ -90,7 +90,7 @@ class Users_controller extends DatabaseController {
 	}
 
 
-	public function save_new(&$user, $db_connection)
+	public function save_new($user, $db_connection)
 	{
 		$name = $user->get_user_name();
 		$pw = $user->get_user_password();

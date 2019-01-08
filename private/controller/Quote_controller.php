@@ -90,7 +90,7 @@ class Quote_controller extends DatabaseController {
 	}
 
 
-	public function save_new(&$quote, $db_connection)
+	public function save_new($quote, $db_connection)
 	{
 		$sucess = true;
 		$date = $quote->get_date_posted();
