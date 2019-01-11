@@ -25,7 +25,7 @@
 
 <section class="main-content">
 	<?php include('html-includes/template/logo-statement.php'); ?>
-	<?php include('../private/action/login-action.php'); ?>
+	<?php include('../private/action/login/login-action.php'); ?>
 	<?php include('html-includes/login/login-form.html'); ?>
 </section>
 
