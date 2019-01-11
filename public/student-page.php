@@ -22,7 +22,7 @@
 <?php include('html-includes/template/nav-and-quote.php'); ?>
 
 <section class="main-content">
-	<?php include('html-includes/assignments/student-info.php'); ?>
+	<?php include('html-includes/users/student-info.php'); ?>
 </section>
 		
 <?php include('html-includes/template/footer.html'); ?>

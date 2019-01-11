@@ -1,4 +1,4 @@
-/* javascript for register form */
+/* JavaScript for register and login forms. */
 
 
 function clearOldErrors()
@@ -252,7 +252,7 @@ function validate()
 			str += errors[i] + " <br>"
 		}
 		
-		document.getElementById("form_errors").innerHTML = "Errors: JAVASCRIPT <br>" + str;
+		document.getElementById("form_errors").innerHTML = "Errors:<br>" + str;
 		
 		return false;
 	}

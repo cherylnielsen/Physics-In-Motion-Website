@@ -12,7 +12,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$firstname = $login_utility->validate_name($_POST['first_name'], "First", $form_errors);
 	$lastname = $login_utility->validate_name($_POST['last_name'], "Last", $form_errors);
 	
-	// validate and preprocess email
+	// validate and sanitize email
 	$email = $login_utility->validate_emails($_POST['email'], $_POST['email_confirm'], $form_errors);
 	
 	// validate and sanitize school name
@@ -28,13 +28,13 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		$account_type = $_POST['account_type'];
 	}
 		
-	// validate and preprocess password and user name
+	// validate and sanitize password and user name
 	$username = $login_utility->validate_passwords("username", $_POST['username'], 
 						$_POST['username_confirm'], $form_errors);
 	$password = $login_utility->validate_passwords("password", $_POST['password'], 
 						$_POST['password_confirm'], $form_errors);
 	
-	// test for duplicate email or username in the database
+	// test for duplicate email or user name in the database
 	
 	if(count($form_errors) == 0)
 	{
@@ -67,7 +67,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	if(count($form_errors) != 0)
 	{
 		// display errors
-		echo'<div class="form-errors"><p>Errors PHP:</p>';
+		echo'<div class="form-errors"><p>Errors:</p>';
 				
 		foreach($form_errors as $str)
 		{
