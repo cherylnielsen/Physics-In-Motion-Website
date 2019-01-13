@@ -1,18 +1,21 @@
 <?php
 
+require_once('model/Assignment.php');
+require_once('controller/DatabaseController.php');
 
-class Assignment_controller extends DatabaseController {
+class AssignmentController extends DatabaseController {
 
 	public function __construct() {}
 	//($assignment_id, $professor_id, $student_id, $lab_id, $date_assigne, $date_due, $date_submited, $total_time, $added_instructions)
 
-
-	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
+	public function initialize()
 	{
-		$assignment_array = array();
-		$query = "select * from assignment where $attribute_type = '$attribute_value'";
-		$result = mysqli_query($db_connection, $query);
+		$table = "assignment";
+		$this->setTableName($table);
+	}
 
+	private function getData($db_result, &$dataArray)
+	{
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -20,49 +23,20 @@ class Assignment_controller extends DatabaseController {
 				$assignment = new Assignment();
 				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], $row['date_submited'], $row['total_time'], $row['added_instructions']);
 				// pushes each object onto the end of the array
-				$assignment_array[] = $assignment;
+				$dataArray[] = $assignment;
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $assignment_array;
+		}		
 	}
 	
-
-	public function get_all($db_connection)
-	{
-		$assignment_array = array();
-		$query = 'select * from assignment';
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			{
-				$assignment = new Assignment();
-				$assignment->initialize($row['assignment_id'], $row['professor_id'], $row['student_id'], $row['lab_id'], $row['date_assigned'], $row['date_due'], $row['date_submited'], $row['total_time'], $row['added_instructions']);
-				// pushes each object onto the end of the array
-				$assignment_array[] = $assignment;
-			}
-			mysqli_free_result($result);		
-		}
-		else
-		{
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $assignment_array;
-
-	}
 	
-	public function update($assignment, $db_connection)
+	public function update($assignment)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		
 		$assignment_id = $assignment->get_assignment_id();
@@ -98,8 +72,9 @@ class Assignment_controller extends DatabaseController {
 	}
 
 
-	public function save_new($assignment, $db_connection)
+	public function saveNew($assignment)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		
 		$professor_id = $assignment->get_professor_id();
@@ -125,7 +100,7 @@ class Assignment_controller extends DatabaseController {
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>New assignment could not be saved.</p>';
+			echo '<p>New assignment could not be saveNewd.</p>';
 		}
 
 		mysqli_close($db_connection);

@@ -1,70 +1,42 @@
 <?php
 
+require_once('model/Administrator.php');
+require_once('controller/DatabaseController.php');
 
-class Administrator_controller extends DatabaseController {
+class AdministratorController extends DatabaseController {
 
 	public function __construct() {}
-	//Student ($administrator_id, $user_id, $first_name, $last_name, $admin_type, $email)
+	//Administrator ($administrator_id, $user_id, $first_name, $last_name, $admin_type, $email)
 
-	
-	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
+	public function initialize()
 	{
-		$admin_array = array();
-		$query = "select * from administrator where $attribute_type = '$attribute_value'";
-		$result = mysqli_query($db_connection, $query);
+		$table = "administrator";
+		$this->setTableName($table);
+	}
 
+	private function getData($db_result, &$dataArray)
+	{
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
-				$admin->initialize($row['admin_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
+				$admin->initialize($row['admin_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
 				// pushes each object onto the end of the array
-				$admin_array[] = $admin;
+				$dataArray[] = $admin;
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $admin_array;
-
-	}
-	
-	
-	public function get_all($db_connection)
-	{
-		$admin_array = array();
-		$query = 'select * from administrator';
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			{
-				$admin = new Administrator();
-				$admin->initialize($row['admin_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
-				// pushes each object onto the end of the array
-				$admin_array[] = $admin;
-			}
-			mysqli_free_result($result);		
-		}
-		else
-		{
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $admin_array;
-
+		}	
 	}
 	
 
-	public function update($administrator, $db_connection)
+	public function update($administrator)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		$first = $administrator->get_first_name();
 		$last = $administrator->get_last_name();
@@ -93,8 +65,9 @@ class Administrator_controller extends DatabaseController {
 	}
 
 
-	public function save_new($administrator, $db_connection)
+	public function saveNew($administrator)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		$id = $administrator->get_admin_id();
 		$first = $administrator->get_first_name();
@@ -115,7 +88,7 @@ class Administrator_controller extends DatabaseController {
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>New administrator could not be saved.</p>';
+			echo '<p>New administrator could not be saveNewd.</p>';
 		}
 
 		mysqli_close($db_connection);

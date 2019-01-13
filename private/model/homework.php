@@ -2,55 +2,30 @@
 
 class Homework {
 	
-	private $homework_id;
+	private $student_id;
 	private $assignment_id;
 	private $lab_summary;
-	private $lab_data;
-	private $lab_graphs;
-	private $lab_math;
-	private $lab_errors;
-	private $chat_session;
-	private $lab_report;
+	private $data;
+	private $graphs;
+	private $math;
+	private $hints;
+	private $chat_session;		
 		
 		
 	public function __construct() {}
 	
-	public function Homework($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
+	public function initialize($assignment_id, $student_id, $lab_summary, $data, $graphs, $math, $hints, $chat_session)
 	{
-		$this->homework_id = $homework_id;
 		$this->assignment_id = $assignment_id;
+		$this->student_id = $student_id;
 		$this->lab_summary = $lab_summary;
-		$this->lab_data = $lab_data;
-		$this->lab_graphs = $lab_graphs;
-		$this->lab_math = $lab_math;
-		$this->lab_errors = $lab_errors;
+		$this->data = $data;
+		$this->graphs = $graphs;
+		$this->math = $math;
+		$this->hints = $hints;
 		$this->chat_session = $chat_session;
-		$this->lab_report = $lab_report;
 	}
 	
-	public function initialize($homework_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
-	{
-		$this->homework_id = $homework_id;
-		$this->assignment_id = $assignment_id;
-		$this->lab_summary = $lab_summary;
-		$this->lab_data = $lab_data;
-		$this->lab_graphs = $lab_graphs;
-		$this->lab_math = $lab_math;
-		$this->lab_errors = $lab_errors;
-		$this->chat_session = $chat_session;
-		$this->lab_report = $lab_report;
-	}
-	
-	
-	public function get_homework_id()
-	{
-		return $this->homework_id;
-	}
-
-	public function set_homework_id($homework_id)
-	{
-		$this->homework_id = $homework_id;
-	}
 	
 	public function get_assignment_id()
 	{
@@ -61,6 +36,16 @@ class Homework {
 	{
 		$this->assignment_id = $assignment_id;
 	}
+	
+	public function get_student_id()
+	{
+		return $this->student_id;
+	}
+
+	public function set_student_id($student_id)
+	{
+		$this->student_id = $student_id;
+	}	
 	
 	public function get_added_instructions()
 	{
@@ -82,44 +67,44 @@ class Homework {
 		$this->lab_summary = $lab_summary;
 	}
 	
-	public function get_lab_data()
+	public function get_data()
 	{
-		return $this->lab_data;
+		return $this->data;
 	}
 
-	public function set_lab_data($lab_data)
+	public function set_data($data)
 	{
-		$this->lab_data = $lab_data;
+		$this->data = $data;
 	}
 	
-	public function get_lab_graphs()
+	public function get_graphs()
 	{
-		return $this->lab_graphs;
+		return $this->graphs;
 	}
 
-	public function set_lab_graphs($lab_graphs)
+	public function set_graphs($graphs)
 	{
-		$this->lab_graphs = $lab_graphs;
+		$this->graphs = $graphs;
 	}
 	
-	public function get_lab_math()
+	public function get_math()
 	{
-		return $this->lab_math;
+		return $this->math;
 	}
 
-	public function set_lab_math($lab_math)
+	public function set_math($math)
 	{
-		$this->lab_math = $lab_math;
+		$this->math = $math;
 	}
 
-	public function get_lab_errors()
+	public function get_hints()
 	{
-		return $this->lab_errors;
+		return $this->hints;
 	}
 
-	public function set_lab_errors($lab_errors)
+	public function set_hints($hints)
 	{
-		$this->lab_errors = $lab_errors;
+		$this->hints = $hints;
 	}
 	
 	public function get_chat_session()
@@ -132,15 +117,6 @@ class Homework {
 		$this->chat_session = $chat_session;
 	}
 
-	public function get_lab_report()
-	{
-		return $this->lab_report;
-	}
-
-	public function set_lab_report($lab_report)
-	{
-		$this->lab_report = $lab_report;
-	}	
 	
 }
 

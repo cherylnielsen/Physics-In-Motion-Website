@@ -1,17 +1,21 @@
 <?php
 
-class Homework_controller extends DatabaseController {
+require_once('model/Homework.php');
+require_once('controller/DatabaseController.php');
+
+class HomeworkController extends DatabaseController {
 
 	public function __construct() {}
 	//($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
 
-
-	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
+	public function initialize()
 	{
-		$homework_array = array();
-		$query = "select * from homework where $attribute_type = '$attribute_value'";
-		$result = mysqli_query($db_connection, $query);
+		$table = "homework";
+		$this->setTableName($table);
+	}
 
+	private function getData($db_result, &$dataArray)
+	{
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -19,50 +23,20 @@ class Homework_controller extends DatabaseController {
 				$homework = new Homework();
 				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
 				// pushes each object onto the end of the array
-				$homework_array[] = $homework;
+				$dataArray[] = $homework;
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $homework_array;
-	}
-	
-
-	public function get_all($db_connection)
-	{
-		$homework_array = array();
-		$query = 'select * from homework';
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			{
-				$homework = new Homework();
-				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
-				// pushes each object onto the end of the array
-				$homework_array[] = $homework;
-			}
-			mysqli_free_result($result);		
-		}
-		else
-		{
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $homework_array;
-
+		}		
 	}
 	
 	
-	public function update($homework, $db_connection)
+	public function update($homework)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		
 		// The homework_id and assignment_id should not be changed.
@@ -88,8 +62,9 @@ class Homework_controller extends DatabaseController {
 	}
 	
 	
-	public function save_new($homework, $db_connection)
+	public function saveNew($homework)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		
 		// The homework_id is not included, because it is set automatically by the database.
@@ -106,7 +81,7 @@ class Homework_controller extends DatabaseController {
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>New homework could not be saved.</p>';
+			echo '<p>New homework could not be saveNewd.</p>';
 		}
 
 		mysqli_close($db_connection);

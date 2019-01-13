@@ -1,19 +1,21 @@
 <?php
 
+require_once('model/Notice.php');
+require_once('controller/DatabaseController.php');
 
-class Notice_controller extends DatabaseController {
+class NoticeController extends DatabaseController {
 
 	public function __construct() {}
 	//($notice_id, $notice_type, $date_sent, $notice_text)
 
-	
-	
-	public function get_by_attribute($attribute_value, $attribute_type, $db_connection)
+	public function initialize()
 	{
-		$notice_array = array();
-		$query = "select * from notice where $attribute_type = '$attribute_value'";
-		$result = mysqli_query($db_connection, $query);
-
+		$table = "notice";
+		$this->setTableName($table);
+	}
+	
+	private function getData($db_result, &$dataArray)
+	{
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -21,50 +23,20 @@ class Notice_controller extends DatabaseController {
 				$notice = new Notice();
 				$notice->initialize($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
 				// pushes each object onto the end of the array
-				$notice_array[] = $notice;	
+				$dataArray[] = $notice;	
 			}
 			mysqli_free_result($result);		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $notice_array;
-	}
-	
-
-	public function get_all($db_connection)
-	{
-		$notice_array = array();
-		$query = 'select * from notice';
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-			{
-				$notice = new Notice();
-				$notice->initialize($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
-				// pushes each object onto the end of the array
-				$notice_array[] = $notice;	
-			}
-			mysqli_free_result($result);		
-		}
-		else
-		{
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $notice_array;
-
+		}	
 	}
 	
 	
-	public function update($professor, $db_connection)
+	public function update($notice)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		$assignment_id = $notice->get_assignment_id();
 		$notice_type = $notice->get_notice_type();
@@ -83,7 +55,6 @@ class Notice_controller extends DatabaseController {
 		{ 
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>The notice could not be updated.</p>';
 		}
 
 		mysqli_close($db_connection);
@@ -92,8 +63,9 @@ class Notice_controller extends DatabaseController {
 	}
 	
 	
-	public function save_new($notice, $db_connection)
+	public function saveNew($notice)
 	{
+		$db_connection = $this->$get_db_connection();
 		$sucess = true;
 		$assignment_id = $notice->get_assignment_id();
 		$notice_type = $notice->get_notice_type();
@@ -114,7 +86,6 @@ class Notice_controller extends DatabaseController {
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>New notice could not be saved.</p>';
 		}
 
 		mysqli_close($db_connection);
