@@ -1,6 +1,6 @@
 <?php
 
-class Tutorial_lab_rating {
+class Lab_Rating {
 	
 	private $rating_id;
 	private $lab_id;
@@ -10,16 +10,6 @@ class Tutorial_lab_rating {
 	private $comments;
 	
 	public function __construct() {}
-	
-	public function Tutorial_lab_rating($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
-	{
-		$this->rating_id = $rating_id;
-		$this->lab_id = $lab_id;
-		$this->user_id = $user_id;
-		$this->date_posted = $date_posted;
-		$this->lab_rating = $lab_rating;
-		$this->comments = $comments;
-	}
 	
 	public function initialize($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
 	{
