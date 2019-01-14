@@ -1,5 +1,6 @@
 <?php
 
+
 // The controllers for each data_type of the database tables
 require_once('controller/UsersController.php');
 require_once('controller/StudentController.php');
@@ -11,27 +12,10 @@ require_once('controller/NoticeController.php');
 require_once('controller/TutorialLabController.php');
 require_once('controller/LabRatingController.php');
 require_once('controller/QuoteController.php');
-
-
-// these controllers still have to be made
-// The models for each data_type of the database tables where new controllers are required
-require_once('model/Homework_Submission.php');
-require_once('controller/DatabaseController.php');
 require_once('controller/HomeworkSubmissionController.php');
-
-require_once('model/Section.php');
-require_once('controller/DatabaseController.php');
 require_once('controller/SectionController.php');
-
-require_once('model/Section_Professors.php');
-require_once('controller/DatabaseController.php');
 require_once('controller/SectionProfessorsController.php');
-
-require_once('model/Section_Students.php');
-require_once('controller/DatabaseController.php');
 require_once('controller/SectionStudentsController.php');
-
-
 
 
 class DatabaseControllerFactory

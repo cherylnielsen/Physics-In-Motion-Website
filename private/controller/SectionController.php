@@ -1,17 +1,17 @@
 <?php
 
-require_once('model/Quote.php');
+require_once('model/Section.php');
 require_once('controller/DatabaseController.php');
 
-class QuoteController extends DatabaseController {
+class SectionController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//Quote ($quote_id, $author, $quote_text, $month, $year)
+	//($section_id, $section_name, $start_date, $end_date)
 	
 	public function initialize()
 	{
-		$table = "quote";
+		$table = "section";
 		$this->setTableName($table);
 	}
 
@@ -21,11 +21,10 @@ class QuoteController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$quote = new Quote();
-				$quote->initialize($row['quote_id'], $row['author'], $row['quote_text'],
-							$row['month'], $row['year']);
+				$section = new Section();
+				$section->initialize($row['section_id'], $row['section_name'], $row['start_date'], $row['end_date']);
 				// pushes each object onto the end of the array
-				$dataArray[] = $quote;
+				$dataArray[] = $section;
 			}
 		}
 		else
@@ -33,54 +32,27 @@ class QuoteController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
 	}
-	
-
-	/***
-	Queries the database for the quote with the current month and year.
-	Input: $db_connection = the database connection.
-	Output: $dataArray = the array of object models created from each result row.
-	***/
-	public function getQuoteOfTheMonth()
-	{
-		$db_connection = $this->$get_db_connection();
-		$dataArray = array();
-		$quote = new Quote();
-		
-		$query = 'select * from quote where (month = MONTH(NOW())) AND (year = YEAR(NOW()))';
-		$result = mysqli_query($db_connection, $query);
-		getData($result, &$dataArray);
-		mysqli_free_result($result);
-		mysqli_close($db_connection);
-			
-		if(count($dataArray) > 0)
-		{
-			$quote = $dataArray[0];
-		}		
-		
-		return $quote;
-	}
 
 
 	// The id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$quote)
+	public function saveNew(&$section)
 	{
 		$sucess = true;
 		$db_connection = $this->$get_db_connection();
-		$author = $quote->get_author();
-		$text = $quote->get_quote_text();
-		$month = $quote->get_month();
-		$year = $quote->get_year();
+		$section_name = $section->get_section_name();
+		$text = $section->get_start_date();
+		$end_date = $section->get_end_date();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into quote (author, quote_text, month, year) 
-				values('$author', '$text', '$month', '$year')";
+		$query = "insert into section (section_name, start_date, end_date) 
+				values('$section_name', '$text', '$end_date')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
-			$quote_id = mysql_insert_id($db_connection);
-			$quote->set_quote_id(quote_id);				
+			$section_id = mysql_insert_id($db_connection);
+			$section->set_section_id(section_id);				
 		}
 		else
 		{
@@ -95,19 +67,20 @@ class QuoteController extends DatabaseController {
 	}
 	
 
-	// The ids must not be changed, so they are not updated.
-	public function update($quote)
+	// The id must not be changed, so it is not updated.
+	public function update(&$section)
 	{
 		$sucess = true;
 		$db_connection = $this->$get_db_connection();
-		$month = $quote->get_month_posted();
-		$author = $quote->get_author();
-		$text = $quote->get_quote_text();
-		$quote_id = $quote->get_quote_id();
+		$section_id = $section->get_section_id();
+		$section_name = $section->get_section_name();
+		$text = $section->get_start_date();
+		$end_date = $section->get_end_date();
 		
-		// The ids must not be changed, so they are not updated.
-		$query = "update quote set month_posted = '$month', author = '$author', 
-					quote_text = '$text' where quote_id = '$quote_id'";
+		
+		// The id must not be changed, so it is not updated.
+		$query = "update section set end_date_posted = '$end_date', section_name = '$section_name', 
+					start_date = '$text' where section_id = '$section_id'";
 				
 		$result = mysqli_query($db_connection, $query);
 

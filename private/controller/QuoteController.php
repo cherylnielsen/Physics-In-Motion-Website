@@ -95,8 +95,8 @@ class QuoteController extends DatabaseController {
 	}
 	
 
-	// The ids must not be changed, so they are not updated.
-	public function update($quote)
+	// The id must not be changed, so it is not updated.
+	public function update(&$quote)
 	{
 		$sucess = true;
 		$db_connection = $this->$get_db_connection();
@@ -105,7 +105,7 @@ class QuoteController extends DatabaseController {
 		$text = $quote->get_quote_text();
 		$quote_id = $quote->get_quote_id();
 		
-		// The ids must not be changed, so they are not updated.
+		// The id must not be changed, so it is not updated.
 		$query = "update quote set month_posted = '$month', author = '$author', 
 					quote_text = '$text' where quote_id = '$quote_id'";
 				

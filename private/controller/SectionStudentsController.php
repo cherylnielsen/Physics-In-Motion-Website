@@ -1,17 +1,17 @@
 <?php
 
-require_once('model/Quote.php');
+require_once('model/Section_Students.php');
 require_once('controller/DatabaseController.php');
 
-class QuoteController extends DatabaseController {
+class SectionStudentsController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//Quote ($quote_id, $author, $quote_text, $month, $year)
+	//($section_id, $student_id)
 	
 	public function initialize()
 	{
-		$table = "quote";
+		$table = "section_students";
 		$this->setTableName($table);
 	}
 
@@ -21,11 +21,10 @@ class QuoteController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$quote = new Quote();
-				$quote->initialize($row['quote_id'], $row['author'], $row['quote_text'],
-							$row['month'], $row['year']);
+				$section_students = new Section_Students();
+				$section_students->initialize($row['section_id'], $row['student_id']);
 				// pushes each object onto the end of the array
-				$dataArray[] = $quote;
+				$dataArray[] = $section_students;
 			}
 		}
 		else
@@ -33,56 +32,21 @@ class QuoteController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
 	}
-	
-
-	/***
-	Queries the database for the quote with the current month and year.
-	Input: $db_connection = the database connection.
-	Output: $dataArray = the array of object models created from each result row.
-	***/
-	public function getQuoteOfTheMonth()
-	{
-		$db_connection = $this->$get_db_connection();
-		$dataArray = array();
-		$quote = new Quote();
-		
-		$query = 'select * from quote where (month = MONTH(NOW())) AND (year = YEAR(NOW()))';
-		$result = mysqli_query($db_connection, $query);
-		getData($result, &$dataArray);
-		mysqli_free_result($result);
-		mysqli_close($db_connection);
-			
-		if(count($dataArray) > 0)
-		{
-			$quote = $dataArray[0];
-		}		
-		
-		return $quote;
-	}
 
 
-	// The id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$quote)
+	// The id for section_students is NOT auto-generated.
+	public function saveNew(&$section_students)
 	{
 		$sucess = true;
 		$db_connection = $this->$get_db_connection();
-		$author = $quote->get_author();
-		$text = $quote->get_quote_text();
-		$month = $quote->get_month();
-		$year = $quote->get_year();
+		$section_id = $section_students->get_section_id();
+		$student_id = $section_students->get_student_id();
 		
-		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into quote (author, quote_text, month, year) 
-				values('$author', '$text', '$month', '$year')";
+		$query = "insert into section_students (section_id, student_id) 
+				values('$section_id', '$student_id')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
-		{
-			// get the newly generated id
-			$quote_id = mysql_insert_id($db_connection);
-			$quote->set_quote_id(quote_id);				
-		}
-		else
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
@@ -94,33 +58,11 @@ class QuoteController extends DatabaseController {
 		
 	}
 	
-
-	// The ids must not be changed, so they are not updated.
-	public function update($quote)
+	
+	public function update(&$section_students)
 	{
-		$sucess = true;
-		$db_connection = $this->$get_db_connection();
-		$month = $quote->get_month_posted();
-		$author = $quote->get_author();
-		$text = $quote->get_quote_text();
-		$quote_id = $quote->get_quote_id();
-		
-		// The ids must not be changed, so they are not updated.
-		$query = "update quote set month_posted = '$month', author = '$author', 
-					quote_text = '$text' where quote_id = '$quote_id'";
-				
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			$sucess = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_free_result($result);
-		mysqli_close($db_connection);
+		$sucess = false;		
 		return $sucess;
-		
 	}
 
 
