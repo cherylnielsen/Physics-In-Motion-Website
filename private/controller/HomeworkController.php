@@ -6,7 +6,7 @@ require_once('controller/DatabaseController.php');
 class HomeworkController extends DatabaseController {
 
 	public function __construct() {}
-	//($homework_id, $assignment_id, $lab_summary, $lab_data, $lab_graphs, $lab_math, $lab_errors, $chat_session, $lab_report)
+	//($assignment_id, $student_id, $lab_summary, $data, $graphs, $math, $hints, $chat_session)
 
 	public function initialize()
 	{
@@ -21,11 +21,11 @@ class HomeworkController extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$homework = new Homework();
-				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['lab_summary'], $row['lab_data'], $row['lab_graphs'], $row['lab_math'], $row['lab_errors'], $row['chat_session'], $row['lab_report']);
+				$homework->initialize($row['assignment_id'], $row['student_id'], $row['lab_summary'], $row['data'], 
+							$row['graphs'], $row['math'], $row['hints'], $row['chat_session']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $homework;
-			}
-			mysqli_free_result($result);		
+			}		
 		}
 		else
 		{
@@ -34,56 +34,66 @@ class HomeworkController extends DatabaseController {
 	}
 	
 	
+	// The ids must not be changed, so they are not updated.
 	public function update($homework)
 	{
 		$db_connection = $this->$get_db_connection();
 		$sucess = true;
+		$assignment_id = $homework->get_assignment_id(); 
+		$student_id = $homework->get_student_id(); 
+		$lab_summary = $homework->get_lab_summary(); 
+		$data = $homework->get_data(); 
+		$graphs = $homework->get_graphs(); 
+		$math = $homework->get_math(); 
+		$hints = $homework->get_hints(); 
+		$chat_session = $homework->get_chat_session();
 		
-		// The homework_id and assignment_id should not be changed.
-		$query = 'update homework set assignment_id = $homework->$assignment_id, lab_summary = $homework->lab_summary, lab_data = $homework->lab_data, lab_graphs = $homework->lab_graphs, lab_math = $homework->lab_math, lab_errors = $homework->lab_errors, chat_session = $homework->chat_session, lab_report = $homework->lab_report
-		where homework_id = $homework_id';
+		// The ids must not be changed, so they are not updated.
+		$query = "update homework set lab_summary = '$lab_summary', data = '$data', graphs = '$graphs', 
+				math = '$math', hints = '$hints', chat_session = '$chat_session' 
+				where (assignment_id = '$assignment_id') AND (student_id = '$student_id')";
 					
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
-		{
-			mysqli_free_result($result);		
-		}
-		else
 		{ 
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>The homework could not be updated.</p>';
 		}
 
+		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 
 	}
 	
 	
-	public function saveNew($homework)
+	// For Homework, the ids are NOT auto-generated.
+	public function saveNew(&$homework)
 	{
 		$db_connection = $this->$get_db_connection();
 		$sucess = true;
+		$assignment_id = $homework->get_assignment_id(); 
+		$student_id = $homework->get_student_id(); 
+		$lab_summary = $homework->get_lab_summary(); 
+		$data = $homework->get_data(); 
+		$graphs = $homework->get_graphs(); 
+		$math = $homework->get_math(); 
+		$hints = $homework->get_hints(); 
+		$chat_session = $homework->get_chat_session();
 		
-		// The homework_id is not included, because it is set automatically by the database.
-		$query = 'insert into homework (assignment_id, lab_summary, lab_data, lab_graphs, lab_math, lab_errors, chat_session, lab_report) 
-		values ($homework->assignment_id, $homework->lab_summary, $homework->lab_data, $homework->lab_graphs, $homework->lab_math, $homework->lab_errors, $homework->chat_session, $homework->lab_report)';
+		
+		$query = "insert into homework (assignment_id, student_id, lab_summary, data, graphs, math, hints, chat_session) 
+		values ('$assignment_id', '$student_id', '$lab_summary', '$data', '$graphs', '$math', '$hints', '$chat_session')";
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
-		{
-			$homework->set_homework_id(mysql_insert_id());
-			mysqli_free_result($result);		
-		}
-		else
+		if(!$result)
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>New homework could not be saveNewd.</p>';
 		}
 
+		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

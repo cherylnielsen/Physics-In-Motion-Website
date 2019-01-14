@@ -6,7 +6,7 @@ require_once('controller/DatabaseController.php');
 class NoticeController extends DatabaseController {
 
 	public function __construct() {}
-	//($notice_id, $notice_type, $date_sent, $notice_text)
+	//($notice_id, $to_user_id, $from_user_id, $date_sent, $subject, $notice_text)
 
 	public function initialize()
 	{
@@ -21,11 +21,11 @@ class NoticeController extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['notice_id'], $row['assignment_id'], $row['notice_type'], $row['date_sent'], $row['notice_text']);
+				$notice->initialize($row['notice_id'], $row['to_user_id'], $row['from_user_id'], 
+						$row['date_sent'], $row['subject'], $row['notice_text']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice;	
 			}
-			mysqli_free_result($result);		
 		}
 		else
 		{
@@ -34,60 +34,65 @@ class NoticeController extends DatabaseController {
 	}
 	
 	
+	// The notice_id must not be changed, so it is not updated.
 	public function update($notice)
 	{
 		$db_connection = $this->$get_db_connection();
 		$sucess = true;
-		$assignment_id = $notice->get_assignment_id();
-		$notice_type = $notice->get_notice_type();
+		$notice_id = $notice->get_notice_id();
+		$to_user_id = $notice->get_to_user_id();
+		$from_user_id = $notice->get_from_user_id();
+		$date_sent = $notice->get_date_sent();
+		$subject = $notice->get_subject();
 		$notice_text = $notice->get_notice_text();
 		
-		// The notice_id should not be changed.
-		$query = "update notice set assignment_id = '$assignment_id', notice_type = '$notice_type', date_sent = 'now()', notice_text = '$notice_text' where notice_id = '$notice_id'";
-		
+		// The notice_id must not be changed, so it is not updated.
+		$query = "update notice set to_user_id = '$to_user_id', from_user_id = '$from_user_id', 
+					date_sent = '$date_sent', subject = '$subject', notice_text = '$notice_text' 
+					where notice_id = '$notice_id'";		
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
-		{
-			mysqli_free_result($result);		
-		}
-		else
 		{ 
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
+		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 
 	}
 	
 	
-	public function saveNew($notice)
+	// The notice_id will be auto-generated, when the new object is added to the database table.
+	public function saveNew(&$notice)
 	{
 		$db_connection = $this->$get_db_connection();
 		$sucess = true;
-		$assignment_id = $notice->get_assignment_id();
-		$notice_type = $notice->get_notice_type();
+		$to_user_id = $notice->get_to_user_id();
+		$from_user_id = $notice->get_from_user_id();
+		$subject = $notice->get_subject();
 		$notice_text = $notice->get_notice_text();
 		
-		// The notice_id is not included, because it is set automatically by the database.
-		$query = "insert into notice (assignment_id, notice_type, date_sent, notice_text) 
-				values('$assignment_id', '$notice_type', 'now()', '$notice_text')";
-				
+		// The notice_id will be auto-generated.
+		$query = "insert into notice (to_user_id, from_user_id, date_sent, subject, notice_text) 
+				values('$to_user_id', '$from_user_id', 'now()', '$subject', '$notice_text')";
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
-		{
-			$notice->set_notice_id(mysql_insert_id($db_connection));
-			mysqli_free_result($result);		
-		}
-		else
+		if(!$result)
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
+		else
+		{
+			// get the newly generated notice_id
+			$notice_id = mysqli_insert_id($db_connection);
+			$notice->set_notice_id($notice_id);
+		}
 
+		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		
