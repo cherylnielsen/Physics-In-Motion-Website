@@ -20,7 +20,7 @@
 <?php include('html-includes/template/nav-and-quote.php'); ?>
 
 <section class="main-content">
-	<?php include('html-includes/assignments/professor-info.php'); ?>
+	<?php include('html-includes/users/professor-info.php'); ?>
 </section>
 		
 <?php include('html-includes/template/footer.html'); ?>

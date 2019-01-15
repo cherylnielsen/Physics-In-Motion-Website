@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Section.php');
-require_once('controller/DatabaseController.php');
+
 
 class SectionController extends DatabaseController {
 
@@ -15,13 +14,13 @@ class SectionController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray)
 	{
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section = new Section();
+				$section = new Sections();
 				$section->initialize($row['section_id'], $row['section_name'], $row['start_date'], $row['end_date']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section;
@@ -38,7 +37,7 @@ class SectionController extends DatabaseController {
 	public function saveNew(&$section)
 	{
 		$sucess = true;
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$section_name = $section->get_section_name();
 		$text = $section->get_start_date();
 		$end_date = $section->get_end_date();
@@ -68,10 +67,10 @@ class SectionController extends DatabaseController {
 	
 
 	// The id must not be changed, so it is not updated.
-	public function update(&$section)
+	public function update($section)
 	{
 		$sucess = true;
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$section_id = $section->get_section_id();
 		$section_name = $section->get_section_name();
 		$text = $section->get_start_date();

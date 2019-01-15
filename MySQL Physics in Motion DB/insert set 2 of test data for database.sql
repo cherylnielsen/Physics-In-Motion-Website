@@ -1,29 +1,48 @@
 /* initialize test data for the database */
 
 use physics_in_motion;
+/* sections */
+
+insert into sections (section_id, section_name, start_date, end_date)
+values (101, "section name 1", "2018-12-01", "2019-02-01"),
+(102, "section name 2", "2018-12-01", "2019-02-01");
+
+insert into section_students (section_id, student_id)
+values (101, 101), (101, 102),
+(102, 101), (102, 102);
+
+insert into section_professors (section_id, professor_id)
+values (101, 101), (102, 102);
+
+SELECT * FROM sections;
+SELECT * FROM section_students;
+SELECT * FROM section_professors;
 
 /* assignments */
-
-insert into assignment (assignment_id, professor_id, student_id, lab_id, date_assigned, date_due, 
-date_submitted, total_time, added_instructions)
-values (101, 103, 101, 101, "2018-11-26 09:0:0", "2018-11-28 23:0:0", "2018-11-28 20:0:0", 3.50, null), 
-(102, 103, 101, 102, "2018-11-30 09:0:0", "2018-12-05 23:0:0", null, null, null), 
-(103, 104, 102, 103, "2018-12-07 09:0:0", "2018-12-12 23:0:0", null, null, 
-		"Use 3 different friction matterials, in addition to the frictionless air surface.");
+insert into assignment (assignment_id, section_id, lab_id, tag, date_assigned, date_due, points_possible, notes)
+values (101, 101, 101, "tag 1", "2018-12-10 10:0:0", "2018-12-15 20:0:0", 20, "notes 1"), 
+(102, 101, 102, "tag 2", "2018-12-15 10:0:0", "2018-12-20 20:0:0", 20, "notes 2");
 
 select * from assignment;
 
 /* student homework */
+insert into homework (assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session)
+values (101, 101, "This is student 1 lab summary.", "the data 1", "the graphs 1", "the math 1", "the hints 1", "the chat 1"),
+(101, 102, "This is the student 2 lab summary.", "the data 2", "the graphs 2", "the math 2 ", "the hints 2", "the chat 2");
 
-insert into homework (homework_id, lab_summary, lab_data, lab_graphs, lab_math, lab_errors, chat_session, lab_report)
-values (101, "This is the lab summary.", null, null, null, "no errors", "This is the lab chat session.", "This is the lab report.");
-
-SELECT * FROM homework;
+select * from homework;
 
 /* ratings */
+insert into lab_rating (rating_id, lab_id, user_id, date_posted, lab_rating, comments)
+values (101, 101, 103, "2018-12-18 12:00:00", 5, "This lab is great!"),
+(102, 101, 105, "2018-12-18 14:00:00", 5, "My students think this lab is great!");
 
-insert into tutorial_lab_rating (rating_id, lab_id, user_id, date_posted, lab_rating, comments)
-values (101, 101, 101, "2018-11-29 12:00:00", 5, "This lab is great!"),
-(102, 101, 103, "2018-11-30 19:00:00", 5, "My students think this lab is great!");
+select * from lab_rating;
 
-select * from tutorial_lab_rating;
+/* homework submission */
+insert into homework_submission (assignment_id, student_id, date_submitted, points_earned, was_graded, total_time)
+values (101, 101, "2018-12-15 12:00:00", 20, 1, 5),
+(101, 102, "2018-12-12 14:00:00", 15, 1, 3);
+
+select * from homework_submission;
+

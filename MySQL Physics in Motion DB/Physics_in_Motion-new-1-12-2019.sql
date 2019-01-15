@@ -25,7 +25,6 @@ DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab` (
   `lab_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `lab_name` VARCHAR(256) NOT NULL,
-  `web_link` VARCHAR(256) NOT NULL,
   `lab_status` SET('New', 'Updated', 'Available', 'Development', 'Discontinued') NOT NULL DEFAULT 'Development',
   `introduction` VARCHAR(1000) NULL DEFAULT NULL,
   `prerequisites` VARCHAR(1000) NULL DEFAULT NULL,
@@ -36,8 +35,6 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab` (
   `date_first_available` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`lab_id`))
 ENGINE = InnoDB;
-
-CREATE UNIQUE INDEX `web_link_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`web_link` ASC) VISIBLE;
 
 CREATE UNIQUE INDEX `lab_name_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`lab_name` ASC) VISIBLE;
 
@@ -114,11 +111,11 @@ CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`professor` (`user_i
 
 
 -- -----------------------------------------------------
--- Table `physics_in_motion`.`section`
+-- Table `physics_in_motion`.`sections`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`section` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`sections` ;
 
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section` (
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`sections` (
   `section_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `section_name` VARCHAR(256) NULL,
   `start_date` DATE NULL,
@@ -144,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment` (
   PRIMARY KEY (`assignment_id`),
   CONSTRAINT `assignment_section_id`
     FOREIGN KEY (`section_id`)
-    REFERENCES `physics_in_motion`.`section` (`section_id`)
+    REFERENCES `physics_in_motion`.`sections` (`section_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `assignment_lab_id`
@@ -168,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
   `assignment_id` INT UNSIGNED NOT NULL,
   `student_id` INT UNSIGNED NOT NULL,
   `lab_summary` VARCHAR(256) NULL DEFAULT NULL,
-  `data` VARCHAR(256) NULL DEFAULT NULL,
+  `lab_data` VARCHAR(256) NULL DEFAULT NULL,
   `graphs` VARCHAR(256) NULL DEFAULT NULL,
   `math` VARCHAR(256) NULL DEFAULT NULL,
   `hints` VARCHAR(256) NULL DEFAULT NULL,
@@ -200,8 +197,8 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`quote` (
   `quote_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `author` VARCHAR(256) NOT NULL,
   `quote_text` VARCHAR(1000) NOT NULL,
-  `month` INT NOT NULL,
-  `year` INT NOT NULL,
+  `month_posted` INT NOT NULL,
+  `year_posted` INT NOT NULL,
   PRIMARY KEY (`quote_id`))
 ENGINE = InnoDB;
 
@@ -309,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_students` (
     ON UPDATE NO ACTION,
   CONSTRAINT `std_section_section_id`
     FOREIGN KEY (`section_id`)
-    REFERENCES `physics_in_motion`.`section` (`section_id`)
+    REFERENCES `physics_in_motion`.`sections` (`section_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -361,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_professors` (
     ON UPDATE NO ACTION,
   CONSTRAINT `pro_section_section_id`
     FOREIGN KEY (`section_id`)
-    REFERENCES `physics_in_motion`.`section` (`section_id`)
+    REFERENCES `physics_in_motion`.`sections` (`section_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

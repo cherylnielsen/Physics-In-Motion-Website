@@ -1,6 +1,6 @@
 <?php
 
-class Section {
+class Sections {
 	
 	private $section_id;
 	private $section_name;

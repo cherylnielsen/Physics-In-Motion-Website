@@ -1,9 +1,8 @@
 <?php
 
 
-$data_type = "tutorial_lab";
 $labs = array();
-$labs = $mdb_control->get_all($data_type);
+$labs = $mdb_control->getController("tutorial_lab")->getAllData();
 $length_labs = count($labs);
 
 echo '<h1 class="labs">Explore our Tutorial Labs!</h1>

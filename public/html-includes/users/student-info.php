@@ -9,14 +9,15 @@
  - Links to rate completed labs.
 **/
 
-if(!isset($_SESSION['user_id']))
+if(!isset($_SESSION['student_id']))
 {
 	$url = "login-page.php";
 	header("Location: $url");
 	exit();
 }
 
-$student_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
+$student_id = $_SESSION['student_id'];
 $first_name = $_SESSION["first_name"];
 $last_name = $_SESSION["last_name"];
 
@@ -36,6 +37,6 @@ echo
 		
 
 echo '<br><a id="bottom" href="#top">return to top</a>';
-mysqli_close($db_connection);
+
 
 ?>

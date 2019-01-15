@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Professor.php');
-require_once('controller/DatabaseController.php');
+
 
 class ProfessorController extends DatabaseController{
 
@@ -14,7 +13,7 @@ class ProfessorController extends DatabaseController{
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray)
 	{
 		if($result)
 		{
@@ -36,7 +35,7 @@ class ProfessorController extends DatabaseController{
 	// The ids must not be changed, so they are not updated.
 	public function update($professor)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$professor_id = $professor->get_professor_id();
 		$first = $professor->get_first_name();
@@ -65,7 +64,7 @@ class ProfessorController extends DatabaseController{
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$professor)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$user_id = $user_id->get_user_id();
 		$first = $professor->get_first_name();

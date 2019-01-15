@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Administrator.php');
-require_once('controller/DatabaseController.php');
+
 
 class AdministratorController extends DatabaseController {
 
@@ -14,7 +13,7 @@ class AdministratorController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray)
 	{
 		if($result)
 		{
@@ -36,7 +35,7 @@ class AdministratorController extends DatabaseController {
 	// The ids must not be changed, so they are not updated.
 	public function update($administrator)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$admin_id = $administrator->get_admin_id();
 		$first = $administrator->get_first_name();
@@ -66,7 +65,7 @@ class AdministratorController extends DatabaseController {
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$administrator)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$user_id = $user_id->get_user_id();
 		$first = $administrator->get_first_name();

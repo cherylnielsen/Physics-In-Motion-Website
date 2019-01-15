@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Notice.php');
-require_once('controller/DatabaseController.php');
+
 
 class NoticeController extends DatabaseController {
 
@@ -14,7 +13,7 @@ class NoticeController extends DatabaseController {
 		$this->setTableName($table);
 	}
 	
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray)
 	{
 		if($result)
 		{
@@ -37,7 +36,7 @@ class NoticeController extends DatabaseController {
 	// The notice_id must not be changed, so it is not updated.
 	public function update($notice)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$notice_id = $notice->get_notice_id();
 		$to_user_id = $notice->get_to_user_id();
@@ -68,7 +67,7 @@ class NoticeController extends DatabaseController {
 	// The notice_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$notice)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$to_user_id = $notice->get_to_user_id();
 		$from_user_id = $notice->get_from_user_id();

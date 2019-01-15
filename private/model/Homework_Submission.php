@@ -97,11 +97,11 @@ class Homework_Submission {
 		{
 			$this->was_graded = $was_graded;
 		}
-		else if(($was_graded == 0)
+		else if($was_graded == 0)
 		{
 			$this->was_graded = false;
 		}
-		else if(($was_graded == 1)
+		else if($was_graded == 1)
 		{
 			$this->was_graded = true;
 		}
