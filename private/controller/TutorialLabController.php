@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Tutorial_Lab.php');
-require_once('controller/DatabaseController.php');
+
 
 class TutorialLabController extends DatabaseController {
 
@@ -16,13 +15,13 @@ class TutorialLabController extends DatabaseController {
 	}
 
 	
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$lab = new TutorialLab();
+				$lab = new Tutorial_Lab();
 				$lab->initialize($row['lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['introduction'], 
 							$row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['description'], 
 							$row['instructions'], $row['date_first_available']);
@@ -39,7 +38,7 @@ class TutorialLabController extends DatabaseController {
 	// The id must not be changed, so it is not updated.
 	public function update($tutorial_lab)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$lab_id = $tutorial_lab->get_lab_id();
 		$lab_name = $tutorial_lab->get_lab_name();
@@ -82,7 +81,7 @@ class TutorialLabController extends DatabaseController {
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$tutorial_lab)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$lab_name = $tutorial_lab->get_lab_name();
 		$web_link = $tutorial_lab->get_web_link();

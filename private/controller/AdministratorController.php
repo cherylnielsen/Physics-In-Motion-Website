@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Administrator.php');
-require_once('controller/DatabaseController.php');
+
 
 class AdministratorController extends DatabaseController {
 
@@ -14,11 +13,11 @@ class AdministratorController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
 				$admin->initialize($row['admin_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
@@ -36,7 +35,7 @@ class AdministratorController extends DatabaseController {
 	// The ids must not be changed, so they are not updated.
 	public function update($administrator)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$admin_id = $administrator->get_admin_id();
 		$first = $administrator->get_first_name();
@@ -56,7 +55,6 @@ class AdministratorController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 
@@ -66,7 +64,7 @@ class AdministratorController extends DatabaseController {
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$administrator)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$user_id = $user_id->get_user_id();
 		$first = $administrator->get_first_name();
@@ -91,7 +89,6 @@ class AdministratorController extends DatabaseController {
 			$administrator->set_admin_id($admin_id);
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

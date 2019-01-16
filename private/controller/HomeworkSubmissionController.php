@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Homework_Submission.php');
-require_once('controller/DatabaseController.php');
+
 
 class HomeworkSubmissionController extends DatabaseController {
 
@@ -15,7 +14,7 @@ class HomeworkSubmissionController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($db_result)
 		{
@@ -39,7 +38,7 @@ class HomeworkSubmissionController extends DatabaseController {
 	public function saveNew(&$submission)
 	{
 		$sucess = true;
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$assignment_id = $submission->get_assignment_id();
 		$student_id = $submission->get_student_id();
 		$date_submitted = $submission->get_date_submitted();
@@ -65,10 +64,10 @@ class HomeworkSubmissionController extends DatabaseController {
 	
 
 	// The ids must not be changed, so they are not updated.
-	public function update(&$submission)
+	public function update($submission)
 	{
 		$sucess = true;
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$assignment_id = $submission->get_assignment_id();
 		$student_id = $submission->get_student_id();
 		$date_submitted = $submission->get_date_submitted();

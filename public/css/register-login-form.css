@@ -61,7 +61,7 @@ input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.5em;
-	border: 2px solid #03AA0D;
+	border: 4px double #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
 }
@@ -80,7 +80,7 @@ input[type=submit], input[type=button] {
 }
 
 input:invalid {
-	border: 2px solid red;
+	border: 4px double red;
 	background-color: #ffd4d4;
 }
 

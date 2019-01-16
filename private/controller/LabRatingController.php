@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Lab_Rating.php');
-require_once('controller/DatabaseController.php');
+
 
 class LabRatingController extends DatabaseController {
 
@@ -14,7 +13,7 @@ class LabRatingController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($result)
 		{
@@ -36,7 +35,7 @@ class LabRatingController extends DatabaseController {
 	// The rating_id must not be changed, so it is not updated.
 	public function update($rating)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$rating_id = $rating->get_rating_id();
 		$lab_id = $rating->get_lab_id();
@@ -68,7 +67,7 @@ class LabRatingController extends DatabaseController {
 	// The rating_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$rating)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$lab_id = $rating->get_lab_id();
 		$user_id = $rating->get_user_id();

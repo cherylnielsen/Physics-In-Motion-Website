@@ -3,11 +3,8 @@
 $web_link = $_GET["lab"];
 $lab_id = $_GET["num"];
 
-$data_type = "tutorial_lab";
-$attribute_type = "lab_id";
-$attribute_value = $lab_id;
 $labs = array();
-$labs = $mdb_control->get_by_attribute($attribute_value, $attribute_type, $data_type);
+$labs = $mdb_control->getController("tutorial_lab")->getByAttribute("lab_id", "$lab_id");
 
 if((!is_null($labs)) AND (count($labs) > 0))
 {	
@@ -18,21 +15,24 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	
 	echo
 	'<div class="grid-lab-info">
-	<img class="lab-info" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+	<img class="lab-info" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
 	<article class="lab-info">';
 		
 	$status = $lab->get_lab_status();
 	switch(	$status )
 	{
-		case 'In Development':
-			echo'<h1 class="development-status">' . $status . '!</h1>';
+		case 'Development':
+			echo'<h1 class="development-status">In Development! Coming Soon!</h1>';
 			break;
 		case 'New':
-			echo'<h1 class="new-status">' . $status . '!</h1>';
+			echo'<h1 class="new-status">NEW! Try it Now!</h1>';
+			break;
+		case 'Updated':
+			echo'<h1 class="new-status">Updated and Improved!</h1>';
 			break;
 	}
 				
-	echo'<p>' . $lab->get_short_description() . '</p>
+	echo'<p>' . $lab->get_introduction() . '</p>
 	<h2>Average time to complete: ??</h2>
 	<h2>Student Rating: ??</h2>
 	<h2>Professor Rating: ??</h2>	
@@ -54,8 +54,8 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	</article>';
 	
 	echo 
-	'<img class="lab-info" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
-	<img class="lab-info" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">';
+	'<img class="lab-info" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+	<img class="lab-info" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">';
 	
 	echo 
 	'<article class="lab-info">

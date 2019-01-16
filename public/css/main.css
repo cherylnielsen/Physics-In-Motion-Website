@@ -156,6 +156,7 @@ section.main-content {
 section.new-labs {
 	float: right;
 	width: 25%;
+	text-align: center;
 	border: 4px double #03AA0D;
 	border-radius: 15px;
 	padding-bottom: 1em;
@@ -168,13 +169,19 @@ article.new-labs {
 	padding: 1em;
 	margin-bottom: 0;
 	background-color: white;
+	text-align: center;
+}
+
+img.new-labs {
+	display: block;
+	margin: auto;
 }
 
 h1.new-labs {
 	padding: 0.5em 1em;
 }
 
-h1.development-status {
+h1.development-status, h1.green {
 	color: #03AA0D;
 }
 

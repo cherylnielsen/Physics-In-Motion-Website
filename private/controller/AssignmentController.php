@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Assignment.php');
-require_once('controller/DatabaseController.php');
+
 
 class AssignmentController extends DatabaseController {
 
@@ -14,7 +13,7 @@ class AssignmentController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($result)
 		{
@@ -37,7 +36,7 @@ class AssignmentController extends DatabaseController {
 	// The ids must not be changed, so they are not updated.
 	public function update($assignment)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		
 		$assignment_id = $assignment->get_assignment_id();
@@ -73,7 +72,7 @@ class AssignmentController extends DatabaseController {
 	// The assignment_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$assignment)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		
 		$section_id = $assignment->get_section_id();

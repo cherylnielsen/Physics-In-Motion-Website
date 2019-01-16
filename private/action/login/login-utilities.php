@@ -1,281 +1,52 @@
 <?php
 
 class LoginUtilities
-{
+{		
 	public function __construct() {}
 	
-	public function sanitize_input($data_input)
-	{
-		if(!isset($data_input)) { return null; }
-		
-		// The following 4 lines are safety measures recommended by w3schools.com
-		$data_input = trim($data_input);
-		$data2 = strip_tags($data_input);	
-		$data2 = stripslashes($data2);
-		//$data2 = htmlspecialchars($data2, ENT_QUOTES);
-		if(strlen($data2) == 0) { return null; }
-		
-		return $data2;
-	}
-	
-	
-	public function check_email_format($email)
-	{
-		$email_error = null;
-		
-		if(!isset($email))
-		{ 	
-			$email_error = 'Enter an email.';
-		}
-		else if(strlen($email) == 0)
-		{
-			$email_error = 'Enter an email.';
-		}
-		else 
-		{
-			// checks that email string is properly formated
-			if(filter_var($email, FILTER_VALIDATE_EMAIL) === false)
-			{
-				$email_error = 'The email format is not valid.';
-			}			
-		}
-		
-		return $email_error;
-	}
-	
-	
-	public function validate_emails($email, $email_confirm, &$form_errors)
-	{	
-		$email_error = null;
-		
-		// tests for zero length and other errors
-		$email = $this->sanitize_input($email);
-		$email_confirm = $this->sanitize_input($email_confirm);
-		
-		// tests for zero length and other errors
-		$err1 = $this->check_email_format($email);
-		$err2 = $this->check_email_format($email_confirm);
-		
-		if(!is_null($err1)) { $form_errors[] = $err1; }	
-		
-		if(!is_null($err2)) { $form_errors[] = $err2; }
-		
-		if(isset($email) && isset($email_confirm))
-		{
-			if(strcmp($email, $email_confirm) != 0)
-			{
-				$form_errors[] = 'The emails do not match.';
-			}
-		}
-		
-		return $email;
-	}
-	
-	
-	public function validate_name($name, $type, &$form_errors)
-	{
-		// tests for zero length and other errors
-		$name = $this->sanitize_input($name);
-		
-		if(is_null($name)) 
-		{ 	
-			$form_errors[] = "Enter $type";
-		}
-		else
-		{
-			if (!preg_match("/^[a-zA-Z0-9 \-\'\.]+$/", $name))
-			{
-				$form_errors[] = "$type names can only contain letters, numbers, or - .' and spaces.";
-			}
-		}
-		
-		return $name;
-	}
-	
-	
-	public function validate_passwords($type, $password, $password_confirm, &$form_errors)
-	{
-		$password = $this->sanitize_input($password);
-		$password_confirm = $this->sanitize_input($password_confirm);
-		
-		if((is_null($password)) || (is_null($password_confirm)))
-		{ 	
-			$form_errors[] = "Enter $type";
-		}
-		else
-		{
-			if(0 != strcmp($password, $password_confirm))
-			{
-				$form_errors[] = 'The ' . $type . 's do not match.';
-			}
-			else
-			{
-				// Both are the same, so compare password to reg expressions.
-				//(min 1 letter & 1 number & 8 char long)
-				if(strlen($password) < 8)
-				{
-					$form_errors[] = "The $type must contain at least 8 characters.";
-				}		
-				if(!preg_match("/[A-Z]+/",$password))
-				{
-					$form_errors[] = "The $type must contains at least one uppercase letter.";
-				}
-				if(!preg_match("/[a-z]+/",$password))
-				{
-					$form_errors[] = "The $type must contains at least one lowercase letter.";
-				}
-				if(!preg_match("/[0-9]+/",$password))
-				{
-					$form_errors[] = "The $type must contains at least one number.";
-				}
-				if(!preg_match("/\\W/",$password))
-				{
-					$form_errors[] = "The $type must contains at least one non-alphanumeric character.";
-				}
-				if (preg_match("/\\s/", $password))
-				{
-					$form_errors[] = "The $type cannot have spaces.";
-				}
-			}
-		}
-		
-		return $password;
-	}
-	
-	
-	public function authenticate_login(&$user, $username, $password, $mdb_control)
+	public function authenticate_login($username, $password, $mdb_control)
 	{		
-		$ok = true;
-		
-		if(!is_null($username) && (!is_null($password)))
-		{
-			// escape user input variables for quote marks, etc.
-			$db_con = $mdb_control->get_db_connection();
-			$name_escaped = mysqli_real_escape_string($db_con, $username);
-			$pw_escaped = mysqli_real_escape_string($db_con, $password);
-			// find in the database
-			$user = $mdb_control->get_users_by_login($name_escaped, $pw_escaped);
-		}
-		else
-		{
-			$user = null;
-			$ok = false;
-		}
-
-		if(isset($user)) 
-		{
-			if(strlen($user->get_user_id()) > 0)
-			{
-				$ok = true;
-			}	
-			else
-			{
-				$user = null;
-				$ok = false;
-			}
-		}
-		else
-		{
-			$user = null;
-			$ok = false;
-		}
-		
-		return $ok;
-		
-	}
-	
-	
-	public function get_user_info($user_id, $user_type, $mdb_control)
-	{
-		$user = array();
-		$attribute = $user_type . '_id';		
-		// No escape needed as user_id and user_type, because
-		// they do not come from user input strings.
-		$user = $mdb_control->get_by_attribute($user_id, $attribute, $user_type);		
-		return $user;		
-	}
-	
-	
-	public function duplicate_email_test($email, $account_type, $mdb_control)
-	{
-		$duplicate = false;
-		// escape user input variables for quote marks, etc.
-		$db_con = $mdb_control->get_db_connection();
-		$email_escaped = mysqli_real_escape_string($db_con, $email);
+		$user_id = -1;
 		// find in the database
-		$data = $mdb_control->get_by_attribute($email_escaped, "email", $account_type);
+		$user_control = $mdb_control->getController("users");
+		$user = $user_control->get_by_login($username, $password);
 		
-		if((!is_null($data)) AND (count($data) > 0))
+		if(!is_null($user)) 
 		{
-			$duplicate = true;
-		}
-		
-		return $duplicate;
-	}
-	
-	
-	public function duplicate_username_test($user_name, $mdb_control)
-	{
-		$duplicate = false;
-		// escape user input variables for quote marks, etc.
-		$db_con = $mdb_control->get_db_connection();
-		$name_escaped = mysqli_real_escape_string($db_con, $user_name);
-		// find in the database
-		$data = $mdb_control->get_by_attribute($name_escaped, "user_name", "users");
-		
-		if((!is_null($data)) AND (count($data) > 0))
-		{
-			$duplicate = true;
-		}
-		
-		return $duplicate;
-	}
-	
-	
-	public function register_new_user($firstname, $lastname, $email, $school, 
-						$account_type, $username, $password, $mdb_control)
-	{
-		// escape user input variables for quote marks, etc.
-		// account_type dose not need escaping
-		$db_con = $mdb_control->get_db_connection();
-		$username = mysqli_real_escape_string($db_con, $username);
-		$password = mysqli_real_escape_string($db_con, $password);
-		$firstname = mysqli_real_escape_string($db_con, $firstname);
-		$lastname = mysqli_real_escape_string($db_con, $lastname);
-		$email = mysqli_real_escape_string($db_con, $email);
-		$school = mysqli_real_escape_string($db_con, $school);
-		
-		// save login as user
-		$user = new Users();
-		$user->initialize(null, $username, $password, $account_type);
-		$ok = $mdb_control->save_new($user, "users");
-		$person = null;
-		
-		// save user as student or professor
-		if($ok) 
-		{
+			// MySQL DATETIME format
+			$format = date("Y-m-d H:i:s");
+			$login_time = date($format, time());
 			$user_id = $user->get_user_id();
-			
-			switch ($account_type)
-			{
-				case "student":
-					$person = new Student();
-					$person->initialize($user_id, $firstname, $lastname, $school, $email);
-					$ok = $mdb_control->save_new($person, "student");
-					break;
-					
-				case "professor":
-					$person = new Professor();
-					$person->initialize($user_id, $firstname, $lastname, $school, $email);
-					$ok = $mdb_control->save_new($person, "professor");
-					break;
-			}
+			echo'<p>user id is '. $user_id . '</p>';
+			$user_control->update_last_login($user_id, $login_time);
 		}
 		
-		return $ok;
-	}
+		return $user_id;
+	}	
 	
+	
+	public function get_member($user_id, &$member_type, $mdb_control)
+	{
+		$member = null;
+		$typeArray = array('student', 'professor', 'administrator');
+		
+		for($i = 0; $i < count($typeArray); $i++)
+		{
+			$dataArray = array();	
+			$control = $mdb_control->getController($typeArray[$i]);
+			$dataArray = $control->getByAttribute("user_id", $user_id);
+			
+			if(!is_null($dataArray) AND count($dataArray) > 0)
+			{
+				$member_type = $typeArray[$i];
+				$member = $dataArray[0];
+				return $member;
+			}
+		}	
+
+		return $member;
+	}
 	
 }
-
+	
 ?>

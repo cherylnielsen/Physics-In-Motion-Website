@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Professor.php');
-require_once('controller/DatabaseController.php');
+
 
 class ProfessorController extends DatabaseController{
 
@@ -14,11 +13,11 @@ class ProfessorController extends DatabaseController{
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$professor = new Professor();
 				$professor->initialize($row['professor_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
@@ -36,7 +35,7 @@ class ProfessorController extends DatabaseController{
 	// The ids must not be changed, so they are not updated.
 	public function update($professor)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$professor_id = $professor->get_professor_id();
 		$first = $professor->get_first_name();
@@ -49,13 +48,12 @@ class ProfessorController extends DatabaseController{
 				where professor_id = '$professor_id'";		
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
+		if(!$result)
 		{ 
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 
@@ -65,7 +63,7 @@ class ProfessorController extends DatabaseController{
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$professor)
 	{
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$user_id = $user_id->get_user_id();
 		$first = $professor->get_first_name();
@@ -90,7 +88,6 @@ class ProfessorController extends DatabaseController{
 			$professor->set_professor_id($professor_id);
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

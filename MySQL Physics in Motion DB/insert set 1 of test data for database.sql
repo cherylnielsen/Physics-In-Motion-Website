@@ -3,42 +3,51 @@
 use physics_in_motion;
 
 /* quote of the month */
-
-insert into quote (quote_id, date_posted, author, quote_text)
-values (101, "2018-12-01", "Les Brown", "Shoot for the Moon. Even if you miss, you'll land among the stars.");
-
+insert into quote (quote_id, author, quote_text, month_posted, year_posted)
+values (101, "Les Brown", "Shoot for the Moon. Even if you miss, you'll land among the stars.", "12", "2018"),
+(102, "Eleanor Roosevelt", "The future belongs to those who beleive in the beauty of their dreams.", "01", "2019"),
+(103, "Vivian Greene", "Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain...", "02", "2019");
 select * from quote;
 
 /*  users  */
-
-insert into users (user_id, user_name, user_password, user_type)
-values (101, "s1name", "s1password", "student"), 
-(102, "s2name", "s2password", "student"), 
-(103, "p1name", "p1password", "professor"), 
-(104, "p2name", "p2password", "professor");
-
+insert into users (user_id, user_name, user_password, date_registered, last_login)
+values 
+(101, "A1username", "A1password", "2018-12-01 10:00:00", "2018-12-01 10:10:00"), 
+(102, "A2username", "A2password", "2018-12-01 10:00:00", "2018-12-01 10:10:00"), 
+(103, "S1username", "S1password", "2018-12-01 10:00:00", "2018-12-01 10:10:00"), 
+(104, "S2username", "S2password", "2018-12-01 10:00:00", "2018-12-01 10:10:00"), 
+(105, "P1username", "P1password", "2018-12-01 10:00:00", "2018-12-01 10:10:00"), 
+(106, "P2username", "P2password", "2018-12-01 10:00:00", "2018-12-01 10:10:00");
 select * from users;
 
-/* students and professors */
+/* students, professors, and administrators */
+insert into administrator (admin_id, user_id, first_name, last_name, admin_type, email)
+values (101, 101, "a1first", "a1last", "testing", "a1@a1.email"), 
+(102, 102, "a2first", "a2last", "testing", "a2@a2.email");
 
-insert into student (student_id, first_name, last_name, school_name, email)
-values (101, "s1first", "s1last", "s1school_name", "s1email"), 
-(102, "s2first", "s2last", "s2school_name", "s2email");
+insert into student (student_id, user_id, first_name, last_name, school_name, email)
+values (101, 103, "s1first", "s1last", "s1school", "s1@s1.email"), 
+(102, 104, "s2first", "s2last", "s2school", "s2@s2.email");
 
-insert into professor (professor_id, first_name, last_name, school_name, email)
-values (103, "p1first", "p1last", "p1school_name", "ps1email"), 
-(104, "p2first", "p2last", "p2school_name", "p2email");
+insert into professor (professor_id, user_id, first_name, last_name, school_name, email)
+values (101, 105, "p1first", "p1last", "p1school", "p1@p1.email"), 
+(102, 106, "p2first", "p2last", "p2school", "p2@p2.email");
 
+select * from administrator;
 select * from student;
 select * from professor;
 
 /* tutorial labs */
+insert into tutorial_lab (lab_id, lab_name, web_link, lab_status)
+values (101, "Vector Calculus of 3D Volumes and Surfaces", "vector_calc_3d_volumes_surfaces", "New"),
+(102, "Beginning RC Circuits", "begin_rc_circuit", "New"),
+(103, "Linear Motion and Collisions", "linear_motion_collision", "Development"), 
+(104, "The Photoelectric Effect from Quantum Physics", "photoelectric_effect_quantum_physics", "Development");
 
-insert into tutorial_lab (lab_id, lab_name, web_link, lab_status, short_description)
-values (101, "Vector Calculus of 3D Volumes and Surfaces", "vector_calc_3d_volumes_surfaces", "In Development", "Solve and graph equations for 3D volumes and surfaces, in Cartesian, Polar, or Cylindrical coordinates. This will include the topics of gradient, tangent, normal, divergence, curl, Green’s Theorem, Stokes’ Theorem, and Gauss’ Theorem. In this lab, the graphs and equations can be varied to see the effects that they have on each other."),
-(102, "Beginning RC Circuits", "begin_rc_circuit", "In Development", "Experiments with basic DC powered circuits made from resisters, capacitors, etc.  This includes activities and calculations to understand parallel and series resisters and capacitors, Ohm’s law, and Kirchhoff’s law."),
-(103, "Linear Motion and Collisions", "linear_motion_collision", "In Development", "Linear motion and conservation of linear momentum as demonstrated by collisions. Vary inclines, masses of carts, and friction materials, while collecting and analyzing data on distance, time, and velocity."), 
-(104, "The Photoelectric Effect from Quantum Physics", "photoelectric_effect_quantum_physics", "In Development", "This is one of the famous experiments that lead to the discovery of Quantum Physics. Light shining on metal causes the release of electrons which are detected as current. The problem was the data did not make sense based on what Classical Physics theory said about the behavior of light waves. This led to a new interpretation of the data by Einstein that light was also made of particles called photons. This also confirmed the quantization of energy. This new interpretation of the experimental data earned the Nobel Prize for Einstein.");
+update tutorial_lab set introduction = "Solve and graph equations for 3D volumes and surfaces, in cartesian, polar, or cylindrical coordinates. Topics include gradient, tangent, normal, divergence, curl, Green’s Theorem, Stokes’ Theorem, and Gauss’ Theorem." where lab_id = 101;
+update tutorial_lab set introduction = "Experiment with DC circuits using resisters, capacitors, and diodes. Topics include parallel and series resistance and capacitance, Ohm’s law, and Kirchhoff’s law." where lab_id = 102;
+update tutorial_lab set introduction = "Vary inclines, masses, and friction, while collecting and analyzing data on distance, time, and velocity. Topics include linear motion, collisions, and conservation of linear momentum." where lab_id = 103;
+update tutorial_lab set introduction = "Light shining on metal causes the release of electrons which are detected as current. But the data broke Classical Physics theory about the behavior of light. The famous experiment that lead to the Nobel Prize for Einstein." where lab_id = 104;
 
 select * from tutorial_lab;
 

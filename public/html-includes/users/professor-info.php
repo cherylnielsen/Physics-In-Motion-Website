@@ -1,47 +1,43 @@
 <?php
 
 
-$db_connection = $mdb_control->get_db_connection();
+/**
+ - List of assigned labs with Professor & due date
+ - List of completed labs
+ - Links to data download, math, graphs, screen shots, etc. from completed labs.
+ - Links to download lab summaries with recommendations for problems encountered, time taken to complete the lab, etc.
+ - Links to send a Notice of Lab Completion to a Professor that assigned a lab.
+ - Links to rate completed labs.
+**/
 
-$professor_id = 101;
-
-
-$query = 'select * from professor where professor_id =' . $professor_id . '';
-$result = mysqli_query($db_connection, $query);
-
-if($result)
+if(!isset($_SESSION['professor_id']))
 {
-	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-	{
-		echo '<h1>Hello ' . $row['first_name'] . ': ' . $row['last_name'] . '</h1>';
+	$url = "login-page.php";
+	header("Location: $url");
+	exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$professor_id = $_SESSION['professor_id'];
+$first_name = $_SESSION["first_name"];
+$last_name = $_SESSION["last_name"];
+
+echo '<h1>Welcome Professor ' . $first_name . ' ' . $last_name . '!</h1>';
+
+/* get the data for the tables */
+
+
+
+/*  build the table to display in html */
 		
-		/**
-		echo
-		'<article class="labs">
-			<img src=" images/labs/' . $row['web_link'] . '.png" alt="image of the lab">
-			<h1 class="lab-status">' . $row['lab_status'] . '!</h1>
-			<p>' . $row['short_description'] . '</p>';
-			
-		echo '<h2>Rating: to be determined</h2>
-		<p><a id="unity-link" href="">Start this lab now.</a></p>
-		</article>';
-		**/
-		echo 
-		'<section class="lab-details">
-		<h2>Average time to complete</h2>
-		<p>to be determined</p>
-		</section>';
-		
-	}
+echo
+'<h2>Tutorial Lab Homework</h2>
+<table class="homework-table">
 	
-	mysqli_free_result($result);		
-}
-else
-{
-	echo '<p> Oops! </p><br><p>' . mysqli_error($db_connection) . '</p>';
-}
+</table>';	
+		
 
 echo '<br><a id="bottom" href="#top">return to top</a>';
-mysqli_close($db_connection);
+
 
 ?>

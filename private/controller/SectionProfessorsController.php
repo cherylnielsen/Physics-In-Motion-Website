@@ -1,7 +1,6 @@
 <?php
 
-require_once('model/Section_Professors.php');
-require_once('controller/DatabaseController.php');
+
 
 class SectionProfessorsController extends DatabaseController {
 
@@ -15,7 +14,7 @@ class SectionProfessorsController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	private function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($db_result)
 		{
@@ -38,7 +37,7 @@ class SectionProfessorsController extends DatabaseController {
 	public function saveNew(&$section_professors)
 	{
 		$sucess = true;
-		$db_connection = $this->$get_db_connection();
+		$db_connection = $this->get_db_connection();
 		$section_id = $section_professors->get_section_id();
 		$professor_id = $section_professors->get_professor_id();
 		
@@ -59,7 +58,7 @@ class SectionProfessorsController extends DatabaseController {
 	}
 	
 	
-	public function update(&$section_professors)
+	public function update($section_professors)
 	{
 		$sucess = false;		
 		return $sucess;

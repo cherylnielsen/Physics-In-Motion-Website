@@ -5,7 +5,7 @@ class Homework {
 	private $student_id;
 	private $assignment_id;
 	private $lab_summary;
-	private $data;
+	private $lab_data;
 	private $graphs;
 	private $math;
 	private $hints;
@@ -14,12 +14,12 @@ class Homework {
 		
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $lab_summary, $data, $graphs, $math, $hints, $chat_session)
+	public function initialize($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->student_id = $student_id;
 		$this->lab_summary = $lab_summary;
-		$this->data = $data;
+		$this->lab_data = $lab_data;
 		$this->graphs = $graphs;
 		$this->math = $math;
 		$this->hints = $hints;
@@ -67,14 +67,14 @@ class Homework {
 		$this->lab_summary = $lab_summary;
 	}
 	
-	public function get_data()
+	public function get_lab_data()
 	{
-		return $this->data;
+		return $this->lab_data;
 	}
 
-	public function set_data($data)
+	public function set_lab_data($lab_data)
 	{
-		$this->data = $data;
+		$this->lab_data = $lab_data;
 	}
 	
 	public function get_graphs()

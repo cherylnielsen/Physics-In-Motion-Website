@@ -10,7 +10,7 @@
 	
 	<link href="css/print-main.css" rel="stylesheet" type="text/css" media="print">';
 
-	require_once('../private/MasterDatabaseController.php'); 
-	$mdb_control = new MasterDatabaseController();
+	require_once('../private/DatabaseControllerFactory.php'); 
+	$mdb_control = new DatabaseControllerFactory();
 		
 ?>
