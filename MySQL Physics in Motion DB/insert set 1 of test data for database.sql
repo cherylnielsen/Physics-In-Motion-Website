@@ -38,11 +38,11 @@ select * from student;
 select * from professor;
 
 /* tutorial labs */
-insert into tutorial_lab (lab_id, lab_name, lab_status)
-values (101, "Vector Calculus of 3D Volumes and Surfaces", "New"),
-(102, "Beginning RC Circuits", "New"),
-(103, "Linear Motion and Collisions", "Development"), 
-(104, "The Photoelectric Effect from Quantum Physics", "Development");
+insert into tutorial_lab (lab_id, lab_name, web_link, lab_status)
+values (101, "Vector Calculus of 3D Volumes and Surfaces", "vector_calc_3d_volumes_surfaces", "New"),
+(102, "Beginning RC Circuits", "begin_rc_circuit", "New"),
+(103, "Linear Motion and Collisions", "linear_motion_collision", "Development"), 
+(104, "The Photoelectric Effect from Quantum Physics", "photoelectric_effect_quantum_physics", "Development");
 
 update tutorial_lab set introduction = "Solve and graph equations for 3D volumes and surfaces, in cartesian, polar, or cylindrical coordinates. Topics include gradient, tangent, normal, divergence, curl, Green’s Theorem, Stokes’ Theorem, and Gauss’ Theorem." where lab_id = 101;
 update tutorial_lab set introduction = "Experiment with DC circuits using resisters, capacitors, and diodes. Topics include parallel and series resistance and capacitance, Ohm’s law, and Kirchhoff’s law." where lab_id = 102;

@@ -13,11 +13,11 @@ class StudentController extends DatabaseController{
 		$this->setTableName($table);
 	}
 
-	protected function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$student = new Student();
 				$student->initialize($row['student_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);

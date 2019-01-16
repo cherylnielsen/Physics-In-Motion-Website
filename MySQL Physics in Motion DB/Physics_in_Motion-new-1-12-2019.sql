@@ -25,8 +25,9 @@ DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab` (
   `lab_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `lab_name` VARCHAR(256) NOT NULL,
+  `web_link` VARCHAR(256) NOT NULL,
   `lab_status` SET('New', 'Updated', 'Available', 'Development', 'Discontinued') NOT NULL DEFAULT 'Development',
-  `introduction` VARCHAR(1000) NULL DEFAULT NULL,
+  `introduction` VARCHAR(1000) NULL,
   `prerequisites` VARCHAR(1000) NULL DEFAULT NULL,
   `key_topics` VARCHAR(1000) NULL DEFAULT NULL,
   `key_equations` VARCHAR(1000) NULL DEFAULT NULL,

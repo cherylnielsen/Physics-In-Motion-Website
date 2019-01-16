@@ -6,10 +6,12 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$login_utility = new LoginUtilities();
 	
-	// input safety checks
-	$username = $login_utility->sanitize_input($_POST['username']);
-	$password = $login_utility->sanitize_input($_POST['password']);
-	$db_con = $mdb_control->get_db_connection();
+	// By standard convention, user name and password are not sanitized.
+	// Instead, they are directly encrypted and verified using built in PHP functions.
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	// clear post info for security
+	$_POST = array();
 	
 	echo'<div class="form-errors" id="action_errors">';
 	
@@ -17,50 +19,66 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		echo'<p>Error: Please enter user name and password.</p>';
 	}
-	else if (empty($username) || empty($password))
-	{
-		echo'<p>Error: Please enter user name and password.</p>';
-	}
 	else
 	{
-		$user = null;
-		$ok = $login_utility->authenticate_login($user, $username, $password, $mdb_control);
-
-		if(!$ok)
+		// Trim to remove white space before or after input.
+		$username = trim($username);
+		$password = trim($password);
+		
+		if (empty($username) || empty($password))
 		{
-			echo'<p>Error: User name or password not found. <br> Please check spelling and try again.</p>';
+			echo'<p>Error: Please enter user name and password.</p>';
 		}
 		else
 		{
-			$user_id = $user->get_user_id();	
-			$user_type = $user->get_user_type();
-			$first;
-			$last;			
-			$user_info = array();
-			$user_info = $login_utility->get_user_info($user_id, $user_type, $mdb_control);		
-			$length = count($user_info);
-
-			if((!is_null($user_info)) AND ($length > 0))
-			{		
-				$info = $user_info[0];
-				$first = $info->get_first_name();
-				$last = $info->get_last_name();
+			$user_id = $login_utility->authenticate_login($username, $password, $mdb_control);
+			
+			if($user_id < 0)
+			{
+				echo'<p>Error: User name or password not found. <br> Please check spelling and try again.</p>';
 			}
-			
-			session_start();
-			$_SESSION['user_id'] = $user_id;
-			$_SESSION['user_type'] = $user_type;
-			$_SESSION['first_name'] = $first;
-			$_SESSION['last_name'] = $last;
-			
-			$url = "index.php";
-			header("Location: $url");
-			exit();
+			else
+			{
+				$member_type = "unknown";
+				$member = $login_utility->get_member($user_id, $member_type, $mdb_control);	
+				
+				if(!is_null($member))
+				{	 
+					if (session_status() == PHP_SESSION_NONE) 
+					{
+						session_start();
+					}
+					
+					$_SESSION['user_id'] = $member->get_user_id();
+					$_SESSION['first_name'] = $member->get_first_name();
+					$_SESSION['last_name'] = $member->get_last_name();	
+					
+					switch($member_type)
+					{
+						case "student":
+							$_SESSION['student_id'] = $member->get_student_id();
+							$url = "student-page.php";
+							break;
+						case "professor":
+							$_SESSION['professor_id'] = $member->get_professor_id();
+							$url = "professor-page.php";
+							break;
+						case "administrator":
+							$_SESSION['admin_id'] = $member->get_admin_id();
+							//$url = "administrator-page.php";
+							$url = "index.php";
+							break;
+					}
+					
+					header("Location: $url");
+					exit();
+				}
+			}
 		}
-
 	}
 	
 	echo'</div>';
+	
 }
 
 

@@ -13,11 +13,11 @@ class AdministratorController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	protected function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
 				$admin->initialize($row['admin_id'], $row['user_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
@@ -55,7 +55,6 @@ class AdministratorController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 
@@ -90,7 +89,6 @@ class AdministratorController extends DatabaseController {
 			$administrator->set_admin_id($admin_id);
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

@@ -13,11 +13,11 @@ class UsersController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	protected function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$the_user = new Users();
 				$the_user->initialize($row['user_id'], $row['user_name'], $row['user_password'], $row['date_registered'], $row['last_login']);
@@ -40,13 +40,17 @@ class UsersController extends DatabaseController {
 		
 		$query = "select * from users where (user_name = '$user_name') AND (user_password = '$user_password')";
 		$result = mysqli_query($db_connection, $query);
-		getData($result, $dataArray);
+		$this->getData($result, $dataArray);
 		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		
 		if(count($dataArray) > 0)
 		{
 			$user = $dataArray[0];
+		}
+		else
+		{
+			$user = null;
 		}
 		
 		return $user;
@@ -66,7 +70,6 @@ class UsersController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;		
 	}
@@ -96,7 +99,6 @@ class UsersController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;		
 	}
@@ -129,7 +131,6 @@ class UsersController extends DatabaseController {
 			$user->set_user_id($user_id);
 		}
 	
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;		
 	}

@@ -19,7 +19,7 @@ abstract class DatabaseController
 		(The object type in the dataArray depends on the actual controller used,
 		because the controller determines whitch database table is queried.)
 	***/
-	abstract protected function getData($db_result, &$dataArray);
+	abstract protected function getData($db_result, &$dataArray, $db_connection);
 	
 	
 	/***
@@ -44,10 +44,10 @@ abstract class DatabaseController
 	
 	
 	/***
-	Private helper function
+	Helper function
 	Used to get a connection to the database as needed.
 	**/
-	protected function get_db_connection()
+	public function get_db_connection()
 	{
 		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') 
 					OR die (mysqli_connect_error());
@@ -69,7 +69,7 @@ abstract class DatabaseController
 		
 		$query = "select * from $table where $attribute = '$value'";
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray);	
+		$this->getData($result, $dataArray, $db_connection);	
 		mysqli_free_result($result);		
 		mysqli_close($db_connection);
 		
@@ -91,7 +91,7 @@ abstract class DatabaseController
 		
 		$query = "select * from $table where ($attribute1 = '$value1') AND ($attribute2 = '$value2')";
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray);	
+		$this->getData($result, $dataArray, $db_connection);	
 		mysqli_free_result($result);
 		mysqli_close($db_connection);	
 		
@@ -111,7 +111,7 @@ abstract class DatabaseController
 		
 		$query = "select * from $table";		
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray);
+		$this->getData($result, $dataArray, $db_connection);
 		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		
@@ -120,17 +120,17 @@ abstract class DatabaseController
 	
 	
 	/***
-	Protected helper function.
+	Helper function.
 	Used to set the name of the database table used by that particular controller.
 	**/
-	protected function getTableName()
+	public function getTableName()
 	{
 		return $this->tableName;
 	}
 	
 	
 	/***
-	Protected helper function.
+	Helper function.
 	Used to set the name of the database table used by that particular controller.
 	**/
 	protected function setTableName($tableName)

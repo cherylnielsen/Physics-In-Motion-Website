@@ -13,7 +13,7 @@ class HomeworkController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	protected function getData($db_result, &$lab_dataArray)
+	protected function getData($db_result, &$lab_dataArray, $db_connection)
 	{
 		if($result)
 		{

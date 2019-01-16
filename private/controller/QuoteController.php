@@ -14,7 +14,7 @@ class QuoteController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	protected function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($db_result)
 		{
@@ -47,7 +47,7 @@ class QuoteController extends DatabaseController {
 		
 		$query = 'select * from quote where (month_posted = MONTH(NOW())) AND (year_posted = YEAR(NOW()))';
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray);
+		$this->getData($result, $dataArray, $db_connection);
 		mysqli_free_result($result);
 		mysqli_close($db_connection);
 			

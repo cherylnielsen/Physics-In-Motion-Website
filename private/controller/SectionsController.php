@@ -14,7 +14,7 @@ class SectionController extends DatabaseController {
 		$this->setTableName($table);
 	}
 
-	protected function getData($db_result, &$dataArray)
+	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($db_result)
 		{

@@ -22,16 +22,19 @@ if((!is_null($labs)) AND ($length_labs > 0))
 		$status = $lab->get_lab_status();
 		switch(	$status )
 		{
-			case 'In Development':
-				echo'<h1 class="development-status">' . $status . '!</h1>';
+			case 'Development':
+				echo'<h1 class="development-status">In Development! Coming Soon!</h1>';
 				break;
 			case 'New':
-				echo'<h1 class="new-status">' . $status . '!</h1>';
+				echo'<h1 class="new-status">NEW! Try it Now!</h1>';
+				break;
+			case 'Updated':
+				echo'<h1 class="new-status">Updated and Improved!</h1>';
 				break;
 		}
 			
 		echo '<img class="labs" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
-		<p>' . $lab->get_short_description() . '</p>
+		<p>' . $lab->get_introduction() . '</p>
 		<h2>Student Rating: ??</h2>
 		<h2>Professor Rating: ??</h2>
 		<a class="labs" href="tutorial-information-page.php?num=' . $lab->get_lab_id() . '&lab=' . $lab->get_web_link() . '">Learn More</a>
