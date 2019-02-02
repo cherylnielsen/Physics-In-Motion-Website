@@ -10,8 +10,7 @@ class SectionController extends DatabaseController {
 	
 	public function initialize()
 	{
-		$table = "section";
-		$this->setTableName($table);
+		$this->tableName = "section";
 	}
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -65,36 +64,64 @@ class SectionController extends DatabaseController {
 		
 	}
 	
-
-	// The id must not be changed, so it is not updated.
-	public function update($section)
+	
+	// updates the given attribute with the new value in the database and in the section object
+	//($section_id, $section_name, $start_date, $end_date)
+	public function update_attribute(&$section, $attribute, $value)
 	{
-		$sucess = true;
 		$db_connection = $this->get_db_connection();
-		$section_id = $section->get_section_id();
-		$section_name = $section->get_section_name();
-		$text = $section->get_start_date();
-		$end_date = $section->get_end_date();
+		$success = true;
+		$section_id = $section->get_section_id();	
 		
+		switch ($attribute)
+		{
+			case $section_id:
+				return false;
+				break;
+			case $section_name:
+				$section->set_section_name($value);	
+				$query = "update sections set section_name = '$value' where section_id = '$section_id'";
+				break;
+			case $start_date:
+				$section->set_start_date($value);	
+				$query = "update sections set start_date = '$value' where section_id = '$section_id'";
+				break;
+			case $end_date:
+				$section->set_end_date($value);	
+				$query = "update sections set end_date = '$value' where section_id = '$section_id'";
+				break;
+		}
 		
-		// The id must not be changed, so it is not updated.
-		$query = "update section set end_date_posted = '$end_date', section_name = '$section_name', 
-					start_date = '$text' where section_id = '$section_id'";
-				
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
+		if(!$result)
 		{
-			$sucess = false;
+			$success = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
-		return $sucess;
-		
+		return $success;		
 	}
+ 
 
+	public function delete_from_database($section)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$section_id = $section->get_section_id();
+		
+		$query = "delete from section where section_id = $section_id";
+		
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+		
+		mysqli_close($db_connection);
+		return $success;
+	}
 
 }
 

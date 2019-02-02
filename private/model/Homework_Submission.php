@@ -6,12 +6,12 @@ class Homework_Submission {
 	private $student_id;
 	private $date_submitted;
 	private $points_earned;
-	private $was_graded;
+	private $is_graded;
 	private $total_time;
 	
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned, $was_graded, $total_time)
+	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned, $is_graded, $total_time)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->student_id = $student_id;
@@ -19,10 +19,10 @@ class Homework_Submission {
 		$this->points_earned = $points_earned;
 		$this->total_time = $total_time;
 		
-		// was_graded must be true or false 
+		// is_graded must be true or false 
 		// this will set 0 to false and 1 to true
 		// default value is false
-		$this->set_was_graded($was_graded);
+		$this->set_is_graded($is_graded);
 		
 	}
 	
@@ -77,37 +77,37 @@ class Homework_Submission {
 		$this->total_time = $total_time;
 	}
 	
-	public function get_was_graded()
+	public function get_is_graded()
 	{
-		return $this->was_graded;
+		return $this->is_graded;
 	}
 
 	/***
-		was_graded must be true or false.
+		is_graded must be true or false.
 		This will set 0 to false and 1 to true.
 		The default value is false.
 	**/
-	public function set_was_graded($was_graded)
+	public function set_is_graded($is_graded)
 	{
-		if(!is_set($was_graded))
+		if(!is_set($is_graded))
 		{
-			$this->was_graded = false;
+			$this->is_graded = false;
 		}
-		else if(($was_graded == false) || ($was_graded == true))
+		else if(($is_graded == false) || ($is_graded == true))
 		{
-			$this->was_graded = $was_graded;
+			$this->is_graded = $is_graded;
 		}
-		else if($was_graded == 0)
+		else if($is_graded == 0)
 		{
-			$this->was_graded = false;
+			$this->is_graded = false;
 		}
-		else if($was_graded == 1)
+		else if($is_graded == 1)
 		{
-			$this->was_graded = true;
+			$this->is_graded = true;
 		}
 		else
 		{
-			$this->was_graded = false;
+			$this->is_graded = false;
 		}
 	}
 	

@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`lab_rating` (
   `lab_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
   `date_posted` DATETIME NOT NULL,
-  `lab_rating` INT NOT NULL,
+  `rating` INT NOT NULL,
   `comments` VARCHAR(1000) NULL DEFAULT NULL,
   PRIMARY KEY (`rating_id`),
   CONSTRAINT `lab_rating_lab_id`
@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework_submission` (
   `student_id` INT UNSIGNED NOT NULL,
   `date_submitted` DATETIME NOT NULL,
   `points_earned` INT UNSIGNED NOT NULL DEFAULT 0,
-  `was_graded` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `is_graded` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `total_time` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`assignment_id`, `student_id`),
   CONSTRAINT `submission_student_id`

@@ -4,13 +4,13 @@
 
 class AssignmentController extends DatabaseController {
 
+	
 	public function __construct() {}
 	//($assignment_id, $section_id, $lab_id, $tag, $date_assigned, $date_due, $points_possible, $notes)
 
 	public function initialize()
 	{
-		$table = "assignment";
-		$this->setTableName($table);
+		$this->tableName = "assignment";
 	}
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -32,43 +32,7 @@ class AssignmentController extends DatabaseController {
 		}		
 	}
 	
-	
-	// The ids must not be changed, so they are not updated.
-	public function update($assignment)
-	{
-		$db_connection = $this->get_db_connection();
-		$sucess = true;
-		
-		$assignment_id = $assignment->get_assignment_id();
-		$section_id = $assignment->get_section_id();
-		$lab_id = $assignment->get_lab_id();
-		$tag = $assignment->get_tag();
-		$date_assigned = $assignment->get_date_assigned();
-		$date_due = $assignment->get_date_due();
-		$points_possible = $assignment->get_points_possible();
-		$notes = $assignment->get_notes();
-		
-		// The ids must not be changed, so they are not updated.
-		$query = "update assignment set section_id = '$section_id', lab_id = '$lab_id', tag = '$tag', 
-					date_assigned = '$date_assigned', date_due = '$date_due', points_possible = '$points_possible', notes = '$notes' 
-					where assignment_id = '$assignment_id'";
-					
-		$result = mysqli_query($db_connection, $query);
 
-		if($result)
-		{ 
-			$sucess = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-			echo '<p>The assignment could not be updated.</p>';
-		}
-
-		mysqli_free_result($result);	
-		mysqli_close($db_connection);
-		return $sucess;
-
-	}
-
-	
 	// The assignment_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$assignment)
 	{
@@ -105,6 +69,84 @@ class AssignmentController extends DatabaseController {
 		return $sucess;		
 	}
 
+
+	// updates the given attribute with the new value in the database and in the assignment object
+	//($assignment_id, $section_id, $lab_id, $tag, $date_assigned, $date_due, $points_possible, $notes)
+	public function update_attribute(&$assignment, $attribute, $value)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$assignment_id = $assignment->get_assignment_id();	
+		
+		switch ($attribute)
+		{
+			case $assignment_id:
+			case $section_id:
+				return false;
+				break;
+			case $lab_id:
+				$assignment->set_lab_id($value);	
+				$query = "update assignment set lab_id = '$value' 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case $tag:
+				$assignment->set_tag($value);	
+				$query = "update assignment set tag = '$value' 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case $date_assigned:
+				$assignment->set_date_assigned($value);	
+				$query = "update assignment set date_assigned = '$value' 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case $date_due:
+				$assignment->set_date_due($value);	
+				$query = "update assignment set date_due = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case $points_possible:
+				$assignment->set_points_possible($value);	
+				$query = "update assignment set points_possible = '$value' 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case $notes:
+				$assignment->set_notes($value);	
+				$query = "update assignment set notes = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+		}
+		
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;		
+	}
+
+	
+	public function delete_from_database($assignment)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$assignment_id = $assignment->get_assignment_id();
+		
+		$query = "delete from assignment where assignment_id = $assignment_id";
+		
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+		
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 
 }
 
