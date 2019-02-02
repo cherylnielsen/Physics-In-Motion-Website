@@ -20,8 +20,8 @@ SELECT * FROM section_professors;
 
 /* assignments */
 insert into assignment (assignment_id, section_id, lab_id, tag, date_assigned, date_due, points_possible, notes)
-values (101, 101, 101, "tag 1", "2018-12-10 10:0:0", "2018-12-15 20:0:0", 20, "notes 1"), 
-(102, 101, 102, "tag 2", "2018-12-15 10:0:0", "2018-12-20 20:0:0", 20, "notes 2");
+values (101, 101, 101, "tag 1", "2018-10-01 10:0:0", "2018-10-15 20:0:0", 20, "notes 1"), 
+(102, 101, 102, "tag 2", "2018-10-15 10:0:0", "2018-11-01 20:0:0", 20, "notes 2");
 
 select * from assignment;
 
@@ -34,15 +34,15 @@ select * from homework;
 
 /* ratings */
 insert into lab_rating (rating_id, lab_id, user_id, date_posted, lab_rating, comments)
-values (101, 101, 103, "2018-12-18 12:00:00", 5, "This lab is great!"),
-(102, 101, 105, "2018-12-18 14:00:00", 5, "My students think this lab is great!");
+values (101, 101, 103, "2018-11-20 12:00:00", 5, "This lab is great!"),
+(102, 101, 105, "2018-12-01 14:00:00", 5, "My students think this lab is great!");
 
 select * from lab_rating;
 
 /* homework submission */
 insert into homework_submission (assignment_id, student_id, date_submitted, points_earned, was_graded, total_time)
-values (101, 101, "2018-12-15 12:00:00", 20, 1, 5),
-(101, 102, "2018-12-12 14:00:00", 15, 1, 3);
+values (101, 101, "2018-10-15 12:00:00", 20, 1, 5),
+(101, 102, "2018-10-10 14:00:00", 15, 1, 3);
 
 select * from homework_submission;
 

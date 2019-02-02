@@ -4,13 +4,13 @@
 
 class AdministratorController extends DatabaseController {
 
+	
 	public function __construct() {}
 	//Administrator ($administrator_id, $user_id, $first_name, $last_name, $admin_type, $email)
 
 	public function initialize()
 	{
-		$table = "administrator";
-		$this->setTableName($table);
+		$this->tableName = "administrator";
 	}
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -32,32 +32,47 @@ class AdministratorController extends DatabaseController {
 	}
 	
 
-	// The ids must not be changed, so they are not updated.
-	public function update($administrator)
+	// updates the given attribute with the new value in the database and in the administrator object
+	public function update_attribute(&$administrator, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
-		$sucess = true;
-		$admin_id = $administrator->get_admin_id();
-		$first = $administrator->get_first_name();
-		$last = $administrator->get_last_name();
-		$school = $administrator->get_school_name();
-		$email = $administrator->get_email();
+		$success = true;
+		$administrator_id = $administrator->get_administrator_id();	
 		
-		// The ids must not be changed, so they are not updated.
-		$query = "update professor set first_name = '$first', last_name = '$last', school_name = '$school', email = '$email' 
-					where admin_id = '$admin_id'";
+		switch ($attribute)
+		{
+			case $administrator_id:
+			case $user_id:
+				return false;
+				break;
+			case $first_name:
+				$administrator->set_first_name($value);	
+				$query = "update administrator set first_name = '$value' where administrator_id = '$administrator_id'";
+				break;
+			case $last_name:
+				$administrator->set_last_name($value);	
+				$query = "update administrator set last_name = '$value' where administrator_id = '$administrator_id'";
+				break;
+			case $admin_type:
+				$administrator->set_admin_type($value);	
+				$query = "update administrator set admin_type = '$value' where administrator_id = '$administrator_id'";
+				break;
+			case $email:
+				$administrator->set_email($value);	
+				$query = "update administrator set email = '$value' where administrator_id = '$administrator_id'";
+				break;
+		}
 		
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
-		{ 
-			$sucess = false;
+		if(!$result)
+		{
+			$success = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
 		mysqli_close($db_connection);
-		return $sucess;
-
+		return $success;		
 	}
 
 	
@@ -92,6 +107,25 @@ class AdministratorController extends DatabaseController {
 		mysqli_close($db_connection);
 		return $sucess;
 		
+	}
+
+	
+	public function delete_from_database($administrator)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$admin_id = $administrator->get_admin_id();
+		
+		$query = "delete from administrator where admin_id = $admin_id";
+		
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+		
+		mysqli_close($db_connection);
+		return $success;
 	}
 
 

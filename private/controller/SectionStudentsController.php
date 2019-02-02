@@ -10,8 +10,7 @@ class SectionStudentsController extends DatabaseController {
 	
 	public function initialize()
 	{
-		$table = "section_students";
-		$this->setTableName($table);
+		$this->tableName = "section_students";
 	}
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -20,10 +19,10 @@ class SectionStudentsController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section_students = new Section_Students();
-				$section_students->initialize($row['section_id'], $row['student_id']);
+				$section_student = new Section_Students();
+				$section_student->initialize($row['section_id'], $row['student_id']);
 				// pushes each object onto the end of the array
-				$dataArray[] = $section_students;
+				$dataArray[] = $section_student;
 			}
 		}
 		else
@@ -34,12 +33,12 @@ class SectionStudentsController extends DatabaseController {
 
 
 	// The id for section_students is NOT auto-generated.
-	public function saveNew(&$section_students)
+	public function saveNew(&$section_student)
 	{
 		$sucess = true;
 		$db_connection = $this->get_db_connection();
-		$section_id = $section_students->get_section_id();
-		$student_id = $section_students->get_student_id();
+		$section_id = $section_student->get_section_id();
+		$student_id = $section_student->get_student_id();
 		
 		$query = "insert into section_students (section_id, student_id) 
 				values('$section_id', '$student_id')";
@@ -54,16 +53,36 @@ class SectionStudentsController extends DatabaseController {
 		mysqli_free_result($result);	
 		mysqli_close($db_connection);
 		return $sucess;
-		
 	}
 	
 	
-	public function update($section_students)
+	// No update is available, because neither student id or professor id is unique.
+	// Use delete and save new instead if a change is needed.
+	public function update_attribute(&$section_student, $attribute, $value)
 	{
-		$sucess = false;		
-		return $sucess;
+		return false;		
 	}
 
+
+	public function delete_from_database($section_student)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$section_id = $section_student->get_section_id();
+		$student_id = $section_student->get_student_id();
+		
+		$query = "delete from section_student where (section_id = $section_id) AND (student_id = $student_id)";
+		
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+		
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 
 }
 

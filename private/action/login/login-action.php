@@ -27,7 +27,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		
 		if (empty($username) || empty($password))
 		{
-			echo'<p>Error: Please enter user name and password.</p>';
+			echo'<p>Error: Please enter user name and password.</p>'; 
 		}
 		else
 		{
@@ -39,6 +39,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 			}
 			else
 			{
+				$login_utility->update_last_login($user_id, $mdb_control);
 				$member_type = "unknown";
 				$member = $login_utility->get_member($user_id, $member_type, $mdb_control);	
 				
@@ -65,8 +66,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 							break;
 						case "administrator":
 							$_SESSION['admin_id'] = $member->get_admin_id();
-							//$url = "administrator-page.php";
-							$url = "index.php";
+							$url = "administrator-page.php";
 							break;
 					}
 					

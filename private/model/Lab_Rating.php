@@ -6,18 +6,18 @@ class Lab_Rating {
 	private $lab_id;
 	private $user_id;
 	private $date_posted;
-	private $lab_rating;
+	private $rating;
 	private $comments;
 	
 	public function __construct() {}
 	
-	public function initialize($rating_id, $lab_id, $user_id, $date_posted, $lab_rating, $comments)
+	public function initialize($rating_id, $lab_id, $user_id, $date_posted, $rating, $comments)
 	{
 		$this->rating_id = $rating_id;
 		$this->lab_id = $lab_id;
 		$this->user_id = $user_id;
 		$this->date_posted = $date_posted;
-		$this->lab_rating = $lab_rating;
+		$this->rating = $rating;
 		$this->comments = $comments;
 	}
 
@@ -61,14 +61,14 @@ class Lab_Rating {
 		$this->date_posted = $date_posted;
 	}
 	
-	public function get_lab_rating()
+	public function get_rating()
 	{
-		return $this->lab_rating;
+		return $this->rating;
 	}
 
-	public function set_lab_rating($lab_rating)
+	public function set_rating($rating)
 	{
-		$this->lab_rating = $lab_rating;
+		$this->rating = $rating;
 	}
 	
 	public function get_comments()

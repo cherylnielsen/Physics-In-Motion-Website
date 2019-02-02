@@ -2,11 +2,11 @@
 
 abstract class DatabaseController
 {
-	private $tableName;
+	protected $tableName;
 	
 	
 	/***
-	Used to set the tableName of the database table used by that particular controller.
+	Sets the tableName of the database table used by that particular controller.
 	**/
 	abstract public function initialize();
  	
@@ -23,20 +23,10 @@ abstract class DatabaseController
 	
 	
 	/***
-	Updates the database row for that particular data object.
-	Input: $data = the object model that contains the row of data to be updated.
-	Output: $sucess = true if database row was updated.
-		(The object type in the data depends on the actual controller used,
-		because the controller determines whitch database table is used.)
-	***/
-	abstract public function update($data);
-	
-	
-	/***
 	Creates a new database row from the data object.
 	Input/Output: $data = the object model that contains the data to be save as a new row in the database table.
 	The $data input is changed to include the new auto-generated data id from the database, if applicable for that data table.
-	Output: $sucess = true if a database row added to the table.
+	Output: $success = true if a database row added to the table.
 		(The object type in the data depends on the actual controller used,
 		because the controller determines whitch database table is used.)
 	***/
@@ -44,7 +34,31 @@ abstract class DatabaseController
 	
 	
 	/***
-	Helper function
+	Updates the attribute with the new value in both the database and in the data object
+	to ensure that they are both the same.
+	Input: $data_object = the data object that needs updating in the database.
+	Input: $attribute = the attribute that needs to be updated for that object.
+	Input: $value = the new value to be set for that attribute.
+	Output: $success = true if the attribute was able to be updated in the database.
+	***/
+	abstract public function update_attribute(&$data_object, $attribute, $value);
+		
+	
+	/*** 
+	Deletes a data_object from the database.
+	WARNING: This may not work if the data_object is currently referenced as a 
+			foreign key by other tables in the database.  
+			Unintended database or program side effects are possible due to
+			cascading deletions in the database.  
+	WARNING: It is left to the calling function to nullify all appropriate related 
+			data_objects from the program, or program side effects may occur.
+	Input: $data_object = the data object to be removed from the database.
+	Output: $success = true if the object was removed.
+	***/
+	abstract public function delete_from_database($data_object);
+	
+	
+	/***
 	Used to get a connection to the database as needed.
 	**/
 	public function get_db_connection()
@@ -70,7 +84,7 @@ abstract class DatabaseController
 		$query = "select * from $table where $attribute = '$value'";
 		$result = mysqli_query($db_connection, $query);
 		$this->getData($result, $dataArray, $db_connection);	
-		mysqli_free_result($result);		
+				
 		mysqli_close($db_connection);
 		
 		return $dataArray;
@@ -105,6 +119,7 @@ abstract class DatabaseController
 	***/
 	public function getAllData()
 	{
+		$table = "";
 		$table = $this->getTableName();
 		$db_connection = $this->get_db_connection();
 		$dataArray = array();
@@ -112,7 +127,6 @@ abstract class DatabaseController
 		$query = "select * from $table";		
 		$result = mysqli_query($db_connection, $query);
 		$this->getData($result, $dataArray, $db_connection);
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		
 		return $dataArray;
@@ -120,23 +134,13 @@ abstract class DatabaseController
 	
 	
 	/***
-	Helper function.
-	Used to set the name of the database table used by that particular controller.
+	Used to get the name of the database table used by that particular controller.
 	**/
 	public function getTableName()
 	{
 		return $this->tableName;
 	}
-	
-	
-	/***
-	Helper function.
-	Used to set the name of the database table used by that particular controller.
-	**/
-	protected function setTableName($tableName)
-	{
-		$this->tableName = $tableName;
-	}
+
 	
 	
 }

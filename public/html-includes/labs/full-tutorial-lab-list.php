@@ -45,7 +45,7 @@ if((!is_null($labs)) AND ($length_labs > 0))
 }
 else
 {
-	echo '<p> Oops! Error: no labs found.</p>';
+	echo '<p> Error: no labs found.</p>';
 }
 
 echo '</div><br><a id="bottom" href="#top">return to top</a>';

@@ -10,8 +10,7 @@ class QuoteController extends DatabaseController {
 	
 	public function initialize()
 	{
-		$table = "quote";
-		$this->setTableName($table);
+		$this->tableName = "quote";
 	}
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -94,34 +93,68 @@ class QuoteController extends DatabaseController {
 	}
 	
 
-	// The id must not be changed, so it is not updated.
-	public function update($quote)
+	// updates the given attribute with the new value in the database and in the quote object
+	public function update_attribute(&$quote, $attribute, $value)
 	{
-		$sucess = true;
+		//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
 		$db_connection = $this->get_db_connection();
-		$month_posted = $quote->get_month_posted_posted();
-		$author = $quote->get_author();
-		$text = $quote->get_quote_text();
-		$quote_id = $quote->get_quote_id();
+		$success = true;
+		$quote_id = $quote->get_quote_id();	
 		
-		// The id must not be changed, so it is not updated.
-		$query = "update quote set month_posted_posted = '$month_posted', author = '$author', 
-					quote_text = '$text' where quote_id = '$quote_id'";
-				
+		switch ($attribute)
+		{
+			case $quote_id:
+				return false;
+				break;
+			case $author:
+				$quote->set_author($value);	
+				$query = "update quote set author = '$value' where quote_id = '$quote_id'";
+				break;
+			case $quote_text:
+				$quote->set_quote_text($value);	
+				$query = "update quote set quote_text = '$value' where quote_id = '$quote_id'";
+				break;
+			case $month_posted:
+				$quote->set_month_posted($value);	
+				$query = "update quote set month_posted = '$value' where quote_id = '$quote_id'";
+				break;
+			case $year_posted:
+				$quote->set_year_posted($value);	
+				$query = "update quote set year_posted = '$value' where quote_id = '$quote_id'";
+				break;
+		}
+		
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
+		if(!$result)
 		{
-			$sucess = false;
+			$success = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
-		return $sucess;
-		
+		return $success;		
 	}
 
+
+	public function delete_from_database($quote)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$quote_id = $quote->get_quote_id();
+		
+		$query = "delete from quote where quote_id = $quote_id";
+		
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+		
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 
 }
 

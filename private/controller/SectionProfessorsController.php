@@ -10,8 +10,7 @@ class SectionProfessorsController extends DatabaseController {
 	
 	public function initialize()
 	{
-		$table = "section_professors";
-		$this->setTableName($table);
+		$this->tableName = "section_professors";
 	}
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -57,11 +56,32 @@ class SectionProfessorsController extends DatabaseController {
 		
 	}
 	
-	
-	public function update($section_professors)
+
+	// No update is available, because neither student id or professor id is unique.
+	// Use delete and save new instead if a change is needed.
+	public function update_attribute(&$section_professor, $attribute, $value)
 	{
-		$sucess = false;		
-		return $sucess;
+		return false;		
+	}
+
+
+	public function delete_from_database($section_professor)
+	{
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$section_id = $section_professor->get_section_id();
+		$professor_id = $section_professor->get_professor_id();
+		
+		$query = "delete from section_professors where (section_id = $section_id) AND (professor_id = $professor_id)";
+		
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+		
+		mysqli_close($db_connection);
+		return $success;
 	}
 
 

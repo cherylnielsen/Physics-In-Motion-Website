@@ -6,36 +6,8 @@ use physics_in_motion;
 insert into quote (quote_id, author, quote_text, month_posted, year_posted)
 values (101, "Les Brown", "Shoot for the Moon. Even if you miss, you'll land among the stars.", "12", "2018"),
 (102, "Eleanor Roosevelt", "The future belongs to those who beleive in the beauty of their dreams.", "01", "2019"),
-(103, "Vivian Greene", "Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain...", "02", "2019");
+(103, "Vivian Greene", "Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain.", "02", "2019");
 select * from quote;
-
-/*  users  */
-insert into users (user_id, user_type, user_name, user_password, date_registered)
-values 
-(101, "administrator", "A1username", "A1password", "2018-09-01 10:00:00"), 
-(102, "administrator", "A2username", "A2password", "2018-09-01 10:00:00"), 
-(103, "student", "S1username", "S1password", "2018-09-01 10:00:00"), 
-(104, "student", "S2username", "S2password", "2018-09-01 10:00:00"), 
-(105, "professor", "P1username", "P1password", "2018-09-01 10:00:00"), 
-(106, "professor", "P2username", "P2password", "2018-09-01 10:00:00");
-select * from users;
-
-/* students, professors, and administrators */
-insert into administrator (admin_id, user_id, first_name, last_name, admin_type, email)
-values (101, 101, "A1first", "A2last", "testing", "a1@a1.email"), 
-(102, 102, "A2first", "A2last", "testing", "a2@a21.email");
-
-insert into student (student_id, user_id, first_name, last_name, school_name, email)
-values (101, 103, "S1first", "S1last", "testing", "s1@s1.email"), 
-(102, 104, "S2first", "S2last", "testing", "s2@s2.email");
-
-insert into professor (professor_id, user_id, first_name, last_name, school_name, email)
-values (101, 105, "P1first", "P1last", "testing", "p1@p1.email"), 
-(102, 106, "P2first", "P2last", "testing", "p2@p2.email");
-
-select * from administrator;
-select * from student;
-select * from professor;
 
 /* tutorial labs */
 insert into tutorial_lab (lab_id, lab_name, web_link, lab_status)
