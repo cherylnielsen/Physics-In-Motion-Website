@@ -41,7 +41,6 @@ if((!is_null($labs)) AND ($length_labs > 0))
 		</article>';
 	}
 	
-	
 }
 else
 {

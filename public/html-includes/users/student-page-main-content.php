@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  - List of assigned labs with Professor & due date
  - List of completed labs
@@ -10,25 +9,40 @@
  - Links to rate completed labs.
 **/
 
-if(!isset($_SESSION['professor_id']))
+/***
+if(!isset($_SESSION['student_id']))
 {
-	$url = "login-page.php";
-	header("Location: $url");
-	exit();
+	if(!isset($_SESSION['professor_id']))
+	{
+		$url = "login-page.php";
+		header("Location: $url");
+		exit();
+	}
+	else
+	{
+		$url = "professor-page.php";
+		header("Location: $url");
+		exit();
+	}
 }
 
 $user_id = $_SESSION['user_id'];
-$professor_id = $_SESSION['professor_id'];
+$student_id = $_SESSION['student_id'];
 $first_name = $_SESSION["first_name"];
 $last_name = $_SESSION["last_name"];
+***/
 
-echo '<h1>Welcome Professor ' . $first_name . ' ' . $last_name . '!</h1>';
+//test data for professor page
+$user_id = 5;
+$student_id = 1;
+$first_name = 'S1first-testing';
+$last_name = 'S1last-testing';
+// end test data
 
-/* get the data for the tables */
 
+echo '<h2>Welcome ' . $first_name . ' ' . $last_name . '!</h2>';
 
-
-/*  build the table to display in html */
+/* Get the data and display it in tables.*/
 		
 echo
 '<h2>Tutorial Lab Homework</h2>

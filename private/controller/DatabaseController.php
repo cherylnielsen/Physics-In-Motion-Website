@@ -24,13 +24,15 @@ abstract class DatabaseController
 	
 	/***
 	Creates a new database row from the data object.
-	Input/Output: $data = the object model that contains the data to be save as a new row in the database table.
-	The $data input is changed to include the new auto-generated data id from the database, if applicable for that data table.
+	The data_object input is changed to include the new auto-generated data id 
+	from the database, if applicable for that data table.
+	Input/Output: $data_object = the object model that contains the data to be 
+			saved as a new row in the database table.
 	Output: $success = true if a database row added to the table.
 		(The object type in the data depends on the actual controller used,
 		because the controller determines whitch database table is used.)
 	***/
-	abstract public function saveNew(&$data);
+	abstract public function saveNew(&$data_object);
 	
 	
 	/***
