@@ -108,7 +108,7 @@ abstract class DatabaseController
 		$query = "select * from $table where ($attribute1 = '$value1') AND ($attribute2 = '$value2')";
 		$result = mysqli_query($db_connection, $query);
 		$this->getData($result, $dataArray, $db_connection);	
-		mysqli_free_result($result);
+
 		mysqli_close($db_connection);	
 		
 		return $dataArray;

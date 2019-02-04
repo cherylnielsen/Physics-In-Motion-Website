@@ -75,18 +75,18 @@ class SectionController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $section_id:
+			case 'section_id':
 				return false;
 				break;
-			case $section_name:
+			case 'section_name':
 				$section->set_section_name($value);	
 				$query = "update sections set section_name = '$value' where section_id = '$section_id'";
 				break;
-			case $start_date:
+			case 'start_date':
 				$section->set_start_date($value);	
 				$query = "update sections set start_date = '$value' where section_id = '$section_id'";
 				break;
-			case $end_date:
+			case 'end_date':
 				$section->set_end_date($value);	
 				$query = "update sections set end_date = '$value' where section_id = '$section_id'";
 				break;

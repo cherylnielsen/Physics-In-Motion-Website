@@ -2,8 +2,8 @@
 
 class Homework_Submission {
 	
-	private $assignment_id;
-	private $student_id;
+	private $assignment_id; // key part 1
+	private $user_id;		// key part 2
 	private $date_submitted;
 	private $points_earned;
 	private $is_graded;
@@ -11,10 +11,10 @@ class Homework_Submission {
 	
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned, $is_graded, $total_time)
+	public function initialize($assignment_id, $user_id, $date_submitted, $points_earned, $is_graded, $total_time)
 	{
 		$this->assignment_id = $assignment_id;
-		$this->student_id = $student_id;
+		$this->user_id = $user_id;
 		$this->date_submitted = $date_submitted;
 		$this->points_earned = $points_earned;
 		$this->total_time = $total_time;
@@ -37,14 +37,14 @@ class Homework_Submission {
 		$this->assignment_id = $assignment_id;
 	}
 	
-	public function get_student_id()
+	public function get_user_id()
 	{
-		return $this->student_id;
+		return $this->user_id;
 	}
 
-	public function set_student_id($student_id)
+	public function set_user_id($user_id)
 	{
-		$this->student_id = $student_id;
+		$this->user_id = $user_id;
 	}
 	
 	public function get_date_submitted()

@@ -9,7 +9,7 @@
  - Links to rate completed labs.
 **/
 
-/***
+
 if(!isset($_SESSION['student_id']))
 {
 	if(!isset($_SESSION['professor_id']))
@@ -26,30 +26,18 @@ if(!isset($_SESSION['student_id']))
 	}
 }
 
-$user_id = $_SESSION['user_id'];
 $student_id = $_SESSION['student_id'];
+$user_id = $_SESSION['student_id'];
 $first_name = $_SESSION["first_name"];
 $last_name = $_SESSION["last_name"];
-***/
 
-//test data for professor page
-$user_id = 5;
-$student_id = 1;
-$first_name = 'S1first-testing';
-$last_name = 'S1last-testing';
-// end test data
+echo "<h2>Welcome $first_name $last_name!</h2>";
+
+// Get the user data and display it in tables.
+// Notices - received & sent - listed with links to display
+// Sections - with assignments & homework links & submission links	
 
 
-echo '<h2>Welcome ' . $first_name . ' ' . $last_name . '!</h2>';
-
-/* Get the data and display it in tables.*/
-		
-echo
-'<h2>Tutorial Lab Homework</h2>
-<table class="homework-table">
-	
-</table>';	
-		
 
 echo '<br><a id="bottom" href="#top">return to top</a>';
 

@@ -80,36 +80,36 @@ class AssignmentController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $assignment_id:
-			case $section_id:
+			case 'assignment_id':
+			case 'section_id':
 				return false;
 				break;
-			case $lab_id:
+			case 'lab_id':
 				$assignment->set_lab_id($value);	
 				$query = "update assignment set lab_id = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $tag:
+			case 'tag':
 				$assignment->set_tag($value);	
 				$query = "update assignment set tag = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $date_assigned:
+			case 'date_assigned':
 				$assignment->set_date_assigned($value);	
 				$query = "update assignment set date_assigned = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $date_due:
+			case 'date_due':
 				$assignment->set_date_due($value);	
 				$query = "update assignment set date_due = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $points_possible:
+			case 'points_possible':
 				$assignment->set_points_possible($value);	
 				$query = "update assignment set points_possible = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $notes:
+			case 'notes':
 				$assignment->set_notes($value);	
 				$query = "update assignment set notes = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";

@@ -3,14 +3,14 @@
 class Section_Students {
 	
 	private $section_id;
-	private $student_id;
+	private $user_id;
 	
 	public function __construct() {}
 	
-	public function initialize($section_id, $student_id)
+	public function initialize($section_id, $user_id)
 	{
 		$this->section_id = $section_id;
-		$this->student_id = $student_id;
+		$this->user_id = $user_id;
 	}
 	
 	
@@ -24,15 +24,16 @@ class Section_Students {
 		$this->section_id = $section_id;
 	}
 	
-	public function get_student_id()
+	public function get_user_id()
 	{
-		return $this->student_id;
+		return $this->user_id;
 	}
 
-	public function set_student_id($student_id)
+	public function set_user_id($user_id)
 	{
-		$this->student_id = $student_id;
+		$this->user_id = $user_id;
 	}
+	
 	
 	
 }

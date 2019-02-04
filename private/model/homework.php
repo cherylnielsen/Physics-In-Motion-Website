@@ -2,8 +2,8 @@
 
 class Homework {
 	
-	private $student_id;
-	private $assignment_id;
+	private $user_id;		// key part 1
+	private $assignment_id; // key part 2
 	private $lab_summary;
 	private $lab_data;
 	private $graphs;
@@ -14,10 +14,10 @@ class Homework {
 		
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
+	public function initialize($assignment_id, $user_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
 	{
 		$this->assignment_id = $assignment_id;
-		$this->student_id = $student_id;
+		$this->user_id = $user_id;
 		$this->lab_summary = $lab_summary;
 		$this->lab_data = $lab_data;
 		$this->graphs = $graphs;
@@ -37,14 +37,14 @@ class Homework {
 		$this->assignment_id = $assignment_id;
 	}
 	
-	public function get_student_id()
+	public function get_user_id()
 	{
-		return $this->student_id;
+		return $this->user_id;
 	}
 
-	public function set_student_id($student_id)
+	public function set_user_id($user_id)
 	{
-		$this->student_id = $student_id;
+		$this->user_id = $user_id;
 	}	
 	
 	public function get_added_instructions()

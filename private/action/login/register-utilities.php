@@ -302,19 +302,19 @@ class RegisterUtilities
 			{
 				case "student":
 					$person = new Student();
-					$person->initialize(null, $user_id, $firstname, $lastname, $school, $email);
+					$person->initialize($user_id, $firstname, $lastname, $school, $email);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "professor":
 					$person = new Professor();
-					$person->initialize(null, $user_id, $firstname, $lastname, $school, $email);
+					$person->initialize($user_id, $firstname, $lastname, $school, $email);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "administrator":
 					$person = new Administrator();
-					$person->initialize(null, $user_id, $firstname, $lastname, $school, $email);
+					$person->initialize($user_id, $firstname, $lastname, $school, $email);
 					$ok = $control->saveNew($person);
 					break;
 			}

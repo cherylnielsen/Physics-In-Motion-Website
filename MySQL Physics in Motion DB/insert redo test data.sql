@@ -2,17 +2,13 @@
 
 use physics_in_motion;
 
-/* ratings */
-insert into lab_rating (rating_id, lab_id, user_id, date_posted, rating, comments)
-values (1, 101, 5, "2018-02-05 12:00:00", 5, "This lab is great!"),
-(2, 101, 4, "2018-02-05 14:00:00", 5, "My students and I think this lab is great!");
+/* quote of the month */
+insert into quote (author, quote_text, month_posted, year_posted)
+values 
+("Anais Nin", "Life shrinks or expands in proportion to one's courage.", "3", "2019"),
+("Neale Donald Walsch", "Life begins at the end of your comfort zone.", "4", "2019"),
+("Unknown", "Life isn't about finding yourself. Life is about creating yourself.", "5", "2019");
 
-select * from lab_rating;
+select * from quote;
 
-/* homework submission */
-insert into homework_submission (assignment_id, student_id, date_submitted, points_earned, is_graded, total_time)
-values (1, 1, "2018-02-04 22:00:00", 20, 1, 4),
-(1, 2, "2018-02-04 23:00:00", 10, 1, 2);
-
-select * from homework_submission;
 

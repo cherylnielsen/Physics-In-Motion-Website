@@ -6,7 +6,7 @@ class SectionStudentsController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//($section_id, $student_id)
+	//($section_id, $user_id)
 	
 	public function initialize()
 	{
@@ -20,7 +20,7 @@ class SectionStudentsController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section_student = new Section_Students();
-				$section_student->initialize($row['section_id'], $row['student_id']);
+				$section_student->initialize($row['section_id'], $row['user_id']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student;
 			}
@@ -38,10 +38,10 @@ class SectionStudentsController extends DatabaseController {
 		$sucess = true;
 		$db_connection = $this->get_db_connection();
 		$section_id = $section_student->get_section_id();
-		$student_id = $section_student->get_student_id();
+		$user_id = $section_student->get_user_id();
 		
-		$query = "insert into section_students (section_id, student_id) 
-				values('$section_id', '$student_id')";
+		$query = "insert into section_students (section_id, user_id) 
+				values('$section_id', '$user_id')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -69,9 +69,9 @@ class SectionStudentsController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$section_id = $section_student->get_section_id();
-		$student_id = $section_student->get_student_id();
+		$user_id = $section_student->get_user_id();
 		
-		$query = "delete from section_student where (section_id = $section_id) AND (student_id = $student_id)";
+		$query = "delete from section_student where (section_id = $section_id) AND (user_id = $user_id)";
 		
 		if(!$result)
 		{

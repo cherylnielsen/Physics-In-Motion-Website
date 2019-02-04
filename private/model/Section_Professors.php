@@ -3,14 +3,14 @@
 class Section_Professors {
 	
 	private $section_id;
-	private $professor_id;
+	private $user_id;
 	
 	public function __construct() {}
 	
-	public function initialize($section_id, $professor_id)
+	public function initialize($section_id, $user_id)
 	{
 		$this->section_id = $section_id;
-		$this->professor_id = $professor_id;
+		$this->user_id = $user_id;
 	}
 	
 	
@@ -24,14 +24,14 @@ class Section_Professors {
 		$this->section_id = $section_id;
 	}
 	
-	public function get_professor_id()
+	public function get_user_id()
 	{
-		return $this->professor_id;
+		return $this->user_id;
 	}
 
-	public function set_professor_id($professor_id)
+	public function set_user_id($user_id)
 	{
-		$this->professor_id = $professor_id;
+		$this->user_id = $user_id;
 	}
 	
 	

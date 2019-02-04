@@ -2,22 +2,22 @@
 
 class Notice {
 	
-	private $notice_id;
+	private $notice_id; // key
 	private $to_user_id;
 	private $from_user_id;
 	private $date_sent;
-	private $subject;
+	private $notice_subject;
 	private $notice_text;
 	
 	public function __construct() {}
 	
-	public function initialize($notice_id, $to_user_id, $from_user_id, $date_sent, $subject, $notice_text)
+	public function initialize($notice_id, $to_user_id, $from_user_id, $date_sent, $notice_subject, $notice_text)
 	{
 		$this->notice_id = $notice_id;
 		$this->to_user_id = $to_user_id;
 		$this->from_user_id = $from_user_id;
 		$this->date_sent = $date_sent;
-		$this->subject = $subject;
+		$this->notice_subject = $notice_subject;
 		$this->notice_text = $notice_text;
 	}
 	
@@ -72,14 +72,14 @@ class Notice {
 		$this->notice_text = $notice_text;
 	}
 	
-	public function get_subject()
+	public function get_notice_subject()
 	{
-		return $this->subject;
+		return $this->notice_subject;
 	}
 
-	public function set_subject($subject)
+	public function set_notice_subject($notice_subject)
 	{
-		$this->subject = $subject;
+		$this->notice_subject = $notice_subject;
 	}
 	
 	

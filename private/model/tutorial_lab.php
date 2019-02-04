@@ -7,9 +7,9 @@ class Tutorial_Lab {
 	private $lab_status;
 	private $lab_status_array;
 	
-	private $lab_id;
+	private $lab_id;	// key
 	private $lab_name;
-	private $web_link;
+	private $web_link;	// unique
 	private $introduction;
 	private $prerequisites;
 	private $key_topics;

@@ -76,20 +76,20 @@ class LabRatingController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $rating_id:
-			case $lab_id:
-			case $user_id:
+			case 'rating_id':
+			case 'lab_id':
+			case 'user_id':
 				return false;
 				break;
-			case $date_posted:
+			case 'date_posted':
 				$lab_rating->set_date_posted($value);	
 				$query = "update lab_rating set date_posted = '$value' where rating_id = '$rating_id'";
 				break;
-			case $rating:
+			case 'rating':
 				$lab_rating->set_rating($value);	
 				$query = "update lab_rating set rating = '$value' where rating_id = '$rating_id'";
 				break;
-			case $comments:
+			case 'comments':
 				$lab_rating->set_comments($value);	
 				$query = "update lab_rating set comments = '$value' where rating_id = '$rating_id'";
 				break;

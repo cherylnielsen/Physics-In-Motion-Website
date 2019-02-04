@@ -2,7 +2,7 @@
 
 class Assignment {
 	
-	private $assignment_id;
+	private $assignment_id; // key
 	private $section_id;
 	private $lab_id;	
 	private $tag;

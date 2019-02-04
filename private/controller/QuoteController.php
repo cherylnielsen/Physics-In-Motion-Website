@@ -103,22 +103,22 @@ class QuoteController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $quote_id:
+			case 'quote_id':
 				return false;
 				break;
-			case $author:
+			case 'author':
 				$quote->set_author($value);	
 				$query = "update quote set author = '$value' where quote_id = '$quote_id'";
 				break;
-			case $quote_text:
+			case 'quote_text':
 				$quote->set_quote_text($value);	
 				$query = "update quote set quote_text = '$value' where quote_id = '$quote_id'";
 				break;
-			case $month_posted:
+			case 'month_posted':
 				$quote->set_month_posted($value);	
 				$query = "update quote set month_posted = '$value' where quote_id = '$quote_id'";
 				break;
-			case $year_posted:
+			case 'year_posted':
 				$quote->set_year_posted($value);	
 				$query = "update quote set year_posted = '$value' where quote_id = '$quote_id'";
 				break;

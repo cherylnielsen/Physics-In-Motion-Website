@@ -3,11 +3,16 @@
 use physics_in_motion;
 
 /* quote of the month */
-insert into quote (quote_id, author, quote_text, month_posted, year_posted)
-values (101, "Les Brown", "Shoot for the Moon. Even if you miss, you'll land among the stars.", "12", "2018"),
-(102, "Eleanor Roosevelt", "The future belongs to those who beleive in the beauty of their dreams.", "01", "2019"),
-(103, "Vivian Greene", "Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain.", "02", "2019");
+insert into quote (author, quote_text, month_posted, year_posted)
+values ("Les Brown", "Shoot for the Moon. Even if you miss, you'll land among the stars.", "12", "2018"),
+("Eleanor Roosevelt", "The future belongs to those who beleive in the beauty of their dreams.", "01", "2019"),
+("Vivian Greene", "Life isn't about waiting for the storm to pass. It's about learning how to dance in the rain.", "02", "2019"),
+("Anais Nin", "Life shrinks or expands in proportion to one's courage.", "3", "2019"),
+("Neale Donald Walsch", "Life begins at the end of your comfort zone.", "4", "2019"),
+("Unknown", "Life isn't about finding yourself. Life is about creating yourself.", "5", "2019");
+
 select * from quote;
+
 
 /* tutorial labs */
 insert into tutorial_lab (lab_id, lab_name, web_link, lab_status)

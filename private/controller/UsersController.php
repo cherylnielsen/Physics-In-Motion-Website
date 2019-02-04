@@ -69,33 +69,34 @@ class UsersController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$user_id = $user->get_user_id();	
+		$query = null;
 		
 		switch ($attribute)
 		{
-			case $user_id:
+			case 'user_id':
 				return false;
 				break;
-			case $user_type:
+			case 'user_type':
 				$user->set_user_type($value);	
 				$query = "update users set user_type = '$value' where user_id = '$user_id'";
 				break;
-			case $user_name:
+			case 'user_name':
 				$user->set_user_name($value);	
 				$query = "update users set user_name = '$value' where user_id = '$user_id'";
 				break;
-			case $user_password:
+			case 'user_password':
 				$user->set_user_password($value);	
 				$query = "update users set user_password = '$value' where user_id = '$user_id'";
 				break;
-			case $date_registered:
+			case 'date_registered':
 				$user->set_date_registered($value);	
 				$query = "update users set date_registered = '$value' where user_id = '$user_id'";
 				break;
-			case $last_login:
+			case 'last_login':
 				$user->set_last_login($value);	
 				$query = "update users set last_login = '$value' where user_id = '$user_id'";
 				break;
-			case $last_logoff:	
+			case 'last_logoff':	
 				$user->set_last_logoff($value);	
 				$query = "update users set last_logoff = '$value' where user_id = '$user_id'";
 				break;

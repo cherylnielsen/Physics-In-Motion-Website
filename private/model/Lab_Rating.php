@@ -2,7 +2,7 @@
 
 class Lab_Rating {
 	
-	private $rating_id;
+	private $rating_id; // key
 	private $lab_id;
 	private $user_id;
 	private $date_posted;

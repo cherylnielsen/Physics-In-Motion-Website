@@ -22,7 +22,8 @@
 <?php include('html-includes/template/nav-and-quote.php'); ?>
 
 <section class="main-content">
-	
+	<?php include('../private/MemberDataUtilities.php'); ?>
+	<?php include('../private/User_Actions.php'); ?>
 	<?php include('html-includes/users/student-page-main-content.php'); ?>
 </section>
 		

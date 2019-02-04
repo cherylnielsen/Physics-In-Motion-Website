@@ -31,17 +31,18 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 		else
 		{
-			$user_id = $login_utility->authenticate_login($username, $password, $mdb_control);
+			$user = $login_utility->authenticate_login($username, $password, $mdb_control);
 			
-			if($user_id < 0)
+			if(is_null($user))
 			{
 				echo'<p>Error: User name or password not found. <br> Please check spelling and try again.</p>';
 			}
 			else
 			{
-				$login_utility->update_last_login($user_id, $mdb_control);
-				$member_type = "unknown";
+				$user_id = $user->get_user_id();
+				$member_type = $user->get_user_type();
 				$member = $login_utility->get_member($user_id, $member_type, $mdb_control);	
+				$user_id = $member->get_user_id();
 				
 				if(!is_null($member))
 				{	 
@@ -50,22 +51,24 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 						session_start();
 					}
 					
-					$_SESSION['user_id'] = $member->get_user_id();
+					$ok = $login_utility->update_last_login($user, $mdb_control);
+					$_SESSION['user_id'] = $user_id;
+					$_SESSION['ok'] = $ok;
 					$_SESSION['first_name'] = $member->get_first_name();
 					$_SESSION['last_name'] = $member->get_last_name();	
 					
 					switch($member_type)
 					{
 						case "student":
-							$_SESSION['student_id'] = $member->get_student_id();
+							$_SESSION['student_id'] = $user_id;
 							$url = "student-page.php";
 							break;
 						case "professor":
-							$_SESSION['professor_id'] = $member->get_professor_id();
+							$_SESSION['professor_id'] = $user_id;
 							$url = "professor-page.php";
 							break;
 						case "administrator":
-							$_SESSION['admin_id'] = $member->get_admin_id();
+							$_SESSION['admin_id'] = $user_id;
 							$url = "administrator-page.php";
 							break;
 					}

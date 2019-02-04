@@ -10,8 +10,8 @@ require_once('model/Notice.php');
 require_once('model/Professor.php');
 require_once('model/Quote.php');
 require_once('model/Sections.php');
-require_once('model/Section_Professors.php');
 require_once('model/Section_Students.php');
+require_once('model/Section_Professors.php');
 require_once('model/Student.php');
 require_once('model/Tutorial_Lab.php');
 require_once('model/Users.php');
@@ -28,12 +28,11 @@ require_once('controller/NoticeController.php');
 require_once('controller/ProfessorController.php');
 require_once('controller/QuoteController.php');
 require_once('controller/SectionsController.php');
-require_once('controller/SectionProfessorsController.php');
 require_once('controller/SectionStudentsController.php');
+require_once('controller/SectionProfessorsController.php');
 require_once('controller/StudentController.php');
 require_once('controller/TutorialLabController.php');
 require_once('controller/UsersController.php');
-
 
 
 class DatabaseControllerFactory
