@@ -5,13 +5,12 @@
 class LabRatingController extends DatabaseController {
 
 	
-	public function __construct() {}
-	//($rating_id, $lab_id, $user_id, $date_posted, $rating, $comments)
-	
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "lab_rating";
 	}
+	//($rating_id, $lab_id, $member_id, $date_posted, $rating, $comments)
+	
 
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
@@ -20,7 +19,7 @@ class LabRatingController extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$rating = new LabRating();
-				$rating->initialize($row['rating_id'], $row['lab_id'], $row['user_id'], 
+				$rating->initialize($row['rating_id'], $row['lab_id'], $row['member_id'], 
 							$row['date_posted'], $row['rating'], $row['comments']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $rating;
@@ -39,13 +38,13 @@ class LabRatingController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$lab_id = $rating->get_lab_id();
-		$user_id = $rating->get_user_id();
+		$member_id = $rating->get_member_id();
 		$rating = $rating->get_rating();
 		$comments = $rating->get_comments();
 		
 		// The rating_id will be auto-generated.
-		$query = "insert into lab_rating (lab_id, user_id, date_posted, rating, comments) 
-				values('$lab_id', '$user_id', 'now()', '$rating', '$comments')";
+		$query = "insert into lab_rating (lab_id, member_id, date_posted, rating, comments) 
+				values('$lab_id', '$member_id', 'now()', '$rating', '$comments')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -67,7 +66,7 @@ class LabRatingController extends DatabaseController {
 
 
 	// updates the given attribute with the new value in the database and in the lab_rating object
-	//($rating_id, $lab_id, $user_id, $date_posted, $rating, $comments)
+	//($rating_id, $lab_id, $member_id, $date_posted, $rating, $comments)
 	public function update_attribute(&$lab_rating, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
@@ -76,20 +75,20 @@ class LabRatingController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $rating_id:
-			case $lab_id:
-			case $user_id:
+			case 'rating_id':
+			case 'lab_id':
+			case 'member_id':
 				return false;
 				break;
-			case $date_posted:
+			case 'date_posted':
 				$lab_rating->set_date_posted($value);	
 				$query = "update lab_rating set date_posted = '$value' where rating_id = '$rating_id'";
 				break;
-			case $rating:
+			case 'rating':
 				$lab_rating->set_rating($value);	
 				$query = "update lab_rating set rating = '$value' where rating_id = '$rating_id'";
 				break;
-			case $comments:
+			case 'comments':
 				$lab_rating->set_comments($value);	
 				$query = "update lab_rating set comments = '$value' where rating_id = '$rating_id'";
 				break;

@@ -2,12 +2,6 @@
 /* CSS Document */
 
 
-h1.summary {
-	width: 70%;
-	position: relative;
-	left: 5%;
-}
-
 h1.form {
 	margin: 1em 0 0 0;
 }
@@ -16,13 +10,6 @@ a {
 	display: inline-block;
 	font-weight: 900;	
 	margin: 0.5em 0;
-}
-	
-section.main-content {
-	float: left;
-	width: auto;
-	padding: 0 2%;
-	margin-bottom: 2em;	
 }
 
 form {
@@ -53,9 +40,4 @@ input[type=checkbox] {
 	margin: 0.5em 0;
 }
 
-@media screen and (max-width: 600px) {
-	div.quote {
-		display: none;
-	}
-}
 

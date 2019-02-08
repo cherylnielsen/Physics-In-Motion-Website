@@ -2,8 +2,7 @@
 
 class Administrator {
 	
-	private $admin_id;
-	private $user_id;
+	private $member_id;	// key
 	private $first_name;
 	private $last_name;
 	private $admin_type;
@@ -12,34 +11,24 @@ class Administrator {
 	public function __construct() {}
 	
 
-	public function initialize($admin_id, $user_id, $first_name, $last_name, $admin_type, $email)
+	public function initialize($member_id, $first_name, $last_name, $admin_type, $email)
 	{
-		$this->admin_id = $admin_id;
-		$this->user_id = $user_id;
+		$this->member_id = $member_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
 		$this->admin_type = $admin_type;
 		$this->email = $email;
 	}
 	
-	public function get_admin_id()
+
+	public function get_member_id()
 	{
-		return $this->admin_id;
+		return $this->member_id;
 	}
 
-	public function set_admin_id($admin_id)
+	public function set_member_id($member_id)
 	{
-		$this->admin_id = $admin_id;
-	}
-	
-	public function get_user_id()
-	{
-		return $this->user_id;
-	}
-
-	public function set_user_id($user_id)
-	{
-		$this->user_id = $user_id;
+		$this->member_id = $member_id;
 	}
 	
 	public function get_first_name()

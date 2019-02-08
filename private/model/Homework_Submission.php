@@ -2,8 +2,8 @@
 
 class Homework_Submission {
 	
-	private $assignment_id;
-	private $student_id;
+	private $assignment_id; 	// key part 1
+	private $student_id;		// key part 2
 	private $date_submitted;
 	private $points_earned;
 	private $is_graded;
@@ -18,10 +18,6 @@ class Homework_Submission {
 		$this->date_submitted = $date_submitted;
 		$this->points_earned = $points_earned;
 		$this->total_time = $total_time;
-		
-		// is_graded must be true or false 
-		// this will set 0 to false and 1 to true
-		// default value is false
 		$this->set_is_graded($is_graded);
 		
 	}
@@ -82,33 +78,9 @@ class Homework_Submission {
 		return $this->is_graded;
 	}
 
-	/***
-		is_graded must be true or false.
-		This will set 0 to false and 1 to true.
-		The default value is false.
-	**/
 	public function set_is_graded($is_graded)
 	{
-		if(!is_set($is_graded))
-		{
-			$this->is_graded = false;
-		}
-		else if(($is_graded == false) || ($is_graded == true))
-		{
-			$this->is_graded = $is_graded;
-		}
-		else if($is_graded == 0)
-		{
-			$this->is_graded = false;
-		}
-		else if($is_graded == 1)
-		{
-			$this->is_graded = true;
-		}
-		else
-		{
-			$this->is_graded = false;
-		}
+		$this->is_graded = $is_graded;
 	}
 	
 	

@@ -1,27 +1,25 @@
 <?php
 
 
-
 class NoticeController extends DatabaseController {
 
-	
-	public function __construct() {}
-	//($notice_id, $to_user_id, $from_user_id, $date_sent, $subject, $notice_text)
-
-	public function initialize()
+  	
+	public function __construct() 
 	{
 		$this->tableName = "notice";
 	}
+	//($notice_id, $from_member_id, $to_section_id, $date_sent, $notice_subject, $notice_text)
+	
 	
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['notice_id'], $row['to_user_id'], $row['from_user_id'], 
-						$row['date_sent'], $row['subject'], $row['notice_text']);
+				$notice->initialize($row['notice_id'], $row['from_member_id'], $row['to_section_id'],
+						$row['date_sent'], $row['notice_subject'], $row['notice_text']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice;	
 			}
@@ -38,14 +36,14 @@ class NoticeController extends DatabaseController {
 	{
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
-		$to_user_id = $notice->get_to_user_id();
-		$from_user_id = $notice->get_from_user_id();
-		$subject = $notice->get_subject();
+		$from_member_id = $notice->get_from_member_id();
+		$to_section_id = $notice->get_to_section_id();
+		$notice_subject = $notice->get_notice_subject();
 		$notice_text = $notice->get_notice_text();
 		
 		// The notice_id will be auto-generated.
-		$query = "insert into notice (to_user_id, from_user_id, date_sent, subject, notice_text) 
-				values('$to_user_id', '$from_user_id', 'now()', '$subject', '$notice_text')";
+		$query = "insert into notice (from_member_id, to_section_id, date_sent, notice_subject, notice_text) 
+				values('$from_member_id', '$to_section_id, ', 'now()', '$notice_subject', '$notice_text')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -68,7 +66,7 @@ class NoticeController extends DatabaseController {
 	
 	
 	// updates the given attribute with the new value in the database and in the notice object
-	//($notice_id, $to_user_id, $from_user_id, $date_sent, $subject, $notice_text)
+	//($notice_id, $to_member_id, $from_member_id, $date_sent, $notice_subject, $notice_text)
 	public function update_attribute(&$notice, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
@@ -77,26 +75,26 @@ class NoticeController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $notice_id:
+			case 'notice_id':
 				return false;
 				break;
-			case $to_user_id:
-				$notice->set_to_user_id($value);	
-				$query = "update notice set to_user_id = '$value' where notice_id = '$notice_id'";
+			case 'from_member_id':
+				$notice->set_from_member_id($value);	
+				$query = "update notice set from_member_id = '$value' where notice_id = '$notice_id'";
 				break;
-			case $from_user_id:
-				$notice->set_from_user_id($value);	
-				$query = "update notice set from_user_id = '$value' where notice_id = '$notice_id'";
+			case 'to_section_id':
+				$notice->set_to_section_id($value);	
+				$query = "update notice set to_section_id = '$value' where notice_id = '$notice_id'";
 				break;
-			case $date_sent:
+			case 'date_sent':
 				$notice->set_date_sent($value);	
 				$query = "update notice set date_sent = '$value' where notice_id = '$notice_id'";
 				break;
-			case $subject:
-				$notice->set_subject($value);	
-				$query = "update notice set subject = '$value' where notice_id = '$notice_id'";
+			case 'notice_subject':
+				$notice->set_notice_subject($value);	
+				$query = "update notice set notice_subject = '$value' where notice_id = '$notice_id'";
 				break;
-			case $notice_text:
+			case 'notice_text':
 				$notice->set_notice_text($value);	
 				$query = "update notice set notice_text = '$value' where notice_id = '$notice_id'";
 				break;

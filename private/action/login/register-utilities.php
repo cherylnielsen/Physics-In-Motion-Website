@@ -134,7 +134,7 @@ class RegisterUtilities
 	{
 		$ok = true;
 		
-		// compare password or user name to the required reg expression patterns.
+		// compare password or member name to the required reg expression patterns.
 		//(min 1 letter & 1 number & 8 char long)
 		if(strlen($data) < 8)
 		{
@@ -166,29 +166,29 @@ class RegisterUtilities
 	}
 	
 	
-	public function validate_username($username, $username_confirm, &$form_errors)
+	public function validate_membername($membername, $membername_confirm, &$form_errors)
 	{
 		$ok = true;
 		
 		// tests for zero length and other errors
-		if(!($this->sanitize_input($username, "User Name", $form_errors)))
+		if(!($this->sanitize_input($membername, "Member Name", $form_errors)))
 		{ 
 			$ok = false; 
 		}
 		
-		if(!($this->sanitize_input($username_confirm, "User Name", $form_errors)))
+		if(!($this->sanitize_input($membername_confirm, "Member Name", $form_errors)))
 		{ 
 			$ok = false; 
 		}
 			
-		if(0 != strcmp($username, $username_confirm))
+		if(0 != strcmp($membername, $membername_confirm))
 		{
-			$form_errors[] = 'The User Names do not match.';
+			$form_errors[] = 'The Member Names do not match.';
 			$ok = false;
 		}
 		else
 		{
-			$ok = $this->validate_pw_un_pattern("User Name", $username, $form_errors);
+			$ok = $this->validate_pw_un_pattern("Member Name", $membername, $form_errors);
 		}
 
 		return $ok;
@@ -224,20 +224,20 @@ class RegisterUtilities
 	}
 	
 	
-	public function duplicate_user_name($username, $mdb_control, &$form_errors)
+	public function duplicate_member_name($membername, $mdb_control, &$form_errors)
 	{
 		$ok = true;		
-		$control = $mdb_control->getController("users");
+		$control = $mdb_control->getController("member");
 		$db_con = $control->get_db_connection();
 		
-		// escape user input variables for quote marks, etc.
-		$username = mysqli_real_escape_string($db_con, $username);		
+		// escape member input variables for quote marks, etc.
+		$membername = mysqli_real_escape_string($db_con, $membername);		
 		// find in the database
-		$duplicate = $control->getByAttribute("user_name", $username);
+		$duplicate = $control->getByAttribute("member_name", $membername);
 		
 		if(count($duplicate) > 0)
 		{
-			$form_errors[] = 'User name is already in use. ';
+			$form_errors[] = 'Member name is already in use. ';
 			$ok = false;
 		}
 		
@@ -251,7 +251,7 @@ class RegisterUtilities
 		$control = $mdb_control->getController($account_type);
 		$db_con = $control->get_db_connection();
 		
-		// escape user input variables for quote marks, etc.
+		// escape member input variables for quote marks, etc.
 		$data_escaped = mysqli_real_escape_string($db_con, $email);		
 		// find in the database
 		$duplicate = $control->getByAttribute("email", $data_escaped);
@@ -266,32 +266,32 @@ class RegisterUtilities
 		return $ok;
 	}
 	
-	public function register_new_user($firstname, $lastname, $email, $school, 
-						$account_type, $username, $password, $mdb_control)
+	public function register_new_member($firstname, $lastname, $email, $school, 
+						$account_type, $membername, $password, $mdb_control)
 	{
 		$ok = true;
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
 		$date_registered = date($format, time());
-		$control = $mdb_control->getController("users");
+		$control = $mdb_control->getController("member");
 		$db_con = $control->get_db_connection();
 		
-		$username = mysqli_real_escape_string($db_con, $username);
+		$membername = mysqli_real_escape_string($db_con, $membername);
 		$password = mysqli_real_escape_string($db_con, $password);
 		
-		// save new user
-		$user = new Users();
+		// save new member
+		$member = new Member();
 		$password = password_hash($password, PASSWORD_DEFAULT);
-		$user->initialize(null, $account_type, $username, $password, $date_registered, null, null);
-		$ok = $control->saveNew($user);
+		$member->initialize(null, $account_type, $membername, $password, $date_registered, null, null);
+		$ok = $control->saveNew($member);
 		$person = null;
 		
-		// save user as student or professor
+		// save member as student or professor
 		if($ok) 
 		{
 			$control = $mdb_control->getController($account_type);
-			$user_id = $user->get_user_id();
-			// escape user input variables for quote marks, etc.
+			$member_id = $member->get_member_id();
+			// escape member input variables for quote marks, etc.
 			// account_type dose not need escaping
 			$firstname = mysqli_real_escape_string($db_con, $firstname);
 			$lastname = mysqli_real_escape_string($db_con, $lastname);
@@ -302,19 +302,19 @@ class RegisterUtilities
 			{
 				case "student":
 					$person = new Student();
-					$person->initialize(null, $user_id, $firstname, $lastname, $school, $email);
+					$person->initialize($member_id, $firstname, $lastname, $school, $email);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "professor":
 					$person = new Professor();
-					$person->initialize(null, $user_id, $firstname, $lastname, $school, $email);
+					$person->initialize($member_id, $firstname, $lastname, $school, $email);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "administrator":
 					$person = new Administrator();
-					$person->initialize(null, $user_id, $firstname, $lastname, $school, $email);
+					$person->initialize($member_id, $firstname, $lastname, $school, $email);
 					$ok = $control->saveNew($person);
 					break;
 			}

@@ -2,8 +2,7 @@
 
 class Professor {
 	
-	private $professor_id;
-	private $user_id;
+	private $member_id;
 	private $first_name;
 	private $last_name;
 	private $school_name;
@@ -11,34 +10,23 @@ class Professor {
 	
 	public function __construct() {}
 
-	public function initialize($professor_id, $user_id, $first_name, $last_name, $school_name, $email)
+	public function initialize($member_id, $first_name, $last_name, $school_name, $email)
 	{
-		$this->professor_id = $professor_id;
-		$this->user_id = $user_id;
+		$this->member_id = $member_id;
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
 		$this->school_name = $school_name;
 		$this->email = $email;
 	}
 	
-	public function get_professor_id()
+	public function get_member_id()
 	{
-		return $this->professor_id;
+		return $this->member_id;
 	}
 
-	public function set_professor_id($professor_id)
+	public function set_member_id($member_id)
 	{
-		$this->professor_id = $professor_id;
-	}
-
-	public function get_user_id()
-	{
-		return $this->user_id;
-	}
-
-	public function set_user_id($user_id)
-	{
-		$this->user_id = $user_id;
+		$this->member_id = $member_id;
 	}
 	
 	public function get_first_name()

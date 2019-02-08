@@ -2,28 +2,28 @@
 
 class Assignment {
 	
-	private $assignment_id;
+	private $assignment_id; // key
 	private $section_id;
-	private $lab_id;	
-	private $tag;
+	private $lab_id;
 	private $date_assigned;
 	private $date_due;
 	private $points_possible;		
 	private $notes;
+	private $has_notes;
 	
 	
 	public function __construct() {}
 
-	public function initialize($assignment_id, $section_id, $lab_id, $tag, $date_assigned, $date_due, $points_possible, $notes)
+	public function initialize($assignment_id, $section_id, $lab_id, $date_assigned, $date_due, $points_possible, $notes)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->section_id = $section_id;
 		$this->lab_id = $lab_id;
-		$this->tag = $tag;		
 		$this->date_assigned = $date_assigned;
 		$this->date_due = $date_due;	
 		$this->points_possible = $points_possible;
 		$this->notes = $notes;
+		$this->has_notes = isset($notes) ? "Yes" : "No";
 	}
 	
 	public function get_assignment_id()
@@ -54,16 +54,6 @@ class Assignment {
 	public function set_lab_id($lab_id)
 	{
 		$this->lab_id = $lab_id;
-	}
-	
-	public function get_tag()
-	{
-		return $this->tag;
-	}
-
-	public function set_tag($tag)
-	{
-		$this->tag = $tag;
 	}
 	
 	public function get_date_assigned()
@@ -104,6 +94,16 @@ class Assignment {
 	public function set_notes($notes)
 	{
 		$this->notes = $notes;
+	}
+	
+	public function get_has_notes()
+	{
+		return $this->has_notes;
+	}
+
+	public function set_has_notes($has_notes)
+	{
+		$this->has_notes = $has_notes;
 	}
 	
 }

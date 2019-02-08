@@ -5,22 +5,21 @@
 class AssignmentController extends DatabaseController {
 
 	
-	public function __construct() {}
-	//($assignment_id, $section_id, $lab_id, $tag, $date_assigned, $date_due, $points_possible, $notes)
-
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "assignment";
 	}
+	//($assignment_id, $section_id, $lab_id, $date_assigned, $date_due, $points_possible, $notes)
+
 
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$assignment = new Assignment();
-				$assignment->initialize($row['assignment_id'], $row['section_id'], $row['lab_id'], $row['tag'],  
+				$assignment->initialize($row['assignment_id'], $row['section_id'], $row['lab_id'],   
 						$row['date_assigned'], $row['date_due'], $row['points_possible'], $row['notes']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment;
@@ -41,15 +40,14 @@ class AssignmentController extends DatabaseController {
 		
 		$section_id = $assignment->get_section_id();
 		$lab_id = $assignment->get_lab_id();
-		$tag = $assignment->get_tag();
 		$date_assigned = $assignment->get_date_assigned();
 		$date_due = $assignment->get_date_due();
 		$points_possible = $assignment->get_points_possible();
 		$notes = $assignment->get_notes();
 		
 		// The assignment_id will be auto-generated.
-		$query = "insert into assignment (section_id, tag, lab_id, date_assigned, date_due, points_possible, notes) 
-			values ('$section_id', '$lab_id', '$tag', '$date_assigned', '$date_due', '$points_possible', '$notes')";
+		$query = "insert into assignment (section_id, lab_id, date_assigned, date_due, points_possible, notes) 
+			values ('$section_id', '$lab_id', '$date_assigned', '$date_due', '$points_possible', '$notes')";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -80,36 +78,31 @@ class AssignmentController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $assignment_id:
-			case $section_id:
+			case 'assignment_id':
+			case 'section_id':
 				return false;
 				break;
-			case $lab_id:
+			case 'lab_id':
 				$assignment->set_lab_id($value);	
 				$query = "update assignment set lab_id = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $tag:
-				$assignment->set_tag($value);	
-				$query = "update assignment set tag = '$value' 
-							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
-				break;
-			case $date_assigned:
+			case 'date_assigned':
 				$assignment->set_date_assigned($value);	
 				$query = "update assignment set date_assigned = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $date_due:
+			case 'date_due':
 				$assignment->set_date_due($value);	
 				$query = "update assignment set date_due = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $points_possible:
+			case 'points_possible':
 				$assignment->set_points_possible($value);	
 				$query = "update assignment set points_possible = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case $notes:
+			case 'notes':
 				$assignment->set_notes($value);	
 				$query = "update assignment set notes = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";

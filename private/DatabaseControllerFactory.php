@@ -7,14 +7,14 @@ require_once('model/Homework.php');
 require_once('model/Homework_Submission.php');
 require_once('model/Lab_Rating.php');
 require_once('model/Notice.php');
+require_once('model/Notice_Attachment.php');
 require_once('model/Professor.php');
 require_once('model/Quote.php');
-require_once('model/Sections.php');
-require_once('model/Section_Professors.php');
-require_once('model/Section_Students.php');
+require_once('model/Section.php');
+require_once('model/Section_Student.php');
 require_once('model/Student.php');
 require_once('model/Tutorial_Lab.php');
-require_once('model/Users.php');
+require_once('model/Member.php');
 
 
 // The controllers for each of the database tables
@@ -25,15 +25,14 @@ require_once('controller/HomeworkController.php');
 require_once('controller/HomeworkSubmissionController.php');
 require_once('controller/LabRatingController.php');
 require_once('controller/NoticeController.php');
+require_once('controller/NoticeAttachmentController.php');
 require_once('controller/ProfessorController.php');
 require_once('controller/QuoteController.php');
-require_once('controller/SectionsController.php');
-require_once('controller/SectionProfessorsController.php');
-require_once('controller/SectionStudentsController.php');
+require_once('controller/SectionController.php');
+require_once('controller/SectionStudentController.php');
 require_once('controller/StudentController.php');
 require_once('controller/TutorialLabController.php');
-require_once('controller/UsersController.php');
-
+require_once('controller/MemberController.php');
 
 
 class DatabaseControllerFactory
@@ -44,14 +43,14 @@ class DatabaseControllerFactory
 	
 	public function getController($data_type)
 	{
-		$controller;
+		$controller = null;
 		$data_type = trim($data_type);
 		$data_type = strtolower($data_type);
 		
 		switch($data_type)
 		{
-			case "users" :
-				$controller = new UsersController();
+			case "member" :
+				$controller = new MemberController();
 				break;
 			case "student" :
 				$controller = new StudentController();
@@ -71,6 +70,9 @@ class DatabaseControllerFactory
 			case "notice" :
 				$controller = new NoticeController();
 				break;
+			case "notice_attachment" :
+				$controller = new NoticeAttachmentController();
+				break;
 			case "tutorial_lab" :
 				$controller  = new TutorialLabController();
 				break;
@@ -83,18 +85,13 @@ class DatabaseControllerFactory
 			case "homework_submission" :
 				$controller = new HomeworkSubmissionController();
 				break;
-			case "sections" :
-				$controller = new SectionsController();
+			case "section" :
+				$controller = new SectionController();
 				break;
-			case "section_professors" :
-				$controller = new SectionProfessorsController();
-				break;
-			case "section_students" :
-				$controller = new SectionStudentsController();
+			case "section_student" :
+				$controller = new SectionStudentController();
 				break;
 		}
-		
-		$controller->initialize();
 		
 		return $controller;
 	}

@@ -2,24 +2,23 @@
 
 
 
-class SectionStudentsController extends DatabaseController {
+class SectionStudentController extends DatabaseController {
 
 	
-	public function __construct() {}
+	public function __construct() 
+	{
+		$this->tableName = "section_student";
+	}
 	//($section_id, $student_id)
 	
-	public function initialize()
-	{
-		$this->tableName = "section_students";
-	}
-
+	
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section_student = new Section_Students();
+				$section_student = new Section_Student();
 				$section_student->initialize($row['section_id'], $row['student_id']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student;
@@ -32,7 +31,7 @@ class SectionStudentsController extends DatabaseController {
 	}
 
 
-	// The id for section_students is NOT auto-generated.
+	// The id for section_student is NOT auto-generated.
 	public function saveNew(&$section_student)
 	{
 		$sucess = true;
@@ -40,7 +39,7 @@ class SectionStudentsController extends DatabaseController {
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
 		
-		$query = "insert into section_students (section_id, student_id) 
+		$query = "insert into section_student (section_id, student_id) 
 				values('$section_id', '$student_id')";
 		$result = mysqli_query($db_connection, $query);
 

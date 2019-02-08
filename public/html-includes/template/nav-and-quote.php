@@ -1,14 +1,25 @@
 <?php
 
 $quote = $mdb_control->getController("quote")->getQuoteOfTheMonth();
+$no_session = (session_status() == PHP_SESSION_NONE);
 
 echo
 '<aside class="nav-quote">
 	<nav class="navigation">		
-		<a id="home_pg_link" href="index.php">Home Page</a><hr>
-		<a id="student_pg_link" href="student-page.php">Student Pages</a><hr>
-		<a id="professor_pg_link" href="professor-page.php">Professor Pages</a><hr>		
-		<a id="labs_pg_link" href="tutorial-labs-page.php">Tutorial Labs</a><hr>
+		<a id="home_pg_link" href="index.php">Home Page</a><hr>';
+		
+	if(!isset($_SESSION["professor_id"]))
+	{
+		echo '<a id="student_pg_link" href="student-page.php">Student Pages</a><hr>';
+	}
+	
+	if(!isset($_SESSION["student_id"]))
+	{
+		echo '<a id="professor_pg_link" href="professor-page.php">Professor Pages</a><hr>'; 	
+	}
+	
+	echo
+		'<a id="labs_pg_link" href="tutorial-labs-page.php">Tutorial Labs</a><hr>
 	</nav>';
 
 if(!is_null($quote))

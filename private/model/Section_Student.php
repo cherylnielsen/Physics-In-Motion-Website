@@ -1,6 +1,6 @@
 <?php
 
-class Section_Students {
+class Section_Student {
 	
 	private $section_id;
 	private $student_id;
@@ -33,6 +33,7 @@ class Section_Students {
 	{
 		$this->student_id = $student_id;
 	}
+	
 	
 	
 }

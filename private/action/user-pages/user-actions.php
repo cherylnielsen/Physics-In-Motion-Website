@@ -1,6 +1,6 @@
 <?php
 
-class UserUtilities
+class User_Actions
 {
 	public function __construct() {}
 	

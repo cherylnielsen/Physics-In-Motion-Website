@@ -5,14 +5,12 @@
 class TutorialLabController extends DatabaseController {
 	
 	
-	public function __construct() {}
-	//($lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
-	// $key_equations, $description, $instructions, $date_first_available)
-	
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "tutorial_lab";
 	}
+	//($lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
+	// $key_equations, $description, $instructions, $date_first_available)
 
 	
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -88,46 +86,46 @@ class TutorialLabController extends DatabaseController {
 		
 		switch ($attribute)
 		{
-			case $lab_id:
+			case 'lab_id':
 				return false;
 				break;
-			case $lab_name:
+			case 'lab_name':
 				$tutorial_lab->set_lab_name($value);	
 				$query = "update tutorial_lab set lab_name = '$value' where lab_id = '$lab_id'";
 				break;
-			case $web_link:
+			case 'web_link':
 				$tutorial_lab->set_web_link($value);	
 				$query = "update tutorial_lab set web_link = '$value' where lab_id = '$lab_id'";
 				break;
-			case $lab_status:
+			case 'lab_status':
 				$tutorial_lab->set_lab_status($value);	
 				$query = "update tutorial_lab set lab_status = '$value' where lab_id = '$lab_id'";
 				break;
-			case $introduction:
+			case 'introduction':
 				$tutorial_lab->set_introduction($value);	
 				$query = "update tutorial_lab set introduction = '$value' where lab_id = '$lab_id'";
 				break;
-			case $prerequisites:
+			case 'prerequisites':
 				$tutorial_lab->set_prerequisites($value);	
 				$query = "update tutorial_lab set prerequisites = '$value' where lab_id = '$lab_id'";
 				break;
-			case $key_topics:
+			case 'key_topics':
 				$tutorial_lab->set_key_topics($value);	
 				$query = "update tutorial_lab set key_topics = '$value' where lab_id = '$lab_id'";
 				break;
-			case $key_equations:
+			case 'key_equations':
 				$tutorial_lab->set_key_equations($value);	
 				$query = "update tutorial_lab set key_equations = '$value' where lab_id = '$lab_id'";
 				break;
-			case $description:
+			case 'description':
 				$tutorial_lab->set_description($value);	
 				$query = "update tutorial_lab set description = '$value' where lab_id = '$lab_id'";
 				break;
-			case $instructions:
+			case 'instructions':
 				$tutorial_lab->set_instructions($value);	
 				$query = "update tutorial_lab set instructions = '$value' where lab_id = '$lab_id'";
 				break;
-			case $date_first_available:
+			case 'date_first_available':
 				$tutorial_lab->set_date_first_available($value);	
 				$query = "update tutorial_lab set date_first_available = '$value' where lab_id = '$lab_id'";
 				break;
