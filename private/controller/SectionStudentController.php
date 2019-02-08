@@ -2,25 +2,24 @@
 
 
 
-class SectionStudentsController extends DatabaseController {
+class SectionStudentController extends DatabaseController {
 
 	
-	public function __construct() {}
-	//($section_id, $user_id)
-	
-	public function initialize()
+	public function __construct() 
 	{
-		$this->tableName = "section_students";
+		$this->tableName = "section_student";
 	}
-
+	//($section_id, $student_id)
+	
+	
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section_student = new Section_Students();
-				$section_student->initialize($row['section_id'], $row['user_id']);
+				$section_student = new Section_Student();
+				$section_student->initialize($row['section_id'], $row['student_id']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student;
 			}
@@ -32,16 +31,16 @@ class SectionStudentsController extends DatabaseController {
 	}
 
 
-	// The id for section_students is NOT auto-generated.
+	// The id for section_student is NOT auto-generated.
 	public function saveNew(&$section_student)
 	{
 		$sucess = true;
 		$db_connection = $this->get_db_connection();
 		$section_id = $section_student->get_section_id();
-		$user_id = $section_student->get_user_id();
+		$student_id = $section_student->get_student_id();
 		
-		$query = "insert into section_students (section_id, user_id) 
-				values('$section_id', '$user_id')";
+		$query = "insert into section_student (section_id, student_id) 
+				values('$section_id', '$student_id')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -69,9 +68,9 @@ class SectionStudentsController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$section_id = $section_student->get_section_id();
-		$user_id = $section_student->get_user_id();
+		$student_id = $section_student->get_student_id();
 		
-		$query = "delete from section_student where (section_id = $section_id) AND (user_id = $user_id)";
+		$query = "delete from section_student where (section_id = $section_id) AND (student_id = $student_id)";
 		
 		if(!$result)
 		{

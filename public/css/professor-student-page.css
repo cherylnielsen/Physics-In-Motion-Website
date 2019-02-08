@@ -1,0 +1,31 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+
+h1.user-page {
+	
+}
+
+
+table {
+	border: 2px double #03AA0D;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid #03AA0D;
+	padding: 5px;
+	text-align: left;
+}
+
+table th {
+	background-color: #A7DAFA;
+}
+
+tr:hover {
+	background-color:#DDD;
+}
+
+@media screen and (max-width: 600px) {
+	
+}
+  

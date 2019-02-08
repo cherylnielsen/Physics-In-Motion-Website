@@ -74,7 +74,7 @@
 	
 	<fieldset class="login-info" id="login-info">
 		<h2>Sign In Information:</h2>
-		<p>The User Name and Password are required to have:</p>
+		<p>The Member Name and Password are required to have:</p>
 		<ul>
 			<li>at least one uppercase letter,</li>
 			<li>at least one lowercase letter,</li>
@@ -84,14 +84,14 @@
 		</ul>
 		<br>
 		
-		<label>User Name<br>
-		<input type="text" name="username" id="username"
-			value="<?php if (isset($_POST['username'])) echo $_POST['username']; ?>" 
+		<label>Member Name<br>
+		<input type="text" name="membername" id="membername"
+			value="<?php if (isset($_POST['membername'])) echo $_POST['membername']; ?>" 
 			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
 		<br>
 		
-		<label>Confirm User Name<br><input type="text" name="username_confirm" id="username_confirm"
-			value="<?php if (isset($_POST['username_confirm'])) echo $_POST['username_confirm']; ?>" 
+		<label>Confirm Member Name<br><input type="text" name="membername_confirm" id="membername_confirm"
+			value="<?php if (isset($_POST['membername_confirm'])) echo $_POST['membername_confirm']; ?>" 
 			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
 		<br>
 		

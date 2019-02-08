@@ -2,14 +2,7 @@
 
 abstract class DatabaseController
 {
-	protected $tableName;
-	
-	
-	/***
-	Sets the tableName of the database table used by that particular controller.
-	**/
-	abstract public function initialize();
- 	
+	protected $tableName; 	
 	
 	/***
 	Protected helper function.

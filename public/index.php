@@ -22,7 +22,7 @@
 
 <section class="main-content">
 	<?php include('html-includes/template/logo-statement.php'); ?>
-	<?php include('html-includes/home/project-summary.html'); ?>
+	<?php include('html-includes/template/project-summary.html'); ?>
 </section>
 
 <?php include('html-includes/labs/new-labs-list.php'); ?>			

@@ -10,22 +10,22 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$lastname = $_POST['last_name'];
 	$email = $_POST['email'];
 	$school = $_POST['school'];
-	$username = $_POST['username'];
+	$membername = $_POST['membername'];
 	$password = $_POST['password'];
 	$found = false;
 	$ok = true;
 	
-	// validate the user inputs
+	// validate the member inputs
 	$account_type = $register->validate_account_type($_POST['account_type'], $form_errors);
 	$register->validate_name($_POST['first_name'], "First", $form_errors);
 	$register->validate_name($_POST['last_name'], "Last", $form_errors);
 	$register->validate_name($_POST['school'], "School", $form_errors);	
 	$register->validate_password($_POST['password'], $_POST['password_confirm'], $form_errors);
 	
-	$ok = $register->validate_username($_POST['username'], $_POST['username_confirm'], $form_errors);
+	$ok = $register->validate_membername($_POST['membername'], $_POST['membername_confirm'], $form_errors);
 	if($ok) 
 	{
-		$found = $register->duplicate_user_name($username, $mdb_control, $form_errors);
+		$found = $register->duplicate_member_name($membername, $mdb_control, $form_errors);
 	}
 
 	$ok = $register->validate_emails($_POST['email'], $_POST['email_confirm'], $form_errors);
@@ -41,12 +41,12 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	else
 	{
 		// Save the data to the database
-		$ok = $register->register_new_user($firstname, $lastname, $email, $school, 
-				$account_type, $username, $password, $mdb_control);
+		$ok = $register->register_new_member($firstname, $lastname, $email, $school, 
+				$account_type, $membername, $password, $mdb_control);
 				
 		if($ok) 
 		{
-			// Redirect the new user to the login page
+			// Redirect the new member to the login page
 			$url = "login-page.php";
 			header("Location: $url");
 			exit();

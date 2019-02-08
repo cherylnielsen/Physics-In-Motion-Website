@@ -8,11 +8,9 @@
 	
 	<meta name="Keywords" content="student, student services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
 		
-	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
-	
-	<link href="css/oops.css" rel="stylesheet" type="text/css" media="screen">
-	
-
+	<?php include('html-includes/template/common-db-and-css-links.php'); ?>	
+	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">	
 	
 </head>
 <body>	
@@ -22,8 +20,10 @@
 <?php include('html-includes/template/nav-and-quote.php'); ?>
 
 <section class="main-content">
-	<?php include('../private/MemberDataUtilities.php'); ?>
-	<?php include('../private/User_Actions.php'); ?>
+	<?php include('../private/Member_Data_Utilities.php'); ?>
+	<?php include('../private/action/user-pages/user-actions.php'); ?>
+	<?php include('html-includes/users/Member_Display_Tables.php'); ?>
+	<?php include('html-includes/users/Member_Display_Summaries.php'); ?>
 	<?php include('html-includes/users/student-page-main-content.php'); ?>
 </section>
 		

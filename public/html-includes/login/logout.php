@@ -10,7 +10,7 @@
 	}
 	
 	$login_utility = new LoginUtilities();	
-	$login_utility->update_last_logout($_SESSION['user_id'], $mdb_control);
+	$login_utility->update_last_logout($_SESSION['member_id'], $mdb_control);
 	
 	// remove all session variables
 	session_unset(); 

@@ -5,14 +5,12 @@
 class TutorialLabController extends DatabaseController {
 	
 	
-	public function __construct() {}
-	//($lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
-	// $key_equations, $description, $instructions, $date_first_available)
-	
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "tutorial_lab";
 	}
+	//($lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
+	// $key_equations, $description, $instructions, $date_first_available)
 
 	
 	protected function getData($db_result, &$dataArray, $db_connection)

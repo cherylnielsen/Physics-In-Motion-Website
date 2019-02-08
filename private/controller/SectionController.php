@@ -5,13 +5,12 @@
 class SectionController extends DatabaseController {
 
 	
-	public function __construct() {}
-	//($section_id, $section_name, $start_date, $end_date)
-	
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "section";
 	}
+	//($section_id, $professor_id, $section_name, $start_date, $end_date)
+	
 
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
@@ -19,8 +18,9 @@ class SectionController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section = new Sections();
-				$section->initialize($row['section_id'], $row['section_name'], $row['start_date'], $row['end_date']);
+				$section = new Section();
+				$section->initialize($row['section_id'], $row['section_name'], $row['professor_id'], 
+							$row['start_date'], $row['end_date']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section;
 			}
@@ -38,12 +38,13 @@ class SectionController extends DatabaseController {
 		$sucess = true;
 		$db_connection = $this->get_db_connection();
 		$section_name = $section->get_section_name();
+		$professor_id = $section->get_professor_id();
 		$text = $section->get_start_date();
 		$end_date = $section->get_end_date();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into section (section_name, start_date, end_date) 
-				values('$section_name', '$text', '$end_date')";
+		$query = "insert into section (section_name, professor_id, start_date, end_date) 
+				values('$section_name', '$professor_id', '$text', '$end_date')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -80,15 +81,19 @@ class SectionController extends DatabaseController {
 				break;
 			case 'section_name':
 				$section->set_section_name($value);	
-				$query = "update sections set section_name = '$value' where section_id = '$section_id'";
+				$query = "update section set section_name = '$value' where section_id = '$section_id'";
+				break;
+			case 'professor_id':
+				$section->set_professor_id($value);	
+				$query = "update section set professor_id = '$value' where section_id = '$section_id'";
 				break;
 			case 'start_date':
 				$section->set_start_date($value);	
-				$query = "update sections set start_date = '$value' where section_id = '$section_id'";
+				$query = "update section set start_date = '$value' where section_id = '$section_id'";
 				break;
 			case 'end_date':
 				$section->set_end_date($value);	
-				$query = "update sections set end_date = '$value' where section_id = '$section_id'";
+				$query = "update section set end_date = '$value' where section_id = '$section_id'";
 				break;
 		}
 		

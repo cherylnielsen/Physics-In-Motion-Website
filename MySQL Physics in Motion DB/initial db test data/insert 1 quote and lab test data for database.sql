@@ -28,8 +28,8 @@ update tutorial_lab set introduction = "Light shining on metal causes the releas
 
 /* more tutorial labs */
 insert into tutorial_lab (lab_id, lab_name, web_link, lab_status)
-values (105, "Discrete Mathematics", "discrete_math", "New"),
-(106, "Beginning Orbital Trajectories", "begin_oribits", "New"),
+values (105, "Discrete Mathematics", "discrete_math", "Development"),
+(106, "Beginning Orbital Trajectories", "begin_oribits", "Development"),
 (107, "2D and 3D Collisions", "2D_3D_collisions", "Development"), 
 (108, "Beginning Springs and Pendulums", "begin_spring_pendulum", "Development");
 
@@ -37,5 +37,6 @@ update tutorial_lab set introduction = "Learn Discrete Mathematics." where lab_i
 update tutorial_lab set introduction = "Learn Beginning Orbital Trajectories." where lab_id = 106;
 update tutorial_lab set introduction = "Learn 2D and 3D Collisions." where lab_id = 107;
 update tutorial_lab set introduction = "Learn Beginning Springs and Pendulums." where lab_id = 108;
+
 select * from tutorial_lab;
 

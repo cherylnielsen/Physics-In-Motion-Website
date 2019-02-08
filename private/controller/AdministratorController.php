@@ -5,13 +5,12 @@
 class AdministratorController extends DatabaseController {
 
 	
-	public function __construct() {}
-	//Administrator ($user_id, $first_name, $last_name, $admin_type, $email)
-
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "administrator";
 	}
+	//Administrator ($member_id, $first_name, $last_name, $admin_type, $email)
+
 
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{
@@ -20,7 +19,7 @@ class AdministratorController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
-				$admin->initialize($row['user_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
+				$admin->initialize($row['member_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $admin;
 			}		
@@ -37,28 +36,28 @@ class AdministratorController extends DatabaseController {
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$user_id = $administrator->get_user_id();	
+		$member_id = $administrator->get_member_id();	
 		
 		switch ($attribute)
 		{
-			case 'user_id':
+			case 'member_id':
 				return false;
 				break;
 			case 'first_name':
 				$administrator->set_first_name($value);	
-				$query = "update administrator set first_name = '$value' where user_id = '$user_id'";
+				$query = "update administrator set first_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_name':
 				$administrator->set_last_name($value);	
-				$query = "update administrator set last_name = '$value' where user_id = '$user_id'";
+				$query = "update administrator set last_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'admin_type':
 				$administrator->set_admin_type($value);	
-				$query = "update administrator set admin_type = '$value' where user_id = '$user_id'";
+				$query = "update administrator set admin_type = '$value' where member_id = '$member_id'";
 				break;
 			case 'email':
 				$administrator->set_email($value);	
-				$query = "update administrator set email = '$value' where user_id = '$user_id'";
+				$query = "update administrator set email = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -79,15 +78,15 @@ class AdministratorController extends DatabaseController {
 	{
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
-		$user_id = $user_id->get_user_id();
+		$member_id = $member_id->get_member_id();
 		$first = $administrator->get_first_name();
 		$last = $administrator->get_last_name();
 		$school = $administrator->get_school_name();
 		$email = $administrator->get_email();
 		
 		
-		$query = "insert into administrator (user_id, first_name, last_name, admin_type, email) 
-				values('$user_id', '$first', '$last', '$school', '$email')";
+		$query = "insert into administrator (member_id, first_name, last_name, admin_type, email) 
+				values('$member_id', '$first', '$last', '$school', '$email')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -106,9 +105,9 @@ class AdministratorController extends DatabaseController {
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$user_id = $administrator->get_admin_id();
+		$member_id = $administrator->get_admin_id();
 		
-		$query = "delete from administrator where user_id = $user_id";
+		$query = "delete from administrator where member_id = $member_id";
 		
 		if(!$result)
 		{

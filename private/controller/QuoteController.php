@@ -5,13 +5,12 @@
 class QuoteController extends DatabaseController {
 
 	
-	public function __construct() {}
-	//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
-	
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "quote";
 	}
+	//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
+
 
 	protected function getData($db_result, &$dataArray, $db_connection)
 	{

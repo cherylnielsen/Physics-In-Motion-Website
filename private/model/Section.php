@@ -1,27 +1,26 @@
 <?php
 
-class Sections {
+class Section {
 	
 	private $section_id;
 	private $section_name;
+	private $professor_id;
 	private $start_date;
 	private $end_date;
-	private $section_students;
-	private $section_profesors;
+	private $section_student_array;
+	
 	
 	public function __construct() {}
 	
-	public function initialize($section_id, $section_name, $start_date, $end_date, $professor_array, $student_array)
+	
+	public function initialize($section_id, $section_name, $professor_id, $start_date, $end_date)
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
+		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		$this->profesor_array = array();
-		$this->student_array = array();
-		array_merge($this->profesor_array, $professor_array);
-		array_merge($this->student_array, $student_array);
-		
+		$this->section_student_array = array();		
 	}
 	
 	
@@ -45,6 +44,16 @@ class Sections {
 		$this->section_name = $section_name;
 	}
 	
+	public function get_professor_id()
+	{
+		return $this->professor_id;
+	}
+
+	public function set_professor_id($professor_id)
+	{
+		$this->professor_id = $professor_id;
+	}
+	
 	public function get_start_date()
 	{
 		return $this->start_date;
@@ -63,6 +72,16 @@ class Sections {
 	public function set_end_date($end_date)
 	{
 		$this->end_date = $end_date;
+	}
+	
+	public function get_student_array()
+	{
+		return $this->section_student_array;
+	}
+
+	public function set_student_array($section_student_array)
+	{
+		$this->section_student_array = $section_student_array;
 	}
 	
 	

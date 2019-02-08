@@ -4,60 +4,60 @@ class LoginUtilities
 {		
 	public function __construct() {}
 	
-	public function authenticate_login($username, $password, $mdb_control)
+	public function authenticate_login($membername, $password, $mdb_control)
 	{		
 		// find in the database
-		$user = null;
-		$user_control = $mdb_control->getController("users");
-		$user = $user_control->get_by_login($username, $password);
-		return $user;
+		$member = null;
+		$member_control = $mdb_control->getController("member");
+		$member = $member_control->get_by_login($membername, $password);
+		return $member;
 	}	
 	
 	
-	public function get_member($user_id, $member_type, $mdb_control)
+	public function get_user($member_id, $member_type, $mdb_control)
 	{		
 		// find in the database
-		$member_array = array();
-		$member = null;
+		$user_array = array();
+		$user = null;
 		$control = $mdb_control->getController($member_type);
-		$member_array = $control->getByAttribute("user_id", $user_id);
+		$user_array = $control->getByAttribute("member_id", $member_id);
 		
-		if(!is_null($member_array) && count($member_array) > 0) 
+		if(!is_null($user_array) && count($user_array) > 0) 
 		{
-			$member = $member_array[0];
+			$user = $user_array[0];
 		}
 		
-		return $member;
+		return $user;
 	}
 	
 	
-	public function update_last_login($user, $mdb_control)
+	public function update_last_login($member, $mdb_control)
 	{
 		$success = false;
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
 		$login_time = date($format, time());
-		$user_control = $mdb_control->getController("users");
-		$success = $user_control->update_attribute($user, "last_login", $login_time);
+		$member_control = $mdb_control->getController("member");
+		$success = $member_control->update_attribute($member, "last_login", $login_time);
 		
 		return $success;
 	}
 
 	
-	public function update_last_logout($user_id, $mdb_control)
+	public function update_last_logout($member_id, $mdb_control)
 	{
 		$success = false;
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
 		$logout_time = date($format, time());	
-		$user_control = $mdb_control->getController("users");
-		$users = array();
-		$users = $user_control->getByAttribute("user_id", $user_id);
+		$member_control = $mdb_control->getController("member");
+		$member = array();
+		$member = $member_control->getByAttribute("member_id", $member_id);
 		
-		if(count($users) > 0)
+		if(count($member) > 0)
 		{
-			$user = $users[0];
-			$success = $user_control->update_attribute($user, "last_logoff", $logout_time);
+			$member = $member[0];
+			$success = $member_control->update_attribute($member, "last_logoff", $logout_time);
 		}
 		
 		return $success;

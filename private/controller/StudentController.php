@@ -4,13 +4,11 @@
 class StudentController extends DatabaseController
 {
 	
-	public function __construct() {}
-	//Student ($user_id, $first_name, $last_name, $school_name, $email)
-
-	public function initialize()
+	public function __construct() 
 	{
 		$this->tableName = "student";
 	}
+	//Student ($member_id, $first_name, $last_name, $school_name, $email)
 
 
 	protected function getData($db_result, &$dataArray, $db_connection)
@@ -20,7 +18,7 @@ class StudentController extends DatabaseController
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$student = new Student();
-				$student->initialize($row['user_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				$student->initialize($row['member_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $student;
 			}
@@ -37,28 +35,28 @@ class StudentController extends DatabaseController
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$user_id = $student->get_user_id();	
+		$member_id = $student->get_member_id();	
 		
 		switch ($attribute)
 		{
-			case 'user_id':
+			case 'member_id':
 				return false;
 				break;
 			case 'first_name':
 				$student->set_first_name($value);	
-				$query = "update student set first_name = '$value' where user_id = '$user_id'";
+				$query = "update student set first_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_name':
 				$student->set_last_name($value);	
-				$query = "update student set last_name = '$value' where user_id = '$user_id'";
+				$query = "update student set last_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'school_name':
 				$student->set_school_name($value);	
-				$query = "update student set school_name = '$value' where user_id = '$user_id'";
+				$query = "update student set school_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'email':
 				$student->set_email($value);	
-				$query = "update student set email = '$value' where user_id = '$user_id'";
+				$query = "update student set email = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -79,15 +77,15 @@ class StudentController extends DatabaseController
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$user_id = $student->get_user_id();
+		$member_id = $student->get_member_id();
 		$first = $student->get_first_name();
 		$last = $student->get_last_name();
 		$school = $student->get_school_name();
 		$email = $student->get_email();
 		
 	
-		$query = "insert into student (user_id, first_name, last_name, school_name, email) 
-				values('$user_id', '$first', '$last', '$school', '$email')";
+		$query = "insert into student (member_id, first_name, last_name, school_name, email) 
+				values('$member_id', '$first', '$last', '$school', '$email')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -106,9 +104,9 @@ class StudentController extends DatabaseController
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$user_id = $student->get_user_id();
+		$member_id = $student->get_member_id();
 		
-		$query = "delete from student where user_id = $user_id";
+		$query = "delete from student where member_id = $member_id";
 		
 		if(!$result)
 		{
