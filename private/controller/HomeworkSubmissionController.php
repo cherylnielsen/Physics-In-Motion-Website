@@ -9,18 +9,20 @@ class HomeworkSubmissionController extends DatabaseController {
 	{
 		$this->tableName = "homework_submission";
 	}
-	//($assignment_id, $student_id, $date_submitted, $points_earned, $is_graded, $total_time)
+	//($assignment_id, $student_id, $date_submitted, $points_earned, $was_graded, $total_time)
 	
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$submission = new Homework_Submission();
 				$submission->initialize($row['assignment_id'], $row['student_id'], $row['date_submitted'],
-							$row['points_earned'], $row['is_graded'], $row['total_time']);
+							$row['points_earned'], $row['was_graded'], $row['total_time']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $submission;
 			}
@@ -29,6 +31,8 @@ class HomeworkSubmissionController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 	
 
@@ -41,11 +45,11 @@ class HomeworkSubmissionController extends DatabaseController {
 		$student_id = $submission->get_member_id();
 		$date_submitted = $submission->get_date_submitted();
 		$points_earned = $submission->get_points_earned();
-		$is_graded = $submission->get_is_graded();
+		$was_graded = $submission->get_was_graded();
 		$total_time = $submission->get_total_time();
 		
-		$query = "insert into homework_submission (assignment_id, student_id, date_submitted, points_earned, is_graded, total_time) 
-				values('$assignment_id', '$student_id', '$date_submitted', '$points_earned', '$is_graded', '$total_time')";
+		$query = "insert into homework_submission (assignment_id, student_id, date_submitted, points_earned, was_graded, total_time) 
+				values('$assignment_id', '$student_id', '$date_submitted', '$points_earned', '$was_graded', '$total_time')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -62,8 +66,8 @@ class HomeworkSubmissionController extends DatabaseController {
 	
 
 	// updates the given attribute with the new value in the database and in the homework_submission object
-	//($assignment_id, $student_id, $date_submitted, $points_earned, $is_graded, $total_time)
-	public function update_attribute(&$homework_submission, $attribute, $value)
+	//($assignment_id, $student_id, $date_submitted, $points_earned, $was_graded, $total_time)
+	public function updateAttribute(&$homework_submission, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
@@ -86,9 +90,9 @@ class HomeworkSubmissionController extends DatabaseController {
 				$query = "update homework_submission set points_earned = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
-			case 'is_graded':
-				$homework_submission->set_is_graded($value);	
-				$query = "update homework_submission set is_graded = '$value' 
+			case 'was_graded':
+				$homework_submission->set_was_graded($value);	
+				$query = "update homework_submission set was_graded = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'total_time':

@@ -12,8 +12,10 @@ class QuoteController extends DatabaseController {
 	//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
 
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -29,6 +31,8 @@ class QuoteController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 	
 
@@ -45,7 +49,7 @@ class QuoteController extends DatabaseController {
 		
 		$query = 'select * from quote where (month_posted = MONTH(NOW())) AND (year_posted = YEAR(NOW()))';
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray, $db_connection);
+		$dataArray = $this->getData($result, $db_connection);
 		mysqli_free_result($result);
 		mysqli_close($db_connection);
 			
@@ -93,7 +97,7 @@ class QuoteController extends DatabaseController {
 	
 
 	// updates the given attribute with the new value in the database and in the quote object
-	public function update_attribute(&$quote, $attribute, $value)
+	public function updateAttribute(&$quote, $attribute, $value)
 	{
 		//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
 		$db_connection = $this->get_db_connection();

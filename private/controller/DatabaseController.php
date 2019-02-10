@@ -12,7 +12,7 @@ abstract class DatabaseController
 		(The object type in the dataArray depends on the actual controller used,
 		because the controller determines whitch database table is queried.)
 	***/
-	abstract protected function getData($db_result, &$dataArray, $db_connection);
+	abstract protected function getData($db_result, $db_connection);
 	
 	
 	/***
@@ -31,12 +31,12 @@ abstract class DatabaseController
 	/***
 	Updates the attribute with the new value in both the database and in the data object
 	to ensure that they are both the same.
-	Input: $data_object = the data object that needs updating in the database.
+	Input/Output: $data_object = the data object that needs updating in the database.
 	Input: $attribute = the attribute that needs to be updated for that object.
 	Input: $value = the new value to be set for that attribute.
 	Output: $success = true if the attribute was able to be updated in the database.
 	***/
-	abstract public function update_attribute(&$data_object, $attribute, $value);
+	abstract public function updateAttribute(&$data_object, $attribute, $value);
 		
 	
 	/*** 
@@ -78,7 +78,7 @@ abstract class DatabaseController
 		
 		$query = "select * from $table where $attribute = '$value'";
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray, $db_connection);	
+		$dataArray = $this->getData($result, $db_connection);	
 				
 		mysqli_close($db_connection);
 		
@@ -100,7 +100,7 @@ abstract class DatabaseController
 		
 		$query = "select * from $table where ($attribute1 = '$value1') AND ($attribute2 = '$value2')";
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray, $db_connection);	
+		$dataArray = $this->getData($result, $db_connection);	
 
 		mysqli_close($db_connection);	
 		
@@ -121,7 +121,7 @@ abstract class DatabaseController
 		
 		$query = "select * from $table";		
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray, $db_connection);
+		$dataArray = $this->getData($result, $db_connection);
 		mysqli_close($db_connection);
 		
 		return $dataArray;

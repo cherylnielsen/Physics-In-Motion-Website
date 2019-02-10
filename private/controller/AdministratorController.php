@@ -12,8 +12,10 @@ class AdministratorController extends DatabaseController {
 	//Administrator ($member_id, $first_name, $last_name, $admin_type, $email)
 
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -28,11 +30,13 @@ class AdministratorController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}	
+		
+		return $dataArray;
 	}
 	
 
 	// updates the given attribute with the new value in the database and in the administrator object
-	public function update_attribute(&$administrator, $attribute, $value)
+	public function updateAttribute(&$administrator, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

@@ -11,8 +11,10 @@ class NoticeAttachmentController extends DatabaseController {
 	//($notice_attachment_id, $notice_id, $attachment)
 	
 	
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -27,6 +29,8 @@ class NoticeAttachmentController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}	
+		
+		return $dataArray;
 	}
 	
 	
@@ -65,7 +69,7 @@ class NoticeAttachmentController extends DatabaseController {
 	
 	// updates the given attribute with the new value in the database and in the notice_attachment object
 	// ($notice_attachment_id, $notice_id, $attachment)
-	public function update_attribute(&$notice_attachment, $attribute, $value)
+	public function updateAttribute(&$notice_attachment, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

@@ -179,7 +179,7 @@ class Member_Display_Summaries
 		$points_earned = $submission->get_points_earned();
 		$total_time = $submission->get_total_time();
 		
-		$is_graded = $submission->get_is_graded();
+		$is_graded = $submission->get_was_graded();
 		//answer = test ? true : false;
 		$graded = $is_graded ? "Yes" : "No";
 		

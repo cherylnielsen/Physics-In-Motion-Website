@@ -12,8 +12,10 @@ class AssignmentController extends DatabaseController {
 	//($assignment_id, $section_id, $lab_id, $date_assigned, $date_due, $points_possible, $notes)
 
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -29,6 +31,8 @@ class AssignmentController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 	
 
@@ -70,7 +74,7 @@ class AssignmentController extends DatabaseController {
 
 	// updates the given attribute with the new value in the database and in the assignment object
 	//($assignment_id, $section_id, $lab_id, $tag, $date_assigned, $date_due, $points_possible, $notes)
-	public function update_attribute(&$assignment, $attribute, $value)
+	public function updateAttribute(&$assignment, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
