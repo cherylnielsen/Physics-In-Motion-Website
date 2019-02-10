@@ -12,8 +12,10 @@ class LabRatingController extends DatabaseController {
 	//($rating_id, $lab_id, $member_id, $date_posted, $rating, $comments)
 	
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($result)
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -28,7 +30,9 @@ class LabRatingController extends DatabaseController {
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}		
+		}	
+			
+		return $dataArray;
 	}
 	
 	
@@ -67,7 +71,7 @@ class LabRatingController extends DatabaseController {
 
 	// updates the given attribute with the new value in the database and in the lab_rating object
 	//($rating_id, $lab_id, $member_id, $date_posted, $rating, $comments)
-	public function update_attribute(&$lab_rating, $attribute, $value)
+	public function updateAttribute(&$lab_rating, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

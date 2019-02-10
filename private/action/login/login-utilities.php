@@ -38,7 +38,7 @@ class LoginUtilities
 		$format = date("Y-m-d H:i:s");
 		$login_time = date($format, time());
 		$member_control = $mdb_control->getController("member");
-		$success = $member_control->update_attribute($member, "last_login", $login_time);
+		$success = $member_control->updateAttribute($member, "last_login", $login_time);
 		
 		return $success;
 	}
@@ -57,7 +57,7 @@ class LoginUtilities
 		if(count($member) > 0)
 		{
 			$member = $member[0];
-			$success = $member_control->update_attribute($member, "last_logoff", $logout_time);
+			$success = $member_control->updateAttribute($member, "last_logoff", $logout_time);
 		}
 		
 		return $success;

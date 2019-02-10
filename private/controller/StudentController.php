@@ -11,8 +11,10 @@ class StudentController extends DatabaseController
 	//Student ($member_id, $first_name, $last_name, $school_name, $email)
 
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -27,11 +29,13 @@ class StudentController extends DatabaseController
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 
 
 	// updates the given attribute with the new value in the database and in the student object
-	public function update_attribute(&$student, $attribute, $value)
+	public function updateAttribute(&$student, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

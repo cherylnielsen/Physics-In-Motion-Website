@@ -12,8 +12,10 @@ class SectionStudentController extends DatabaseController {
 	//($section_id, $student_id)
 	
 	
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -28,6 +30,8 @@ class SectionStudentController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 
 
@@ -57,7 +61,7 @@ class SectionStudentController extends DatabaseController {
 	
 	// No update is available, because neither student id or professor id is unique.
 	// Use delete and save new instead if a change is needed.
-	public function update_attribute(&$section_student, $attribute, $value)
+	public function updateAttribute(&$section_student, $attribute, $value)
 	{
 		return false;		
 	}

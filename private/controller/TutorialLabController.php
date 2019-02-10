@@ -13,8 +13,10 @@ class TutorialLabController extends DatabaseController {
 	// $key_equations, $description, $instructions, $date_first_available)
 
 	
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -30,6 +32,8 @@ class TutorialLabController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}	
+		
+		return $dataArray;
 	}	
 
 
@@ -78,7 +82,7 @@ class TutorialLabController extends DatabaseController {
 	// updates the given attribute with the new value in the database and in the tutorial_lab object
 	//($lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
 	// $key_equations, $description, $instructions, $date_first_available)
-	public function update_attribute(&$tutorial_lab, $attribute, $value)
+	public function updateAttribute(&$tutorial_lab, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

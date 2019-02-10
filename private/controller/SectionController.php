@@ -12,8 +12,10 @@ class SectionController extends DatabaseController {
 	//($section_id, $professor_id, $section_name, $start_date, $end_date)
 	
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -29,6 +31,8 @@ class SectionController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 
 
@@ -68,7 +72,7 @@ class SectionController extends DatabaseController {
 	
 	// updates the given attribute with the new value in the database and in the section object
 	//($section_id, $section_name, $start_date, $end_date)
-	public function update_attribute(&$section, $attribute, $value)
+	public function updateAttribute(&$section, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

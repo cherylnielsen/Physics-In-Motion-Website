@@ -11,8 +11,10 @@ class NoticeController extends DatabaseController {
 	//($notice_id, $from_member_id, $to_section_id, $date_sent, $notice_subject, $notice_text)
 	
 	
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -28,6 +30,8 @@ class NoticeController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}	
+		
+		return $dataArray;
 	}
 	
 	
@@ -67,7 +71,7 @@ class NoticeController extends DatabaseController {
 	
 	// updates the given attribute with the new value in the database and in the notice object
 	//($notice_id, $to_member_id, $from_member_id, $date_sent, $notice_subject, $notice_text)
-	public function update_attribute(&$notice, $attribute, $value)
+	public function updateAttribute(&$notice, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

@@ -12,8 +12,10 @@ class HomeworkController extends DatabaseController {
 	//($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
 
 
-	protected function getData($db_result, &$lab_dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -22,13 +24,15 @@ class HomeworkController extends DatabaseController {
 				$homework->initialize($row['assignment_id'], $row['student_id'], $row['lab_summary'], $row['lab_data'], 
 							$row['graphs'], $row['math'], $row['hints'], $row['chat_session']);
 				// pushes each object onto the end of the array
-				$lab_dataArray[] = $homework;
+				$dataArray[] = $homework;
 			}		
 		}
 		else
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 	
 	
@@ -66,7 +70,7 @@ class HomeworkController extends DatabaseController {
 	
 	// updates the given attribute with the new value in the database and in the homework object
 	//($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
-	public function update_attribute(&$homework, $attribute, $value)
+	public function updateAttribute(&$homework, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

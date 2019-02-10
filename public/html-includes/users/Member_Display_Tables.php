@@ -211,7 +211,7 @@ class Member_Display_Tables
 				$date_submitted = $submission_list[$i]->get_date_submitted();
 				$date_submitted = $this->format_date_time($date_submitted);
 				$points_earned = $submission_list[$i]->get_points_earned();
-				$is_graded = $submission_list[$i]->get_is_graded();
+				$is_graded = $submission_list[$i]->get_was_graded();
 				//answer = test ? true : false;
 				$graded = $is_graded ? "Yes" : "No";
 				$total_time = $submission_list[$i]->get_total_time();

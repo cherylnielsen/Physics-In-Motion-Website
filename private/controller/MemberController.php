@@ -11,8 +11,10 @@ class MemberController extends DatabaseController {
 	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff)
 
 
-	protected function getData($db_result, &$dataArray, $db_connection)
+	protected function getData($db_result, $db_connection)
 	{
+		$dataArray = array();
+		
 		if($db_result)
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
@@ -28,6 +30,8 @@ class MemberController extends DatabaseController {
 		{
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}		
+		
+		return $dataArray;
 	}
 
 
@@ -39,7 +43,7 @@ class MemberController extends DatabaseController {
 		
 		$query = "select * from member where member_name = '$member_name'"; 
 		$result = mysqli_query($db_connection, $query);
-		$this->getData($result, $dataArray, $db_connection);
+		$dataArray = $this->getData($result, $db_connection);
 		mysqli_close($db_connection);
 		$num = count($dataArray);
 		
@@ -63,7 +67,7 @@ class MemberController extends DatabaseController {
 
 	// updates the given attribute with the new value in the database and in the member object
 	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff)
-	public function update_attribute(&$member, $attribute, $value)
+	public function updateAttribute(&$member, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;

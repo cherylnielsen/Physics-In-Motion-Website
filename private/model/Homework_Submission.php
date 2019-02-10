@@ -6,19 +6,19 @@ class Homework_Submission {
 	private $student_id;		// key part 2
 	private $date_submitted;
 	private $points_earned;
-	private $is_graded;
+	private $was_graded;
 	private $total_time;
 	
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned, $is_graded, $total_time)
+	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned, $was_graded, $total_time)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->student_id = $student_id;
 		$this->date_submitted = $date_submitted;
 		$this->points_earned = $points_earned;
 		$this->total_time = $total_time;
-		$this->set_is_graded($is_graded);
+		$this->set_was_graded($was_graded);
 		
 	}
 	
@@ -73,14 +73,14 @@ class Homework_Submission {
 		$this->total_time = $total_time;
 	}
 	
-	public function get_is_graded()
+	public function get_was_graded()
 	{
-		return $this->is_graded;
+		return $this->was_graded;
 	}
 
-	public function set_is_graded($is_graded)
+	public function set_was_graded($was_graded)
 	{
-		$this->is_graded = $is_graded;
+		$this->was_graded = $was_graded;
 	}
 	
 	
