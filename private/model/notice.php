@@ -23,6 +23,7 @@ class Notice {
 		$this->notice_attachment_array = array();
 	}
 	
+	
 	public function get_notice_id()
 	{
 		return $this->notice_id;

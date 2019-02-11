@@ -4,10 +4,7 @@
 class MemberController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "member";
-	}
+	public function __construct() {}
 	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff)
 
 
@@ -40,8 +37,9 @@ class MemberController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$member = new Member();	
 		$dataArray = array();	
+		$table = $this->getTableName();
 		
-		$query = "select * from member where member_name = '$member_name'"; 
+		$query = "select * from $table where member_name = '$member_name'"; 
 		$result = mysqli_query($db_connection, $query);
 		$dataArray = $this->getData($result, $db_connection);
 		mysqli_close($db_connection);
@@ -73,6 +71,7 @@ class MemberController extends DatabaseController {
 		$success = true;
 		$member_id = $member->get_member_id();	
 		$query = null;
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -81,27 +80,27 @@ class MemberController extends DatabaseController {
 				break;
 			case 'member_type':
 				$member->set_member_type($value);	
-				$query = "update member set member_type = '$value' where member_id = '$member_id'";
+				$query = "update $table set member_type = '$value' where member_id = '$member_id'";
 				break;
 			case 'member_name':
 				$member->set_member_name($value);	
-				$query = "update member set member_name = '$value' where member_id = '$member_id'";
+				$query = "update $table set member_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'member_password':
 				$member->set_member_password($value);	
-				$query = "update member set member_password = '$value' where member_id = '$member_id'";
+				$query = "update $table set member_password = '$value' where member_id = '$member_id'";
 				break;
 			case 'date_registered':
 				$member->set_date_registered($value);	
-				$query = "update member set date_registered = '$value' where member_id = '$member_id'";
+				$query = "update $table set date_registered = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_login':
 				$member->set_last_login($value);	
-				$query = "update member set last_login = '$value' where member_id = '$member_id'";
+				$query = "update $table set last_login = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_logoff':	
 				$member->set_last_logoff($value);	
-				$query = "update member set last_logoff = '$value' where member_id = '$member_id'";
+				$query = "update $table set last_logoff = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -126,10 +125,11 @@ class MemberController extends DatabaseController {
 		$member_type = $member->get_member_type();
 		$password = $member->get_member_password();
 		$date = $member->get_date_registered();
+		$table = $this->getTableName();
 		
 		$success = true;
 		// The member_id will be auto-generated.
-		$query = "insert into member (member_name, member_type, member_password, date_registered) 
+		$query = "insert into $table (member_name, member_type, member_password, date_registered) 
 				values('$name', '$member_type', '$password', '$date')";
 		
 		$result = mysqli_query($db_connection, $query);			
@@ -151,13 +151,14 @@ class MemberController extends DatabaseController {
 	}
 	
 
-	public function delete_from_database($member)
+	public function deleteFromDatabase($member)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$member_id = $member->get_member_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from member where member_id = $member_id";
+		$query = "delete from $table where member_id = $member_id";
 		
 		if(!$result)
 		{

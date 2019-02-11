@@ -5,10 +5,7 @@
 class SectionController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "section";
-	}
+	public function __construct(){}
 	//($section_id, $professor_id, $section_name, $start_date, $end_date)
 	
 
@@ -45,9 +42,10 @@ class SectionController extends DatabaseController {
 		$professor_id = $section->get_professor_id();
 		$text = $section->get_start_date();
 		$end_date = $section->get_end_date();
+		$table = $this->getTableName();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into section (section_name, professor_id, start_date, end_date) 
+		$query = "insert into $table (section_name, professor_id, start_date, end_date) 
 				values('$section_name', '$professor_id', '$text', '$end_date')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -77,6 +75,7 @@ class SectionController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$section_id = $section->get_section_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -85,19 +84,19 @@ class SectionController extends DatabaseController {
 				break;
 			case 'section_name':
 				$section->set_section_name($value);	
-				$query = "update section set section_name = '$value' where section_id = '$section_id'";
+				$query = "update $table set section_name = '$value' where section_id = '$section_id'";
 				break;
 			case 'professor_id':
 				$section->set_professor_id($value);	
-				$query = "update section set professor_id = '$value' where section_id = '$section_id'";
+				$query = "update $table set professor_id = '$value' where section_id = '$section_id'";
 				break;
 			case 'start_date':
 				$section->set_start_date($value);	
-				$query = "update section set start_date = '$value' where section_id = '$section_id'";
+				$query = "update $table set start_date = '$value' where section_id = '$section_id'";
 				break;
 			case 'end_date':
 				$section->set_end_date($value);	
-				$query = "update section set end_date = '$value' where section_id = '$section_id'";
+				$query = "update $table set end_date = '$value' where section_id = '$section_id'";
 				break;
 		}
 		
@@ -114,13 +113,14 @@ class SectionController extends DatabaseController {
 	}
  
 
-	public function delete_from_database($section)
+	public function deleteFromDatabase($section)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$section_id = $section->get_section_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from section where section_id = $section_id";
+		$query = "delete from $table where section_id = $section_id";
 		
 		if(!$result)
 		{

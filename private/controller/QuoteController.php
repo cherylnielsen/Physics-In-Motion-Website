@@ -5,10 +5,7 @@
 class QuoteController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "quote";
-	}
+	public function __construct() {}
 	//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
 
 
@@ -46,8 +43,9 @@ class QuoteController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$dataArray = array();
 		$quote = new Quote();
+		$table = $this->getTableName();
 		
-		$query = 'select * from quote where (month_posted = MONTH(NOW())) AND (year_posted = YEAR(NOW()))';
+		$query = "select * from $table where (month_posted = MONTH(NOW())) AND (year_posted = YEAR(NOW()))";
 		$result = mysqli_query($db_connection, $query);
 		$dataArray = $this->getData($result, $db_connection);
 		mysqli_free_result($result);
@@ -71,9 +69,10 @@ class QuoteController extends DatabaseController {
 		$text = $quote->get_quote_text();
 		$month_posted = $quote->get_month_posted();
 		$year_posted = $quote->get_year_posted();
+		$table = $this->getTableName();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into quote (author, quote_text, month_posted, year_posted) 
+		$query = "insert into $table (author, quote_text, month_posted, year_posted) 
 				values('$author', '$text', '$month_posted', '$year_posted')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -103,6 +102,7 @@ class QuoteController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$quote_id = $quote->get_quote_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -111,19 +111,19 @@ class QuoteController extends DatabaseController {
 				break;
 			case 'author':
 				$quote->set_author($value);	
-				$query = "update quote set author = '$value' where quote_id = '$quote_id'";
+				$query = "update $table set author = '$value' where quote_id = '$quote_id'";
 				break;
 			case 'quote_text':
 				$quote->set_quote_text($value);	
-				$query = "update quote set quote_text = '$value' where quote_id = '$quote_id'";
+				$query = "update $table set quote_text = '$value' where quote_id = '$quote_id'";
 				break;
 			case 'month_posted':
 				$quote->set_month_posted($value);	
-				$query = "update quote set month_posted = '$value' where quote_id = '$quote_id'";
+				$query = "update $table set month_posted = '$value' where quote_id = '$quote_id'";
 				break;
 			case 'year_posted':
 				$quote->set_year_posted($value);	
-				$query = "update quote set year_posted = '$value' where quote_id = '$quote_id'";
+				$query = "update $table set year_posted = '$value' where quote_id = '$quote_id'";
 				break;
 		}
 		
@@ -140,13 +140,14 @@ class QuoteController extends DatabaseController {
 	}
 
 
-	public function delete_from_database($quote)
+	public function deleteFromDatabase($quote)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$quote_id = $quote->get_quote_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from quote where quote_id = $quote_id";
+		$query = "delete from $table where quote_id = $quote_id";
 		
 		if(!$result)
 		{

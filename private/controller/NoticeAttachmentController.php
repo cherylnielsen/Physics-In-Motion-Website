@@ -4,10 +4,7 @@
 class NoticeAttachmentController extends DatabaseController {
 
   	
-	public function __construct() 
-	{
-		$this->tableName = "notice";
-	}
+	public function __construct() {}
 	//($notice_attachment_id, $notice_id, $attachment)
 	
 	
@@ -42,9 +39,10 @@ class NoticeAttachmentController extends DatabaseController {
 		$notice_id = $notice_attachment->get_notice_id();
 		$notice_subject = $notice_attachment->get_notice_subject();
 		$notice_text = $notice_attachment->get_notice_text();
+		$table = $this->getTableName();
 		
 		// The notice_attachment_id will be auto-generated.
-		$query = "insert into notice_attachment (notice_id, attachment) 
+		$query = "insert into $table (notice_id, attachment) 
 				values('$notice_id', '$attachment')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -74,6 +72,7 @@ class NoticeAttachmentController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -82,11 +81,11 @@ class NoticeAttachmentController extends DatabaseController {
 				break;
 			case 'notice_id':
 				$notice_attachment->set_notice_id($value);	
-				$query = "update notice_attachment set notice_id = '$value' where notice_attachment_id = '$notice_attachment_id'";
+				$query = "update $table set notice_id = '$value' where notice_attachment_id = '$notice_attachment_id'";
 				break;
 			case 'attachment':
 				$notice_attachment->set_attachment($value);	
-				$query = "update notice_attachment set attachment = '$value' where notice_attachment_id = '$notice_attachment_id'";
+				$query = "update $table set attachment = '$value' where notice_attachment_id = '$notice_attachment_id'";
 				break;
 		}
 		
@@ -103,13 +102,14 @@ class NoticeAttachmentController extends DatabaseController {
 	}
 
 	
-	public function delete_from_database($notice_attachment)
+	public function deleteFromDatabase($notice_attachment)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from notice_attachment where notice_attachment_id = $notice_attachment_id";
+		$query = "delete from $table where notice_attachment_id = $notice_attachment_id";
 		
 		if(!$result)
 		{
