@@ -2,7 +2,8 @@
 
 abstract class DatabaseController
 {
-	protected $tableName; 	
+	private $tableName; 	
+	private $dataKey;
 	
 	/***
 	Protected helper function.
@@ -50,7 +51,7 @@ abstract class DatabaseController
 	Input: $data_object = the data object to be removed from the database.
 	Output: $success = true if the object was removed.
 	***/
-	abstract public function delete_from_database($data_object);
+	abstract public function deleteFromDatabase($data_object);
 	
 	
 	/***
@@ -136,6 +137,29 @@ abstract class DatabaseController
 		return $this->tableName;
 	}
 
+	/***
+	Used to set the name of the database table used by that particular controller.
+	**/
+	public function setTableName($tableName)
+	{
+		$this->tableName = $tableName;
+	}
+	
+	/***
+	Used to set the name of a key attribute for that database table.
+	**/
+	public function setDataKey($dataKey)
+	{
+		$this->dataKey = $dataKey;
+	}
+	
+	/***
+	Used to get the name of a key attribute for that database table.
+	**/
+	public function getDataKey()
+	{
+		return $this->dataKey;
+	}
 	
 	
 }

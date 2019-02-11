@@ -5,10 +5,7 @@
 class LabRatingController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "lab_rating";
-	}
+	public function __construct() {}
 	//($rating_id, $lab_id, $member_id, $date_posted, $rating, $comments)
 	
 
@@ -45,9 +42,10 @@ class LabRatingController extends DatabaseController {
 		$member_id = $rating->get_member_id();
 		$rating = $rating->get_rating();
 		$comments = $rating->get_comments();
+		$table = $this->getTableName();
 		
 		// The rating_id will be auto-generated.
-		$query = "insert into lab_rating (lab_id, member_id, date_posted, rating, comments) 
+		$query = "insert into $table (lab_id, member_id, date_posted, rating, comments) 
 				values('$lab_id', '$member_id', 'now()', '$rating', '$comments')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -76,6 +74,7 @@ class LabRatingController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$rating_id = $lab_rating->get_rating_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -86,15 +85,15 @@ class LabRatingController extends DatabaseController {
 				break;
 			case 'date_posted':
 				$lab_rating->set_date_posted($value);	
-				$query = "update lab_rating set date_posted = '$value' where rating_id = '$rating_id'";
+				$query = "update $table set date_posted = '$value' where rating_id = '$rating_id'";
 				break;
 			case 'rating':
 				$lab_rating->set_rating($value);	
-				$query = "update lab_rating set rating = '$value' where rating_id = '$rating_id'";
+				$query = "update $table set rating = '$value' where rating_id = '$rating_id'";
 				break;
 			case 'comments':
 				$lab_rating->set_comments($value);	
-				$query = "update lab_rating set comments = '$value' where rating_id = '$rating_id'";
+				$query = "update $table set comments = '$value' where rating_id = '$rating_id'";
 				break;
 		}
 		
@@ -111,13 +110,14 @@ class LabRatingController extends DatabaseController {
 	}
 
 	
-	public function delete_from_database($lab_rating)
+	public function deleteFromDatabase($lab_rating)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$rating_id = $lab_rating->get_rating_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from lab_rating where rating_id = $rating_id";
+		$query = "delete from $table where rating_id = $rating_id";
 		
 		if(!$result)
 		{

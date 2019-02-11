@@ -5,10 +5,7 @@
 class TutorialLabController extends DatabaseController {
 	
 	
-	public function __construct() 
-	{
-		$this->tableName = "tutorial_lab";
-	}
+	public function __construct() {}
 	//($lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
 	// $key_equations, $description, $instructions, $date_first_available)
 
@@ -52,6 +49,7 @@ class TutorialLabController extends DatabaseController {
 		$description = $tutorial_lab->get_description();
 		$instructions = $tutorial_lab->get_instructions();
 		$date_first_available = $tutorial_lab->get_date_first_available();
+		$table = $this->getTableName();
 		
 		// The id will be auto-generated
 		$query = "insert into tutorial_lab (lab_name, web_link, lab_status, introduction, prerequisites, 
@@ -87,6 +85,7 @@ class TutorialLabController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$lab_id = $tutorial_lab->get_lab_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -95,43 +94,43 @@ class TutorialLabController extends DatabaseController {
 				break;
 			case 'lab_name':
 				$tutorial_lab->set_lab_name($value);	
-				$query = "update tutorial_lab set lab_name = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set lab_name = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'web_link':
 				$tutorial_lab->set_web_link($value);	
-				$query = "update tutorial_lab set web_link = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set web_link = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'lab_status':
 				$tutorial_lab->set_lab_status($value);	
-				$query = "update tutorial_lab set lab_status = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set lab_status = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'introduction':
 				$tutorial_lab->set_introduction($value);	
-				$query = "update tutorial_lab set introduction = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set introduction = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'prerequisites':
 				$tutorial_lab->set_prerequisites($value);	
-				$query = "update tutorial_lab set prerequisites = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set prerequisites = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'key_topics':
 				$tutorial_lab->set_key_topics($value);	
-				$query = "update tutorial_lab set key_topics = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set key_topics = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'key_equations':
 				$tutorial_lab->set_key_equations($value);	
-				$query = "update tutorial_lab set key_equations = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set key_equations = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'description':
 				$tutorial_lab->set_description($value);	
-				$query = "update tutorial_lab set description = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set description = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'instructions':
 				$tutorial_lab->set_instructions($value);	
-				$query = "update tutorial_lab set instructions = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set instructions = '$value' where lab_id = '$lab_id'";
 				break;
 			case 'date_first_available':
 				$tutorial_lab->set_date_first_available($value);	
-				$query = "update tutorial_lab set date_first_available = '$value' where lab_id = '$lab_id'";
+				$query = "update $table set date_first_available = '$value' where lab_id = '$lab_id'";
 				break;
 		}
 		
@@ -148,13 +147,14 @@ class TutorialLabController extends DatabaseController {
 	}
 
 
-	public function delete_from_database($tutorial_lab)
+	public function deleteFromDatabase($tutorial_lab)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$lab_id = $tutorial_lab->get_lab_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from tutorial_lab where lab_id = $lab_id";
+		$query = "delete from $table where lab_id = $lab_id";
 		
 		if(!$result)
 		{

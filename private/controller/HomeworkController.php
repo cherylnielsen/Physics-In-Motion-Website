@@ -5,10 +5,7 @@
 class HomeworkController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "homework";
-	}
+	public function __construct(){}
 	//($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
 
 
@@ -50,8 +47,8 @@ class HomeworkController extends DatabaseController {
 		$hints = $homework->get_hints(); 
 		$chat_session = $homework->get_chat_session();
 		
-		
-		$query = "insert into homework (assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session) 
+		$table = $this->getTableName();
+		$query = "insert into $table (assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session) 
 		values ('$assignment_id', '$student_id', '$lab_summary', '$lab_data', '$graphs', '$math', '$hints', '$chat_session')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -76,6 +73,7 @@ class HomeworkController extends DatabaseController {
 		$success = true;
 		$assignment_id = $homework->get_assignment_id();	
 		$student_id = $homework->get_member_id();
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -85,32 +83,32 @@ class HomeworkController extends DatabaseController {
 				break;
 			case 'lab_summary':
 				$homework->set_lab_summary($value);	
-				$query = "update homework set lab_summary = '$value' 
+				$query = "update $table set lab_summary = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'lab_data':
 				$homework->set_lab_data($value);	
-				$query = "update homework set lab_data = '$value' 
+				$query = "update $table set lab_data = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'graphs':
 				$homework->set_graphs($value);	
-				$query = "update homework set graphs = '$value' 
+				$query = "update $table set graphs = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'math':
 				$homework->set_math($value);	
-				$query = "update homework set math = '$value' 
+				$query = "update $table set math = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'hints':
 				$homework->set_hints($value);	
-				$query = "update homework set hints = '$value' 
+				$query = "update $table set hints = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'chat_session':
 				$homework->set_chat_session($value);	
-				$query = "update homework set chat_session = '$value' 
+				$query = "update $table set chat_session = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 		}
@@ -128,14 +126,15 @@ class HomeworkController extends DatabaseController {
 	}
 
 	
-	public function delete_from_database($homework)
+	public function deleteFromDatabase($homework)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$student_id = $homework->get_member_id();
 		$assignment_id = $homework->get_assignment_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from homework where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
+		$query = "delete from $table where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 		
 		if(!$result)
 		{

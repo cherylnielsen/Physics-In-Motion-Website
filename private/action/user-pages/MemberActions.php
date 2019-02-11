@@ -1,6 +1,6 @@
 <?php
 
-class User_Actions
+class MemberActions
 {
 	public function __construct() {}
 	

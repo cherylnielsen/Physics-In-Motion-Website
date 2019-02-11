@@ -35,12 +35,20 @@ require_once('controller/TutorialLabController.php');
 require_once('controller/MemberController.php');
 
 
+/***
+Creates the desired type of database controller
+***/
 class DatabaseControllerFactory
 {
 	
 	public function __construct() {}
 	
-	
+	/***
+	Creates the desired type of database controller
+	Input: $data_type = the name of the type of database controller that is needed,
+						and this is the same as the name of the database table to be accessed
+	Output: $controller = the new database controller
+	***/
 	public function getController($data_type)
 	{
 		$controller = null;
@@ -91,6 +99,11 @@ class DatabaseControllerFactory
 			case "section_student" :
 				$controller = new SectionStudentController();
 				break;
+		}
+		
+		if(isset($controller))
+		{
+			$controller->setTableName($data_type);
 		}
 		
 		return $controller;

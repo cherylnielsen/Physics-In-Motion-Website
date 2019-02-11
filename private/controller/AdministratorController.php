@@ -5,10 +5,7 @@
 class AdministratorController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "administrator";
-	}
+	public function __construct() {}
 	//Administrator ($member_id, $first_name, $last_name, $admin_type, $email)
 
 
@@ -41,6 +38,7 @@ class AdministratorController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$member_id = $administrator->get_member_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -49,19 +47,19 @@ class AdministratorController extends DatabaseController {
 				break;
 			case 'first_name':
 				$administrator->set_first_name($value);	
-				$query = "update administrator set first_name = '$value' where member_id = '$member_id'";
+				$query = "update $table set first_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_name':
 				$administrator->set_last_name($value);	
-				$query = "update administrator set last_name = '$value' where member_id = '$member_id'";
+				$query = "update $table set last_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'admin_type':
 				$administrator->set_admin_type($value);	
-				$query = "update administrator set admin_type = '$value' where member_id = '$member_id'";
+				$query = "update $table set admin_type = '$value' where member_id = '$member_id'";
 				break;
 			case 'email':
 				$administrator->set_email($value);	
-				$query = "update administrator set email = '$value' where member_id = '$member_id'";
+				$query = "update $table set email = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -87,9 +85,9 @@ class AdministratorController extends DatabaseController {
 		$last = $administrator->get_last_name();
 		$school = $administrator->get_school_name();
 		$email = $administrator->get_email();
+		$table = $this->getTableName();
 		
-		
-		$query = "insert into administrator (member_id, first_name, last_name, admin_type, email) 
+		$query = "insert into $table (member_id, first_name, last_name, admin_type, email) 
 				values('$member_id', '$first', '$last', '$school', '$email')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -105,13 +103,14 @@ class AdministratorController extends DatabaseController {
 	}
 
 	
-	public function delete_from_database($administrator)
+	public function deleteFromDatabase($administrator)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$member_id = $administrator->get_admin_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from administrator where member_id = $member_id";
+		$query = "delete from $table where member_id = $member_id";
 		
 		if(!$result)
 		{

@@ -5,10 +5,7 @@
 class HomeworkSubmissionController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "homework_submission";
-	}
+	public function __construct(){}
 	//($assignment_id, $student_id, $date_submitted, $points_earned, $was_graded, $total_time)
 	
 
@@ -48,7 +45,8 @@ class HomeworkSubmissionController extends DatabaseController {
 		$was_graded = $submission->get_was_graded();
 		$total_time = $submission->get_total_time();
 		
-		$query = "insert into homework_submission (assignment_id, student_id, date_submitted, points_earned, was_graded, total_time) 
+		$table = $this->getTableName();
+		$query = "insert into $table (assignment_id, student_id, date_submitted, points_earned, was_graded, total_time) 
 				values('$assignment_id', '$student_id', '$date_submitted', '$points_earned', '$was_graded', '$total_time')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -73,6 +71,7 @@ class HomeworkSubmissionController extends DatabaseController {
 		$success = true;
 		$student_id = $homework_submission->get_member_id();	
 		$assignment_id = $homework_submission->get_assignment_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -82,22 +81,22 @@ class HomeworkSubmissionController extends DatabaseController {
 				break;
 			case 'date_submitted':
 				$homework_submission->set_date_submitted($value);	
-				$query = "update homework_submission set date_submitted = '$value' 
+				$query = "update $table set date_submitted = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'points_earned':
 				$homework_submission->set_points_earned($value);	
-				$query = "update homework_submission set points_earned = '$value' 
+				$query = "update $table set points_earned = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'was_graded':
 				$homework_submission->set_was_graded($value);	
-				$query = "update homework_submission set was_graded = '$value' 
+				$query = "update $table set was_graded = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 			case 'total_time':
 				$homework_submission->set_total_time($value);	
-				$query = "update homework_submission set total_time = '$value' 
+				$query = "update $table set total_time = '$value' 
 							where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 				break;
 		}
@@ -115,14 +114,15 @@ class HomeworkSubmissionController extends DatabaseController {
 	}
 
 	
-	public function delete_from_database($homework_submission)
+	public function deleteFromDatabase($homework_submission)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$student_id = $homework_submission->get_member_id();
 		$assignment_id = $homework_submission->get_assignment_id();
 		
-		$query = "delete from homework_submission where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
+		$table = $this->getTableName();
+		$query = "delete from $table where (student_id = '$student_id') AND (assignment_id = '$assignment_id')";
 		
 		if(!$result)
 		{

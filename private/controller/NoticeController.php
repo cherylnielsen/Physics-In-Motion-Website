@@ -4,10 +4,7 @@
 class NoticeController extends DatabaseController {
 
   	
-	public function __construct() 
-	{
-		$this->tableName = "notice";
-	}
+	public function __construct() {}
 	//($notice_id, $from_member_id, $to_section_id, $date_sent, $notice_subject, $notice_text)
 	
 	
@@ -44,9 +41,10 @@ class NoticeController extends DatabaseController {
 		$to_section_id = $notice->get_to_section_id();
 		$notice_subject = $notice->get_notice_subject();
 		$notice_text = $notice->get_notice_text();
+		$table = $this->getTableName();
 		
 		// The notice_id will be auto-generated.
-		$query = "insert into notice (from_member_id, to_section_id, date_sent, notice_subject, notice_text) 
+		$query = "insert into $table (from_member_id, to_section_id, date_sent, notice_subject, notice_text) 
 				values('$from_member_id', '$to_section_id, ', 'now()', '$notice_subject', '$notice_text')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -76,6 +74,7 @@ class NoticeController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$notice_id = $notice->get_notice_id();	
+		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
@@ -84,23 +83,23 @@ class NoticeController extends DatabaseController {
 				break;
 			case 'from_member_id':
 				$notice->set_from_member_id($value);	
-				$query = "update notice set from_member_id = '$value' where notice_id = '$notice_id'";
+				$query = "update $table set from_member_id = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'to_section_id':
 				$notice->set_to_section_id($value);	
-				$query = "update notice set to_section_id = '$value' where notice_id = '$notice_id'";
+				$query = "update $table set to_section_id = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'date_sent':
 				$notice->set_date_sent($value);	
-				$query = "update notice set date_sent = '$value' where notice_id = '$notice_id'";
+				$query = "update $table set date_sent = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'notice_subject':
 				$notice->set_notice_subject($value);	
-				$query = "update notice set notice_subject = '$value' where notice_id = '$notice_id'";
+				$query = "update $table set notice_subject = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'notice_text':
 				$notice->set_notice_text($value);	
-				$query = "update notice set notice_text = '$value' where notice_id = '$notice_id'";
+				$query = "update $table set notice_text = '$value' where notice_id = '$notice_id'";
 				break;
 		}
 		
@@ -117,13 +116,14 @@ class NoticeController extends DatabaseController {
 	}
 
 	
-	public function delete_from_database($notice)
+	public function deleteFromDatabase($notice)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$notice_id = $notice->get_notice_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from notice where notice_id = $notice_id";
+		$query = "delete from $table where notice_id = $notice_id";
 		
 		if(!$result)
 		{

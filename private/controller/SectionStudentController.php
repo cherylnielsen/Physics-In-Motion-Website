@@ -5,10 +5,7 @@
 class SectionStudentController extends DatabaseController {
 
 	
-	public function __construct() 
-	{
-		$this->tableName = "section_student";
-	}
+	public function __construct() {}
 	//($section_id, $student_id)
 	
 	
@@ -42,8 +39,9 @@ class SectionStudentController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
+		$table = $this->getTableName();
 		
-		$query = "insert into section_student (section_id, student_id) 
+		$query = "insert into $table (section_id, student_id) 
 				values('$section_id', '$student_id')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -67,14 +65,15 @@ class SectionStudentController extends DatabaseController {
 	}
 
 
-	public function delete_from_database($section_student)
+	public function deleteFromDatabase($section_student)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
+		$table = $this->getTableName();
 		
-		$query = "delete from section_student where (section_id = $section_id) AND (student_id = $student_id)";
+		$query = "delete from $table where (section_id = $section_id) AND (student_id = $student_id)";
 		
 		if(!$result)
 		{
