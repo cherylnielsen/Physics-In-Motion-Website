@@ -21,7 +21,7 @@
 
 <section class="main-content">
 	<?php include('../private/Member_Data_Utilities.php'); ?>
-	<?php include('../private/action/user-pages/user-actions.php'); ?>
+	<?php include('../private/action/user-pages/MemberActions.php'); ?>
 	<?php include('html-includes/users/Member_Display_Tables.php'); ?>
 	<?php include('html-includes/users/Member_Display_Summaries.php'); ?>
 	<?php include('html-includes/users/student-page-main-content.php'); ?>
