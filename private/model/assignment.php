@@ -8,9 +8,7 @@ class Assignment {
 	private $date_assigned;
 	private $date_due;
 	private $points_possible;		
-	private $notes;
-	private $has_notes;
-	
+	private $notes;	
 	
 	public function __construct() {}
 
@@ -23,7 +21,6 @@ class Assignment {
 		$this->date_due = $date_due;	
 		$this->points_possible = $points_possible;
 		$this->notes = $notes;
-		$this->has_notes = isset($notes) ? "Yes" : "No";
 	}
 	
 	public function get_assignment_id()
@@ -94,16 +91,6 @@ class Assignment {
 	public function set_notes($notes)
 	{
 		$this->notes = $notes;
-	}
-	
-	public function get_has_notes()
-	{
-		return $this->has_notes;
-	}
-
-	public function set_has_notes($has_notes)
-	{
-		$this->has_notes = $has_notes;
 	}
 	
 }

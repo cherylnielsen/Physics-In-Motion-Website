@@ -5,7 +5,7 @@ class Tutorial_Lab {
 	// lab_status allowed value set is: New, Updated, Available, Development, Discontinued
 	// default value is: "Development"
 	private $lab_status;
-	private $lab_status_value_set;
+	private $allowed_lab_status_values = array('New', 'Updated', 'Available', 'Development', 'Discontinued');	
 	
 	private $lab_id;	// key
 	private $lab_name;	// unique
@@ -23,15 +23,12 @@ class Tutorial_Lab {
 	
 	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $introduction)
 	{
-		// lab_status allowed value set
-		$this->lab_status_value_set = array('New', 'Updated', 'Available', 'Development', 'Discontinued');	
-		// Make sure value is an allowed value, otherwise use the default value.
-		$this->set_lab_status($lab_status);
-				
 		$this->lab_id = $lab_id;
 		$this->lab_name = $lab_name;
 		$this->web_link = $web_link;
 		$this->introduction = $introduction;
+		// Make sure value is an allowed value, otherwise use the default value.
+		$this->set_lab_status($lab_status);
 	}
 	
 	
@@ -73,7 +70,7 @@ class Tutorial_Lab {
 	public function set_lab_status($lab_status)
 	{
 		// Make sure value is an allowed value, otherwise use the default value of "Development".
-		if(in_array($lab_status, $this->lab_status_value_set))
+		if(in_array($lab_status, $this->allowed_lab_status_values))
 		{
 			$this->lab_status = $lab_status;
 		}
@@ -81,6 +78,11 @@ class Tutorial_Lab {
 		{
 			$this->lab_status = "Development";
 		}
+	}
+	
+	public function get_allowed_lab_status_values()
+	{
+		return $this->allowed_lab_status_values;
 	}
 	
 	public function get_introduction()

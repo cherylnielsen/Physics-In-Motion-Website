@@ -5,7 +5,6 @@
 abstract class DatabaseController
 {
 	private $tableName; 	
-	private $dataKey;
 	
 	/***
 	Protected helper function.
@@ -147,21 +146,6 @@ abstract class DatabaseController
 		$this->tableName = $tableName;
 	}
 	
-	/***
-	Used to set the name of a key attribute for that database table.
-	**/
-	public function setDataKey($dataKey)
-	{
-		$this->dataKey = $dataKey;
-	}
-	
-	/***
-	Used to get the name of a key attribute for that database table.
-	**/
-	public function getDataKey()
-	{
-		return $this->dataKey;
-	}
 	
 	
 }

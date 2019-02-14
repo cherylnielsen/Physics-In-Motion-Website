@@ -1,54 +1,15 @@
 <?php
 
-class Administrator {
+class Administrator extends Member {
 	
-	private $member_id;	// key
-	private $first_name;
-	private $last_name;
 	private $admin_type;
-	private $email; 
+	private $allowed_admin_types = array('General');
 	
-	public function __construct() {}
+	public function __construct() {}	
 	
-
-	public function initialize($member_id, $first_name, $last_name, $admin_type, $email)
+	public function get_allowed_admin_types()
 	{
-		$this->member_id = $member_id;
-		$this->first_name = $first_name;
-		$this->last_name = $last_name;
-		$this->admin_type = $admin_type;
-		$this->email = $email;
-	}
-	
-
-	public function get_member_id()
-	{
-		return $this->member_id;
-	}
-
-	public function set_member_id($member_id)
-	{
-		$this->member_id = $member_id;
-	}
-	
-	public function get_first_name()
-	{
-		return $this->first_name;
-	}
-
-	public function set_first_name($first_name)
-	{
-		$this->first_name = $first_name;
-	}
-	
-	public function get_last_name()
-	{
-		return $this->last_name;
-	}
-
-	public function set_last_name($last_name)
-	{
-		$this->last_name = $last_name;
+		return $this->allowed_admin_types;
 	}
 	
 	public function get_admin_type()
@@ -58,18 +19,17 @@ class Administrator {
 
 	public function set_admin_type($admin_type)
 	{
-		$this->admin_type = $admin_type;
+		// Make sure value is an allowed value, otherwise use the default value of "General".
+		if(in_array($admin_type, $this->allowed_admin_types))
+		{
+			$this->admin_type = $admin_type;
+		}
+		else
+		{
+			$this->admin_type = "General";
+		}
 	}
 	
-	public function get_email()
-	{
-		return $this->email;
-	}
-
-	public function set_email($email)
-	{
-		$this->email = $email;
-	}
 }
 
 ?>

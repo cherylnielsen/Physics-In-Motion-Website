@@ -1,38 +1,43 @@
 <?php
 
 // The models for each of the database tables
-require_once('model/Administrator.php');
-require_once('model/Assignment.php');
-require_once('model/Homework.php');
-require_once('model/Homework_Submission.php');
-require_once('model/Lab_Rating.php');
-require_once('model/Notice.php');
-require_once('model/Notice_Attachment.php');
-require_once('model/Professor.php');
-require_once('model/Quote.php');
-require_once('model/Section.php');
-require_once('model/Section_Student.php');
-require_once('model/Student.php');
-require_once('model/Tutorial_Lab.php');
+require_once('model/Security_Question.php');
 require_once('model/Member.php');
-
+require_once('model/Administrator.php');
+require_once('model/Professor.php');
+require_once('model/Student.php');
+require_once('model/Assignment.php');
+require_once('model/Homework_Submission.php');
+require_once('model/Homework.php');
+require_once('model/Notice_Received.php');
+require_once('model/Notice_Attachment.php');
+require_once('model/Notice.php');
+require_once('model/Quote.php');
+require_once('model/Section_Student.php');
+require_once('model/Section.php');
+require_once('model/Section_Rating.php');
+require_once('model/Tutorial_Lab.php');
+require_once('model/Tutorial_Lab_Rating.php');
 
 // The controllers for each of the database tables
 require_once('controller/DatabaseController.php');
-require_once('controller/AdministratorController.php');
-require_once('controller/AssignmentController.php');
-require_once('controller/HomeworkController.php');
-require_once('controller/HomeworkSubmissionController.php');
-require_once('controller/LabRatingController.php');
-require_once('controller/NoticeController.php');
-require_once('controller/NoticeAttachmentController.php');
-require_once('controller/ProfessorController.php');
-require_once('controller/QuoteController.php');
-require_once('controller/SectionController.php');
-require_once('controller/SectionStudentController.php');
-require_once('controller/StudentController.php');
-require_once('controller/TutorialLabController.php');
+require_once('controller/SecurityQuestionController.php');
 require_once('controller/MemberController.php');
+require_once('controller/AdministratorController.php');
+require_once('controller/ProfessorController.php');
+require_once('controller/StudentController.php');
+require_once('controller/AssignmentController.php');
+require_once('controller/HomeworkSubmissionController.php');
+require_once('controller/HomeworkController.php');
+require_once('controller/NoticeReceivedController.php');
+require_once('controller/NoticeAttachmentController.php');
+require_once('controller/NoticeController.php');
+require_once('controller/QuoteController.php');
+require_once('controller/SectionStudentController.php');
+require_once('controller/SectionController.php');
+require_once('controller/SectionRatingController.php');
+require_once('controller/TutorialLabController.php');
+require_once('controller/TutorialLabRatingController.php');
 
 
 /***
@@ -60,6 +65,9 @@ class DatabaseControllerFactory
 			case "member" :
 				$controller = new MemberController();
 				break;
+			case "security_question" :
+				$controller = new SecurityQuestionController();
+				break;
 			case "student" :
 				$controller = new StudentController();
 				break;
@@ -81,10 +89,13 @@ class DatabaseControllerFactory
 			case "notice_attachment" :
 				$controller = new NoticeAttachmentController();
 				break;
+			case "notice_received" :
+				$controller = new NoticeReceivedController();
+				break;
 			case "tutorial_lab" :
 				$controller  = new TutorialLabController();
 				break;
-			case "lab_rating" :
+			case "tutorial_lab_rating" :
 				$controller = new LabRatingController();
 				break;
 			case "quote" :
@@ -95,6 +106,9 @@ class DatabaseControllerFactory
 				break;
 			case "section" :
 				$controller = new SectionController();
+				break;
+			case "section_rating" :
+				$controller = new SectionRatingController();
 				break;
 			case "section_student" :
 				$controller = new SectionStudentController();
