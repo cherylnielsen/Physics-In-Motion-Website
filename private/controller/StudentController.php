@@ -5,7 +5,7 @@ class StudentController extends DatabaseController
 {
 	
 	public function __construct() {}
-	//Student ($member_id, $first_name, $last_name, $school_name, $email)
+	//Student ($member_id, $school_name)
 
 
 	protected function getData($db_result, $db_connection)
@@ -17,7 +17,8 @@ class StudentController extends DatabaseController
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$student = new Student();
-				$student->initialize($row['member_id'], $row['first_name'], $row['last_name'], $row['school_name'], $row['email']);
+				$student->set_member_id($row['member_id']);
+				$student->set_school_name($row['school_name']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $student;
 			}
@@ -44,21 +45,9 @@ class StudentController extends DatabaseController
 			case 'member_id':
 				return false;
 				break;
-			case 'first_name':
-				$student->set_first_name($value);	
-				$query = "update $table set first_name = '$value' where member_id = '$member_id'";
-				break;
-			case 'last_name':
-				$student->set_last_name($value);	
-				$query = "update $table set last_name = '$value' where member_id = '$member_id'";
-				break;
 			case 'school_name':
 				$student->set_school_name($value);	
 				$query = "update $table set school_name = '$value' where member_id = '$member_id'";
-				break;
-			case 'email':
-				$student->set_email($value);	
-				$query = "update $table set email = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -80,14 +69,10 @@ class StudentController extends DatabaseController
 		$db_connection = $this->get_db_connection();
 		$success = true;
 		$member_id = $student->get_member_id();
-		$first = $student->get_first_name();
-		$last = $student->get_last_name();
 		$school = $student->get_school_name();
-		$email = $student->get_email();
 		$table = $this->getTableName();
 	
-		$query = "insert into $table (member_id, first_name, last_name, school_name, email) 
-				values('$member_id', '$first', '$last', '$school', '$email')";
+		$query = "insert into $table (member_id, school_name) values('$member_id', '$school')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)

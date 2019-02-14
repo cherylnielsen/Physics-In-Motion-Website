@@ -6,7 +6,7 @@ class AdministratorController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//Administrator ($member_id, $first_name, $last_name, $admin_type, $email)
+	//Administrator ($member_id, $admin_type)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,8 @@ class AdministratorController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
-				$admin->initialize($row['member_id'], $row['first_name'], $row['last_name'], $row['admin_type'], $row['email']);
+				$admin->set_member_id($row['member_id']);
+				$admin->set_admin_type($row['admin_type']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $admin;
 			}		
@@ -45,21 +46,9 @@ class AdministratorController extends DatabaseController {
 			case 'member_id':
 				return false;
 				break;
-			case 'first_name':
-				$administrator->set_first_name($value);	
-				$query = "update $table set first_name = '$value' where member_id = '$member_id'";
-				break;
-			case 'last_name':
-				$administrator->set_last_name($value);	
-				$query = "update $table set last_name = '$value' where member_id = '$member_id'";
-				break;
 			case 'admin_type':
 				$administrator->set_admin_type($value);	
 				$query = "update $table set admin_type = '$value' where member_id = '$member_id'";
-				break;
-			case 'email':
-				$administrator->set_email($value);	
-				$query = "update $table set email = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -81,14 +70,10 @@ class AdministratorController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$member_id = $member_id->get_member_id();
-		$first = $administrator->get_first_name();
-		$last = $administrator->get_last_name();
 		$school = $administrator->get_school_name();
-		$email = $administrator->get_email();
 		$table = $this->getTableName();
 		
-		$query = "insert into $table (member_id, first_name, last_name, admin_type, email) 
-				values('$member_id', '$first', '$last', '$school', '$email')";
+		$query = "insert into $table (member_id, admin_type) values('$member_id', '$admin_type')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)

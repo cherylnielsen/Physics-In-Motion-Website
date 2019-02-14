@@ -88,7 +88,7 @@ class HomeworkController extends DatabaseController {
 				return false;
 				break;
 			case 'student_id':
-				$homework->set_student_id$value);	
+				$homework->set_student_id($value);	
 				$query = "update $table set student_id = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'assignment_id':

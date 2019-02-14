@@ -36,7 +36,7 @@ class Member {
 		$this->set_last_name($last_name);
 		$this->set_email($email);	
 		$this->set_registration_complete($registration_complete);
-		$this->$security_array = array();
+		$this->security_array = array();
 	}
 	
 	public function get_member_id()

@@ -16,7 +16,7 @@ class Homework {
 	public function __construct() {}
 	
 	public function initialize($assignment_id, $student_id, $lab_summary, $lab_data, 
-								$graphs, $math, $hints, $chat_session, $homework_submition)
+								$graphs, $math, $hints, $chat_session)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->student_id = $student_id;
@@ -26,7 +26,7 @@ class Homework {
 		$this->math = $math;
 		$this->hints = $hints;
 		$this->chat_session = $chat_session;
-		$this->homework_submition = $homework_submition;
+		$this->homework_submition = new Homework_Submission();
 	}
 	
 	
