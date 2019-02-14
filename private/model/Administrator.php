@@ -5,8 +5,6 @@ class Administrator extends Member {
 	private $admin_type;
 	private $allowed_admin_types = array('General');
 	
-	public function __construct() {}	
-	
 	public function get_allowed_admin_types()
 	{
 		return $this->allowed_admin_types;

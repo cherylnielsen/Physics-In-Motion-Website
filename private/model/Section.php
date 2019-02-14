@@ -7,7 +7,8 @@ class Section {
 	private $professor_id;
 	private $start_date;
 	private $end_date;
-	private $section_student_array;
+	// the list of section_students
+	private $student_array;
 	
 	
 	public function __construct() {}
@@ -20,7 +21,7 @@ class Section {
 		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		$this->section_student_array = array();		
+		$this->student_array = array();		
 	}
 	
 	
@@ -76,12 +77,12 @@ class Section {
 	
 	public function get_student_array()
 	{
-		return $this->section_student_array;
+		return $this->student_array;
 	}
 
-	public function set_student_array($section_student_array)
+	public function set_student_array($student_array)
 	{
-		$this->section_student_array = $section_student_array;
+		$this->student_array = $student_array;
 	}
 	
 	

@@ -6,7 +6,7 @@ class SectionStudentController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//($section_id, $student_id)
+	//($section_id, $student_id, $dropped_section, $reviewed_section)
 	
 	
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,7 @@ class SectionStudentController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section_student = new Section_Student();
-				$section_student->initialize($row['section_id'], $row['student_id']);
+				$section_student->initialize($row['section_id'], $row['student_id'], $row['dropped_section'], $row['reviewed_section']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student;
 			}
@@ -39,10 +39,12 @@ class SectionStudentController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
+		$dropped_section = $section_student->get_dropped_section();
+		$reviewed_section = $section_student->get_reviewed_section();
 		$table = $this->getTableName();
 		
-		$query = "insert into $table (section_id, student_id) 
-				values('$section_id', '$student_id')";
+		$query = "insert into $table (section_id, student_id, dropped_section, reviewed_section) 
+				values('$section_id', '$student_id', '$dropped_section', '$reviewed_section')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -57,11 +59,42 @@ class SectionStudentController extends DatabaseController {
 	}
 	
 	
-	// No update is available, because neither student id or professor id is unique.
-	// Use delete and save new instead if a change is needed.
+	// updates the given attribute with the new value in the database and in the section_student object
+	//($section_id, $student_id, $dropped_section, $reviewed_section)
 	public function updateAttribute(&$section_student, $attribute, $value)
 	{
-		return false;		
+		$db_connection = $this->get_db_connection();
+		$success = true;
+		$section_id = $section->get_section_id();	
+		$student_id = $section_student->get_student_id();
+		$table = $this->getTableName();
+		
+		switch ($attribute)
+		{
+			case 'section_id':
+			case 'student_id':
+				return false;
+				break;
+			case 'dropped_section':
+				$section->set_dropped_section($value);	
+				$query = "update $table set dropped_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
+				break;
+			case 'reviewed_section':
+				$section->set_reviewed_section($value);	
+				$query = "update $table set reviewed_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
+				break;
+		}
+		
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;		
 	}
 
 

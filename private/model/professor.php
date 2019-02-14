@@ -3,10 +3,7 @@
 class Professor extends Member {
 	
 	private $school_name;
-	
-	public function __construct() {}
 
-	
 	public function get_school_name()
 	{
 		return $this->school_name;
@@ -16,8 +13,6 @@ class Professor extends Member {
 	{
 		$this->school_name = $school_name;
 	}
-	
-
 	
 }
 

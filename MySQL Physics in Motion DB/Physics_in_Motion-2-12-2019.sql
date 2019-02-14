@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`member` (
   `member_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_type` SET('Student', 'Professor', 'Administrator', 'Blocked') NOT NULL,
   `member_name` VARCHAR(45) NOT NULL,
-  `member_password` VARCHAR(45) NOT NULL,
+  `member_password` VARCHAR(256) NOT NULL,
   `date_registered` DATETIME NOT NULL,
   `last_login` DATETIME NULL,
   `last_logoff` DATETIME NULL,
@@ -385,10 +385,11 @@ CREATE INDEX `received_member_id_idx` ON `physics_in_motion`.`notice_received` (
 DROP TABLE IF EXISTS `physics_in_motion`.`security_question` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`security_question` (
+  `security_question_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INT UNSIGNED NOT NULL,
   `question` VARCHAR(256) NOT NULL,
   `answer` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`member_id`),
+  PRIMARY KEY (`security_question_id`),
   CONSTRAINT `security_question_member_id`
     FOREIGN KEY (`member_id`)
     REFERENCES `physics_in_motion`.`member` (`member_id`)

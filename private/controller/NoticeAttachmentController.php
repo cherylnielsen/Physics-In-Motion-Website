@@ -37,8 +37,7 @@ class NoticeAttachmentController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$notice_id = $notice_attachment->get_notice_id();
-		$notice_subject = $notice_attachment->get_notice_subject();
-		$notice_text = $notice_attachment->get_notice_text();
+		$attachment = $notice_attachment->get_attachment();
 		$table = $this->getTableName();
 		
 		// The notice_attachment_id will be auto-generated.

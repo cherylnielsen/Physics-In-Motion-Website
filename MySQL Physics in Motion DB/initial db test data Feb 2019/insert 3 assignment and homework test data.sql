@@ -19,7 +19,7 @@ values (1, 1, 101, 2, "the summary for assignment 1", "the data", "the graphs", 
 select * from homework;
 
 /* homework submission */
-insert into homework_submission (homework_id, date_submitted, points_earned, was_graded, total_time)
+insert into homework_submission (homework_id, date_submitted, points_earned, was_graded, hours)
 values (1, "2018-02-03 22:00:00", 20, 1, 3),
 (3, "2018-02-04 12:00:00", 15, 1, 2);
 

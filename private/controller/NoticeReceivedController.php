@@ -1,11 +1,11 @@
 <?php
 
 
-class NoticeAttachmentController extends DatabaseController {
+class NoticeReceivedController extends DatabaseController {
 
   	
 	public function __construct() {}
-	//($notice_attachment_id, $notice_id, $attachment)
+	//($notice_id, $to_member_id, $flag_read, $flag_important)
 	
 	
 	protected function getData($db_result, $db_connection)
@@ -16,10 +16,10 @@ class NoticeAttachmentController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$notice_attachment = new Notice_Attachment();
-				$notice_attachment->initialize($row['notice_attachment_id'], $row['notice_id'], $row['attachment']);
+				$recieved = new Notice_Received();
+				$recieved->initialize($row['notice_id'], $row['to_member_id'], $row['flag_read'], $row['flag_important']);
 				// pushes each object onto the end of the array
-				$dataArray[] = $notice_attachment;	
+				$dataArray[] = $recieved;	
 			}
 		}
 		else
@@ -31,31 +31,24 @@ class NoticeAttachmentController extends DatabaseController {
 	}
 	
 	
-	// The notice_attachment_id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$notice_attachment)
+	public function saveNew(&$notice_received)
 	{
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
-		$notice_id = $notice_attachment->get_notice_id();
-		$notice_subject = $notice_attachment->get_notice_subject();
-		$notice_text = $notice_attachment->get_notice_text();
+		$notice_id = $notice_recieved->get_notice_id();
+		$to_member_id = $notice_recieved->get_to_member_id();
+		$flag_read = $notice_recieved->get_flag_read();
+		$flag_important = $notice_recieved->get_flag_important();
 		$table = $this->getTableName();
 		
-		// The notice_attachment_id will be auto-generated.
-		$query = "insert into $table (notice_id, attachment) 
-				values('$notice_id', '$attachment')";
+		$query = "insert into $table (notice_id, to_member_id, flag_read, flag_important) 
+				values('$notice_id', '$to_member_id', '$flag_read', '$flag_important')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		else
-		{
-			// get the newly generated notice_attachment_id
-			$notice_attachment_id = mysqli_insert_id($db_connection);
-			$notice_attachment->set_notice_attachment_id($notice_attachment_id);
 		}
 
 		mysqli_free_result($result);
@@ -65,27 +58,31 @@ class NoticeAttachmentController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the notice_attachment object
-	// ($notice_attachment_id, $notice_id, $attachment)
-	public function updateAttribute(&$notice_attachment, $attribute, $value)
+	// updates the given attribute with the new value in the database and in the notice_recieved object
+	// ($notice_id, $to_member_id, $flag_read, $flag_important)
+	public function updateAttribute(&$notice_recieved, $attribute, $value)
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();	
+		$notice_id = $notice_recieved->get_notice_id();	
 		$table = $this->getTableName();
 		
 		switch ($attribute)
 		{
-			case 'notice_attachment_id':
+			case 'notice_id':
 				return false;
 				break;
-			case 'notice_id':
-				$notice_attachment->set_notice_id($value);	
-				$query = "update $table set notice_id = '$value' where notice_attachment_id = '$notice_attachment_id'";
+			case 'to_member_id':
+				$notice_recieved->set_to_member_id($value);	
+				$query = "update $table set notice_id = '$value' where notice_id = '$notice_id'";
 				break;
-			case 'attachment':
-				$notice_attachment->set_attachment($value);	
-				$query = "update $table set attachment = '$value' where notice_attachment_id = '$notice_attachment_id'";
+			case 'flag_read':
+				$notice_recieved->set_flag_read($value);	
+				$query = "update $table set flag_read = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'flag_important':
+				$notice_recieved->set_flag_important($value);	
+				$query = "update $table set flag_important = '$value' where notice_id = '$notice_id'";
 				break;
 		}
 		
@@ -106,10 +103,10 @@ class NoticeAttachmentController extends DatabaseController {
 	{
 		$db_connection = $this->get_db_connection();
 		$success = true;
-		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();
+		$notice_id = $notice_attachment->get_notice_id();
 		$table = $this->getTableName();
 		
-		$query = "delete from $table where notice_attachment_id = $notice_attachment_id";
+		$query = "delete from $table where notice_id = $notice_id";
 		
 		if(!$result)
 		{

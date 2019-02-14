@@ -34,6 +34,13 @@ class TutorialLabController extends DatabaseController {
 	}	
 
 
+	public function getAllowedStatusValues()
+	{
+		$lab = new Tutorial_Lab();
+		$status_values = $lab->get_allowed_lab_status_values();
+	}
+	
+	
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$tutorial_lab)
 	{

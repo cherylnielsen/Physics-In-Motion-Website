@@ -2,7 +2,7 @@
 
 
 
-class TutorialLabRatingController extends DatabaseController {
+class SectionRatingController extends DatabaseController {
 
 	
 	public function __construct() {}
@@ -17,7 +17,7 @@ class TutorialLabRatingController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$rating = new Tutorial_Lab_Rating();
+				$rating = new Section_Rating();
 				$rating->initialize($row['rating_id'], $row['lab_id'], $row['member_id'], 
 							$row['date_posted'], $row['rating'], $row['comments'], $row['flag_for_review']);
 				// pushes each object onto the end of the array

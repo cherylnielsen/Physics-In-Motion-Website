@@ -4,7 +4,8 @@
 
 class ProfessorController extends DatabaseController{
 
-
+	
+	
 	public function __construct() {}
 	//Professor ($member_id, $first_name, $last_name, $school_name, $email)
 

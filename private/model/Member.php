@@ -17,12 +17,13 @@ class Member {
 	// array of security questions
 	private $security_array;
 	
+	
 	public function __construct() {}
+	
 
 	public function initialize($member_id, $member_type, $member_name, $member_password, 
 								$date_registered, $last_login, $last_logoff, 
-								$first_name, $last_name, $email, $registration_complete = false,
-								$security_array)
+								$first_name, $last_name, $email, $registration_complete = false)
 	{
 		$this->set_member_id($member_id);
 		$this->set_member_type($member_type);
@@ -36,8 +37,6 @@ class Member {
 		$this->set_email($email);	
 		$this->set_registration_complete($registration_complete);
 		$this->$security_array = array();
-		$this->set_security_array($security_array);
-		
 	}
 	
 	public function get_member_id()
