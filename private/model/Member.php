@@ -7,7 +7,7 @@ class Member {
 	private $last_name;
 	private $email; 
 	private $member_type;
-	private $allowed_member_types = array('Professor', 'Student', 'Administrator', 'Blocked');
+	private $allowed_member_types = array('professor', 'student', 'administrator', 'blocked');
 	private $member_name;
 	private $member_password;
 	private $date_registered;

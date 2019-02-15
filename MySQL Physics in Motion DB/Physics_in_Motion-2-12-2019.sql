@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `physics_in_motion`.`member` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`member` (
   `member_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `member_type` SET('Student', 'Professor', 'Administrator', 'Blocked') NOT NULL,
+  `member_type` SET('student', 'professor', 'administrator', 'blocked') NOT NULL,
   `member_name` VARCHAR(45) NOT NULL,
   `member_password` VARCHAR(256) NOT NULL,
   `date_registered` DATETIME NOT NULL,
@@ -271,8 +271,8 @@ CREATE INDEX `lab_rating_user_id_idx` ON `physics_in_motion`.`tutorial_lab_ratin
 DROP TABLE IF EXISTS `physics_in_motion`.`administrator` ;
 
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator` (
-  `member_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `admin_type` SET('General') NOT NULL DEFAULT 'General',
+  `member_id` INT UNSIGNED NOT NULL,
+  `admin_type` SET('general') NOT NULL DEFAULT 'general',
   PRIMARY KEY (`member_id`),
   CONSTRAINT `admin_user_id`
     FOREIGN KEY (`member_id`)
