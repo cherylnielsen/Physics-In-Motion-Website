@@ -166,7 +166,6 @@ DROP TABLE IF EXISTS `physics_in_motion`.`homework` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
   `homework_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `assignment_id` INT UNSIGNED NOT NULL,
-  `section_id` INT UNSIGNED NOT NULL,
   `student_id` INT UNSIGNED NOT NULL,
   `lab_summary` VARCHAR(256) NULL DEFAULT NULL,
   `lab_data` VARCHAR(256) NULL DEFAULT NULL,
@@ -183,11 +182,6 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
   CONSTRAINT `hmwk_student_id`
     FOREIGN KEY (`student_id`)
     REFERENCES `physics_in_motion`.`student` (`member_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `hmwk_section_id`
-    FOREIGN KEY (`section_id`)
-    REFERENCES `physics_in_motion`.`section` (`section_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

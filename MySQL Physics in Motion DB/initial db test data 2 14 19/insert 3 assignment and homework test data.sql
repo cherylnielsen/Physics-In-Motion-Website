@@ -10,11 +10,11 @@ values (1, 101, 101, "2019-02-01 10:0:0", "2018-02-04 23:59:0", 20, "notes for a
 select * from assignment;
 
 /* student homework */
-insert into homework (homework_id, assignment_id, section_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session)
-values (1, 1, 101, 2, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
-(2, 2, 101, 2, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat"),
-(3, 1, 101, 3, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
-(4, 2, 101, 3, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat");
+insert into homework (homework_id, assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session)
+values (1, 1, 2, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
+(2, 2, 2, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat"),
+(3, 1, 3, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
+(4, 2, 3, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat");
 
 select * from homework;
 

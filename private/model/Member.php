@@ -14,9 +14,6 @@ class Member {
 	private $last_login;
 	private $last_logoff;
 	private $registration_complete;
-	// array of security questions
-	private $security_array;
-	
 	
 	public function __construct() {}
 	
@@ -36,8 +33,8 @@ class Member {
 		$this->set_last_name($last_name);
 		$this->set_email($email);	
 		$this->set_registration_complete($registration_complete);
-		$this->security_array = array();
 	}
+	
 	
 	public function get_member_id()
 	{
@@ -63,7 +60,7 @@ class Member {
 		}
 		else
 		{
-			$this->member_type = "";
+			$this->member_type = "error";
 		}
 	}
 	
@@ -155,16 +152,6 @@ class Member {
 	public function set_registration_complete($registration_complete)
 	{
 		$this->registration_complete = $registration_complete;
-	}
-	
-	public function get_security_array()
-	{
-		return $this->security_array;
-	}
-
-	public function set_security_array($security_array)
-	{
-		$this->security_array = $security_array;
 	}
 	
 	

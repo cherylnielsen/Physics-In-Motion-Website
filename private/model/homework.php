@@ -11,7 +11,7 @@ class Homework {
 	private $math;
 	private $hints;
 	private $chat_session;	
-	private $homework_submition;
+	
 		
 	public function __construct() {}
 	
@@ -26,7 +26,6 @@ class Homework {
 		$this->math = $math;
 		$this->hints = $hints;
 		$this->chat_session = $chat_session;
-		$this->homework_submition = new Homework_Submission();
 	}
 	
 	
@@ -120,16 +119,6 @@ class Homework {
 		$this->chat_session = $chat_session;
 	}
 
-	public function get_homework_submition()
-	{
-		return $this->homework_submition;
-	}
-
-	public function set_homework_submition($homework_submition)
-	{
-		$this->homework_submition = $homework_submition;
-	}
-	
 	
 }
 

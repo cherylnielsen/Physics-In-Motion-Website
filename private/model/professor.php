@@ -1,9 +1,11 @@
 <?php
 
-class Professor extends Member {
+class Professor {
 	
 	private $school_name;
 
+	public function __construct() {}
+	
 	public function get_school_name()
 	{
 		return $this->school_name;

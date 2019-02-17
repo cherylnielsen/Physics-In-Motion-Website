@@ -11,7 +11,7 @@
 	
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
 	
-	<link href="css/summary.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/home-summary.css" rel="stylesheet" type="text/css" media="screen">
 	
 </head>
 <body>

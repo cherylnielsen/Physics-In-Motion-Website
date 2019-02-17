@@ -6,7 +6,7 @@ class HomeworkController extends DatabaseController {
 
 	
 	public function __construct(){}
-	//($homework_id, $assignment_id, $section_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
+	//($homework_id, $assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,7 @@ class HomeworkController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$homework = new Homework();
-				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['section_id'], $row['student_id'], $row['lab_summary'], $row['lab_data'], 
+				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['student_id'], $row['lab_summary'], $row['lab_data'], 
 							$row['graphs'], $row['math'], $row['hints'], $row['chat_session']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $homework;
@@ -39,7 +39,6 @@ class HomeworkController extends DatabaseController {
 		$db_connection = $this->get_db_connection();
 		$sucess = true;
 		$assignment_id = $homework->get_assignment_id();
-		$section_id = $homework->get_section_id();
 		$student_id = $homework->get_member_id(); 
 		$lab_summary = $homework->get_lab_summary(); 
 		$lab_data = $homework->get_lab_data(); 
@@ -49,8 +48,8 @@ class HomeworkController extends DatabaseController {
 		$chat_session = $homework->get_chat_session();
 		
 		$table = $this->getTableName();
-		$query = "insert into $table (assignment_id, section_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session) 
-		values ('$assignment_id', '$section_id', '$student_id', '$lab_summary', 
+		$query = "insert into $table (assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session) 
+		values ('$assignment_id', '$student_id', '$lab_summary', 
 					'$lab_data', '$graphs', '$math', '$hints', '$chat_session')";
 		$result = mysqli_query($db_connection, $query);
 

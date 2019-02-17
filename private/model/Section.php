@@ -7,9 +7,6 @@ class Section {
 	private $professor_id;
 	private $start_date;
 	private $end_date;
-	// the list of section_students
-	private $student_array;
-	
 	
 	public function __construct() {}
 	
@@ -21,7 +18,7 @@ class Section {
 		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		$this->student_array = array();		
+		
 	}
 	
 	
@@ -73,16 +70,6 @@ class Section {
 	public function set_end_date($end_date)
 	{
 		$this->end_date = $end_date;
-	}
-	
-	public function get_student_array()
-	{
-		return $this->student_array;
-	}
-
-	public function set_student_array($student_array)
-	{
-		$this->student_array = $student_array;
 	}
 	
 	

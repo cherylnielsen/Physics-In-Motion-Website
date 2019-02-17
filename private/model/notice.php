@@ -9,8 +9,6 @@ class Notice {
 	private $notice_text;
 	private $sent_high_priority;
 	private $flag_for_review;
-	private $notice_attachment_array;
-	private $notice_received_array;
 	
 	public function __construct() {}
 	
@@ -24,8 +22,6 @@ class Notice {
 		$this->notice_text = $notice_text;
 		$this->sent_high_priority = $sent_high_priority;
 		$this->flag_for_review = $flag_for_review;
-		$this->notice_attachment_array = array();
-		$this->notice_received_array = array();
 	}
 	
 	
@@ -97,26 +93,6 @@ class Notice {
 	public function set_flag_for_review($flag_for_review)
 	{
 		$this->flag_for_review = $flag_for_review;
-	}
-	
-	public function get_attachment_array()
-	{
-		return $this->notice_attachment_array;
-	}
-
-	public function set_attachment_array($notice_attachment_array)
-	{
-		$this->notice_attachment_array = $notice_attachment_array;
-	}
-	
-	public function get_notice_received_array()
-	{
-		return $this->notice_received_array;
-	}
-
-	public function set_notice_received_array($notice_received_array)
-	{
-		$this->notice_received_array = $notice_received_array;
 	}
 	
 	

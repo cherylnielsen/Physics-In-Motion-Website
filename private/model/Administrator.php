@@ -1,9 +1,11 @@
 <?php
 
-class Administrator extends Member {
+class Administrator {
 	
 	private $admin_type;
 	private $allowed_admin_types = array('General');
+	
+	public function __construct() {}
 	
 	public function get_allowed_admin_types()
 	{

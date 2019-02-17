@@ -1,8 +1,10 @@
 <?php
 
-class Student extends Member {
+class Student {
 	
 	private $school_name;
+	
+	public function __construct() {}
 		
 	public function get_school_name()
 	{
