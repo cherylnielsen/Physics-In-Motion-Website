@@ -35,19 +35,21 @@ class Member_Display_Tables
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			//echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>Subject</th><th>Message</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$from_member_id = $notices_received[$i]->get_from_member_id();
-				$to_section_id = $notices_received[$i]->get_to_section_id();
+				//$to_section_id = $notices_received[$i]->get_to_section_id();
 				$date = $notices_received[$i]->get_date_sent();
 				$date = $this->format_date_time($date);
 				$subject = $notices_received[$i]->get_notice_subject();
 				$text = $notices_received[$i]->get_notice_text();
 				$text = substr($text, 0, 30) . ' ... ';
 				
-				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$subject</td><td>$text</td></tr>";
+				//echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
 			}
 		}
 				
@@ -61,19 +63,21 @@ class Member_Display_Tables
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>Subject</th><th>Message</th></tr>";
+			//echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$from_member_id = $notices_received[$i]->get_from_member_id();
-				$to_section_id = $notices_sent[$i]->get_to_section_id();
+				//$to_section_id = $notices_sent[$i]->get_to_section_id();
 				$date = $notices_sent[$i]->get_date_sent();
 				$date = $this->format_date_time($date);
 				$subject = $notices_sent[$i]->get_notice_subject();
 				$text = $notices_sent[$i]->get_notice_text();
 				$text = substr($text, 0, 30) . ' ... ';
 				
-				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$subject</td><td>$text</td></tr>";
+				//echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
 			}
 		}
 		

@@ -2,8 +2,8 @@
 
 class Section_Student {
 	
-	private $section_id;
-	private $student_id;
+	private $section_id;  
+	private $student_id;  
 	private $dropped_section;
 	private $reviewed_section;
 	
@@ -16,6 +16,7 @@ class Section_Student {
 		$this->dropped_section = $dropped_section;
 		$this->reviewed_section = $reviewed_section;
 	}
+
 	
 	public function get_section_id()
 	{

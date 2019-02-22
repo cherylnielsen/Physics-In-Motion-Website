@@ -7,7 +7,7 @@ class ProfessorController extends DatabaseController{
 	
 	
 	public function __construct() {}
-	//Professor ($member_id, $school_name)
+	//Professor ($professor_id, $school_name)
 
 
 	protected function getData($db_result, $db_connection)
@@ -19,7 +19,7 @@ class ProfessorController extends DatabaseController{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$professor = new Professor();
-				$professor->set_member_id($row['member_id']);
+				$professor->set_professor_id($row['professor_id']);
 				$professor->set_school_name($row['school_name']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $professor;
@@ -34,22 +34,22 @@ class ProfessorController extends DatabaseController{
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the professor object
-	public function updateAttribute(&$professor, $attribute, $value)
+	// updates the given key with the new value in the database
+	public function updateAttribute($professor, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
-		$member_id = $professor->get_member_id();	
+		$professor_id = $professor->get_professor_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
-			case 'member_id':
+			case 'professor_id':
 				return false;
 				break;
 			case 'school_name':
-				$professor->set_school_name($value);	
-				$query = "update $table set school_name = '$value' where member_id = '$member_id'";
+				$value = $professor->get_school_name();	
+				$query = "update $table set school_name = '$value' where professor_id = '$professor_id'";
 				break;
 		}
 		
@@ -69,13 +69,13 @@ class ProfessorController extends DatabaseController{
 	
 	public function saveNew(&$professor)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$sucess = true;
-		$member_id = $professor->get_member_id();
+		$professor_id = $professor->get_professor_id();
 		$school = $professor->get_school_name();
 		$table = $this->getTableName();
 		
-		$query = "insert into $table (member_id, school_name) values('$member_id', '$school')";
+		$query = "insert into $table (professor_id, school_name) values('$professor_id', '$school')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -92,12 +92,12 @@ class ProfessorController extends DatabaseController{
 
 	public function deleteFromDatabase($professor)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
-		$member_id = $professor->get_member_id();
+		$professor_id = $professor->get_professor_id();
 		$table = $this->getTableName();
 		
-		$query = "delete from $table where member_id = $member_id";
+		$query = "delete from $table where professor_id = $professor_id";
 		
 		if(!$result)
 		{

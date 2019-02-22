@@ -7,7 +7,7 @@ class Tutorial_Lab {
 	private $lab_status;
 	private $allowed_lab_status_values = array('New', 'Updated', 'Available', 'Development', 'Discontinued');	
 	
-	private $lab_id;	// key
+	private $tutorial_lab_id;	// key
 	private $lab_name;	// unique
 	private $web_link;	// unique
 	private $introduction;
@@ -21,9 +21,9 @@ class Tutorial_Lab {
 	public function __construct() {}
 
 	
-	public function initialize($lab_id, $lab_name, $web_link, $lab_status, $introduction)
+	public function initialize($tutorial_lab_id, $lab_name, $web_link, $lab_status, $introduction)
 	{
-		$this->lab_id = $lab_id;
+		$this->tutorial_lab_id = $tutorial_lab_id;
 		$this->lab_name = $lab_name;
 		$this->web_link = $web_link;
 		$this->introduction = $introduction;
@@ -32,14 +32,14 @@ class Tutorial_Lab {
 	}
 	
 	
-	public function get_lab_id()
+	public function get_tutorial_lab_id()
 	{
-		return $this->lab_id;
+		return $this->tutorial_lab_id;
 	}
 
-	public function set_lab_id($lab_id)
+	public function set_tutorial_lab_id($tutorial_lab_id)
 	{
-		$this->lab_id = $lab_id;
+		$this->tutorial_lab_id = $tutorial_lab_id;
 	}
 	
 	public function get_lab_name()

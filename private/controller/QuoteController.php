@@ -40,7 +40,7 @@ class QuoteController extends DatabaseController {
 	***/
 	public function getQuoteOfTheMonth()
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$dataArray = array();
 		$quote = new Quote();
 		$table = $this->getTableName();
@@ -64,7 +64,7 @@ class QuoteController extends DatabaseController {
 	public function saveNew(&$quote)
 	{
 		$sucess = true;
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$author = $quote->get_author();
 		$text = $quote->get_quote_text();
 		$month_posted = $quote->get_month_posted();
@@ -95,34 +95,34 @@ class QuoteController extends DatabaseController {
 	}
 	
 
-	// updates the given attribute with the new value in the database and in the quote object
-	public function updateAttribute(&$quote, $attribute, $value)
+	// updates the given key with the new value in the database
+	public function updateAttribute($quote, $key)
 	{
 		//Quote ($quote_id, $author, $quote_text, $month_posted, $year_posted)
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$quote_id = $quote->get_quote_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'quote_id':
 				return false;
 				break;
 			case 'author':
-				$quote->set_author($value);	
+				$value = $quote->get_author();	
 				$query = "update $table set author = '$value' where quote_id = '$quote_id'";
 				break;
 			case 'quote_text':
-				$quote->set_quote_text($value);	
+				$value = $quote->get_quote_text();	
 				$query = "update $table set quote_text = '$value' where quote_id = '$quote_id'";
 				break;
 			case 'month_posted':
-				$quote->set_month_posted($value);	
+				$value = $quote->get_month_posted();	
 				$query = "update $table set month_posted = '$value' where quote_id = '$quote_id'";
 				break;
 			case 'year_posted':
-				$quote->set_year_posted($value);	
+				$value = $quote->get_year_posted();	
 				$query = "update $table set year_posted = '$value' where quote_id = '$quote_id'";
 				break;
 		}
@@ -142,7 +142,7 @@ class QuoteController extends DatabaseController {
 
 	public function deleteFromDatabase($quote)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$quote_id = $quote->get_quote_id();
 		$table = $this->getTableName();

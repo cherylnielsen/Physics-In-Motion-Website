@@ -29,10 +29,9 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 		else
 		{
-			$control = $mdb_control->getController("member");
-			$db_con = $control->get_db_connection();
-			$membername = mysqli_real_escape_string($db_con, $membername);
-			$password = mysqli_real_escape_string($db_con, $password);
+			$db_connect = get_db_connection();
+			$membername = mysqli_real_escape_string($db_connect, $membername);
+			$password = mysqli_real_escape_string($db_connect, $password);
 			$member = $login_utility->authenticate_login($membername, $password, $mdb_control);
 			
 			if(is_null($member))

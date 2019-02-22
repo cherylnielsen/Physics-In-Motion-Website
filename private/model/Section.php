@@ -1,5 +1,8 @@
 <?php
 
+require_once('Section_Student.php');
+
+
 class Section {
 	
 	private $section_id;
@@ -18,7 +21,6 @@ class Section {
 		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		
 	}
 	
 	
@@ -71,7 +73,6 @@ class Section {
 	{
 		$this->end_date = $end_date;
 	}
-	
 	
 }
 

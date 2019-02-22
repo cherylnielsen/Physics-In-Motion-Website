@@ -15,6 +15,7 @@ class Notice_Attachment {
 		$this->attachment = $attachment;
 	}
 	
+	
 	public function get_notice_attachment_id()
 	{
 		return $this->notice_attachment_id;

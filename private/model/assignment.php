@@ -23,6 +23,7 @@ class Assignment {
 		$this->notes = $notes;
 	}
 	
+	
 	public function get_assignment_id()
 	{
 		return $this->assignment_id;

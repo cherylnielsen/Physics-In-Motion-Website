@@ -2,8 +2,8 @@
 
 class Homework_Submission {
 	
-	private $homework_id; 	// key
-	private $student_id;		
+	private $homework_submission_id; // key	
+	private $homework_id;		
 	private $date_submitted;
 	private $points_earned;
 	private $was_graded;
@@ -11,10 +11,10 @@ class Homework_Submission {
 	
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned = 0, $was_graded = false, $hours = 0)
+	public function initialize($homework_submission_id, $homework_id, $date_submitted, $points_earned = 0, $was_graded = false, $hours = 0)
 	{
-		$this->assignment_id = $assignment_id;
-		$this->student_id = $student_id;
+		$this->homework_submission_id = $homework_submission_id;
+		$this->homework_id = $homework_id;
 		$this->date_submitted = $date_submitted;
 		$this->points_earned = $points_earned;
 		$this->hours = $hours;
@@ -22,24 +22,24 @@ class Homework_Submission {
 	}
 	
 	
-	public function get_assignment_id()
+	public function get_homework_submission_id()
 	{
-		return $this->assignment_id;
+		return $this->homework_submission_id;
 	}
 
-	public function set_assignment_id($assignment_id)
+	public function set_homework_submission_id($homework_submission_id)
 	{
-		$this->assignment_id = $assignment_id;
+		$this->homework_submission_id = $homework_submission_id;
 	}
 	
-	public function get_student_id()
+	public function get_homework_id()
 	{
-		return $this->student_id;
+		return $this->homework_id;
 	}
 
-	public function set_student_id($student_id)
+	public function set_homework_id($homework_id)
 	{
-		$this->student_id = $student_id;
+		$this->homework_id = $homework_id;
 	}
 	
 	public function get_date_submitted()

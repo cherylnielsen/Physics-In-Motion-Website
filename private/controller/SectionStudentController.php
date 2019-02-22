@@ -36,7 +36,7 @@ class SectionStudentController extends DatabaseController {
 	public function saveNew(&$section_student)
 	{
 		$sucess = true;
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
 		$dropped_section = $section_student->get_dropped_section();
@@ -59,28 +59,28 @@ class SectionStudentController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the section_student object
+	// updates the given key with the new value in the database
 	//($section_id, $student_id, $dropped_section, $reviewed_section)
-	public function updateAttribute(&$section_student, $attribute, $value)
+	public function updateAttribute($section_student, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$section_id = $section->get_section_id();	
 		$student_id = $section_student->get_student_id();
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'section_id':
 			case 'student_id':
 				return false;
 				break;
 			case 'dropped_section':
-				$section->set_dropped_section($value);	
+				$value = $section->get_dropped_section();	
 				$query = "update $table set dropped_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
 				break;
 			case 'reviewed_section':
-				$section->set_reviewed_section($value);	
+				$value = $section->get_reviewed_section();	
 				$query = "update $table set reviewed_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
 				break;
 		}
@@ -100,7 +100,7 @@ class SectionStudentController extends DatabaseController {
 
 	public function deleteFromDatabase($section_student)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();

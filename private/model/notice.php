@@ -1,14 +1,32 @@
 <?php
 
+require_once('NoticeToMember.php');
+require_once('NoticeToSection.php');
+require_once('Notice_Attachment.php');
+
+
 class Notice {
 	
 	private $notice_id; // key 
+	// the member who wrote the notice
 	private $from_member_id;
 	private $date_sent;
 	private $notice_subject;
 	private $notice_text;
+	// flag for high priority can be set when the notice is made
 	private $sent_high_priority;
+	// flag for questionable notice content, can be set by any member
 	private $flag_for_review;
+	
+	// additional information from other database tables
+	
+	// array of section ids that the notice was sent to
+	private $sent_to_sections = array();
+	// array of member ids that the notice was sent to and the flags those members set
+	private $sent_to_members = array();
+	// array of attachments that were sent with the notice
+	private $attachments = array();
+	
 	
 	public function __construct() {}
 	
@@ -95,6 +113,38 @@ class Notice {
 		$this->flag_for_review = $flag_for_review;
 	}
 	
+	public function get_sent_to_sections()
+	{
+		return $this->sent_to_sections;
+	}
+
+	public function set_sent_to_sections($sent_to_sections)
+	{
+		$this->sent_to_sections = array();
+		$this->sent_to_sections = $sent_to_sections;
+	}
+	
+	public function get_sent_to_members()
+	{
+		return $this->sent_to_members;
+	}
+
+	public function set_sent_to_members($sent_to_members)
+	{
+		$this->sent_to_members = array();
+		$this->sent_to_members = $sent_to_members;
+	}
+	
+	public function get_attachments()
+	{
+		return $this->attachments;
+	}
+
+	public function set_attachments($attachments)
+	{
+		$this->attachments = array();
+		$this->attachments = $attachments;
+	}
 	
 }
 

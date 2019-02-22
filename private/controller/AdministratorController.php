@@ -6,7 +6,7 @@ class AdministratorController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//Administrator ($member_id, $admin_type)
+	//Administrator ($administrator_id, $admin_type)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,7 @@ class AdministratorController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$admin = new Administrator();
-				$admin->set_member_id($row['member_id']);
+				$admin->set_administrator_id($row['administrator_id']);
 				$admin->set_admin_type($row['admin_type']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $admin;
@@ -33,22 +33,22 @@ class AdministratorController extends DatabaseController {
 	}
 	
 
-	// updates the given attribute with the new value in the database and in the administrator object
-	public function updateAttribute(&$administrator, $attribute, $value)
+	// updates the given key with the new value in the database
+	public function updateAttribute($administrator, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
-		$member_id = $administrator->get_member_id();	
+		$administrator_id = $administrator->get_administrator_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
-			case 'member_id':
+			case 'administrator_id':
 				return false;
 				break;
 			case 'admin_type':
-				$administrator->set_admin_type($value);	
-				$query = "update $table set admin_type = '$value' where member_id = '$member_id'";
+				$value = $administrator->get_admin_type();	
+				$query = "update $table set admin_type = '$value' where administrator_id = '$administrator_id'";
 				break;
 		}
 		
@@ -67,13 +67,13 @@ class AdministratorController extends DatabaseController {
 	
 	public function saveNew(&$administrator)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$sucess = true;
-		$member_id = $member_id->get_member_id();
+		$administrator_id = $administrator_id->get_administrator_id();
 		$school = $administrator->get_school_name();
 		$table = $this->getTableName();
 		
-		$query = "insert into $table (member_id, admin_type) values('$member_id', '$admin_type')";
+		$query = "insert into $table (administrator_id, admin_type) values('$administrator_id', '$admin_type')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -90,12 +90,12 @@ class AdministratorController extends DatabaseController {
 	
 	public function deleteFromDatabase($administrator)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
-		$member_id = $administrator->get_admin_id();
+		$administrator_id = $administrator->get_administrator_id();
 		$table = $this->getTableName();
 		
-		$query = "delete from $table where member_id = $member_id";
+		$query = "delete from $table where administrator_id = $administrator_id";
 		
 		if(!$result)
 		{

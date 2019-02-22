@@ -36,7 +36,7 @@ class SecurityQuestionController extends DatabaseController {
 	public function saveNew(&$security_question)
 	{
 		$sucess = true;
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$member_id = $security_question->get_member_id();
 		$question = $security_question->get_question();
 		$answer = $security_question->get_answer();
@@ -64,31 +64,31 @@ class SecurityQuestionController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the security_question object
+	// updates the given key with the new value in the database
 	//($security_question_id, $member_id, $question, $answer)
-	public function updateAttribute(&$security_question, $attribute, $value)
+	public function updateAttribute($security_question, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
-		$security_question_id = $member->get_security_question_id();	
+		$security_question_id = $security_question->get_security_question_id();	
 		$query = null;
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'security_question_id':
 				return false;
 				break;
 			case 'member_id':
-				$member->set_member_id($value);	
+				$value = $security_question->get_member_id();	
 				$query = "update $table set member_id = '$value' where security_question_id = '$security_question_id'";
 				break;
 			case 'question':
-				$member->set_question($value);	
+				$value = $security_question->get_question();	
 				$query = "update $table set question = '$value' where security_question_id = '$security_question_id'";
 				break;
 			case 'answer':
-				$member->set_answer($value);	
+				$value = $security_question->get_answer();	
 				$query = "update $table set answer = '$value' where security_question_id = '$security_question_id'";
 				break;
 		}
@@ -108,7 +108,7 @@ class SecurityQuestionController extends DatabaseController {
 
 	public function deleteFromDatabase($security_question)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$security_question_id = $security_question->get_security_question_id();
 		$member_id = $security_question->get_member_id();

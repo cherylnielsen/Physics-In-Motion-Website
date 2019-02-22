@@ -19,6 +19,7 @@ class Quote {
 		$this->year_posted = $year_posted;
 	}
 	
+	
 	public function get_quote_id()
 	{
 		return $this->quote_id;

@@ -2,7 +2,7 @@
 
 class Section_Rating {
 	
-	private $rating_id; // key
+	private $section_rating_id; // key
 	private $section_id;
 	private $member_id;
 	private $date_posted;
@@ -12,10 +12,10 @@ class Section_Rating {
 	
 	public function __construct() {}
 	
-	public function initialize($rating_id, $section_id, $member_id, $date_posted, 
+	public function initialize($section_rating_id, $section_id, $member_id, $date_posted, 
 					$rating, $comments, $flag_for_review = false)
 	{
-		$this->rating_id = $rating_id;
+		$this->section_rating_id = $section_rating_id;
 		$this->section_id = $section_id;
 		$this->member_id = $member_id;
 		$this->date_posted = $date_posted;
@@ -23,14 +23,15 @@ class Section_Rating {
 		$this->comments = $comments;
 	}
 
-	public function get_rating_id()
+	
+	public function get_section_rating_id()
 	{
-		return $this->rating_id;
+		return $this->section_rating_id;
 	}
 
-	public function set_rating_id($rating_id)
+	public function set_section_rating_id($section_rating_id)
 	{
-		$this->rating_id = $rating_id;
+		$this->section_rating_id = $section_rating_id;
 	}
 	
 	public function get_section_id()

@@ -1,9 +1,9 @@
 <?php
 
-class Notice_Received {
+class NoticeToMember {
 	
-	private $notice_id; // key 
-	private $to_member_id;
+	private $notice_id; 
+	private $to_member_id; 
 	private $flag_read;
 	private $flag_important;
 	
@@ -16,8 +16,9 @@ class Notice_Received {
 		$this->flag_read = $flag_read;
 		$this->flag_important = $flag_important;
 	}
+
 	
-	public function get_notice_id()
+	public function get_notice_id() 
 	{
 		return $this->notice_id;
 	}

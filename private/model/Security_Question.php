@@ -17,6 +17,7 @@ class Security_Question {
 		$this->answer = $answer;
 	}
 	
+	
 	public function get_security_question_id()
 	{
 		return $this->security_question_id;

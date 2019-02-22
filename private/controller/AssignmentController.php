@@ -36,7 +36,7 @@ class AssignmentController extends DatabaseController {
 	// The assignment_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$assignment)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$sucess = true;
 		
 		$section_id = $assignment->get_section_id();
@@ -70,43 +70,43 @@ class AssignmentController extends DatabaseController {
 	}
 
 
-	// updates the given attribute with the new value in the database and in the assignment object
+	// updates the given key with the new value in the database 
 	//($assignment_id, $section_id, $lab_id, $tag, $date_assigned, $date_due, $points_possible, $notes)
-	public function updateAttribute(&$assignment, $attribute, $value)
+	public function updateAttribute($assignment, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$assignment_id = $assignment->get_assignment_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'assignment_id':
 			case 'section_id':
 				return false;
 				break;
 			case 'lab_id':
-				$assignment->set_lab_id($value);	
+				$value = $assignment->get_lab_id();	
 				$query = "update $table set lab_id = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'date_assigned':
-				$assignment->set_date_assigned($value);	
+				$value = $assignment->get_date_assigned();	
 				$query = "update $table set date_assigned = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'date_due':
-				$assignment->set_date_due($value);	
+				$value = $assignment->get_date_due();	
 				$query = "update $table set date_due = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'points_possible':
-				$assignment->set_points_possible($value);	
+				$value = $assignment->get_points_possible();	
 				$query = "update $table set points_possible = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'notes':
-				$assignment->set_notes($value);	
+				$value = $assignment->get_notes();	
 				$query = "update $table set notes = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
@@ -127,7 +127,7 @@ class AssignmentController extends DatabaseController {
 	
 	public function deleteFromDatabase($assignment)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$assignment_id = $assignment->get_assignment_id();
 		$table = $this->getTableName();

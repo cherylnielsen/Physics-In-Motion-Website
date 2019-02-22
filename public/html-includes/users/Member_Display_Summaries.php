@@ -51,19 +51,21 @@ class Member_Display_Summaries
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			//echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>Subject</th><th>Message</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$from_member_id = $notices_received[$i]->get_from_member_id();
-				$to_section_id = $notices_received[$i]->get_to_section_id();
+				//$to_section_id = $notices_received[$i]->get_to_section_id();
 				$date = $notices_received[$i]->get_date_sent();
 				$date = $this->format_date_time($date);
 				$subject = $notices_received[$i]->get_notice_subject();
 				$text = $notices_received[$i]->get_notice_text();
 				$text = substr($text, 0, 30) . ' ... ';
 				
-				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				//echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$subject</td><td>$text</td></tr>";
 			}
 		}
 				
@@ -77,19 +79,21 @@ class Member_Display_Summaries
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			//echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>Subject</th><th>Message</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$from_member_id = $notices_received[$i]->get_from_member_id();
-				$to_section_id = $notices_sent[$i]->get_to_section_id();
+				//$to_section_id = $notices_sent[$i]->get_to_section_id();
 				$date = $notices_sent[$i]->get_date_sent();
 				$date = $this->format_date_time($date);
 				$subject = $notices_sent[$i]->get_notice_subject();
 				$text = $notices_sent[$i]->get_notice_text();
 				$text = substr($text, 0, 30) . ' ... ';
 				
-				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				//echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$subject</td><td>$text</td></tr>";
 			}
 		}
 		
@@ -164,7 +168,8 @@ class Member_Display_Summaries
 		$date_due = $assignment->get_date_due();
 		$date_due = $this->format_date_time($date_due);
 		$points_possible = $assignment->get_points_possible();
-		$has_notes = $assignment->get_has_notes();
+		$notes = $assignment->get_notes();
+		$has_notes = isset($notes);
 		
 		echo "<tr><td>Section $section_id</td><td>Assignment $assignment_id</td><td>Lab $lab_id</td>
 				<td>need to add lab name</td><td>Assigned $date_assigned</td>
@@ -204,22 +209,22 @@ class Member_Display_Summaries
 	{
 		$assignment_id = $homework->get_assignment_id();
 		$student_id = $homework->get_student_id();
-		//answer = test ? true : false;
-		$has_summary = $homework->get_has_lab_summary();
-		$summary = $has_summary ? "Yes" : "No";
-		$has_data = $homework->get_has_lab_data();
-		$data = $has_data ? "Yes" : "No";
-		$has_graphs = $homework->get_has_graphs();
-		$graphs = $has_graphs ? "Yes" : "No";
-		$has_math = $homework->get_has_math();
-		$math = $has_math ? "Yes" : "No";
-		$has_hints = $homework->get_has_hints();
-		$hints = $has_hints ? "Yes" : "No";
-		$has_chat_session = $homework->get_has_chat_session();
-		$chat = $has_chat_session ? "Yes" : "No";
+
+		$summary = $homework->get_lab_summary();
+		$has_summary = isset($summary);
+		$data = $homework->get_lab_data();
+		$has_data = isset($data);
+		$graphs = $homework->get_graphs();
+		$has_graphs = isset($graphs);
+		$math = $homework->get_math();
+		$has_math = isset($math);
+		$hints = $homework->get_hints();
+		$has_hints = isset($hints);
+		$chat_session = $homework->get_chat_session();
+		$has_chat_session = isset($chat_session);
 		
-		echo "<tr><td></td><td>Lab Summary? $summary</td><td>Data? $data</td><td>Graphs? $graphs</td>
-				<td>Math? $math</td><td>Hints? $hints</td><td>Chat Session? $chat</td></tr>";
+		echo "<tr><td></td><td>Lab Summary? $has_summary</td><td>Data? $has_data</td><td>Graphs? $has_graphs</td>
+				<td>Math? $has_math</td><td>Hints? $has_hints</td><td>Chat Session? $has_chat_session</td></tr>";
 
 	}
 	

@@ -35,7 +35,7 @@ class MemberController extends DatabaseController {
 
 	public function get_by_login($member_name, $password)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$member = new Member();	
 		$dataArray = array();	
 		$table = $this->getTableName();
@@ -64,60 +64,60 @@ class MemberController extends DatabaseController {
 	}
 
 
-	// updates the given attribute with the new value in the database and in the member object
+	// updates the given key with the new value in the database
 	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff
 	//			$first_name, $last_name, $email, $registration_complete)
-	public function updateAttribute(&$member, $attribute, $value)
+	public function updateAttribute($member, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$member_id = $member->get_member_id();	
 		$query = null;
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'member_id':
 				return false;
 				break;
 			case 'member_type':
-				$member->set_member_type($value);	
+				$value = $member->get_member_type();	
 				$query = "update $table set member_type = '$value' where member_id = '$member_id'";
 				break;
 			case 'member_name':
-				$member->set_member_name($value);	
+				$value = $member->get_member_name();	
 				$query = "update $table set member_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'member_password':
-				$member->set_member_password($value);	
+				$value = $member->get_member_password();	
 				$query = "update $table set member_password = '$value' where member_id = '$member_id'";
 				break;
 			case 'date_registered':
-				$member->set_date_registered($value);	
+				$value = $member->get_date_registered();	
 				$query = "update $table set date_registered = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_login':
-				$member->set_last_login($value);	
+				$value = $member->get_last_login();	
 				$query = "update $table set last_login = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_logoff':	
-				$member->set_last_logoff($value);	
+				$value = $member->get_last_logoff();	
 				$query = "update $table set last_logoff = '$value' where member_id = '$member_id'";
 				break;
 			case 'first_name':
-				$member->set_first_name($value);	
+				$value = $member->get_first_name();	
 				$query = "update $table set first_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_name':
-				$member->set_last_name($value);	
+				$value = $member->get_last_name();	
 				$query = "update $table set last_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'email':
-				$member->set_email($value);	
+				$value = $member->get_email();	
 				$query = "update $table set email = '$value' where member_id = '$member_id'";
 				break;
 			case 'registration_complete':	
-				$member->set_registration_complete($value);	
+				$value = $member->get_registration_complete();	
 				$query = "update $table set registration_complete = '$value' where member_id = '$member_id'";
 				break;
 		}
@@ -140,7 +140,7 @@ class MemberController extends DatabaseController {
 	//			$first_name, $last_name, $email, $registration_complete)
 	public function saveNew(&$member)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$name = $member->get_member_name();
 		$member_type = $member->get_member_type();
 		$password = $member->get_member_password();
@@ -180,7 +180,7 @@ class MemberController extends DatabaseController {
 
 	public function deleteFromDatabase($member)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$member_id = $member->get_member_id();
 		$table = $this->getTableName();

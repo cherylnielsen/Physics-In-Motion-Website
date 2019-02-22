@@ -36,7 +36,7 @@ class HomeworkController extends DatabaseController {
 	// For homework, the ids are auto-generated.
 	public function saveNew(&$homework)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$sucess = true;
 		$assignment_id = $homework->get_assignment_id();
 		$student_id = $homework->get_member_id(); 
@@ -72,50 +72,50 @@ class HomeworkController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the homework object
+	// updates the given key with the new value in the database 
 	//($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
-	public function updateAttribute(&$homework, $attribute, $value)
+	public function updateAttribute($homework, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$homework_id = $homework->get_homework_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'homework_id':
 				return false;
 				break;
 			case 'student_id':
-				$homework->set_student_id($value);	
+				$value = $homework->get_student_id();	
 				$query = "update $table set student_id = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'assignment_id':
-				$homework->set_assignment_id($value);	
+				$value = $homework->get_assignment_id();	
 				$query = "update $table set assignment_id = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'lab_summary':
-				$homework->set_lab_summary($value);	
+				$value = $homework->get_lab_summary();	
 				$query = "update $table set lab_summary = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'lab_data':
-				$homework->set_lab_data($value);	
+				$value = $homework->get_lab_data();	
 				$query = "update $table set lab_data = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'graphs':
-				$homework->set_graphs($value);	
+				$value = $homework->get_graphs();	
 				$query = "update $table set graphs = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'math':
-				$homework->set_math($value);	
+				$value = $homework->get_math();	
 				$query = "update $table set math = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'hints':
-				$homework->set_hints($value);	
+				$value = $homework->get_hints();	
 				$query = "update $table set hints = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'chat_session':
-				$homework->set_chat_session($value);	
+				$value = $homework->get_chat_session();	
 				$query = "update $table set chat_session = '$value' where homework_id = '$homework_id'";
 				break;
 		}
@@ -135,7 +135,7 @@ class HomeworkController extends DatabaseController {
 	
 	public function deleteFromDatabase($homework)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$homework_id = $homework->get_homework_id();
 		$table = $this->getTableName();

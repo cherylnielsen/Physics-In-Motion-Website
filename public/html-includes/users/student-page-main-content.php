@@ -50,9 +50,9 @@ $display_utility->display_section_table($section_list);
 echo "<br>";
 
 $notices_received = array();
-$notices_received = $data_utility->get_notices_by_section($section_list, $mdb_control);
+$notices_received = $data_utility->get_notices_received_by_section($section_list, $mdb_control);
 $notices_sent = array();
-$notices_sent = $data_utility->get_notices_by_member($student_id, $mdb_control);
+$notices_sent = $data_utility->get_notices_sent_by_member($student_id, $mdb_control);
 
 $display_utility->display_notice_table($notices_received, $notices_sent);
 echo "<br>";
