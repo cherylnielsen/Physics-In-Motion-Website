@@ -2,26 +2,21 @@
 
 class Homework {
 	
-	private $student_id;		// key part 1
-	private $assignment_id; 	// key part 2
+	private $homework_id; // key 
+	private $student_id;		
+	private $assignment_id; 	
 	private $lab_summary;
 	private $lab_data;
 	private $graphs;
 	private $math;
 	private $hints;
-	private $chat_session;		
-	
-	private $has_lab_summary;
-	private $has_lab_data;
-	private $has_graphs;
-	private $has_math;
-	private $has_hints;
-	private $has_chat_session;
+	private $chat_session;	
 	
 		
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
+	public function initialize($assignment_id, $student_id, $lab_summary, $lab_data, 
+								$graphs, $math, $hints, $chat_session)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->student_id = $student_id;
@@ -31,13 +26,6 @@ class Homework {
 		$this->math = $math;
 		$this->hints = $hints;
 		$this->chat_session = $chat_session;
-		
-		$this->has_lab_summary = isset($lab_summary);
-		$this->has_lab_data = isset($lab_data);
-		$this->has_graphs = isset($graphs);
-		$this->has_math = isset($math);
-		$this->has_hints = isset($hints);
-		$this->has_chat_session = isset($chat_session);
 	}
 	
 	
@@ -131,66 +119,6 @@ class Homework {
 		$this->chat_session = $chat_session;
 	}
 
-	
-	public function get_has_lab_summary()
-	{
-		return $this->has_lab_summary;
-	}
-
-	public function set_has_lab_summary($has_lab_summary)
-	{
-		$this->has_lab_summary = $has_lab_summary;
-	}
-	
-	public function get_has_lab_data()
-	{
-		return $this->has_lab_data;
-	}
-
-	public function set_has_lab_data($has_lab_data)
-	{
-		$this->has_lab_data = $has_lab_data;
-	}
-	
-	public function get_has_graphs()
-	{
-		return $this->has_graphs;
-	}
-
-	public function set_has_graphs($has_graphs)
-	{
-		$this->has_graphs = $has_graphs;
-	}
-	
-	public function get_has_math()
-	{
-		return $this->has_math;
-	}
-
-	public function set_has_math($has_math)
-	{
-		$this->has_math = $has_math;
-	}
-
-	public function get_has_hints()
-	{
-		return $this->has_hints;
-	}
-
-	public function set_has_hints($has_hints)
-	{
-		$this->has_hints = $has_hints;
-	}
-	
-	public function get_has_chat_session()
-	{
-		return $this->has_chat_session;
-	}
-
-	public function set_has_chat_session($has_chat_session)
-	{
-		$this->has_chat_session = $has_chat_session;
-	}
 	
 }
 

@@ -94,11 +94,23 @@ class Member_Data_Utilities {
 	
 	
 	// Gets the current homework submissions from the database for this student.
-	public function get_submissions_by_student($student_id, $mdb_control)
+	public function get_submissions_by_homework($homework_list, $mdb_control)
 	{
-		$submissions = array();
-		$submissions = $mdb_control->getController("homework_submission")->getByAttribute("student_id", $student_id);
-		return $submissions;
+		$submission_list = array();
+		$submission_controller = $mdb_control->getController("homework_submission");
+		$num = count($homework_list);
+		
+		for($i = 0; $i < $num; $i++)
+		{
+			// get the id for the next assignment
+			$homework_id = $homework_list[$i]->get_assignment_id();
+			$submissions = array();
+			$submissions = $submission_controller->getByAttribute("homework_id", $homework_id);
+			// add new submissions to array
+			$submission_list = array_merge($submission_list, $submissions);
+		}
+		
+		return $submission_list;
 	}
 	
 	
@@ -123,35 +135,97 @@ class Member_Data_Utilities {
 	}
 	
 	
-	// Gets the current notices from the database sent by this student or professor.
-	public function get_notices_by_member($member_id, $mdb_control)
+	// Gets the current notices from the database sent by this member.
+	public function get_notices_sent_by_member($member_id, $mdb_control)
 	{
 		$notices = array();
+		$sent_to_sections = array();
+		$attachments = array();
+		$sent_to_members = array();
+		$num = 0;
+		
 		$notices = $mdb_control->getController("notice")->getByAttribute("from_member_id", $member_id);
+		$num = count($notices);
+		
+		for($i = 0; $i < $num; $i++)
+		{
+			$notice_id = $notices[$i]->get_notice_id();
+			$sent_to_sections = $mdb_control->getController("notice_to_section")->getByAttribute("notice_id", $notice_id);
+			$notices[$i]->set_sent_to_sections($sent_to_sections);
+			$sent_to_members = $mdb_control->getController("notice_to_member")->getByAttribute("notice_id", $notice_id);
+			$notices[$i]->set_sent_to_members($sent_to_members);
+			$attachments = $mdb_control->getController("notice_attachment")->getByAttribute("notice_id", $notice_id);
+			$notices[$i]->set_attachments($attachments);			
+		}
+		
 		return $notices;
 	}
 	
 	
 	// Gets the current notices from the database received by this section.
-	public function get_notices_by_section($section_list, $mdb_control)
+	public function get_notices_received_by_section($section_list, $mdb_control)
+	{
+		$notice_list = array();
+		$notices_sent_to_section = array();
+		$sent_to_sections = array();
+		$attachments = array();
+		$sent_to_members = array();
+		$num_sections = 0;
+		$num_sent = 0;
+		
+		$num_sections = count($section_list);
+		
+		for($i = 0; $i < $num_sections; $i++)
+		{
+			$section_id = $section_list[$i]->get_section_id();
+			$list_by_notice_id = $mdb_control->getController("notice_to_section")->getByAttribute("to_section_id", $section_id);
+			$num_sent_to_section = count($list_by_notice_id);
+			$notices = array();
+						
+			for($j = 0; $j < $num_sent_to_section; $j++)
+			{
+				$notice_id = $list_by_notice_id[$i]->get_notice_id();
+				$notices = $mdb_control->getController("notice")->getByAttribute("notice_id", $notice_id);
+				$notice = new Notice();
+				$notice = $notices[0];
+				
+				$sent_to_sections = $mdb_control->getController("notice_to_section")->getByAttribute("notice_id", $notice_id);
+				$notice->set_sent_to_sections($sent_to_sections);
+				$sent_to_members = $mdb_control->getController("notice_to_member")->getByAttribute("notice_id", $notice_id);
+				$notice->set_sent_to_members($sent_to_members);
+				$attachments = $mdb_control->getController("notice_attachment")->getByAttribute("notice_id", $notice_id);
+				$notice->set_attachments($attachments);	
+				
+				// add notice to end of the array
+				$notice_list[] = $notice;
+			}			
+		}		
+		
+		return $notice_list;
+	}
+
+
+	// Gets the current notices from the database received by this member.
+	public function get_notices_received_by_member($member_id, $mdb_control)
 	{
 		$notice_list = array();
 		$notice_controller = $mdb_control->getController("notice");
+		$notice_to_member_controller = $mdb_control->getController("notice_to_member");
 		$num = count($section_list);
 		
 		for($i = 0; $i < $num; $i++)
 		{
 			// get the section id for the next section for that student
-			$section_id = $section_list[$i]->get_section_id();
-			$notices = array();
-			$notices = $notice_controller->getByAttribute("to_section_id", $section_id);
+			$section_id = $section_list[$i]->get_member_id();
+			$notices = array(); 
+			$notices = $notice_controller->getByAttribute("to_member_id", $member_id);
 			// add new notices to array
 			$notice_list = array_merge($notice_list, $notices);
 		}		
 		
 		return $notice_list;
 	}
-
+	
 	
 }
 

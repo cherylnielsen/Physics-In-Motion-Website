@@ -1,11 +1,9 @@
 <?php
 
 
-
 abstract class DatabaseController
 {
 	private $tableName; 	
-	private $dataKey;
 	
 	/***
 	Protected helper function.
@@ -32,14 +30,13 @@ abstract class DatabaseController
 	
 	
 	/***
-	Updates the attribute with the new value in both the database and in the data object
-	to ensure that they are both the same.
-	Input/Output: $data_object = the data object that needs updating in the database.
-	Input: $attribute = the attribute that needs to be updated for that object.
-	Input: $value = the new value to be set for that attribute.
-	Output: $success = true if the attribute was able to be updated in the database.
+	Updates the database with the new value for the given key.
+	Input: $data_object = the data object that needs updating in the database.
+	Input: $key = the key that needs to be updated for that object.
+	Input: $value = the new value to be set for that key.
+	Output: $success = true if the key was able to be updated in the database.
 	***/
-	abstract public function updateAttribute(&$data_object, $attribute, $value);
+	abstract public function updateAttribute($data_object, $key);
 		
 	
 	/*** 
@@ -54,32 +51,21 @@ abstract class DatabaseController
 	Output: $success = true if the object was removed.
 	***/
 	abstract public function deleteFromDatabase($data_object);
-	
-	
-	/***
-	Used to get a connection to the database as needed.
-	**/
-	public function get_db_connection()
-	{
-		$db_connection = mysqli_connect('localhost', 'root', 'sfsu@2019Grad', 'physics_in_motion') 
-					OR die (mysqli_connect_error());
-		return $db_connection;
-	}
 		
 		
 	/***
-	Queries the database for an array of objects that all have $attribute = $value.
-	Input: $attribute = the collumn of the database table to search.
-	Input: $value = the value of the attribute to find.
+	Queries the database for an array of objects that all have $key = $value.
+	Input: $key = the column of the database table to search.
+	Input: $value = the value of the key to find.
 	Output: $dataArray = the array of object models created from each result row.
 	***/
-	public function getByAttribute($attribute, $value)
+	public function getByAttribute($key, $value)
 	{
 		$table = $this->getTableName();
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$dataArray = array();
 		
-		$query = "select * from $table where $attribute = '$value'";
+		$query = "select * from $table where $key = '$value'";
 		$result = mysqli_query($db_connection, $query);
 		$dataArray = $this->getData($result, $db_connection);	
 				
@@ -90,18 +76,18 @@ abstract class DatabaseController
 	
 	
 	/***
-	Queries the database for an array of objects that all have $attribute = $value.
-	Input: $attribute1, $attribute2 = the collumns of the database table to search.
-	Input: $value1, $value2 = the values of the attributes to find.
+	Queries the database for an array of objects that all have $key = $value.
+	Input: $key1, $key2 = the collumns of the database table to search.
+	Input: $value1, $value2 = the values of the keys to find.
 	Output: $dataArray = the array of object models created from each result row.
 	***/
-	public function getByAttributes($attribute1, $value1, $attribute2, $value2)
+	public function getByAttributes($key1, $value1, $key2, $value2)
 	{
 		$table = $this->getTableName();
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$dataArray = array();
 		
-		$query = "select * from $table where ($attribute1 = '$value1') AND ($attribute2 = '$value2')";
+		$query = "select * from $table where ($key1 = '$value1') AND ($key2 = '$value2')";
 		$result = mysqli_query($db_connection, $query);
 		$dataArray = $this->getData($result, $db_connection);	
 
@@ -119,7 +105,7 @@ abstract class DatabaseController
 	{
 		$table = "";
 		$table = $this->getTableName();
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$dataArray = array();
 		
 		$query = "select * from $table";		
@@ -145,22 +131,6 @@ abstract class DatabaseController
 	public function setTableName($tableName)
 	{
 		$this->tableName = $tableName;
-	}
-	
-	/***
-	Used to set the name of a key attribute for that database table.
-	**/
-	public function setDataKey($dataKey)
-	{
-		$this->dataKey = $dataKey;
-	}
-	
-	/***
-	Used to get the name of a key attribute for that database table.
-	**/
-	public function getDataKey()
-	{
-		return $this->dataKey;
 	}
 	
 	

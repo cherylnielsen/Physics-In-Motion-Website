@@ -2,45 +2,44 @@
 
 class Homework_Submission {
 	
-	private $assignment_id; 	// key part 1
-	private $student_id;		// key part 2
+	private $homework_submission_id; // key	
+	private $homework_id;		
 	private $date_submitted;
 	private $points_earned;
 	private $was_graded;
-	private $total_time;
+	private $hours;
 	
 	public function __construct() {}
 	
-	public function initialize($assignment_id, $student_id, $date_submitted, $points_earned, $was_graded, $total_time)
+	public function initialize($homework_submission_id, $homework_id, $date_submitted, $points_earned = 0, $was_graded = false, $hours = 0)
 	{
-		$this->assignment_id = $assignment_id;
-		$this->student_id = $student_id;
+		$this->homework_submission_id = $homework_submission_id;
+		$this->homework_id = $homework_id;
 		$this->date_submitted = $date_submitted;
 		$this->points_earned = $points_earned;
-		$this->total_time = $total_time;
-		$this->set_was_graded($was_graded);
-		
+		$this->hours = $hours;
+		$this->was_graded = $was_graded;		
 	}
 	
 	
-	public function get_assignment_id()
+	public function get_homework_submission_id()
 	{
-		return $this->assignment_id;
+		return $this->homework_submission_id;
 	}
 
-	public function set_assignment_id($assignment_id)
+	public function set_homework_submission_id($homework_submission_id)
 	{
-		$this->assignment_id = $assignment_id;
+		$this->homework_submission_id = $homework_submission_id;
 	}
 	
-	public function get_student_id()
+	public function get_homework_id()
 	{
-		return $this->student_id;
+		return $this->homework_id;
 	}
 
-	public function set_student_id($student_id)
+	public function set_homework_id($homework_id)
 	{
-		$this->student_id = $student_id;
+		$this->homework_id = $homework_id;
 	}
 	
 	public function get_date_submitted()
@@ -63,14 +62,14 @@ class Homework_Submission {
 		$this->points_earned = $points_earned;
 	}
 	
-	public function get_total_time()
+	public function get_hours()
 	{
-		return $this->total_time;
+		return $this->hours;
 	}
 
-	public function set_total_time($total_time)
+	public function set_hours($hours)
 	{
-		$this->total_time = $total_time;
+		$this->hours = $hours;
 	}
 	
 	public function get_was_graded()

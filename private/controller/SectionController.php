@@ -37,7 +37,7 @@ class SectionController extends DatabaseController {
 	public function saveNew(&$section)
 	{
 		$sucess = true;
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$section_name = $section->get_section_name();
 		$professor_id = $section->get_professor_id();
 		$text = $section->get_start_date();
@@ -68,34 +68,34 @@ class SectionController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the section object
+	// updates the given key with the new value in the database
 	//($section_id, $section_name, $start_date, $end_date)
-	public function updateAttribute(&$section, $attribute, $value)
+	public function updateAttribute($section, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$section_id = $section->get_section_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'section_id':
 				return false;
 				break;
 			case 'section_name':
-				$section->set_section_name($value);	
+				$value = $section->get_section_name();	
 				$query = "update $table set section_name = '$value' where section_id = '$section_id'";
 				break;
 			case 'professor_id':
-				$section->set_professor_id($value);	
+				$value = $section->get_professor_id();	
 				$query = "update $table set professor_id = '$value' where section_id = '$section_id'";
 				break;
 			case 'start_date':
-				$section->set_start_date($value);	
+				$value = $section->get_start_date();	
 				$query = "update $table set start_date = '$value' where section_id = '$section_id'";
 				break;
 			case 'end_date':
-				$section->set_end_date($value);	
+				$value = $section->get_end_date();	
 				$query = "update $table set end_date = '$value' where section_id = '$section_id'";
 				break;
 		}
@@ -115,7 +115,7 @@ class SectionController extends DatabaseController {
 
 	public function deleteFromDatabase($section)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$section_id = $section->get_section_id();
 		$table = $this->getTableName();

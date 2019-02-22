@@ -1,11 +1,13 @@
 <?php
 
 
+/***
+Notice = ($notice_id, $from_member_id, $date_sent, $notice_subject, $notice_text, $sent_high_priority, $flag_for_review)
+***/
 class NoticeController extends DatabaseController {
 
   	
 	public function __construct() {}
-	//($notice_id, $from_member_id, $to_section_id, $date_sent, $notice_subject, $notice_text)
 	
 	
 	protected function getData($db_result, $db_connection)
@@ -17,8 +19,8 @@ class NoticeController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['notice_id'], $row['from_member_id'], $row['to_section_id'],
-						$row['date_sent'], $row['notice_subject'], $row['notice_text']);
+				$notice->initialize($row['notice_id'], $row['from_member_id'], $row['date_sent'], 
+							$row['notice_subject'], $row['notice_text'], $row['sent_high_priority'], $row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice;	
 			}
@@ -35,17 +37,22 @@ class NoticeController extends DatabaseController {
 	// The notice_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$notice)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$sucess = true;
 		$from_member_id = $notice->get_from_member_id();
-		$to_section_id = $notice->get_to_section_id();
+		$from_date_sent = $notice->get_date_sent();
 		$notice_subject = $notice->get_notice_subject();
 		$notice_text = $notice->get_notice_text();
+		$sent_high_priority = $notice->get_sent_high_priority();
+		$flag_for_review = $notice->get_flag_for_review();
 		$table = $this->getTableName();
 		
 		// The notice_id will be auto-generated.
-		$query = "insert into $table (from_member_id, to_section_id, date_sent, notice_subject, notice_text) 
-				values('$from_member_id', '$to_section_id, ', 'now()', '$notice_subject', '$notice_text')";
+		$query = "insert into $table (from_member_id, date_sent, notice_subject, 
+							notice_text, sent_high_priority, flag_for_review) 
+				values('$from_member_id', 'now()', '$notice_subject', 
+							'$notice_text', '$sent_high_priority', '$flag_for_review')";
+							
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -67,39 +74,43 @@ class NoticeController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the notice object
+	// updates the given key with the new value in the database
 	//($notice_id, $to_member_id, $from_member_id, $date_sent, $notice_subject, $notice_text)
-	public function updateAttribute(&$notice, $attribute, $value)
+	public function updateAttribute($notice, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$notice_id = $notice->get_notice_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'notice_id':
 				return false;
 				break;
 			case 'from_member_id':
-				$notice->set_from_member_id($value);	
+				$value = $notice->get_from_member_id();	
 				$query = "update $table set from_member_id = '$value' where notice_id = '$notice_id'";
 				break;
-			case 'to_section_id':
-				$notice->set_to_section_id($value);	
-				$query = "update $table set to_section_id = '$value' where notice_id = '$notice_id'";
-				break;
 			case 'date_sent':
-				$notice->set_date_sent($value);	
+				$value = $notice->get_date_sent();	
 				$query = "update $table set date_sent = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'notice_subject':
-				$notice->set_notice_subject($value);	
+				$value = $notice->get_notice_subject();	
 				$query = "update $table set notice_subject = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'notice_text':
-				$notice->set_notice_text($value);	
+				$value = $notice->get_notice_text();	
 				$query = "update $table set notice_text = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'sent_high_priority':
+				$value = $notice->get_sent_high_priority();	
+				$query = "update $table set sent_high_priority = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'flag_for_review':
+				$value = $notice->get_flag_for_review();	
+				$query = "update $table set flag_for_review = '$value' where notice_id = '$notice_id'";
 				break;
 		}
 		
@@ -118,7 +129,7 @@ class NoticeController extends DatabaseController {
 	
 	public function deleteFromDatabase($notice)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$notice_id = $notice->get_notice_id();
 		$table = $this->getTableName();

@@ -5,8 +5,8 @@ class MemberController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff)
-
+	//($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff,
+	// $first_name, $last_name, $email, $registration_complete)
 
 	protected function getData($db_result, $db_connection)
 	{
@@ -17,8 +17,9 @@ class MemberController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$the_member = new Member();
-				$the_member->initialize($row['member_id'], $row['member_type'], $row['member_name'], $row['member_password'], 
-							$row['date_registered'], $row['last_login'], $row['last_logoff']);
+				$the_member->initialize($row['member_id'], $row['member_type'], $row['member_name'], 
+							$row['member_password'], $row['date_registered'], $row['last_login'], $row['last_logoff'],
+							$row['first_name'], $row['last_name'], $row['email'], $row['registration_complete']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $the_member;
 			}	
@@ -34,7 +35,7 @@ class MemberController extends DatabaseController {
 
 	public function get_by_login($member_name, $password)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$member = new Member();	
 		$dataArray = array();	
 		$table = $this->getTableName();
@@ -63,44 +64,61 @@ class MemberController extends DatabaseController {
 	}
 
 
-	// updates the given attribute with the new value in the database and in the member object
-	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff)
-	public function updateAttribute(&$member, $attribute, $value)
+	// updates the given key with the new value in the database
+	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff
+	//			$first_name, $last_name, $email, $registration_complete)
+	public function updateAttribute($member, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$member_id = $member->get_member_id();	
 		$query = null;
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'member_id':
 				return false;
 				break;
 			case 'member_type':
-				$member->set_member_type($value);	
+				$value = $member->get_member_type();	
 				$query = "update $table set member_type = '$value' where member_id = '$member_id'";
 				break;
 			case 'member_name':
-				$member->set_member_name($value);	
+				$value = $member->get_member_name();	
 				$query = "update $table set member_name = '$value' where member_id = '$member_id'";
 				break;
 			case 'member_password':
-				$member->set_member_password($value);	
+				$value = $member->get_member_password();	
 				$query = "update $table set member_password = '$value' where member_id = '$member_id'";
 				break;
 			case 'date_registered':
-				$member->set_date_registered($value);	
+				$value = $member->get_date_registered();	
 				$query = "update $table set date_registered = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_login':
-				$member->set_last_login($value);	
+				$value = $member->get_last_login();	
 				$query = "update $table set last_login = '$value' where member_id = '$member_id'";
 				break;
 			case 'last_logoff':	
-				$member->set_last_logoff($value);	
+				$value = $member->get_last_logoff();	
 				$query = "update $table set last_logoff = '$value' where member_id = '$member_id'";
+				break;
+			case 'first_name':
+				$value = $member->get_first_name();	
+				$query = "update $table set first_name = '$value' where member_id = '$member_id'";
+				break;
+			case 'last_name':
+				$value = $member->get_last_name();	
+				$query = "update $table set last_name = '$value' where member_id = '$member_id'";
+				break;
+			case 'email':
+				$value = $member->get_email();	
+				$query = "update $table set email = '$value' where member_id = '$member_id'";
+				break;
+			case 'registration_complete':	
+				$value = $member->get_registration_complete();	
+				$query = "update $table set registration_complete = '$value' where member_id = '$member_id'";
 				break;
 		}
 		
@@ -118,19 +136,28 @@ class MemberController extends DatabaseController {
 	
 	
 	// The member_id will be auto-generated, when the new member is added to the database table.
+	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff
+	//			$first_name, $last_name, $email, $registration_complete)
 	public function saveNew(&$member)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$name = $member->get_member_name();
 		$member_type = $member->get_member_type();
 		$password = $member->get_member_password();
 		$date = $member->get_date_registered();
+		$first_name = $member->get_first_name();
+		$last_name = $member->get_last_name();
+		$email = $member->get_email();
+		$registration_complete = $member->get_registration_complete();
+		
 		$table = $this->getTableName();
 		
 		$success = true;
 		// The member_id will be auto-generated.
-		$query = "insert into $table (member_name, member_type, member_password, date_registered) 
-				values('$name', '$member_type', '$password', '$date')";
+		$query = "insert into $table (member_type, member_name, member_password, date_registered, 
+						first_name, last_name, email, registration_complete) 
+				values('$member_type', '$name', '$password', '$date', '$first_name', '$last_name', 
+						'$email', '$registration_complete')";
 		
 		$result = mysqli_query($db_connection, $query);			
 		
@@ -153,7 +180,7 @@ class MemberController extends DatabaseController {
 
 	public function deleteFromDatabase($member)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$member_id = $member->get_member_id();
 		$table = $this->getTableName();

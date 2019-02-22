@@ -35,33 +35,33 @@
 			required pattern="^[a-zA-Z0-9 \-\'\.]+$"></label>
 		<br>
 		
-		<?php if(!isset($_POST['account_type'])) 
+		<?php if(!isset($_POST['member_type'])) 
 			{
 				echo
-				'<label><input type="radio" name="account_type" value="student" required>&nbsp;Student</label>
+				'<label><input type="radio" name="member_type" value="student" required>&nbsp;Student</label>
 				<br>
-				<label><input type="radio" name="account_type" value="professor" v>&nbsp;Professor</label>
+				<label><input type="radio" name="member_type" value="professor" v>&nbsp;Professor</label>
 				<br>';
 			}
 			else
 			{
-				switch ($_POST['account_type'])
+				switch ($_POST['member_type'])
 				{
 					case "student":
 					echo
-						'<label for="student"><input type="radio" name="account_type" id="student" value="student" 
+						'<label for="student"><input type="radio" name="member_type" id="student" value="student" 
 						checked required>&nbsp;Student</label>
 						<br>
-						<label for="professor"><input type="radio" name="account_type" id="professor" value="professor" 
+						<label for="professor"><input type="radio" name="member_type" id="professor" value="professor" 
 						required>&nbsp;Professor</label>
 						<br>';
 					break;
 					case "professor":
 					echo
-						'<label><input type="radio" name="account_type" value="student"
+						'<label><input type="radio" name="member_type" value="student"
 						required>&nbsp;Student</label>
 						<br>
-						<label><input type="radio" name="account_type" value="professor" 
+						<label><input type="radio" name="member_type" value="professor" 
 						checked required>&nbsp;Professor</label>
 						<br>';
 					break;

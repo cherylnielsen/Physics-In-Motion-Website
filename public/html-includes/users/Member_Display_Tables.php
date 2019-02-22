@@ -35,19 +35,21 @@ class Member_Display_Tables
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			//echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>Subject</th><th>Message</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$from_member_id = $notices_received[$i]->get_from_member_id();
-				$to_section_id = $notices_received[$i]->get_to_section_id();
+				//$to_section_id = $notices_received[$i]->get_to_section_id();
 				$date = $notices_received[$i]->get_date_sent();
 				$date = $this->format_date_time($date);
 				$subject = $notices_received[$i]->get_notice_subject();
 				$text = $notices_received[$i]->get_notice_text();
 				$text = substr($text, 0, 30) . ' ... ';
 				
-				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$subject</td><td>$text</td></tr>";
+				//echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
 			}
 		}
 				
@@ -61,19 +63,21 @@ class Member_Display_Tables
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
+			echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>Subject</th><th>Message</th></tr>";
+			//echo "<tr><th>Select</th><th>Date</th><th>From Member</th><th>To Section</th><th>Subject</th><th>Message</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$from_member_id = $notices_received[$i]->get_from_member_id();
-				$to_section_id = $notices_sent[$i]->get_to_section_id();
+				//$to_section_id = $notices_sent[$i]->get_to_section_id();
 				$date = $notices_sent[$i]->get_date_sent();
 				$date = $this->format_date_time($date);
 				$subject = $notices_sent[$i]->get_notice_subject();
 				$text = $notices_sent[$i]->get_notice_text();
 				$text = substr($text, 0, 30) . ' ... ';
 				
-				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
+				echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$subject</td><td>$text</td></tr>";
+				//echo "<tr><td></td><td>$date</td><td>$from_member_id</td><td>$to_section_id</td><td>$subject</td><td>$text</td></tr>";
 			}
 		}
 		
@@ -201,13 +205,13 @@ class Member_Display_Tables
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Assignment ID</th><th>Student ID</th><th>Date Submitted</th>
+			echo "<tr><th>Select</th><th>Assignment ID</th><th>Homework ID</th><th>Date Submitted</th>
 					<th>Points Earned</th><th>Graded?</th><th>Total Time</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$assignment_id = $submission_list[$i]->get_assignment_id();
-				$student_id = $submission_list[$i]->get_student_id();
+				$homework_id = $submission_list[$i]->get_homework_id();
 				$date_submitted = $submission_list[$i]->get_date_submitted();
 				$date_submitted = $this->format_date_time($date_submitted);
 				$points_earned = $submission_list[$i]->get_points_earned();
@@ -216,7 +220,7 @@ class Member_Display_Tables
 				$graded = $is_graded ? "Yes" : "No";
 				$total_time = $submission_list[$i]->get_total_time();
 				
-				echo "<tr><td></td><td>$assignment_id</td><td>$student_id</td><td>$date_submitted</td>
+				echo "<tr><td></td><td>$assignment_id</td><td>$homework_id</td><td>$date_submitted</td>
 						<td>$points_earned</td><td>$graded</td><td>$total_time</td></tr>";
 			}
 		}

@@ -1,17 +1,17 @@
 <?php
 
 $web_link = $_GET["lab"];
-$lab_id = $_GET["num"];
+$tutorial_lab_id = $_GET["num"];
 
 $labs = array();
-$labs = $mdb_control->getController("tutorial_lab")->getByAttribute("lab_id", "$lab_id");
+$labs = $mdb_control->getController("tutorial_lab")->getByAttribute("tutorial_lab_id", "$tutorial_lab_id");
 
 if((!is_null($labs)) AND (count($labs) > 0))
 {	
 	$lab = array();
 	$lab = $labs[0];
 	
-	echo '<h1 class="labs">Tutorial ' . $lab->get_lab_id() . ' : ' . $lab->get_lab_name() . '</h1>';
+	echo '<h1 class="labs">Tutorial ' . $lab->get_tutorial_lab_id() . ' : ' . $lab->get_lab_name() . '</h1>';
 	
 	echo
 	'<div class="grid-lab-info">

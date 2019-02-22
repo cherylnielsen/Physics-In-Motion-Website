@@ -6,8 +6,6 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$login_utility = new LoginUtilities();
 	
-	// By standard convention, member name and password are not sanitized.
-	// Instead, they are directly encrypted and verified using built in PHP functions.
 	$membername = $_POST['membername'];
 	$password = $_POST['password'];
 	// clear post info for security
@@ -31,6 +29,9 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		}
 		else
 		{
+			$db_connect = get_db_connection();
+			$membername = mysqli_real_escape_string($db_connect, $membername);
+			$password = mysqli_real_escape_string($db_connect, $password);
 			$member = $login_utility->authenticate_login($membername, $password, $mdb_control);
 			
 			if(is_null($member))
@@ -52,27 +53,37 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 					
 					$ok = $login_utility->update_last_login($member, $mdb_control);
 					$_SESSION['member_id'] = $member_id;
-					$_SESSION['first_name'] = $user->get_first_name();
-					$_SESSION['last_name'] = $user->get_last_name();	
+					$_SESSION['first_name'] = $member->get_first_name();
+					$_SESSION['last_name'] = $member->get_last_name();	
+					$_SESSION['complete'] = $member->get_registration_complete();
 					
 					switch($member_type)
 					{
 						case "student":
 							$_SESSION['student_id'] = $member_id;
+							$_SESSION['school_name'] = $user->get_school_name();
 							$url = "student-page.php";
 							break;
 						case "professor":
 							$_SESSION['professor_id'] = $member_id;
+							$_SESSION['school_name'] = $user->get_school_name();
 							$url = "professor-page.php";
 							break;
 						case "administrator":
-							$_SESSION['admin_id'] = $member_id;
+							$_SESSION['administrator_id'] = $member_id;
+							$_SESSION['admin_type'] = $user->get_admin_type();
 							$url = "administrator-page.php";
 							break;
 					}
 					
+					if(!$_SESSION['complete'])
+					{
+						$url = "complete_registration_page.php";
+					}
+					
 					header("Location: $url");
 					exit();
+				
 				}
 			}
 		}

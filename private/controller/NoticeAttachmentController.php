@@ -5,7 +5,7 @@ class NoticeAttachmentController extends DatabaseController {
 
   	
 	public function __construct() {}
-	//($notice_attachment_id, $notice_id, $attachment)
+	
 	
 	
 	protected function getData($db_result, $db_connection)
@@ -34,11 +34,10 @@ class NoticeAttachmentController extends DatabaseController {
 	// The notice_attachment_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$notice_attachment)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$sucess = true;
 		$notice_id = $notice_attachment->get_notice_id();
-		$notice_subject = $notice_attachment->get_notice_subject();
-		$notice_text = $notice_attachment->get_notice_text();
+		$attachment = $notice_attachment->get_attachment();
 		$table = $this->getTableName();
 		
 		// The notice_attachment_id will be auto-generated.
@@ -65,26 +64,26 @@ class NoticeAttachmentController extends DatabaseController {
 	}
 	
 	
-	// updates the given attribute with the new value in the database and in the notice_attachment object
+	// updates the given key with the new value in the database 
 	// ($notice_attachment_id, $notice_id, $attachment)
-	public function updateAttribute(&$notice_attachment, $attribute, $value)
+	public function updateAttribute($notice_attachment, $key)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();	
 		$table = $this->getTableName();
 		
-		switch ($attribute)
+		switch ($key)
 		{
 			case 'notice_attachment_id':
 				return false;
 				break;
 			case 'notice_id':
-				$notice_attachment->set_notice_id($value);	
+				$value = $notice_attachment->get_notice_id();	
 				$query = "update $table set notice_id = '$value' where notice_attachment_id = '$notice_attachment_id'";
 				break;
 			case 'attachment':
-				$notice_attachment->set_attachment($value);	
+				$value = $notice_attachment->get_attachment();	
 				$query = "update $table set attachment = '$value' where notice_attachment_id = '$notice_attachment_id'";
 				break;
 		}
@@ -104,7 +103,7 @@ class NoticeAttachmentController extends DatabaseController {
 	
 	public function deleteFromDatabase($notice_attachment)
 	{
-		$db_connection = $this->get_db_connection();
+		$db_connection = get_db_connection();
 		$success = true;
 		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();
 		$table = $this->getTableName();

@@ -1,5 +1,8 @@
 <?php
 
+require_once('Section_Student.php');
+
+
 class Section {
 	
 	private $section_id;
@@ -7,8 +10,6 @@ class Section {
 	private $professor_id;
 	private $start_date;
 	private $end_date;
-	private $section_student_array;
-	
 	
 	public function __construct() {}
 	
@@ -20,7 +21,6 @@ class Section {
 		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		$this->section_student_array = array();		
 	}
 	
 	
@@ -73,17 +73,6 @@ class Section {
 	{
 		$this->end_date = $end_date;
 	}
-	
-	public function get_student_array()
-	{
-		return $this->section_student_array;
-	}
-
-	public function set_student_array($section_student_array)
-	{
-		$this->section_student_array = $section_student_array;
-	}
-	
 	
 }
 

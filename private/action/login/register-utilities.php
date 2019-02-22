@@ -62,15 +62,14 @@ class RegisterUtilities
 	}
 	
 	
-	public function validate_account_type($account_type, &$form_errors)
+	public function validate_member_type($member_type, &$form_errors)
 	{
-		if(!isset($account_type)) 
+		if(!isset($member_type)) 
 		{ 
 			$form_errors[] = 'Enter student or professor.'; 
-			$account_type = null;
 		}
 		
-		return $account_type;
+		return $member_type;
 	}
 	
 	
@@ -224,97 +223,101 @@ class RegisterUtilities
 	}
 	
 	
-	public function duplicate_member_name($membername, $mdb_control, &$form_errors)
+	public function uniqueness_test($email, $membername, $mdb_control, &$form_errors)
 	{
-		$ok = true;		
+		$ok = true;	
+		$found_email = false;
+		$found_username = false;
 		$control = $mdb_control->getController("member");
-		$db_con = $control->get_db_connection();
+		$db_connect = get_db_connection();
 		
 		// escape member input variables for quote marks, etc.
-		$membername = mysqli_real_escape_string($db_con, $membername);		
+		$membername = mysqli_real_escape_string($db_connect, $membername);	
+		$email = mysqli_real_escape_string($db_connect, $email);		
+		
 		// find in the database
 		$duplicate = $control->getByAttribute("member_name", $membername);
 		
 		if(count($duplicate) > 0)
 		{
-			$form_errors[] = 'Member name is already in use. ';
-			$ok = false;
+			$form_errors[] = 'Member Name is already in use. ';
+			$found_username = true;
+			$ok = false;	
 		}
 		
-		return $ok;
-	}
-	
-	
-	public function duplicate_email($email, $account_type, $mdb_control, &$form_errors)
-	{
-		$ok = true;		
-		$control = $mdb_control->getController($account_type);
-		$db_con = $control->get_db_connection();
-		
-		// escape member input variables for quote marks, etc.
-		$data_escaped = mysqli_real_escape_string($db_con, $email);		
-		// find in the database
-		$duplicate = $control->getByAttribute("email", $data_escaped);
+		$duplicate = $control->getByAttribute("email", $email);
 		
 		if(count($duplicate) > 0)
 		{
 			$form_errors[] = 'Email is already in use. ';
-			$form_errors[] = 'Try again, or <a id="sign-in" href="login-page.php">Sign In,</a> or <a id="forgot_login" href="">Forgot ID / Password?</a>';
+			$found_email = true;
+			$ok = false;	
+		}
+		
+		if($found_username && $found_email)
+		{
+			$form_errors[] = 'Try again, or <a id="sign-in" href="login-page.php">Sign In,</a> or <a id="forgot_login" href="">Forgot Member Name / Password?</a>';
 			$ok = false;
 		}
-
+		
 		return $ok;
 	}
 	
+	
 	public function register_new_member($firstname, $lastname, $email, $school, 
-						$account_type, $membername, $password, $mdb_control)
+						$member_type, $membername, $password, $mdb_control)
 	{
 		$ok = true;
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
 		$date_registered = date($format, time());
 		$control = $mdb_control->getController("member");
-		$db_con = $control->get_db_connection();
+		$db_connect = get_db_connection();
 		
-		$membername = mysqli_real_escape_string($db_con, $membername);
-		$password = mysqli_real_escape_string($db_con, $password);
+		$membername = mysqli_real_escape_string($db_connect, $membername);
+		$password = mysqli_real_escape_string($db_connect, $password);
+		$firstname = mysqli_real_escape_string($db_connect, $firstname);
+		$lastname = mysqli_real_escape_string($db_connect, $lastname);
+		$email = mysqli_real_escape_string($db_connect, $email);
+		$school = mysqli_real_escape_string($db_connect, $school);
+		$complete = true;
 		
 		// save new member
 		$member = new Member();
 		$password = password_hash($password, PASSWORD_DEFAULT);
-		$member->initialize(null, $account_type, $membername, $password, $date_registered, null, null);
+		$member->initialize(null, $member_type, $membername, $password, $date_registered, null, null, $firstname, $lastname, $email, $complete);
 		$ok = $control->saveNew($member);
 		$person = null;
 		
 		// save member as student or professor
 		if($ok) 
 		{
-			$control = $mdb_control->getController($account_type);
+			$control = $mdb_control->getController($member_type);
 			$member_id = $member->get_member_id();
 			// escape member input variables for quote marks, etc.
-			// account_type dose not need escaping
-			$firstname = mysqli_real_escape_string($db_con, $firstname);
-			$lastname = mysqli_real_escape_string($db_con, $lastname);
-			$email = mysqli_real_escape_string($db_con, $email);
-			$school = mysqli_real_escape_string($db_con, $school);
+			// member_type dose not need escaping
 			
-			switch ($account_type)
+			switch ($member_type)
 			{
 				case "student":
 					$person = new Student();
-					$person->initialize($member_id, $firstname, $lastname, $school, $email);
+					$person->set_school_name($school);
+					$person->set_student_id($member_id);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "professor":
 					$person = new Professor();
-					$person->initialize($member_id, $firstname, $lastname, $school, $email);
+					$person->set_school_name($school);
+					$person->set_professor_id($member_id);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "administrator":
 					$person = new Administrator();
-					$person->initialize($member_id, $firstname, $lastname, $school, $email);
+					$admin_type = "General";
+					$person->set_admin_type($admin_type);
+					$person->set_administrator_id($member_id);
 					$ok = $control->saveNew($person);
 					break;
 			}
