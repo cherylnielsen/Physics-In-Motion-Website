@@ -132,7 +132,7 @@ class AssignmentController extends DatabaseController {
 		$assignment_id = $assignment->get_assignment_id();
 		$table = $this->getTableName();
 		
-		$query = "delete from $table where assignment_id = $assignment_id";
+		$query = "delete from $table where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 		
 		if(!$result)
 		{

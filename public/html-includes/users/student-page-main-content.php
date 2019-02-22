@@ -62,7 +62,7 @@ $assignment_list = $data_utility->get_assignments_by_section($section_list, $mdb
 $homework_list = array();
 $homework_list = $data_utility->get_homeworks_by_student($student_id, $mdb_control);
 $submission_list = array();
-$submission_list = $data_utility->get_submissions_by_student($student_id, $mdb_control);
+$submission_list = $data_utility->get_submissions_by_homework($homework_list, $mdb_control);
 
 $display_summaries->display_section_summary($section_list, $assignment_list, $homework_list, $submission_list);
 echo "<br>";

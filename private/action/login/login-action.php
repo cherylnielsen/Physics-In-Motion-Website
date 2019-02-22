@@ -70,7 +70,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 							$url = "professor-page.php";
 							break;
 						case "administrator":
-							$_SESSION['admin_id'] = $member_id;
+							$_SESSION['administrator_id'] = $member_id;
 							$_SESSION['admin_type'] = $user->get_admin_type();
 							$url = "administrator-page.php";
 							break;

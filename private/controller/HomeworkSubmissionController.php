@@ -6,7 +6,7 @@ class HomeworkSubmissionController extends DatabaseController {
 
 	
 	public function __construct(){}
-	//($homework_submission_id, $homework_id, $date_submitted, $points_earned, $was_graded, $total_time)
+	//($homework_submission_id, $homework_id, $date_submitted, $points_earned, $was_graded, $hours)
 	
 
 	protected function getData($db_result, $db_connection)
@@ -19,7 +19,7 @@ class HomeworkSubmissionController extends DatabaseController {
 			{
 				$submission = new Homework_Submission();
 				$submission->initialize($row['homework_submission_id'], $row['homework_id'], $row['date_submitted'],
-							$row['points_earned'], $row['was_graded'], $row['total_time']);
+							$row['points_earned'], $row['was_graded'], $row['hours']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $submission;
 			}
@@ -42,11 +42,11 @@ class HomeworkSubmissionController extends DatabaseController {
 		$date_submitted = $submission->get_date_submitted();
 		$points_earned = $submission->get_points_earned();
 		$was_graded = $submission->get_was_graded();
-		$total_time = $submission->get_total_time();
+		$hours = $submission->get_hours();
 		
 		$table = $this->getTableName();
-		$query = "insert into $table (homework_id, date_submitted, points_earned, was_graded, total_time) 
-				values('$homework_id', '$date_submitted', '$points_earned', '$was_graded', '$total_time')";
+		$query = "insert into $table (homework_id, date_submitted, points_earned, was_graded, hours) 
+				values('$homework_id', '$date_submitted', '$points_earned', '$was_graded', '$hours')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -69,7 +69,7 @@ class HomeworkSubmissionController extends DatabaseController {
 	
 
 	// updates the given key with the new value in the database
-	//($homework_submission_id, $homework_id, $date_submitted, $points_earned, $was_graded, $total_time)
+	//($homework_submission_id, $homework_id, $date_submitted, $points_earned, $was_graded, $hours)
 	public function updateAttribute($homework_submission, $key)
 	{
 		$db_connection = get_db_connection();
@@ -97,9 +97,9 @@ class HomeworkSubmissionController extends DatabaseController {
 				$value = $homework_submission->get_was_graded();	
 				$query = "update $table set was_graded = '$value' where homework_submission_id = '$homework_submission_id'";
 				break;
-			case 'total_time':
-				$value = $homework_submission->get_total_time();	
-				$query = "update $table set total_time = '$value' where homework_submission_id = '$homework_submission_id'";
+			case 'hours':
+				$value = $homework_submission->get_hours();	
+				$query = "update $table set hours = '$value' where homework_submission_id = '$homework_submission_id'";
 				break;
 		}
 		

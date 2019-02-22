@@ -17,17 +17,17 @@ values (1, 1, "notice 1 attachment"), (2, 2, "notice 2 attachment");
 
 SELECT * FROM notice_attachment;
 
-insert into notice_sent_to_member (notice_id, to_member_id, flag_read)
+insert into notice_to_member (notice_id, to_member_id, flag_read)
 values (1, 2, true), (1, 3, true),
 (2, 2, true), (2, 3, true),
 (3, 1, true), (3, 3, true),
 (4, 1, true), (4, 2, true),
 (5, 1, false), (5, 2, false);
 
-SELECT * FROM notice_sent_to_member;
+SELECT * FROM notice_to_member;
 
-insert into notice_sent_to_section (notice_id, to_section_id)
+insert into notice_to_section (notice_id, to_section_id)
 values (1, 101), (2, 101), (3, 101), (4, 101), (5, 101);
 
-SELECT * FROM notice_sent_to_section;
+SELECT * FROM notice_to_section;
 

@@ -4,7 +4,7 @@
 
 
 // The function needed to connect to the database
-require_once('../db_access.php');
+require_once('db_access.php');
 
 // The model classes for each of the database tables
 require_once('model/Security_Question.php');

@@ -64,11 +64,11 @@ class DatabaseControllerFactory
 			case "notice_attachment" :
 				$controller = new NoticeAttachmentController();
 				break;
-			case "notice_sent_to_member" :
-				$controller = new NoticeSentToMemberController();
+			case "notice_to_member" :
+				$controller = new NoticeToMemberController();
 				break;
-			case "notice_sent_to_section" :
-				$controller = new NoticeSentToSectionController();
+			case "notice_to_section" :
+				$controller = new NoticeToSectionController();
 				break;
 			case "tutorial_lab" :
 				$controller  = new TutorialLabController();
@@ -96,7 +96,6 @@ class DatabaseControllerFactory
 		if(isset($controller))
 		{
 			$controller->setTableName($data_type);
-			$controller->setPrimaryKeyName($data_type . "_id");
 		}
 		
 		return $controller;

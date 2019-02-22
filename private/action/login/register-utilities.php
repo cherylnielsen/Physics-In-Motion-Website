@@ -229,11 +229,11 @@ class RegisterUtilities
 		$found_email = false;
 		$found_username = false;
 		$control = $mdb_control->getController("member");
-		$db_con = $control->get_db_connection();
+		$db_connect = get_db_connection();
 		
 		// escape member input variables for quote marks, etc.
-		$membername = mysqli_real_escape_string($db_con, $membername);	
-		$email = mysqli_real_escape_string($db_con, $email);		
+		$membername = mysqli_real_escape_string($db_connect, $membername);	
+		$email = mysqli_real_escape_string($db_connect, $email);		
 		
 		// find in the database
 		$duplicate = $control->getByAttribute("member_name", $membername);
@@ -267,21 +267,19 @@ class RegisterUtilities
 	public function register_new_member($firstname, $lastname, $email, $school, 
 						$member_type, $membername, $password, $mdb_control)
 	{
-		echo "<p>member_type is $member_type</p>";
-		
 		$ok = true;
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
 		$date_registered = date($format, time());
 		$control = $mdb_control->getController("member");
-		$db_con = $control->get_db_connection();
+		$db_connect = get_db_connection();
 		
-		$membername = mysqli_real_escape_string($db_con, $membername);
-		$password = mysqli_real_escape_string($db_con, $password);
-		$firstname = mysqli_real_escape_string($db_con, $firstname);
-		$lastname = mysqli_real_escape_string($db_con, $lastname);
-		$email = mysqli_real_escape_string($db_con, $email);
-		$school = mysqli_real_escape_string($db_con, $school);
+		$membername = mysqli_real_escape_string($db_connect, $membername);
+		$password = mysqli_real_escape_string($db_connect, $password);
+		$firstname = mysqli_real_escape_string($db_connect, $firstname);
+		$lastname = mysqli_real_escape_string($db_connect, $lastname);
+		$email = mysqli_real_escape_string($db_connect, $email);
+		$school = mysqli_real_escape_string($db_connect, $school);
 		$complete = true;
 		
 		// save new member
@@ -304,14 +302,14 @@ class RegisterUtilities
 				case "student":
 					$person = new Student();
 					$person->set_school_name($school);
-					$person->set_member_id($member_id);
+					$person->set_student_id($member_id);
 					$ok = $control->saveNew($person);
 					break;
 					
 				case "professor":
 					$person = new Professor();
 					$person->set_school_name($school);
-					$person->set_member_id($member_id);
+					$person->set_professor_id($member_id);
 					$ok = $control->saveNew($person);
 					break;
 					
@@ -319,7 +317,7 @@ class RegisterUtilities
 					$person = new Administrator();
 					$admin_type = "General";
 					$person->set_admin_type($admin_type);
-					$person->set_member_id($member_id);
+					$person->set_administrator_id($member_id);
 					$ok = $control->saveNew($person);
 					break;
 			}

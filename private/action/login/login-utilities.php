@@ -20,7 +20,19 @@ class LoginUtilities
 		$user_array = array();
 		$user = null;
 		$control = $mdb_control->getController($member_type);
-		$user_array = $control->getByAttribute("member_id", $member_id);
+		
+		switch($member_type)
+		{
+			case 'student':
+				$user_array = $control->getByAttribute("student_id", $member_id);
+				break;
+			case 'professor':
+				$user_array = $control->getByAttribute("professor_id", $member_id);
+				break;
+			case 'administrator':
+				$user_array = $control->getByAttribute("administrator_id", $member_id);
+				break;
+		}
 		
 		if(!is_null($user_array) && count($user_array) > 0) 
 		{

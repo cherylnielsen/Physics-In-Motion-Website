@@ -180,7 +180,7 @@ class Member_Display_Summaries
 	public function display_submission_row($submission)
 	{
 		$assignment_id = $submission->get_assignment_id();
-		$student_id = $submission->get_student_id();
+		$homework_id = $submission->get_homework_id();
 		$points_earned = $submission->get_points_earned();
 		$total_time = $submission->get_total_time();
 		

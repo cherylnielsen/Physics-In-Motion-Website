@@ -205,13 +205,13 @@ class Member_Display_Tables
 		}
 		else
 		{
-			echo "<tr><th>Select</th><th>Assignment ID</th><th>Student ID</th><th>Date Submitted</th>
+			echo "<tr><th>Select</th><th>Assignment ID</th><th>Homework ID</th><th>Date Submitted</th>
 					<th>Points Earned</th><th>Graded?</th><th>Total Time</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
 				$assignment_id = $submission_list[$i]->get_assignment_id();
-				$student_id = $submission_list[$i]->get_student_id();
+				$homework_id = $submission_list[$i]->get_homework_id();
 				$date_submitted = $submission_list[$i]->get_date_submitted();
 				$date_submitted = $this->format_date_time($date_submitted);
 				$points_earned = $submission_list[$i]->get_points_earned();
@@ -220,7 +220,7 @@ class Member_Display_Tables
 				$graded = $is_graded ? "Yes" : "No";
 				$total_time = $submission_list[$i]->get_total_time();
 				
-				echo "<tr><td></td><td>$assignment_id</td><td>$student_id</td><td>$date_submitted</td>
+				echo "<tr><td></td><td>$assignment_id</td><td>$homework_id</td><td>$date_submitted</td>
 						<td>$points_earned</td><td>$graded</td><td>$total_time</td></tr>";
 			}
 		}
