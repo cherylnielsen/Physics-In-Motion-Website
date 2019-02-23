@@ -15,7 +15,7 @@ select * from quote;
 
 
 /* tutorial labs */
-insert into tutorial_lab (tutorial_lab_id, lab_name, web_link, lab_status)
+insert into tutorial_lab (tutorial_lab_id, tutorial_lab_name, web_link, lab_status)
 values (101, "Vector Calculus of 3D Volumes and Surfaces", "vector_calc_3d_volumes_surfaces", "New"),
 (102, "Beginning RC Circuits", "begin_rc_circuit", "New"),
 (103, "Linear Motion and Collisions", "linear_motion_collision", "Development"), 
@@ -27,7 +27,7 @@ update tutorial_lab set introduction = "Vary inclines, masses, and friction, whi
 update tutorial_lab set introduction = "Light shining on metal causes the release of electrons which are detected as current. But the data broke Classical Physics theory about the behavior of light. The famous experiment that lead to the Nobel Prize for Einstein." where tutorial_lab_id = 104;
 
 /* more tutorial labs */
-insert into tutorial_lab (tutorial_lab_id, lab_name, web_link, lab_status)
+insert into tutorial_lab (tutorial_lab_id, tutorial_lab_name, web_link, lab_status)
 values (105, "Discrete Mathematics", "discrete_math", "Development"),
 (106, "Beginning Orbital Trajectories", "begin_oribits", "Development"),
 (107, "2D and 3D Collisions", "2D_3D_collisions", "Development"), 
