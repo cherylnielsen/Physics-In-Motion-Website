@@ -223,13 +223,14 @@ DROP TABLE IF EXISTS `physics_in_motion`.`notice` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice` (
   `notice_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `from_member_id` INT UNSIGNED NOT NULL,
+  `response_to_notice_id` INT UNSIGNED NULL,
   `date_sent` DATETIME NOT NULL,
   `notice_subject` VARCHAR(256) NOT NULL,
   `notice_text` VARCHAR(1000) NOT NULL,
   `sent_high_priority` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `flag_for_review` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`notice_id`),
-  CONSTRAINT `notice_from_user_id`
+  CONSTRAINT `notice_from_member_id`
     FOREIGN KEY (`from_member_id`)
     REFERENCES `physics_in_motion`.`member` (`member_id`)
     ON DELETE NO ACTION
@@ -451,9 +452,9 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator_member_view` (`adm
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_student_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `student_id` INT, `first_name` INT, `last_name` INT, `school_name` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`section_tutorial_lab_assignments_view`
+-- Placeholder table for view `physics_in_motion`.`assignment_full_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_tutorial_lab_assignments_view` (`section_name` INT, `tutorial_lab_name` INT, `introduction` INT, `web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_name` INT, `professor_id` INT, `first_name` INT, `last_name` INT, `tutorial_lab_name` INT, `introduction` INT, `web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_professor_view`
@@ -461,14 +462,14 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_tutorial_lab_assignments
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_professor_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `first_name` INT, `last_name` INT, `school_name` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`notice_to_member_view`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_member_view` (`notice_id` INT, `from_member_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `to_member_id` INT, `flag_read` INT, `flag_important` INT);
-
--- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`tutorial_lab_rating_full_view`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view` (`first_name` INT, `last_name` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`notice_full_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_full_view` (`to_section_id` INT, `to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `flag_read` INT, `flag_important` INT);
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`student_member_view`
@@ -532,19 +533,22 @@ CREATE  OR REPLACE VIEW `section_student_view` AS
 		section_id, last_name, student_id;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`section_tutorial_lab_assignments_view`
+-- View `physics_in_motion`.`assignment_full_view`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`section_tutorial_lab_assignments_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`section_tutorial_lab_assignments_view` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`assignment_full_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`assignment_full_view` ;
 USE `physics_in_motion`;
-CREATE  OR REPLACE VIEW `section_tutorial_lab_assignments_view` AS
+CREATE  OR REPLACE VIEW `assignment_full_view` AS
     SELECT 
-        section_name, tutorial_lab_name, introduction, web_link, assignment.*
+        section_name, professor.professor_id, first_name, last_name, school_name
+        tutorial_lab_name, introduction, web_link, assignment.*
     FROM
-        section, assignment, tutorial_lab
+        section, assignment, tutorial_lab, professor, member
     WHERE
         assignment.section_id = section.section_id
         AND assignment.tutorial_lab_id = tutorial_lab.tutorial_lab_id
+        AND section.professor_id = professor.professor_id
+        AND professor.professor_id = member.member_id
 	ORDER BY 
 		section_id, assignment_id;
 
@@ -567,22 +571,6 @@ CREATE  OR REPLACE VIEW `section_professor_view` AS
 		section_id, last_name, professor_id;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`notice_to_member_view`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_member_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`notice_to_member_view` ;
-USE `physics_in_motion`;
-CREATE  OR REPLACE VIEW `notice_to_member_view` AS
-    SELECT 
-        notice.*, to_member_id, flag_read, flag_important
-    FROM
-        notice, notice_to_member
-    WHERE
-        notice.notice_id = notice_to_member.notice_id
-    ORDER BY 
-		to_member_id, date_sent;
-
--- -----------------------------------------------------
 -- View `physics_in_motion`.`tutorial_lab_rating_full_view`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view`;
@@ -598,6 +586,24 @@ CREATE  OR REPLACE VIEW `tutorial_lab_rating_full_view` AS
         AND tutorial_lab_rating.tutorial_lab_id = tutorial_lab.tutorial_lab_id
 	ORDER BY 
 		date_posted;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`notice_full_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_full_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`notice_full_view` ;
+USE `physics_in_motion`;
+CREATE  OR REPLACE VIEW `notice_full_view` AS
+    SELECT 
+        to_section_id, to_member_id, notice.*, flag_read, flag_important
+    FROM
+        notice 
+        INNER JOIN notice_to_member 
+			ON (notice.notice_id = notice_to_member.notice_id)
+		LEFT OUTER JOIN notice_to_section
+			ON (notice.notice_id = notice_to_section.notice_id)
+    ORDER BY 
+		to_member_id, to_section_id, date_sent;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
