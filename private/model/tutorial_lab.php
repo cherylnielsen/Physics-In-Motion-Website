@@ -8,9 +8,9 @@ class Tutorial_Lab {
 	private $allowed_lab_status_values = array('New', 'Updated', 'Available', 'Development', 'Discontinued');	
 	
 	private $tutorial_lab_id;	// key
-	private $lab_name;	// unique
-	private $web_link;	// unique
-	private $introduction;
+	private $tutorial_lab_name;	// unique
+	private $tutorial_lab_web_link;	// unique
+	private $tutorial_lab_introduction;
 	private $prerequisites;
 	private $key_topics;
 	private $key_equations;	
@@ -21,12 +21,12 @@ class Tutorial_Lab {
 	public function __construct() {}
 
 	
-	public function initialize($tutorial_lab_id, $lab_name, $web_link, $lab_status, $introduction)
+	public function initialize($tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, $lab_status, $tutorial_lab_introduction)
 	{
 		$this->tutorial_lab_id = $tutorial_lab_id;
-		$this->lab_name = $lab_name;
-		$this->web_link = $web_link;
-		$this->introduction = $introduction;
+		$this->tutorial_lab_name = $tutorial_lab_name;
+		$this->tutorial_lab_web_link = $tutorial_lab_web_link;
+		$this->tutorial_lab_introduction = $tutorial_lab_introduction;
 		// Make sure value is an allowed value, otherwise use the default value.
 		$this->set_lab_status($lab_status);
 	}
@@ -42,24 +42,24 @@ class Tutorial_Lab {
 		$this->tutorial_lab_id = $tutorial_lab_id;
 	}
 	
-	public function get_lab_name()
+	public function get_tutorial_lab_name()
 	{
-		return $this->lab_name;
+		return $this->tutorial_lab_name;
 	}
 
-	public function set_lab_name($lab_name)
+	public function set_tutorial_lab_name($tutorial_lab_name)
 	{
-		$this->lab_name = $lab_name;
+		$this->tutorial_lab_name = $tutorial_lab_name;
 	}
 	
-	public function get_web_link()
+	public function get_tutorial_lab_web_link()
 	{
-		return $this->web_link;
+		return $this->tutorial_lab_web_link;
 	}
 
-	public function set_web_link($web_link)
+	public function set_tutorial_lab_web_link($tutorial_lab_web_link)
 	{
-		$this->web_link = $web_link;
+		$this->tutorial_lab_web_link = $tutorial_lab_web_link;
 	}
 	
 	public function get_lab_status()
@@ -85,14 +85,14 @@ class Tutorial_Lab {
 		return $this->allowed_lab_status_values;
 	}
 	
-	public function get_introduction()
+	public function get_tutorial_lab_introduction()
 	{
-		return $this->introduction;
+		return $this->tutorial_lab_introduction;
 	}
 
-	public function set_introduction($introduction)
+	public function set_tutorial_lab_introduction($tutorial_lab_introduction)
 	{
-		$this->introduction = $introduction;
+		$this->tutorial_lab_introduction = $tutorial_lab_introduction;
 	}
 	
 	public function get_prerequisites()

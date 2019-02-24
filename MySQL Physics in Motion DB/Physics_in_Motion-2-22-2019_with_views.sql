@@ -434,17 +434,17 @@ USE `physics_in_motion` ;
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`student_member_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_member_view` (`student_id` INT, `first_name` INT, `last_name` INT, `email` INT, `school_name` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_member_view` (`student_id` INT, `email` INT, `school_name` INT, `student_name` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`professor_member_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor_member_view` (`professor_id` INT, `first_name` INT, `last_name` INT, `email` INT, `school_name` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor_member_view` (`professor_id` INT, `email` INT, `school_name` INT, `professor_name` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`administrator_member_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator_member_view` (`administrator_id` INT, `first_name` INT, `last_name` INT, `email` INT, `admin_type` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator_member_view` (`administrator_id` INT, `email` INT, `admin_type` INT, `administrator_name` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_student_view`
@@ -454,22 +454,22 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_student_view` (`section_
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`assignment_full_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_name` INT, `professor_id` INT, `first_name` INT, `last_name` INT, `tutorial_lab_name` INT, `introduction` INT, `web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_name` INT, `professor_id` INT, `professor_name` INT, `school_name` INT, `tutorial_lab_name` INT, `introduction` INT, `web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_professor_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_professor_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `first_name` INT, `last_name` INT, `school_name` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_professor_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `professor_name` INT, `school_name` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`tutorial_lab_rating_full_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view` (`first_name` INT, `last_name` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view` (`member_name` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`notice_full_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_full_view` (`to_section_id` INT, `to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `flag_read` INT, `flag_important` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_full_view` (`to_section_id` INT, `to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `flag_read` INT, `flag_important` INT, `from_member_name` INT);
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`student_member_view`
@@ -479,11 +479,17 @@ DROP VIEW IF EXISTS `physics_in_motion`.`student_member_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `student_member_view` AS
     SELECT 
-        student_id, first_name, last_name, email, school_name
+        student_id,
+        email,
+        school_name,
+        CONCAT(first_name, ' ', last_name) AS student_name
     FROM
-        student, member
+        student,
+        member
     WHERE
-        student.student_id = member.member_id;
+        student.student_id = member.member_id
+	ORDER BY
+		student_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`professor_member_view`
@@ -493,11 +499,14 @@ DROP VIEW IF EXISTS `physics_in_motion`.`professor_member_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `professor_member_view` AS
     SELECT 
-        professor_id, first_name, last_name, email, school_name
+        professor_id, email, school_name,
+        concat(first_name, ' ', last_name) AS professor_name
     FROM
         professor, member
     WHERE
-        professor.professor_id = member.member_id;
+        professor.professor_id = member.member_id
+	ORDER BY
+		professor_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`administrator_member_view`
@@ -507,11 +516,14 @@ DROP VIEW IF EXISTS `physics_in_motion`.`administrator_member_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `administrator_member_view` AS
     SELECT 
-        administrator_id, first_name, last_name, email, admin_type
+        administrator_id, email, admin_type,
+        concat(first_name, ' ', last_name) AS administrator_name
     FROM
         administrator, member
     WHERE
-        administrator.administrator_id = member.member_id;
+        administrator.administrator_id = member.member_id
+	ORDER BY
+		administrator_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`section_student_view`
@@ -530,7 +542,7 @@ CREATE  OR REPLACE VIEW `section_student_view` AS
         AND section.section_id = section_student.section_id
         AND student.student_id = member.member_id
 	ORDER BY 
-		section_id, last_name, student_id;
+		start_date, section_id, last_name, first_name, student.student_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`assignment_full_view`
@@ -540,17 +552,26 @@ DROP VIEW IF EXISTS `physics_in_motion`.`assignment_full_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `assignment_full_view` AS
     SELECT 
-        section_name, professor.professor_id, first_name, last_name, school_name
-        tutorial_lab_name, introduction, web_link, assignment.*
+        section_name,
+        professor.professor_id,
+        concat(first_name, ' ', last_name) AS professor_name,
+        school_name,
+        tutorial_lab_name,
+        introduction,
+        web_link,
+        assignment.*
     FROM
-        section, assignment, tutorial_lab, professor, member
+        section,
+        assignment,
+        tutorial_lab,
+        professor,
+        member
     WHERE
         assignment.section_id = section.section_id
-        AND assignment.tutorial_lab_id = tutorial_lab.tutorial_lab_id
-        AND section.professor_id = professor.professor_id
-        AND professor.professor_id = member.member_id
-	ORDER BY 
-		section_id, assignment_id;
+            AND assignment.tutorial_lab_id = tutorial_lab.tutorial_lab_id
+            AND section.professor_id = professor.professor_id
+            AND professor.professor_id = member.member_id
+    ORDER BY section_id , date_due, assignment_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`section_professor_view`
@@ -560,15 +581,22 @@ DROP VIEW IF EXISTS `physics_in_motion`.`section_professor_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `section_professor_view` AS
     SELECT 
-        section.section_id, section_name, start_date, end_date, 
-        professor.professor_id, first_name, last_name, school_name
+        section.section_id,
+        section_name,
+        start_date,
+        end_date,
+        professor.professor_id,
+        concat(first_name, ' ', last_name) AS professor_name,
+        school_name
     FROM
-        section, professor, member
+        section,
+        professor,
+        member
     WHERE
         section.professor_id = professor.professor_id
-        AND professor.professor_id = member.member_id
+            AND professor.professor_id = member.member_id
 	ORDER BY 
-		section_id, last_name, professor_id;
+		start_date, section.section_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`tutorial_lab_rating_full_view`
@@ -578,14 +606,18 @@ DROP VIEW IF EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `tutorial_lab_rating_full_view` AS
     SELECT 
-        first_name, last_name, tutorial_lab_name, tutorial_lab_rating.*
+        concat(first_name, ' ', last_name) AS member_name,
+        tutorial_lab_name,
+        tutorial_lab_rating.*
     FROM
-        member, tutorial_lab_rating, tutorial_lab
+        member,
+        tutorial_lab_rating,
+        tutorial_lab
     WHERE
         tutorial_lab_rating.member_id = member.member_id
-        AND tutorial_lab_rating.tutorial_lab_id = tutorial_lab.tutorial_lab_id
-	ORDER BY 
-		date_posted;
+            AND tutorial_lab_rating.tutorial_lab_id = tutorial_lab.tutorial_lab_id
+    ORDER BY 
+		tutorial_lab.tutorial_lab_id, date_posted;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`notice_full_view`
@@ -595,15 +627,21 @@ DROP VIEW IF EXISTS `physics_in_motion`.`notice_full_view` ;
 USE `physics_in_motion`;
 CREATE  OR REPLACE VIEW `notice_full_view` AS
     SELECT 
-        to_section_id, to_member_id, notice.*, flag_read, flag_important
+        to_section_id,
+        to_member_id,
+        notice.*,
+        flag_read,
+        flag_important,
+        concat(first_name, ' ', last_name) AS from_member_name
     FROM
         notice 
-        INNER JOIN notice_to_member 
-			ON (notice.notice_id = notice_to_member.notice_id)
-		LEFT OUTER JOIN notice_to_section
-			ON (notice.notice_id = notice_to_section.notice_id)
-    ORDER BY 
-		to_member_id, to_section_id, date_sent;
+            JOIN
+		notice_to_member ON (notice.notice_id = notice_to_member.notice_id)
+            JOIN
+        member ON (notice.from_member_id = member.member_id)
+            LEFT OUTER JOIN
+        notice_to_section ON (notice.notice_id = notice_to_section.notice_id)
+    ORDER BY to_member_id , to_section_id , date_sent;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

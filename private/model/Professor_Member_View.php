@@ -1,22 +1,19 @@
 <?php
 
-class Professor_Member_View {
+class Professor_Member_View  {
 	
 	private $professor_id;	// key
-	private $first_name;
-	private $last_name;
+	private $professor_name;
 	private $email; 
 	private $school_name;
-	
 	
 	public function __construct() {}
 	
 
-	public function initialize($professor_id, $first_name, $last_name, $email, $school_name)
+	public function initialize($professor_id, $professor_name, $email, $school_name)
 	{
 		$this->set_professor_id($professor_id);
-		$this->set_first_name($first_name);
-		$this->set_last_name($last_name);
+		$this->set_professor_name($professor_name);
 		$this->set_email($email);
 		$this->set_school_name($school_name);		
 	}
@@ -32,24 +29,14 @@ class Professor_Member_View {
 		$this->professor_id = $professor_id;
 	}
 	
-	public function get_first_name()
+	public function get_professor_name()
 	{
-		return $this->first_name;
+		return $this->professor_name;
 	}
 	
-	public function set_first_name($first_name)
+	public function set_professor_name($professor_name)
 	{
-		$this->first_name = $first_name;
-	}
-	
-	public function get_last_name()
-	{
-		return $this->last_name;
-	}
-
-	public function set_last_name($last_name)
-	{
-		$this->last_name = $last_name;
+		$this->professor_name = $professor_name;
 	}
 	
 	public function get_email()

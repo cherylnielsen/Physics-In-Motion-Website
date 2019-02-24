@@ -64,10 +64,6 @@ class Member {
 		}
 	}
 	
-	public function get_first_name()
-	{
-		return $this->first_name;
-	}
 	
 	public function get_email()
 	{
@@ -78,7 +74,12 @@ class Member {
 	{
 		$this->email = $email;
 	}
-
+	
+	public function get_first_name()
+	{
+		return $this->first_name;
+	}
+	
 	public function set_first_name($first_name)
 	{
 		$this->first_name = $first_name;

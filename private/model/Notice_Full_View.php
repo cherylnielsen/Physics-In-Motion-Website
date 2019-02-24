@@ -1,13 +1,15 @@
 <?php
 
 
-class Notice_To_Member_View {
+class Notice_Full_View {
 	
 	private $notice_id; // key 
 	// the member who wrote and sent the notice
 	private $from_member_id;
 	// a member who received the notice
 	private $to_member_id;
+	// a section who received the notice
+	private $to_section_id;
 	
 	// the date the notice was sent
 	private $date_sent;
@@ -15,6 +17,8 @@ class Notice_To_Member_View {
 	private $notice_subject;
 	// the contents of the notice
 	private $notice_text;
+	// part of a notice chain
+	private $response_to_notice_id
 	
 	// flag for high priority by the member who wrote and sent the notice
 	private $sent_high_priority;
@@ -29,15 +33,20 @@ class Notice_To_Member_View {
 	public function __construct() {}
 	
 	public function initialize($notice_id, $from_member_id, $to_member_id, $date_sent, $notice_subject, $notice_text, 
-					$sent_high_priority = false, $flag_read = false, $flag_important = false, $flag_for_review = false, )
+								$response_to_notice_id = null, $to_section_id = null, $sent_high_priority = false, 
+								$flag_read = false, $flag_important = false, $flag_for_review = false, )
 	{
 		$this->notice_id = $notice_id;
 		$this->from_member_id = $from_member_id;
 		$this->to_member_id = $to_member_id;
+		$this->to_section_id = $to_section_id;
+		
 		$this->date_sent = $date_sent;
 		$this->notice_subject = $notice_subject;
 		$this->notice_text = $notice_text;
-		// the flags will all default to false if not set in the initialize parameters
+		$this->response_to_notice_id = $response_to_notice_id;
+		
+		// the flags will all default to false
 		$this->sent_high_priority = $sent_high_priority;
 		$this->flag_read = $flag_read;
 		$this->flag_important = $flag_important;
@@ -75,6 +84,16 @@ class Notice_To_Member_View {
 		$this->to_member_id = $to_member_id;
 	}
 	
+	public function get_to_section_id()
+	{
+		return $this->to_section_id;
+	}
+
+	public function set_to_section_id($to_section_id)
+	{
+		$this->to_section_id = $to_section_id;
+	}
+	
 	public function get_date_sent()
 	{
 		return $this->date_sent;
@@ -103,6 +122,16 @@ class Notice_To_Member_View {
 	public function set_notice_text($notice_text)
 	{
 		$this->notice_text = $notice_text;
+	}
+	
+	public function get_response_to_notice_id()
+	{
+		return $this->response_to_notice_id;
+	}
+
+	public function set_response_to_notice_id($response_to_notice_id)
+	{
+		$this->response_to_notice_id = $response_to_notice_id;
 	}
 	
 	public function get_sent_high_priority()
