@@ -22,7 +22,7 @@ class HomeworkController extends DatabaseController {
 				$homework = new Homework();
 				
 				$homework->initialize($row['homework_id'], $row['section_id'], $row['assignment_id'], $row['student_id'], 
-							$row['lab_summary'], $row['lab_data'], $row['graphs'], $row['math'], $row['hints'], $row['chat_session']
+							$row['lab_summary'], $row['lab_data'], $row['graphs'], $row['math'], $row['hints'], $row['chat_session'],
 							$row['homework_submission_id'], $row['homework_id'], $row['date_submitted'],
 							$row['points_earned'], $row['was_graded'], $row['hours']);
 				

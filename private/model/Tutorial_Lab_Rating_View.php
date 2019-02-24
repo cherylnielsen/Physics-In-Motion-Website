@@ -1,6 +1,6 @@
 <?php
 
-class Tutorial_Lab_Rating_Full_View {
+class Tutorial_Lab_Rating_View {
 	
 	private $tutorial_lab_rating_id; 
 	private $tutorial_lab_id;

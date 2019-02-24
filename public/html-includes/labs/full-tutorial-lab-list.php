@@ -17,7 +17,7 @@ if((!is_null($labs)) AND ($length_labs > 0))
 		echo
 		'<article class="labs">
 			
-			<h2>Tutorial ' . $lab->get_tutorial_lab_id() . ': ' . $lab->get_lab_name() . '</h2>';
+			<h2>Tutorial ' . $lab->get_tutorial_lab_id() . ': ' . $lab->get_tutorial_lab_name() . '</h2>';
 			
 		$status = $lab->get_lab_status();
 		switch(	$status )
@@ -33,11 +33,11 @@ if((!is_null($labs)) AND ($length_labs > 0))
 				break;
 		}
 			
-		echo '<img class="labs" src=" images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
-		<p>' . $lab->get_introduction() . '</p>
+		echo '<img class="labs" src=" images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
+		<p>' . $lab->get_tutorial_lab_introduction() . '</p>
 		<h2>Student Rating: ??</h2>
 		<h2>Professor Rating: ??</h2>
-		<a class="labs" href="tutorial-information-page.php?num=' . $lab->get_tutorial_lab_id() . '&lab=' . $lab->get_web_link() . '">Learn More</a>
+		<a class="labs" href="tutorial-information-page.php?num=' . $lab->get_tutorial_lab_id() . '&lab=' . $lab->get_tutorial_lab_web_link() . '">Learn More</a>
 		</article>';
 	}
 	

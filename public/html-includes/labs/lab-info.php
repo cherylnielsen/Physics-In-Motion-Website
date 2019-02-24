@@ -11,11 +11,11 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	$lab = array();
 	$lab = $labs[0];
 	
-	echo '<h1 class="labs">Tutorial ' . $lab->get_tutorial_lab_id() . ' : ' . $lab->get_lab_name() . '</h1>';
+	echo '<h1 class="labs">Tutorial ' . $lab->get_tutorial_lab_id() . ' : ' . $lab->get_tutorial_lab_name() . '</h1>';
 	
 	echo
 	'<div class="grid-lab-info">
-	<img class="lab-info" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
+	<img class="lab-info" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
 	<article class="lab-info">';
 		
 	$status = $lab->get_lab_status();
@@ -32,7 +32,7 @@ if((!is_null($labs)) AND (count($labs) > 0))
 			break;
 	}
 				
-	echo'<p>' . $lab->get_introduction() . '</p>
+	echo'<p>' . $lab->get_tutorial_lab_introduction() . '</p>
 	<h2>Average time to complete: ??</h2>
 	<h2>Student Rating: ??</h2>
 	<h2>Professor Rating: ??</h2>	
@@ -54,8 +54,8 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	</article>';
 	
 	echo 
-	'<img class="lab-info" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">
-	<img class="lab-info" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab">';
+	'<img class="lab-info" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
+	<img class="lab-info" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">';
 	
 	echo 
 	'<article class="lab-info">
