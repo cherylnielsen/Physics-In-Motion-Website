@@ -6,7 +6,7 @@ class HomeworkController extends DatabaseController {
 
 	
 	public function __construct(){}
-	//($homework_id, $section_id, $assignment_id, $student_id, $lab_summary, 
+	// ($homework_id, $section_id, $assignment_id, $student_id, $lab_summary, 
 	// $lab_data, $graphs, $math, $hints, $chat_session,
 	// $date_submitted, $points_earned, $was_graded, $hours)
 

@@ -6,6 +6,8 @@ class Notice_Full_View {
 	private $notice_id; // key 
 	// the member who wrote and sent the notice
 	private $from_member_id;
+	// the member who wrote and sent the notice
+	private $from_member_name;
 	// a member who received the notice
 	private $to_member_id;
 	// a section who received the notice
@@ -32,9 +34,9 @@ class Notice_Full_View {
 	
 	public function __construct() {}
 	
-	public function initialize($notice_id, $from_member_id, $to_member_id, $date_sent, $notice_subject, $notice_text, 
+	public function initialize($notice_id, $from_member_id, $from_member_name, $to_member_id, $date_sent, $notice_subject, $notice_text, 
 								$response_to_notice_id = null, $to_section_id = null, $sent_high_priority = false, 
-								$flag_read = false, $flag_important = false, $flag_for_review = false, )
+								$flag_read = false, $flag_important = false, $flag_for_review = false)
 	{
 		$this->notice_id = $notice_id;
 		$this->from_member_id = $from_member_id;

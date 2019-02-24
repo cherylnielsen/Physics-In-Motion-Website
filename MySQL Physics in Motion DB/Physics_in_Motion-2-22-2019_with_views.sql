@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab` (
   `tutorial_lab_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `tutorial_lab_name` VARCHAR(256) NOT NULL,
-  `web_link` VARCHAR(256) NOT NULL,
+  `tutorial_lab_web_link` VARCHAR(256) NOT NULL,
   `lab_status` SET('New', 'Updated', 'Available', 'Development', 'Discontinued') NOT NULL DEFAULT 'Development',
-  `introduction` VARCHAR(1000) NULL,
+  `tutorial_lab_introduction` VARCHAR(1000) NULL,
   `prerequisites` VARCHAR(1000) NULL,
   `key_topics` VARCHAR(1000) NULL,
   `key_equations` VARCHAR(1000) NULL,
@@ -39,7 +39,7 @@ ENGINE = InnoDB;
 
 CREATE UNIQUE INDEX `lab_name_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`tutorial_lab_name` ASC) VISIBLE;
 
-CREATE UNIQUE INDEX `web_link_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`web_link` ASC) VISIBLE;
+CREATE UNIQUE INDEX `web_link_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`tutorial_lab_web_link` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -223,7 +223,7 @@ DROP TABLE IF EXISTS `physics_in_motion`.`notice` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice` (
   `notice_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `from_member_id` INT UNSIGNED NOT NULL,
-  `response_to_notice_id` INT UNSIGNED NULL,
+  `response_to_notice_id` INT UNSIGNED NULL DEFAULT NULL,
   `date_sent` DATETIME NOT NULL,
   `notice_subject` VARCHAR(256) NOT NULL,
   `notice_text` VARCHAR(1000) NOT NULL,
@@ -454,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_student_view` (`section_
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`assignment_full_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_name` INT, `professor_id` INT, `professor_name` INT, `school_name` INT, `tutorial_lab_name` INT, `introduction` INT, `web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_name` INT, `professor_id` INT, `professor_name` INT, `school_name` INT, `tutorial_lab_name` INT, `tutorial_lab_introduction` INT, `tutorial_lab_web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_professor_view`
@@ -557,8 +557,8 @@ CREATE  OR REPLACE VIEW `assignment_full_view` AS
         concat(first_name, ' ', last_name) AS professor_name,
         school_name,
         tutorial_lab_name,
-        introduction,
-        web_link,
+        tutorial_lab_introduction,
+        tutorial_lab_web_link,
         assignment.*
     FROM
         section,

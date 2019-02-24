@@ -3,7 +3,6 @@
 class Student_Member_View  {
 	
 	private $student_id;	// key
-	private $first_name;
 	private $student_name;
 	private $email; 
 	private $school_name;

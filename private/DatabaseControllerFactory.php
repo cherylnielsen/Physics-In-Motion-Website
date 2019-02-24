@@ -91,6 +91,30 @@ class DatabaseControllerFactory
 			case "section_student" :
 				$controller = new SectionStudentController();
 				break;
+			case "student_member_view" :
+				$controller = new Student_Member_View_Controller();
+				break;
+			case "professor_member_view" :
+				$controller = new Professor_Member_View_Controller();
+				break;
+			case "administrator_member_view" :
+				$controller = new Administrator_Member_View_Controller();
+				break;
+			case "notice_full_view" :
+				$controller = new Notice_Full_View_Controller();
+				break;
+			case "assignment_full_view" :
+				$controller = new Assignment_Full_View_Controller();
+				break;
+			case "tutorial_lab_rating_full_view" :
+				$controller = new Tutorial_Lab_Rating_Full_View_Controller();
+				break;
+			case "section_student_view" :
+				$controller = new Section_Student_View_Controller();
+				break;
+			case "section_professor_view" :
+				$controller = new Section_Professor_View_Controller();
+				break;
 		}
 		
 		if(isset($controller))

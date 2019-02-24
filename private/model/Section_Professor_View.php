@@ -14,8 +14,8 @@ class Section_Professor_View {
 	public function __construct() {}
 	
 	
-	public function initialize($section_id, $section_name, $professor_id, $start_date, $end_date,
-								$professor_name, $school_name)
+	public function initialize($section_id, $section_name, $start_date, $end_date,
+								$professor_id, $professor_name, $school_name)
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
