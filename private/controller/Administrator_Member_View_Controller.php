@@ -16,13 +16,13 @@ class Administrator_Member_View_Controller extends DatabaseController
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$administrator = new Administrator_Member_View();
-				$administrator->set_administrator_id($row['administrator_id']);
-				$administrator->set_administrator_name($row['administrator_name']);
-				$administrator->set_email($row['email']);
-				$administrator->set_admin_type($row['admin_type']);
+				$administrator_member_view = new Administrator_Member_View();
+				$administrator_member_view->set_administrator_id($row['administrator_id']);
+				$administrator_member_view->set_administrator_name($row['administrator_name']);
+				$administrator_member_view->set_email($row['email']);
+				$administrator_member_view->set_admin_type($row['admin_type']);
 				// pushes each object onto the end of the array
-				$dataArray[] = $administrator;
+				$dataArray[] = $administrator_member_view;
 			}
 		}
 		else
@@ -35,11 +35,11 @@ class Administrator_Member_View_Controller extends DatabaseController
 
 
 	// updates the given key with the new value in the database
-	public function updateAttribute($administrator, $key)
+	public function updateAttribute($administrator_member_view, $key)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$administrator_id = $administrator->get_administrator_id();	
+		$administrator_id = $administrator_member_view->get_administrator_id();	
 		$table = $this->getTableName();
 		
 		switch ($key)
@@ -48,15 +48,15 @@ class Administrator_Member_View_Controller extends DatabaseController
 				return false;
 				break;
 			case 'administrator_name':
-				$value = $administrator->get_administrator_name();
+				$value = $administrator_member_view->get_administrator_name();
 				$query = "update $table set administrator_name = '$value' where administrator_id = '$administrator_id'";
 				break;
 			case 'admin_type':
-				$value = $administrator->get_admin_type();
+				$value = $administrator_member_view->get_admin_type();
 				$query = "update $table set admin_type = '$value' where administrator_id = '$administrator_id'";
 				break;
 			case 'email':
-				$value = $administrator->get_email();
+				$value = $administrator_member_view->get_email();
 				$query = "update $table set email = '$value' where administrator_id = '$administrator_id'";
 				break;
 		}
@@ -74,14 +74,14 @@ class Administrator_Member_View_Controller extends DatabaseController
 	}
 
 
-	public function saveNew(&$administrator)
+	public function saveNew(&$administrator_member_view)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$administrator_id = $administrator->get_administrator_id();
-		$administrator_name = $administrator->get_administrator_name();
-		$email = $administrator->get_email();
-		$admin_type = $administrator->get_admin_type();
+		$administrator_id = $administrator_member_view->get_administrator_id();
+		$administrator_name = $administrator_member_view->get_administrator_name();
+		$email = $administrator_member_view->get_email();
+		$admin_type = $administrator_member_view->get_admin_type();
 		$table = $this->getTableName();
 	
 		$query = "insert into $table (administrator_id, administrator_name, email, admin_type) 
@@ -100,11 +100,11 @@ class Administrator_Member_View_Controller extends DatabaseController
 	}
 
 
-	public function deleteFromDatabase($administrator)
+	public function deleteFromDatabase($administrator_member_view)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$administrator_id = $administrator->get_administrator_id();
+		$administrator_id = $administrator_member_view->get_administrator_id();
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where administrator_id = $administrator_id";

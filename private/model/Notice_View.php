@@ -1,7 +1,7 @@
 <?php
 
 
-class Notice_Full_View {
+class Notice_View {
 	
 	private $notice_id; // key 
 	// the member who wrote and sent the notice
@@ -20,7 +20,7 @@ class Notice_Full_View {
 	// the contents of the notice
 	private $notice_text;
 	// part of a notice chain
-	private $response_to_notice_id
+	private $response_to_notice_id;
 	
 	// flag for high priority by the member who wrote and sent the notice
 	private $sent_high_priority;

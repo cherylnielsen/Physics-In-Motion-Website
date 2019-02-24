@@ -14,14 +14,14 @@ if((!is_null($labs_new)) AND ($length_labs_new > 0))
 	for($i = 0; $i < $length_labs_new; $i++) 
 	{	
 		$lab = $labs_new[$i];
-		$web = $lab->get_web_link();
+		$web = $lab->get_tutorial_lab_web_link();
 		
 		echo '<article class="new-labs">
-			<h2>' . $lab->get_lab_name() . '</h2>
+			<h2>' . $lab->get_tutorial_lab_name() . '</h2>
 			<h1 class="new-status"> NEW! </h1>
-			<img class="new-labs" src="images/labs/' . $lab->get_web_link() . '.png" alt="image of the lab" height="100">
-			<p>' . $lab->get_introduction() . '</p>';
-		echo '<p><a href="tutorial-information-page.php?num=' . $lab->get_tutorial_lab_id() . '&lab=' . $lab->get_web_link() . '.png">Learn More</a></p>
+			<img class="new-labs" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab" height="100">
+			<p>' . $lab->get_tutorial_lab_introduction() . '</p>';
+		echo '<p><a href="tutorial-information-page.php?num=' . $lab->get_tutorial_lab_id() . '&lab=' . $lab->get_tutorial_lab_web_link() . '.png">Learn More</a></p>
 			</article><hr>';
 	}
 	

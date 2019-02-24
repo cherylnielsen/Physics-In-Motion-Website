@@ -1,6 +1,6 @@
 <?php
 
-class Assignment_Full_View {
+class Assignment_View {
 	
 	private $assignment_id; // key
 	private $section_id;	// key

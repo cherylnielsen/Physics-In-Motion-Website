@@ -2,7 +2,7 @@
 
 
 
-class TutorialLabRatingController extends DatabaseController {
+class Tutorial_Lab_Rating_View_Controller extends DatabaseController {
 
 	
 	public function __construct() {}
@@ -18,7 +18,7 @@ class TutorialLabRatingController extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
-				$rating = new Tutorial_Lab_Rating();
+				$rating = new Tutorial_Lab_Rating_View();
 				$rating->initialize($row['tutorial_lab_rating_id'], $row['tutorial_lab_id'], $row['member_id'], 
 							$row['tutorial_lab_name'], $row['member_name'], 
 							$row['date_posted'], $row['rating'], $row['comments'], $row['flag_for_review']);
@@ -36,17 +36,17 @@ class TutorialLabRatingController extends DatabaseController {
 	
 	
 	// The tutorial_lab_rating_id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$tutorial_lab_rating)
+	public function saveNew(&$tutorial_lab_rating_view)
 	{
 		$db_connection = get_db_connection();
 		$sucess = true;
-		$tutorial_lab_id = $tutorial_lab_rating->get_tutorial_lab_id();
-		$member_id = $tutorial_lab_rating->get_member_id();		
-		$tutorial_lab_name = $tutorial_lab_rating->get_tutorial_lab_name();
-		$member_name = $tutorial_lab_rating->get_member_name();		
-		$rating = $tutorial_lab_rating->get_rating();
-		$comments = $tutorial_lab_rating->get_comments();
-		$flag = $tutorial_lab_rating->get_flag_for_review();
+		$tutorial_lab_id = $tutorial_lab_rating_view->get_tutorial_lab_id();
+		$member_id = $tutorial_lab_rating_view->get_member_id();		
+		$tutorial_lab_name = $tutorial_lab_rating_view->get_tutorial_lab_name();
+		$member_name = $tutorial_lab_rating_view->get_member_name();		
+		$rating = $tutorial_lab_rating_view->get_rating();
+		$comments = $tutorial_lab_rating_view->get_comments();
+		$flag = $tutorial_lab_rating_view->get_flag_for_review();
 		$table = $this->getTableName();
 		
 		// The tutorial_lab_rating_id will be auto-generated.
@@ -75,11 +75,11 @@ class TutorialLabRatingController extends DatabaseController {
 	// updates the given key with the new value in the database
 	// ($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, $tutorial_lab_name, $member_name, 
 	//  $date_posted, $rating, $comments)
-	public function updateAttribute($tutorial_lab_rating, $key)
+	public function updateAttribute($tutorial_lab_rating_view, $key)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$tutorial_lab_rating_id = $tutorial_lab_rating->get_tutorial_lab_rating_id();	
+		$tutorial_lab_rating_id = $tutorial_lab_rating_view->get_tutorial_lab_rating_id();	
 		$table = $this->getTableName();
 		
 		switch ($key)
@@ -88,35 +88,35 @@ class TutorialLabRatingController extends DatabaseController {
 				return false;
 				break;
 			case 'tutorial_lab_id':
-				$value = $tutorial_lab_rating->get_tutorial_lab_id();
+				$value = $tutorial_lab_rating_view->get_tutorial_lab_id();
 				$query = "update $table set tutorial_lab_id = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'member_id':
-				$value = $tutorial_lab_rating->get_member_id();
+				$value = $tutorial_lab_rating_view->get_member_id();
 				$query = "update $table set member_id = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'tutorial_lab_name':
-				$value = $tutorial_lab_rating->get_tutorial_lab_name();
+				$value = $tutorial_lab_rating_view->get_tutorial_lab_name();
 				$query = "update $table set tutorial_lab_name = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'member_name':
-				$value = $tutorial_lab_rating->get_member_name();
+				$value = $tutorial_lab_rating_view->get_member_name();
 				$query = "update $table set member_name = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'date_posted':	
-				$value = $tutorial_lab_rating->get_date_posted();
+				$value = $tutorial_lab_rating_view->get_date_posted();
 				$query = "update $table set date_posted = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'rating':	
-				$value = $tutorial_lab_rating->get_rating();
+				$value = $tutorial_lab_rating_view->get_rating();
 				$query = "update $table set rating = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'comments':
-				$value = $tutorial_lab_rating->get_comments();
+				$value = $tutorial_lab_rating_view->get_comments();
 				$query = "update $table set comments = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 			case 'flag_for_review':
-				$value = $tutorial_lab_rating->get_flag_for_review();
+				$value = $tutorial_lab_rating_view->get_flag_for_review();
 				$query = "update $table set flag_for_review = '$value' where tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
 				break;
 		}
@@ -134,11 +134,11 @@ class TutorialLabRatingController extends DatabaseController {
 	}
 
 	
-	public function deleteFromDatabase($tutorial_lab_rating)
+	public function deleteFromDatabase($tutorial_lab_rating_view)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$tutorial_lab_rating_id = $tutorial_lab_rating->get_tutorial_lab_rating_id();
+		$tutorial_lab_rating_id = $tutorial_lab_rating_view->get_tutorial_lab_rating_id();
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where tutorial_lab_rating_id = $tutorial_lab_rating_id";

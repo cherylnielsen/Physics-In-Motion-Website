@@ -452,9 +452,9 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator_member_view` (`adm
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_student_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `student_id` INT, `first_name` INT, `last_name` INT, `school_name` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`assignment_full_view`
+-- Placeholder table for view `physics_in_motion`.`assignment_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_name` INT, `professor_id` INT, `professor_name` INT, `school_name` INT, `tutorial_lab_name` INT, `tutorial_lab_introduction` INT, `tutorial_lab_web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_view` (`section_name` INT, `professor_id` INT, `professor_name` INT, `school_name` INT, `tutorial_lab_name` INT, `tutorial_lab_introduction` INT, `tutorial_lab_web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_professor_view`
@@ -462,14 +462,14 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_full_view` (`section_
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_professor_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `professor_name` INT, `school_name` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`tutorial_lab_rating_full_view`
+-- Placeholder table for view `physics_in_motion`.`tutorial_lab_rating_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view` (`member_name` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_view` (`member_name` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`notice_full_view`
+-- Placeholder table for view `physics_in_motion`.`notice_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_full_view` (`to_section_id` INT, `to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `flag_read` INT, `flag_important` INT, `from_member_name` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_view` (`to_section_id` INT, `to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `flag_read` INT, `flag_important` INT, `from_member_name` INT);
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`student_member_view`
@@ -545,12 +545,12 @@ CREATE  OR REPLACE VIEW `section_student_view` AS
 		start_date, section_id, last_name, first_name, student.student_id;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`assignment_full_view`
+-- View `physics_in_motion`.`assignment_view`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`assignment_full_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`assignment_full_view` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`assignment_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`assignment_view` ;
 USE `physics_in_motion`;
-CREATE  OR REPLACE VIEW `assignment_full_view` AS
+CREATE  OR REPLACE VIEW `assignment_view` AS
     SELECT 
         section_name,
         professor.professor_id,
@@ -599,12 +599,12 @@ CREATE  OR REPLACE VIEW `section_professor_view` AS
 		start_date, section.section_id;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`tutorial_lab_rating_full_view`
+-- View `physics_in_motion`.`tutorial_lab_rating_view`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`tutorial_lab_rating_full_view` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab_rating_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`tutorial_lab_rating_view` ;
 USE `physics_in_motion`;
-CREATE  OR REPLACE VIEW `tutorial_lab_rating_full_view` AS
+CREATE  OR REPLACE VIEW `tutorial_lab_rating_view` AS
     SELECT 
         concat(first_name, ' ', last_name) AS member_name,
         tutorial_lab_name,
@@ -620,12 +620,12 @@ CREATE  OR REPLACE VIEW `tutorial_lab_rating_full_view` AS
 		tutorial_lab.tutorial_lab_id, date_posted;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`notice_full_view`
+-- View `physics_in_motion`.`notice_view`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`notice_full_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`notice_full_view` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`notice_view` ;
 USE `physics_in_motion`;
-CREATE  OR REPLACE VIEW `notice_full_view` AS
+CREATE  OR REPLACE VIEW `notice_view` AS
     SELECT 
         to_section_id,
         to_member_id,

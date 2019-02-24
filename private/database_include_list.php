@@ -12,7 +12,6 @@ require_once('model/Administrator.php');
 require_once('model/Professor.php');
 require_once('model/Student.php');
 require_once('model/Assignment.php');
-require_once('model/Homework_Submission.php');
 require_once('model/Homework.php');
 require_once('model/NoticeToMember.php');
 require_once('model/NoticeToSection.php');
@@ -34,7 +33,6 @@ require_once('controller/AdministratorController.php');
 require_once('controller/ProfessorController.php');
 require_once('controller/StudentController.php');
 require_once('controller/AssignmentController.php');
-require_once('controller/HomeworkSubmissionController.php');
 require_once('controller/HomeworkController.php');
 require_once('controller/NoticeToMemberController.php');
 require_once('controller/NoticeToSectionController.php');
@@ -50,8 +48,8 @@ require_once('controller/TutorialLabRatingController.php');
 
 // The model classes for each of the database views
 require_once('model/Tutorial_Lab_Rating_View.php');
-require_once('model/Assignment_Full_View.php');
-require_once('model/Notice_Full_View.php');
+require_once('model/Assignment_View.php');
+require_once('model/Notice_View.php');
 require_once('model/Section_Student_View.php');
 require_once('model/Section_Professor_View.php');
 require_once('model/Professor_Member_View.php');
@@ -61,8 +59,8 @@ require_once('model/Administrator_Member_View.php');
 
 // The controller classes for each of the database views
 require_once('controller/Tutorial_Lab_Rating_View_Controller.php');
-require_once('controller/Assignment_Full_View_Controller.php');
-require_once('controller/Notice_Full_View_Controller.php');
+require_once('controller/Assignment_View_Controller.php');
+require_once('controller/Notice_View_Controller.php');
 require_once('controller/Section_Student_View_Controller.php');
 require_once('controller/Section_Professor_View_Controller.php');
 require_once('controller/Professor_Member_View_Controller.php');
