@@ -6,7 +6,8 @@ class TutorialLabController extends DatabaseController {
 	
 	
 	public function __construct() {}
-	//($tutorial_lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
+	// $tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, $lab_status, 
+	// $tutorial_lab_introduction, $prerequisites, $key_topics, 
 	// $key_equations, $description, $instructions, $date_first_available)
 
 	
@@ -19,7 +20,7 @@ class TutorialLabController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$lab = new Tutorial_Lab();
-				$lab->initialize($row['tutorial_lab_id'], $row['lab_name'], $row['web_link'], $row['lab_status'], $row['introduction'], 
+				$lab->initialize($row['tutorial_lab_id'], $row['tutorial_lab_name'], $row['tutorial_lab_web_link'], $row['lab_status'], $row['tutorial_lab_introduction'], 
 							$row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['description'], 
 							$row['instructions'], $row['date_first_available']);
 				$dataArray[] = $lab;
@@ -46,10 +47,10 @@ class TutorialLabController extends DatabaseController {
 	{
 		$db_connection = get_db_connection();
 		$sucess = true;
-		$lab_name = $tutorial_lab->get_lab_name();
-		$web_link = $tutorial_lab->get_web_link();
+		$tutorial_lab_name = $tutorial_lab->get_tutorial_lab_name();
+		$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
 		$lab_status = $tutorial_lab->get_lab_status();
-		$introduction = $tutorial_lab->get_introduction();
+		$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
 		$prerequisites = $tutorial_lab->get_prerequisites();
 		$key_topics = $tutorial_lab->get_key_topics();
 		$key_equations = $tutorial_lab->get_key_equations();
@@ -59,9 +60,9 @@ class TutorialLabController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		// The id will be auto-generated
-		$query = "insert into tutorial_lab (lab_name, web_link, lab_status, introduction, prerequisites, 
+		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, lab_status, tutorial_lab_introduction, prerequisites, 
 				key_topics, key_equations, description, instructions, date_first_available) 
-		values ('$lab_name', '$web_link', '$lab_status', '$introduction', '$prerequisites', '$key_topics', 
+		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', '$tutorial_lab_introduction', '$prerequisites', '$key_topics', 
 				'$key_equations', '$description', '$instructions', '$date_first_available')";
 		$result = mysqli_query($db_connection, $query);
 
@@ -85,7 +86,7 @@ class TutorialLabController extends DatabaseController {
 	
 	
 	// updates the given key with the new value in the database
-	//($tutorial_lab_id, $lab_name, $web_link, $lab_status, $introduction, $prerequisites, $key_topics, 
+	//($tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, $lab_status, $tutorial_lab_introduction, $prerequisites, $key_topics, 
 	// $key_equations, $description, $instructions, $date_first_available)
 	public function updateAttribute($tutorial_lab, $key)
 	{
@@ -99,21 +100,21 @@ class TutorialLabController extends DatabaseController {
 			case 'tutorial_lab_id':
 				return false;
 				break;
-			case 'lab_name':
-				$value = $tutorial_lab->get_lab_name();
-				$query = "update $table set lab_name = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
+			case 'tutorial_lab_name':
+				$value = $tutorial_lab->get_tutorial_lab_name();
+				$query = "update $table set tutorial_lab_name = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
 				break;
-			case 'web_link':	
-				$value = $tutorial_lab->get_web_link();
-				$query = "update $table set web_link = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
+			case 'tutorial_lab_web_link':	
+				$value = $tutorial_lab->get_tutorial_lab_web_link();
+				$query = "update $table set tutorial_lab_web_link = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
 				break;
 			case 'lab_status':
 				$value = $tutorial_lab->get_lab_status();
 				$query = "update $table set lab_status = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
 				break;
-			case 'introduction':
-				$value = $tutorial_lab->get_introduction();
-				$query = "update $table set introduction = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
+			case 'tutorial_lab_introduction':
+				$value = $tutorial_lab->get_tutorial_lab_introduction();
+				$query = "update $table set tutorial_lab_introduction = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
 				break;
 			case 'prerequisites':
 				$value = $tutorial_lab->get_prerequisites();

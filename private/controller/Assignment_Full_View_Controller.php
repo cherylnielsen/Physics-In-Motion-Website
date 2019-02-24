@@ -1,12 +1,15 @@
 <?php
 
-
+/***
+$assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
+$assignment_name, $date_due, $points_possible, $notes,
+$section_name, $professor_id, $professor_name, $school_name,
+$tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
+***/
 
 class AssignmentController extends DatabaseController {
 
-	
 	public function __construct() {}
-	//($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, $date_due, $points_possible, $notes)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,8 +21,10 @@ class AssignmentController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$assignment = new Assignment();
-				$assignment->initialize($row['assignment_id'], $row['section_id'], $row['tutorial_lab_id'],   
-						$row['date_assigned'], $row['assignment_name'], $row['date_due'], $row['points_possible'], $row['notes']);
+				$assignment->initialize($row['assignment_id'], $row['section_id'], $row['tutorial_lab_id'],  $row['date_assigned'], 
+						$row['assignment_name'], $row['date_due'], $row['points_possible'], $row['notes'],
+						$row['section_name'], $row['professor_id'], $row['professor_name'],  $row['school_name'], 
+						$row['tutorial_lab_name'], $row['tutorial_lab_introduction'], $row['tutorial_lab_web_link']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment;
 			}	
@@ -48,9 +53,23 @@ class AssignmentController extends DatabaseController {
 		$notes = $assignment->get_notes();
 		$table = $this->getTableName();
 		
+		$section_name = $assignment->get_section_name();
+		$professor_id = $assignment->get_professor_id();
+		$professor_name = $assignment->get_professor_name();
+		$school_name = $assignment->get_school_name();
+		$tutorial_lab_name = $assignment->get_tutorial_lab_name();
+		$tutorial_lab_introduction = $assignment->get_tutorial_lab_introduction();
+		$tutorial_lab_web_link = $assignment->get_tutorial_lab_web_link();
+		
 		// The assignment_id will be auto-generated.
-		$query = "insert into $table (section_id, tutorial_lab_id, assignment_name, date_assigned, date_due, points_possible, notes) 
-			values ('$section_id', '$tutorial_lab_id', '$assignment_name', '$date_assigned', '$date_due', '$points_possible', '$notes')";
+		$query = "insert into $table (assignment_id, section_id, tutorial_lab_id, date_assigned, 
+									assignment_name, date_due, points_possible, notes,
+									section_name, professor_id, professor_name, school_name,
+									tutorial_lab_name, tutorial_lab_introduction, tutorial_lab_web_link) 
+			values ('$assignment_id', '$section_id', '$tutorial_lab_id', '$date_assigned', 
+						'$assignment_name', '$date_due', '$points_possible', '$notes',
+						'$section_name', '$professor_id', '$professor_name', '$school_name',
+						'$tutorial_lab_name', '$tutorial_lab_introduction', '$tutorial_lab_web_link')";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -71,8 +90,15 @@ class AssignmentController extends DatabaseController {
 	}
 
 
-	// updates the given key with the new value in the database 
-	//($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, $date_due, $points_possible, $notes)
+	
+	/***
+		updates the given key with the new value in the database 
+	
+		$assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
+		$assignment_name, $date_due, $points_possible, $notes,
+		$section_name, $professor_id, $professor_name, $school_name,
+		$tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
+	***/
 	public function updateAttribute($assignment, $key)
 	{
 		$db_connection = get_db_connection();
@@ -122,6 +148,41 @@ class AssignmentController extends DatabaseController {
 				$query = "update $table set notes = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
+			case 'section_name':
+				$value = $assignment->get_section_name();	
+				$query = "update $table set section_name = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'professor_id':
+				$value = $assignment->get_professor_id();	
+				$query = "update $table set professor_id = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'professor_name':
+				$value = $assignment->get_professor_name();	
+				$query = "update $table set professor_name = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'school_name':
+				$value = $assignment->get_school_name();	
+				$query = "update $table set school_name = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'tutorial_lab_name':
+				$value = $assignment->get_tutorial_lab_name();	
+				$query = "update $table set tutorial_lab_name = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'tutorial_lab_introduction':
+				$value = $assignment->get_tutorial_lab_introduction();	
+				$query = "update $table set tutorial_lab_introduction = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'tutorial_lab_web_link':
+				$value = $assignment->get_tutorial_lab_web_link();	
+				$query = "update $table set tutorial_lab_web_link = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;				
 		}
 		
 		$result = mysqli_query($db_connection, $query);

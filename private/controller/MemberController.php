@@ -1,11 +1,10 @@
 <?php
 
-
 class MemberController extends DatabaseController {
 
-	
 	public function __construct() {}
-	//($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff,
+	// ($member_id, $member_type, $member_name, $member_password, 
+	// $date_registered, $last_login, $last_logoff,
 	// $first_name, $last_name, $email, $registration_complete)
 
 	protected function getData($db_result, $db_connection)

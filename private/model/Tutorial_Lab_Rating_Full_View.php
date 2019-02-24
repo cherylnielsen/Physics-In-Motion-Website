@@ -1,9 +1,11 @@
 <?php
 
-class Tutorial_Lab_Rating {
+class Tutorial_Lab_Rating_Full_View {
 	
-	private $tutorial_lab_rating_id; // key
+	private $tutorial_lab_rating_id; 
 	private $tutorial_lab_id;
+	private $tutorial_lab_name;
+	private $member_name;	
 	private $member_id;
 	private $date_posted;
 	private $rating;
@@ -12,11 +14,14 @@ class Tutorial_Lab_Rating {
 	
 	public function __construct() {}
 	
-	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, $date_posted, 
+	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, 
+					$tutorial_lab_name, $member_name, $date_posted, 
 					$rating, $comments, $flag_for_review = false)
 	{
 		$this->tutorial_lab_rating_id = $tutorial_lab_rating_id;
 		$this->tutorial_lab_id = $tutorial_lab_id;
+		$this->tutorial_lab_name = $tutorial_lab_name;
+		$this->member_name = $member_name;
 		$this->member_id = $member_id;
 		$this->date_posted = $date_posted;
 		$this->rating = $rating;
@@ -52,6 +57,26 @@ class Tutorial_Lab_Rating {
 	public function set_member_id($member_id)
 	{
 		$this->member_id = $member_id;
+	}
+	
+	public function get_tutorial_lab_name()
+	{
+		return $this->tutorial_lab_name;
+	}
+
+	public function set_tutorial_lab_name($tutorial_lab_name)
+	{
+		$this->tutorial_lab_name = $tutorial_lab_name;
+	}
+	
+	public function get_member_name()
+	{
+		return $this->member_name;
+	}
+
+	public function set_member_name($member_name)
+	{
+		$this->member_name = $member_name;
 	}
 	
 	public function get_date_posted()

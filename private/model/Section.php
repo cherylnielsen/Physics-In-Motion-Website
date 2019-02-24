@@ -1,7 +1,5 @@
 <?php
 
-require_once('Section_Student.php');
-
 
 class Section {
 	

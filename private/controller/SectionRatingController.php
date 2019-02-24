@@ -6,7 +6,7 @@ class SectionRatingController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//($section_rating_id, $lab_id, $member_id, $date_posted, $rating, $comments, $flag_for_review)
+	//($section_rating_id, $section_id, $date_posted, $rating, $comments, $flag_for_review)
 	
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,7 @@ class SectionRatingController extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$rating = new Section_Rating();
-				$rating->initialize($row['section_rating_id'], $row['lab_id'], $row['member_id'], 
+				$rating->initialize($row['section_rating_id'], $row['section_id'],  
 							$row['date_posted'], $row['rating'], $row['comments'], $row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $rating;
@@ -38,16 +38,15 @@ class SectionRatingController extends DatabaseController {
 	{
 		$db_connection = get_db_connection();
 		$sucess = true;
-		$lab_id = $rating->get_lab_id();
-		$member_id = $rating->get_member_id();
+		$section_id = $rating->get_section_id();
 		$rating = $rating->get_rating();
 		$comments = $rating->get_comments();
 		$flag = $rating->get_flag_for_review();
 		$table = $this->getTableName();
 		
 		// The section_rating_id will be auto-generated.
-		$query = "insert into $table (lab_id, member_id, date_posted, rating, comments, flag_for_review) 
-				values('$lab_id', '$member_id', 'now()', '$rating', '$comments', '$flag')";
+		$query = "insert into $table (section_id, date_posted, rating, comments, flag_for_review) 
+				values('$section_id', 'now()', '$rating', '$comments', '$flag')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -69,7 +68,7 @@ class SectionRatingController extends DatabaseController {
 
 
 	// updates the given key with the new value in the database
-	//($section_rating_id, $lab_id, $member_id, $date_posted, $rating, $comments)
+	//($section_rating_id, $section_id, $member_id, $date_posted, $rating, $comments)
 	public function updateAttribute($lab_rating, $key)
 	{
 		$db_connection = get_db_connection();
@@ -80,9 +79,11 @@ class SectionRatingController extends DatabaseController {
 		switch ($key)
 		{
 			case 'section_rating_id':
-			case 'lab_id':
-			case 'member_id':
 				return false;
+				break;
+			case 'section_id':
+				$value = $lab_rating->get_section_id();	
+				$query = "update $table set section_id = '$value' where section_rating_id = '$section_rating_id'";
 				break;
 			case 'date_posted':
 				$value = $lab_rating->get_date_posted();	

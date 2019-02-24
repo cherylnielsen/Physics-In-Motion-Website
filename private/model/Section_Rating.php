@@ -4,7 +4,6 @@ class Section_Rating {
 	
 	private $section_rating_id; // key
 	private $section_id;
-	private $member_id;
 	private $date_posted;
 	private $rating;
 	private $comments;
@@ -12,7 +11,7 @@ class Section_Rating {
 	
 	public function __construct() {}
 	
-	public function initialize($section_rating_id, $section_id, $member_id, $date_posted, 
+	public function initialize($section_rating_id, $section_id, $date_posted, 
 					$rating, $comments, $flag_for_review = false)
 	{
 		$this->section_rating_id = $section_rating_id;
@@ -42,16 +41,6 @@ class Section_Rating {
 	public function set_section_id($section_id)
 	{
 		$this->section_id = $section_id;
-	}
-	
-	public function get_member_id()
-	{
-		return $this->member_id;
-	}
-
-	public function set_member_id($member_id)
-	{
-		$this->member_id = $member_id;
 	}
 	
 	public function get_date_posted()

@@ -6,7 +6,9 @@ class HomeworkController extends DatabaseController {
 
 	
 	public function __construct(){}
-	//($homework_id, $assignment_id, $student_id, $lab_summary, $lab_data, $graphs, $math, $hints, $chat_session)
+	// ($homework_id, $section_id, $assignment_id, $student_id, $lab_summary, 
+	// $lab_data, $graphs, $math, $hints, $chat_session,
+	// $date_submitted, $points_earned, $was_graded, $hours)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,8 +20,12 @@ class HomeworkController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$homework = new Homework();
-				$homework->initialize($row['homework_id'], $row['assignment_id'], $row['student_id'], $row['lab_summary'], $row['lab_data'], 
-							$row['graphs'], $row['math'], $row['hints'], $row['chat_session']);
+				
+				$homework->initialize($row['homework_id'], $row['section_id'], $row['assignment_id'], $row['student_id'], 
+							$row['lab_summary'], $row['lab_data'], $row['graphs'], $row['math'], $row['hints'], $row['chat_session']
+							$row['homework_submission_id'], $row['homework_id'], $row['date_submitted'],
+							$row['points_earned'], $row['was_graded'], $row['hours']);
+				
 				// pushes each object onto the end of the array
 				$dataArray[] = $homework;
 			}		
@@ -38,6 +44,7 @@ class HomeworkController extends DatabaseController {
 	{
 		$db_connection = get_db_connection();
 		$sucess = true;
+		$section_id = $homework->get_section_id();
 		$assignment_id = $homework->get_assignment_id();
 		$student_id = $homework->get_member_id(); 
 		$lab_summary = $homework->get_lab_summary(); 
@@ -46,11 +53,19 @@ class HomeworkController extends DatabaseController {
 		$math = $homework->get_math(); 
 		$hints = $homework->get_hints(); 
 		$chat_session = $homework->get_chat_session();
+		$date_submitted = $submission->get_date_submitted();
+		$points_earned = $submission->get_points_earned();
+		$was_graded = $submission->get_was_graded();
+		$hours = $submission->get_hours();
 		
 		$table = $this->getTableName();
-		$query = "insert into $table (assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session) 
-		values ('$assignment_id', '$student_id', '$lab_summary', 
-					'$lab_data', '$graphs', '$math', '$hints', '$chat_session')";
+
+		$query = "insert into $table (section_id, assignment_id, student_id, lab_summary, lab_data, 
+						graphs, math, hints, chat_session, date_submitted, points_earned, was_graded, hours) 
+				values ('$section_id', '$assignment_id', '$student_id', '$lab_summary', '$lab_data', 
+						'$graphs', '$math', '$hints', '$chat_session', '$date_submitted', 
+						'$points_earned', '$was_graded', '$hours')";
+						
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -86,13 +101,17 @@ class HomeworkController extends DatabaseController {
 			case 'homework_id':
 				return false;
 				break;
-			case 'student_id':
-				$value = $homework->get_student_id();	
-				$query = "update $table set student_id = '$value' where homework_id = '$homework_id'";
+			case 'section_id':
+				$value = $homework->get_section_id();	
+				$query = "update $table set section_id = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'assignment_id':
 				$value = $homework->get_assignment_id();	
 				$query = "update $table set assignment_id = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'student_id':
+				$value = $homework->get_student_id();	
+				$query = "update $table set student_id = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'lab_summary':
 				$value = $homework->get_lab_summary();	
@@ -117,6 +136,22 @@ class HomeworkController extends DatabaseController {
 			case 'chat_session':
 				$value = $homework->get_chat_session();	
 				$query = "update $table set chat_session = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'date_submitted':
+				$value = $homework->get_date_submitted();	
+				$query = "update $table set date_submitted = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'points_earned':
+				$value = $homework->get_points_earned();	
+				$query = "update $table set points_earned = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'was_graded':
+				$value = $homework->get_was_graded();	
+				$query = "update $table set was_graded = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'hours':
+				$value = $homework->get_hours();	
+				$query = "update $table set hours = '$value' where homework_id = '$homework_id'";
 				break;
 		}
 		
