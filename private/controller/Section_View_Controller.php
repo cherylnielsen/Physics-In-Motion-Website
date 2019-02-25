@@ -2,10 +2,10 @@
 
 
 
-class Section_Student_View_Controller extends DatabaseController {
+class Section_View_Controller extends DatabaseController {
 
 	public function __construct(){}
-	//($section_id, $section_name, $start_date, $end_date, $student_id, $first_name, $last_name, $school_name)
+	//($section_id, $section_name, $start_date, $end_date, $professor_id, $professor_name, $school_name)
 	
 	protected function getData($db_result, $db_connection)
 	{
@@ -15,11 +15,11 @@ class Section_Student_View_Controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section_student_view = new Section_Student_View();
-				$section_student_view->initialize($row['section_id'], $row['section_name'], $row['start_date'], $row['end_date'], 
-										$row['student_id'], $row['first_name'], $row['last_name'], $row['school_name']);
+				$section_professor_view = new Section_View();
+				$section_professor_view->initialize($row['section_id'], $row['section_name'], $row['start_date'], $row['end_date'], 
+										$row['professor_id'], $row['professor_name'], $row['school_name']);
 				// pushes each object onto the end of the array
-				$dataArray[] = $section_student_view;
+				$dataArray[] = $section_professor_view;
 			}
 		}
 		else
@@ -32,29 +32,28 @@ class Section_Student_View_Controller extends DatabaseController {
 
 
 	// The id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$section_student_view)
+	public function saveNew(&$section_professor_view)
 	{
 		$sucess = true;
 		$db_connection = get_db_connection();
-		$section_name = $section_student_view->get_section_name();
-		$text = $section_student_view->get_start_date();
-		$end_date = $section_student_view->get_end_date();
-		$student_id = $section_student_view->get_student_id();
-		$first_name = $section_student_view->get_first_name();
-		$last_name = $section_student_view->get_last_name();
-		$school_name = $section_student_view->get_school_name();
+		$section_name = $section_professor_view->get_section_name();
+		$text = $section_professor_view->get_start_date();
+		$end_date = $section_professor_view->get_end_date();
+		$professor_id = $section_professor_view->get_professor_id();
+		$professor_name = $section_professor_view->get_professor_name();
+		$school_name = $section_professor_view->get_school_name();
 		$table = $this->getTableName();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into $table (section_name, start_date, end_date, student_id, first_name, last_name, school_name) 
-				values('$section_name', '$text', '$end_date', '$student_id', '$first_name', '$last_name', '$school_name')";
+		$query = "insert into $table (section_name, start_date, end_date, professor_id, professor_name, school_name) 
+				values('$section_name', '$text', '$end_date', '$professor_id', '$professor_name', '$school_name')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
 			$section_id = mysql_insert_id($db_connection);
-			$section_student_view->set_section_id(section_id);				
+			$section_professor_view->set_section_id(section_id);				
 		}
 		else
 		{
@@ -71,11 +70,11 @@ class Section_Student_View_Controller extends DatabaseController {
 	
 	// updates the given key with the new value in the database
 	//($section_id, $section_name, $start_date, $end_date)
-	public function updateAttribute($section_student_view, $key)
+	public function updateAttribute($section_professor_view, $key)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$section_id = $section_student_view->get_section_id();	
+		$section_id = $section_professor_view->get_section_id();	
 		$table = $this->getTableName();
 		
 		switch ($key)
@@ -84,31 +83,27 @@ class Section_Student_View_Controller extends DatabaseController {
 				return false;
 				break;
 			case 'section_name':
-				$value = $section_student_view->get_section_name();	
+				$value = $section_professor_view->get_section_name();	
 				$query = "update $table set section_name = '$value' where section_id = '$section_id'";
 				break;
 			case 'start_date':
-				$value = $section_student_view->get_start_date();	
+				$value = $section_professor_view->get_start_date();	
 				$query = "update $table set start_date = '$value' where section_id = '$section_id'";
 				break;
 			case 'end_date':
-				$value = $section_student_view->get_end_date();	
+				$value = $section_professor_view->get_end_date();	
 				$query = "update $table set end_date = '$value' where section_id = '$section_id'";
 				break;
-			case 'student_id':
-				$value = $section_student_view->get_student_id();	
-				$query = "update $table set student_id = '$value' where section_id = '$section_id'";
+			case 'professor_id':
+				$value = $section_professor_view->get_professor_id();	
+				$query = "update $table set professor_id = '$value' where section_id = '$section_id'";
 				break;
-			case 'first_name':
-				$value = $section_student_view->get_first_name();	
-				$query = "update $table set first_name = '$value' where section_id = '$section_id'";
-				break;
-			case 'last_name':
-				$value = $section_student_view->get_last_name();	
-				$query = "update $table set last_name = '$value' where section_id = '$section_id'";
+			case 'professor_name':
+				$value = $section_professor_view->get_professor_name();	
+				$query = "update $table set professor_name = '$value' where section_id = '$section_id'";
 				break;
 			case 'school_name':
-				$value = $section_student_view->get_school_name();	
+				$value = $section_professor_view->get_school_name();	
 				$query = "update $table set school_name = '$value' where section_id = '$section_id'";
 				break;
 		}
@@ -126,11 +121,11 @@ class Section_Student_View_Controller extends DatabaseController {
 	}
  
 
-	public function deleteFromDatabase($section_student_view)
+	public function deleteFromDatabase($section_professor_view)
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$section_id = $section_student_view->get_section_id();
+		$section_id = $section_professor_view->get_section_id();
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where section_id = $section_id";

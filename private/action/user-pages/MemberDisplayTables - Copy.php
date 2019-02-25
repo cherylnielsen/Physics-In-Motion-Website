@@ -1,6 +1,6 @@
 <?php
 
-class Member_Display_Tables
+class MemberDisplayTables
 {
 	
 	public function __construct() {}

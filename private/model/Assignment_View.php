@@ -37,7 +37,7 @@ class Assignment_View {
 		$this->points_possible = $points_possible;
 		$this->notes = $notes;
 		
-		$this->section_name($section_name);
+		$this->set_section_name($section_name);
 		$this->set_professor_id($professor_id);
 		$this->set_professor_name($professor_name);
 		$this->set_school_name($school_name);

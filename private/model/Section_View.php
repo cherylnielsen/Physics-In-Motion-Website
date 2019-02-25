@@ -1,7 +1,7 @@
 <?php
 
 
-class Section_Professor_View {
+class Section_View {
 	
 	private $section_id;
 	private $section_name;

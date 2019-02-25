@@ -1,7 +1,7 @@
 <?php
 
 
-class Section_Student_View {
+class Section_List_Of_Students_View {
 	
 	private $section_id;
 	private $section_name;

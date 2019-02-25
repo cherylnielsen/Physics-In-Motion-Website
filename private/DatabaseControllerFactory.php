@@ -49,9 +49,6 @@ class DatabaseControllerFactory
 			case "homework" :
 				$controller = new HomeworkController();
 				break;
-			case "homework_submission" :
-				$controller = new HomeworkSubmissionController();
-				break;
 			case "full_homework" :
 				$controller = new Full_HomeworkController();
 				break;
@@ -100,20 +97,20 @@ class DatabaseControllerFactory
 			case "administrator_member_view" :
 				$controller = new Administrator_Member_View_Controller();
 				break;
-			case "notice_full_view" :
-				$controller = new Notice_Full_View_Controller();
+			case "notice_view" :
+				$controller = new Notice_View_Controller();
 				break;
-			case "assignment_full_view" :
-				$controller = new Assignment_Full_View_Controller();
+			case "assignment_view" :
+				$controller = new Assignment_View_Controller();
 				break;
-			case "tutorial_lab_rating_full_view" :
-				$controller = new Tutorial_Lab_Rating_Full_View_Controller();
+			case "tutorial_lab_rating_view" :
+				$controller = new Tutorial_Lab_Rating_View_Controller();
 				break;
-			case "section_student_view" :
-				$controller = new Section_Student_View_Controller();
+			case "section_view" :
+				$controller = new Section_View_Controller();
 				break;
-			case "section_professor_view" :
-				$controller = new Section_Professor_View_Controller();
+			case "section_list_of_students_view" :
+				$controller = new Section_List_Of_Students_View_Controller();
 				break;
 		}
 		

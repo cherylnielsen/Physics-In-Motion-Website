@@ -1,6 +1,6 @@
 <?php
 
-class Member_Display_Summaries
+class MemberDisplaySummaries
 {
 	
 	public function __construct() {}
