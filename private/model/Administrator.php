@@ -2,9 +2,9 @@
 
 class Administrator {
 	
-	private $administrator_id;	// key
-	private $admin_type;
-	private $allowed_admin_types = array("general");
+	protected $administrator_id;	// key
+	protected $admin_type;
+	protected $allowed_admin_types = array("general");
 	
 	public function __construct() {}
 	
@@ -28,6 +28,11 @@ class Administrator {
 	public function get_allowed_admin_types()
 	{
 		return $this->allowed_admin_types;
+	}
+	
+	public function set_allowed_admin_types($allowed_admin_types)
+	{
+		$this->allowed_admin_types = $allowed_admin_types;
 	}
 	
 	public function get_admin_type()

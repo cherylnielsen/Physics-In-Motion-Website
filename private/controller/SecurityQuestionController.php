@@ -111,9 +111,6 @@ class SecurityQuestionController extends DatabaseController {
 		$db_connection = get_db_connection();
 		$success = true;
 		$security_question_id = $security_question->get_security_question_id();
-		$member_id = $security_question->get_member_id();
-		$question = $security_question->get_question();
-		$answer = $security_question->get_answer();
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where security_question_id = $security_question_id";

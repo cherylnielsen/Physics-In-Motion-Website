@@ -21,20 +21,38 @@ class MemberDisplayUtilities
 	}
 	
 	
+	public function displaySectionStudentRow($section_list_of_students_view)
+	{
+		$section_id = $section_list_of_students_view->get_section_id();
+		$section_name = $section_list_of_students_view->get_section_name();
+		$student_id = $section_list_of_students_view->get_student_id();
+		$first_name = $section_list_of_students_view->get_first_name();
+		$last_name = $section_list_of_students_view->get_last_name();
+		$school_name = $section_list_of_students_view->get_school_name();
+		$start_date = $section_list_of_students_view->get_start_date();
+		$start_date = $this->displayDate($start_date);
+		$end_date = $section_list_of_students_view->get_end_date();
+		$end_date = $this->displayDate($end_date);
+		
+		echo "<tr><td>$section_id&nbsp:&nbsp$section_name</td><td>$student_id</td><td>$first_name&nbsp&nbsp$last_name</td><td>$school_name</td><td>$start_date</td><td>$end_date</td></tr>";
+	}
+
+
 	public function displaySectionRow($section_view)
 	{
 		$section_id = $section_view->get_section_id();
 		$section_name = $section_view->get_section_name();
-		$professor_name = $section_view->get_professor_name();
+		$first_name = $section_view->get_first_name();
+		$last_name = $section_view->get_last_name();
 		$school_name = $section_view->get_school_name();
 		$start_date = $section_view->get_start_date();
 		$start_date = $this->displayDate($start_date);
 		$end_date = $section_view->get_end_date();
 		$end_date = $this->displayDate($end_date);
 		
-		echo "<tr><td>$section_id</td><td>$section_name</td><td>$professor_name</td><td>$school_name</td><td>$start_date</td><td>$end_date</td></tr>";
+		echo "<tr><td>$section_id&nbsp:&nbsp$section_name</td><td>$first_name&nbsp&nbsp$last_name</td><td>$school_name</td><td>$start_date</td><td>$end_date</td></tr>";
 	}
-
+	
 	
 	public function displayAssignmentRow($assignment_view)
 	{
@@ -53,7 +71,6 @@ class MemberDisplayUtilities
 				<td>need to add lab name</td><td>Assigned $date_assigned</td>
 				<td>Due $date_due</td><td>Points Possible $points_possible</td><td>Notes? $has_notes</td></tr>";
 	}
-	
 	
 	
 	public function displayHomeworkRow($homework)
@@ -77,6 +94,8 @@ class MemberDisplayUtilities
 		echo "<tr><td></td><td>Lab Summary? $has_summary</td><td>Data? $has_data</td><td>Graphs? $has_graphs</td>
 				<td>Math? $has_math</td><td>Hints? $has_hints</td><td>Chat Session? $has_chat_session</td></tr>";
 	}
+	
+		
 	
 	
 }

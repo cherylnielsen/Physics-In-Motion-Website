@@ -8,21 +8,23 @@ class Section_View {
 	private $start_date;
 	private $end_date;
 	private $professor_id;
-	private $professor_name;
+	private $first_name;
+	private $last_name;
 	private $school_name;
 	
 	public function __construct() {}
 	
 	
 	public function initialize($section_id, $section_name, $start_date, $end_date,
-								$professor_id, $professor_name, $school_name)
+								$professor_id, $first_name, $last_name, $school_name)
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
 		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		$this->professor_name = $professor_name;
+		$this->first_name = $first_name;
+		$this->last_name = $last_name;
 		$this->school_name = $school_name;
 	}
 	
@@ -77,14 +79,24 @@ class Section_View {
 		$this->professor_id = $professor_id;
 	}
 	
-	public function get_professor_name()
+	public function get_first_name()
 	{
-		return $this->professor_name;
+		return $this->first_name;
 	}
 	
-	public function set_professor_name($professor_name)
+	public function set_first_name($first_name)
 	{
-		$this->professor_name = $professor_name;
+		$this->first_name = $first_name;
+	}
+	
+	public function get_last_name()
+	{
+		return $this->last_name;
+	}
+	
+	public function set_last_name($last_name)
+	{
+		$this->last_name = $last_name;
 	}
 	
 	public function get_school_name()

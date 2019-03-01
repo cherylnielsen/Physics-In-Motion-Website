@@ -1,6 +1,6 @@
 <?php
 
-class HomeworkController extends DatabaseController {
+class Homework_View_Controller extends DatabaseController {
 
 	public function __construct(){}
 	// ($homework_id, $section_id, $assignment_id, $student_id, $lab_summary, 
@@ -19,10 +19,9 @@ class HomeworkController extends DatabaseController {
 				$homework = new Homework();
 				
 				$homework->initialize($row['homework_id'], $row['section_id'], $row['assignment_id'], 
-							$row['student_id'], 
-							$row['lab_summary'], $row['lab_data'], $row['graphs'], $row['math'], 
-							$row['hints'], $row['chat_session'], $row['date_submitted'],
-							$row['points_earned'], $row['was_graded'], $row['hours']);
+						$row['student_id'], $row['lab_summary'], $row['lab_data'], 
+						$row['graphs'], $row['math'], $row['hints'], $row['chat_session'], 
+						$row['date_submitted'], $row['points_earned'], $row['was_graded'], $row['hours'], $row['student_first_name'], $row['student_last_name'], $row['school_name']);
 				
 				// pushes each object onto the end of the array
 				$dataArray[] = $homework;
@@ -40,48 +39,7 @@ class HomeworkController extends DatabaseController {
 	// For homework, the ids are auto-generated.
 	public function saveNew(&$homework)
 	{
-		$db_connection = get_db_connection();
-		$sucess = true;
-		$section_id = $homework->get_section_id();
-		$assignment_id = $homework->get_assignment_id();
-		$student_id = $homework->get_member_id(); 
-		$lab_summary = $homework->get_lab_summary(); 
-		$lab_data = $homework->get_lab_data(); 
-		$graphs = $homework->get_graphs(); 
-		$math = $homework->get_math(); 
-		$hints = $homework->get_hints(); 
-		$chat_session = $homework->get_chat_session();
-		$date_submitted = $submission->get_date_submitted();
-		$points_earned = $submission->get_points_earned();
-		$was_graded = $submission->get_was_graded();
-		$hours = $submission->get_hours();
-		
-		$table = $this->getTableName();
-
-		$query = "insert into $table (section_id, assignment_id, student_id, lab_summary, lab_data, 
-						graphs, math, hints, chat_session, date_submitted, points_earned, was_graded, hours) 
-				values ('$section_id', '$assignment_id', '$student_id', '$lab_summary', '$lab_data', 
-						'$graphs', '$math', '$hints', '$chat_session', '$date_submitted', 
-						'$points_earned', '$was_graded', '$hours')";
-						
-		$result = mysqli_query($db_connection, $query);
-
-		if(!$result)
-		{
-			$sucess = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		else
-		{
-			// get the newly generated homework_id
-			$homework_id = mysqli_insert_id($db_connection);
-			$member->set_homework_id($homework_id);
-		}
-		
-		mysqli_free_result($result);
-		mysqli_close($db_connection);
-		return $sucess;
-		
+		return false;
 	}
 	
 	
@@ -151,6 +109,18 @@ class HomeworkController extends DatabaseController {
 				$value = $homework->get_hours();	
 				$query = "update $table set hours = '$value' where homework_id = '$homework_id'";
 				break;
+			case 'student_first_name':
+				$value = $homework->get_student_first_name();	
+				$query = "update $table set student_first_name = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'student_last_name':
+				$value = $homework->get_student_last_name();	
+				$query = "update $table set student_last_name = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'school_name':
+				$value = $homework->get_school_name();	
+				$query = "update $table set school_name = '$value' where homework_id = '$homework_id'";
+				break;
 		}
 		
 		$result = mysqli_query($db_connection, $query);
@@ -168,21 +138,7 @@ class HomeworkController extends DatabaseController {
 	
 	public function deleteFromDatabase($homework)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$homework_id = $homework->get_homework_id();
-		$table = $this->getTableName();
-		
-		$query = "delete from $table where homework_id = '$homework_id'";
-		
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		
-		mysqli_close($db_connection);
-		return $success;
+		return false;
 	}
 	
 	

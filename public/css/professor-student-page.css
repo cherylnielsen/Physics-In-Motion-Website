@@ -7,6 +7,7 @@ h1.user-page {
 
 
 table {
+	table-layout: fixed;
 	border: 2px double #03AA0D;
 	border-collapse: collapse;
 }
@@ -15,6 +16,7 @@ th, td {
 	border: 1px solid #03AA0D;
 	padding: 5px;
 	text-align: left;
+	width: 20%;
 }
 
 table th {

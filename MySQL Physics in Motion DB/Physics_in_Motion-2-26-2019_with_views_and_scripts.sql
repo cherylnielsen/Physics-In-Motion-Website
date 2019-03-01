@@ -1,0 +1,806 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema physics_in_motion
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema physics_in_motion
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `physics_in_motion` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `physics_in_motion` ;
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`member`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`member` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`member` (
+  `member_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `member_type` SET('student', 'professor', 'administrator', 'blocked') NOT NULL,
+  `member_name` VARCHAR(45) NOT NULL,
+  `member_password` VARCHAR(256) NOT NULL,
+  `date_registered` DATETIME NOT NULL,
+  `last_login` DATETIME NULL DEFAULT NULL,
+  `last_logoff` DATETIME NULL DEFAULT NULL,
+  `registration_complete` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`member_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE UNIQUE INDEX `user_name_UNIQUE` ON `physics_in_motion`.`member` (`member_name` ASC) VISIBLE;
+
+CREATE UNIQUE INDEX `email_UNIQUE` ON `physics_in_motion`.`member` (`email` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`administrator`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`administrator` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator` (
+  `administrator_id` INT(10) UNSIGNED NOT NULL,
+  `admin_type` SET('general') NOT NULL DEFAULT 'general',
+  PRIMARY KEY (`administrator_id`),
+  CONSTRAINT `admin_user_id`
+    FOREIGN KEY (`administrator_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`administrator` (`administrator_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`tutorial_lab`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab` (
+  `tutorial_lab_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tutorial_lab_name` VARCHAR(256) NOT NULL,
+  `tutorial_lab_web_link` VARCHAR(256) NOT NULL,
+  `lab_status` SET('New', 'Updated', 'Available', 'Development', 'Discontinued') NOT NULL DEFAULT 'Development',
+  `tutorial_lab_introduction` VARCHAR(1000) NULL DEFAULT NULL,
+  `prerequisites` VARCHAR(1000) NULL DEFAULT NULL,
+  `key_topics` VARCHAR(1000) NULL DEFAULT NULL,
+  `key_equations` VARCHAR(1000) NULL DEFAULT NULL,
+  `description` VARCHAR(256) NULL DEFAULT NULL,
+  `instructions` VARCHAR(256) NULL DEFAULT NULL,
+  `date_first_available` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`tutorial_lab_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 109
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE UNIQUE INDEX `lab_name_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`tutorial_lab_name` ASC) VISIBLE;
+
+CREATE UNIQUE INDEX `web_link_UNIQUE` ON `physics_in_motion`.`tutorial_lab` (`tutorial_lab_web_link` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`professor`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`professor` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor` (
+  `professor_id` INT(10) UNSIGNED NOT NULL,
+  `school_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`professor_id`),
+  CONSTRAINT `professor_user_id`
+    FOREIGN KEY (`professor_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`professor` (`professor_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`section`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section` (
+  `section_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `professor_id` INT(10) UNSIGNED NOT NULL,
+  `section_name` VARCHAR(256) NOT NULL,
+  `start_date` DATE NOT NULL,
+  `end_date` DATE NOT NULL,
+  PRIMARY KEY (`section_id`),
+  CONSTRAINT `section_professor_id`
+    FOREIGN KEY (`professor_id`)
+    REFERENCES `physics_in_motion`.`professor` (`professor_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 103
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `section_professor_id_idx` ON `physics_in_motion`.`section` (`professor_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`assignment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`assignment` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment` (
+  `assignment_id` INT(10) UNSIGNED NOT NULL,
+  `section_id` INT(10) UNSIGNED NOT NULL,
+  `tutorial_lab_id` INT(10) UNSIGNED NOT NULL,
+  `assignment_name` VARCHAR(256) NULL DEFAULT NULL,
+  `date_assigned` DATETIME NOT NULL,
+  `date_due` DATETIME NOT NULL,
+  `points_possible` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `notes` VARCHAR(256) NULL DEFAULT NULL,
+  PRIMARY KEY (`assignment_id`, `section_id`),
+  CONSTRAINT `assignment_lab_id`
+    FOREIGN KEY (`tutorial_lab_id`)
+    REFERENCES `physics_in_motion`.`tutorial_lab` (`tutorial_lab_id`),
+  CONSTRAINT `assignment_section_id`
+    FOREIGN KEY (`section_id`)
+    REFERENCES `physics_in_motion`.`section` (`section_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `assignment_section_id_idx` ON `physics_in_motion`.`assignment` (`section_id` ASC) VISIBLE;
+
+CREATE INDEX `assignment_lab_id_idx` ON `physics_in_motion`.`assignment` (`tutorial_lab_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`student`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`student` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student` (
+  `student_id` INT(10) UNSIGNED NOT NULL,
+  `school_name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`student_id`),
+  CONSTRAINT `student_user_id`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE UNIQUE INDEX `user_id_UNIQUE` ON `physics_in_motion`.`student` (`student_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`homework`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`homework` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework` (
+  `homework_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `section_id` INT(10) UNSIGNED NOT NULL,
+  `assignment_id` INT(10) UNSIGNED NOT NULL,
+  `student_id` INT(10) UNSIGNED NOT NULL,
+  `lab_summary` VARCHAR(256) NULL DEFAULT NULL,
+  `lab_data` VARCHAR(256) NULL DEFAULT NULL,
+  `graphs` VARCHAR(256) NULL DEFAULT NULL,
+  `math` VARCHAR(256) NULL DEFAULT NULL,
+  `hints` VARCHAR(256) NULL DEFAULT NULL,
+  `chat_session` VARCHAR(256) NULL DEFAULT NULL,
+  `date_submitted` DATETIME NULL DEFAULT NULL,
+  `points_earned` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `was_graded` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `hours` DOUBLE NOT NULL DEFAULT '0',
+  PRIMARY KEY (`homework_id`),
+  CONSTRAINT `hmwk_assignment_id`
+    FOREIGN KEY (`assignment_id`)
+    REFERENCES `physics_in_motion`.`assignment` (`assignment_id`),
+  CONSTRAINT `hmwk_section_id`
+    FOREIGN KEY (`section_id`)
+    REFERENCES `physics_in_motion`.`section` (`section_id`),
+  CONSTRAINT `hmwk_student_id`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `physics_in_motion`.`student` (`student_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `hmwk_assignment_id` ON `physics_in_motion`.`homework` (`assignment_id` ASC) VISIBLE;
+
+CREATE INDEX `hmwk_section_id` ON `physics_in_motion`.`homework` (`section_id` ASC) VISIBLE;
+
+CREATE INDEX `hmwk_student_id_idx` ON `physics_in_motion`.`homework` (`student_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`notice`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice` (
+  `notice_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `from_member_id` INT(10) UNSIGNED NOT NULL,
+  `response_to_notice_id` INT(10) UNSIGNED NULL DEFAULT NULL,
+  `date_sent` DATETIME NOT NULL,
+  `notice_subject` VARCHAR(256) NOT NULL,
+  `notice_text` VARCHAR(1000) NOT NULL,
+  `flag_for_review` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`notice_id`),
+  CONSTRAINT `notice_from_member_id`
+    FOREIGN KEY (`from_member_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `notice_from_user_id_idx` ON `physics_in_motion`.`notice` (`from_member_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`notice_attachment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_attachment` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_attachment` (
+  `notice_attachment_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `notice_id` INT(10) UNSIGNED NOT NULL,
+  `attachment` VARCHAR(256) NOT NULL,
+  PRIMARY KEY (`notice_attachment_id`),
+  CONSTRAINT `attachment_notice_id`
+    FOREIGN KEY (`notice_id`)
+    REFERENCES `physics_in_motion`.`notice` (`notice_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `attachment_notice_id_idx` ON `physics_in_motion`.`notice_attachment` (`notice_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`notice_to_member`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_member` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_member` (
+  `notice_id` INT(10) UNSIGNED NOT NULL,
+  `to_member_id` INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`notice_id`, `to_member_id`),
+  CONSTRAINT `sent_to_member_member_id`
+    FOREIGN KEY (`to_member_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`),
+  CONSTRAINT `sent_to_member_notice_id`
+    FOREIGN KEY (`notice_id`)
+    REFERENCES `physics_in_motion`.`notice` (`notice_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `received_member_id_idx` ON `physics_in_motion`.`notice_to_member` (`to_member_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`notice_to_section`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_section` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_section` (
+  `notice_id` INT(10) UNSIGNED NOT NULL,
+  `to_section_id` INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`notice_id`, `to_section_id`),
+  CONSTRAINT `notice_to_section_notice_id`
+    FOREIGN KEY (`notice_id`)
+    REFERENCES `physics_in_motion`.`notice` (`notice_id`),
+  CONSTRAINT `notice_to_section_section_id`
+    FOREIGN KEY (`to_section_id`)
+    REFERENCES `physics_in_motion`.`section` (`section_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `notice_to_section_section_id_idx` ON `physics_in_motion`.`notice_to_section` (`to_section_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`quote`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`quote` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`quote` (
+  `quote_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `author` VARCHAR(256) NOT NULL,
+  `quote_text` VARCHAR(1000) NOT NULL,
+  `month_posted` INT(11) NOT NULL,
+  `year_posted` INT(11) NOT NULL,
+  PRIMARY KEY (`quote_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`section_rating`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section_rating` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_rating` (
+  `section_rating_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `section_id` INT(10) UNSIGNED NOT NULL,
+  `date_posted` DATETIME NOT NULL,
+  `rating` INT(11) NOT NULL,
+  `comments` VARCHAR(1000) NULL DEFAULT NULL,
+  `flag_for_review` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`section_rating_id`),
+  CONSTRAINT `lab_rating_section_id`
+    FOREIGN KEY (`section_id`)
+    REFERENCES `physics_in_motion`.`section` (`section_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `lab_rating_section_id_idx` ON `physics_in_motion`.`section_rating` (`section_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`section_student`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section_student` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_student` (
+  `section_id` INT(10) UNSIGNED NOT NULL,
+  `student_id` INT(10) UNSIGNED NOT NULL,
+  `dropped_section` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `reviewed_section` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`section_id`, `student_id`),
+  CONSTRAINT `section_section_id`
+    FOREIGN KEY (`section_id`)
+    REFERENCES `physics_in_motion`.`section` (`section_id`),
+  CONSTRAINT `section_student_id`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `physics_in_motion`.`student` (`student_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `section_student_id_idx` ON `physics_in_motion`.`section_student` (`student_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`security_question`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`security_question` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`security_question` (
+  `security_question_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `member_id` INT(10) UNSIGNED NOT NULL,
+  `question` VARCHAR(256) NOT NULL,
+  `answer` VARCHAR(256) NOT NULL,
+  PRIMARY KEY (`security_question_id`),
+  CONSTRAINT `security_question_member_id`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE UNIQUE INDEX `member_id_UNIQUE` ON `physics_in_motion`.`security_question` (`member_id` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `physics_in_motion`.`tutorial_lab_rating`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab_rating` ;
+
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating` (
+  `tutorial_lab_rating_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tutorial_lab_id` INT(10) UNSIGNED NOT NULL,
+  `member_id` INT(10) UNSIGNED NOT NULL,
+  `date_posted` DATETIME NOT NULL,
+  `rating` INT(11) NOT NULL,
+  `comments` VARCHAR(1000) NULL DEFAULT NULL,
+  `flag_for_review` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`tutorial_lab_rating_id`),
+  CONSTRAINT `lab_rating_lab_id`
+    FOREIGN KEY (`tutorial_lab_id`)
+    REFERENCES `physics_in_motion`.`tutorial_lab` (`tutorial_lab_id`),
+  CONSTRAINT `lab_rating_user_id`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `physics_in_motion`.`member` (`member_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE INDEX `lab_rating_lab_id_idx` ON `physics_in_motion`.`tutorial_lab_rating` (`tutorial_lab_id` ASC) VISIBLE;
+
+CREATE INDEX `lab_rating_user_id_idx` ON `physics_in_motion`.`tutorial_lab_rating` (`member_id` ASC) VISIBLE;
+
+USE `physics_in_motion` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`administrator_member_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator_member_view` (`administrator_id` INT, `email` INT, `admin_type` INT, `first_name` INT, `last_name` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`assignment_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_view` (`section_name` INT, `professor_id` INT, `professor_first_name` INT, `professor_last_name` INT, `school_name` INT, `tutorial_lab_name` INT, `tutorial_lab_introduction` INT, `tutorial_lab_web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`notice_to_member_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_member_view` (`to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_first_name` INT, `from_last_name` INT, `from_member_type` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`professor_member_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor_member_view` (`professor_id` INT, `email` INT, `school_name` INT, `first_name` INT, `last_name` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`section_list_of_students_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_list_of_students_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `student_id` INT, `student_first_name` INT, `student_last_name` INT, `school_name` INT, `dropped_section` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`notice_to_section_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_section_view` (`to_section_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_first_name` INT, `from_last_name` INT, `from_member_type` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`section_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `professor_first_name` INT, `professor_last_name` INT, `school_name` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`student_member_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`student_member_view` (`student_id` INT, `email` INT, `school_name` INT, `first_name` INT, `last_name` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`tutorial_lab_rating_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_view` (`first_name` INT, `last_name` INT, `member_type` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`section_rating_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_rating_view` (`section_rating_id` INT, `section_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `school_name` INT, `professor_first_name` INT, `professor_last_name` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`homework_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`homework_view` (`student_first_name` INT, `student_last_name` INT, `school_name` INT, `homework_id` INT, `section_id` INT, `assignment_id` INT, `student_id` INT, `lab_summary` INT, `lab_data` INT, `graphs` INT, `math` INT, `hints` INT, `chat_session` INT, `date_submitted` INT, `points_earned` INT, `was_graded` INT, `hours` INT);
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`administrator_member_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`administrator_member_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`administrator_member_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`administrator_member_view` AS
+    SELECT 
+        `physics_in_motion`.`administrator`.`administrator_id` AS `administrator_id`,
+        `physics_in_motion`.`member`.`email` AS `email`,
+        `physics_in_motion`.`administrator`.`admin_type` AS `admin_type`,
+        `physics_in_motion`.`member`.`first_name`,
+		`physics_in_motion`.`member`.`last_name`
+    FROM
+        (`physics_in_motion`.`administrator`
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        (`physics_in_motion`.`administrator`.`administrator_id` = `physics_in_motion`.`member`.`member_id`)
+    ORDER BY `physics_in_motion`.`administrator`.`administrator_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`assignment_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`assignment_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`assignment_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`assignment_view` AS
+    SELECT 
+        `physics_in_motion`.`section`.`section_name` AS `section_name`,
+        `physics_in_motion`.`professor`.`professor_id` AS `professor_id`,
+        `physics_in_motion`.`member`.`first_name` AS `professor_first_name`,
+		`physics_in_motion`.`member`.`last_name` AS `professor_last_name`,
+        `physics_in_motion`.`professor`.`school_name` AS `school_name`,
+        `physics_in_motion`.`tutorial_lab`.`tutorial_lab_name` AS `tutorial_lab_name`,
+        `physics_in_motion`.`tutorial_lab`.`tutorial_lab_introduction` AS `tutorial_lab_introduction`,
+        `physics_in_motion`.`tutorial_lab`.`tutorial_lab_web_link` AS `tutorial_lab_web_link`,
+        `physics_in_motion`.`assignment`.`assignment_id` AS `assignment_id`,
+        `physics_in_motion`.`assignment`.`section_id` AS `section_id`,
+        `physics_in_motion`.`assignment`.`tutorial_lab_id` AS `tutorial_lab_id`,
+        `physics_in_motion`.`assignment`.`assignment_name` AS `assignment_name`,
+        `physics_in_motion`.`assignment`.`date_assigned` AS `date_assigned`,
+        `physics_in_motion`.`assignment`.`date_due` AS `date_due`,
+        `physics_in_motion`.`assignment`.`points_possible` AS `points_possible`,
+        `physics_in_motion`.`assignment`.`notes` AS `notes`
+    FROM
+        ((((`physics_in_motion`.`section`
+        JOIN `physics_in_motion`.`assignment`)
+        JOIN `physics_in_motion`.`tutorial_lab`)
+        JOIN `physics_in_motion`.`professor`)
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        ((`physics_in_motion`.`assignment`.`section_id` = `physics_in_motion`.`section`.`section_id`)
+            AND (`physics_in_motion`.`assignment`.`tutorial_lab_id` = `physics_in_motion`.`tutorial_lab`.`tutorial_lab_id`)
+            AND (`physics_in_motion`.`section`.`professor_id` = `physics_in_motion`.`professor`.`professor_id`)
+            AND (`physics_in_motion`.`professor`.`professor_id` = `physics_in_motion`.`member`.`member_id`))
+    ORDER BY `physics_in_motion`.`assignment`.`section_id` , `physics_in_motion`.`assignment`.`assignment_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`notice_to_member_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_member_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`notice_to_member_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`notice_to_member_view` AS
+    SELECT 
+        `physics_in_motion`.`notice_to_member`.`to_member_id` AS `to_member_id`,
+        `physics_in_motion`.`notice`.`notice_id` AS `notice_id`,
+        `physics_in_motion`.`notice`.`from_member_id` AS `from_member_id`,
+        `physics_in_motion`.`notice`.`response_to_notice_id` AS `response_to_notice_id`,
+        `physics_in_motion`.`notice`.`date_sent` AS `date_sent`,
+        `physics_in_motion`.`notice`.`notice_subject` AS `notice_subject`,
+        `physics_in_motion`.`notice`.`notice_text` AS `notice_text`,
+        `physics_in_motion`.`notice`.`flag_for_review` AS `flag_for_review`,
+        `physics_in_motion`.`member`.`first_name` AS `from_first_name`,
+        `physics_in_motion`.`member`.`last_name` AS `from_last_name`,
+        `physics_in_motion`.`member`.`member_type` AS `from_member_type`
+    FROM
+        ((`physics_in_motion`.`notice`
+        JOIN `physics_in_motion`.`notice_to_member`)
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        ((`physics_in_motion`.`notice`.`notice_id` = `physics_in_motion`.`notice_to_member`.`notice_id`)
+            AND (`physics_in_motion`.`notice`.`from_member_id` = `physics_in_motion`.`member`.`member_id`))
+    ORDER BY `physics_in_motion`.`notice`.`date_sent` , `physics_in_motion`.`notice`.`notice_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`professor_member_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`professor_member_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`professor_member_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`professor_member_view` AS
+    SELECT 
+        `physics_in_motion`.`professor`.`professor_id` AS `professor_id`,
+        `physics_in_motion`.`member`.`email` AS `email`,
+        `physics_in_motion`.`professor`.`school_name` AS `school_name`,
+        `physics_in_motion`.`member`.`first_name`,
+		`physics_in_motion`.`member`.`last_name`
+    FROM
+        (`physics_in_motion`.`professor`
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        (`physics_in_motion`.`professor`.`professor_id` = `physics_in_motion`.`member`.`member_id`)
+    ORDER BY `physics_in_motion`.`professor`.`professor_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`section_list_of_students_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section_list_of_students_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`section_list_of_students_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`section_list_of_students_view` AS
+    SELECT 
+        `physics_in_motion`.`section`.`section_id` AS `section_id`,
+        `physics_in_motion`.`section`.`section_name` AS `section_name`,
+        `physics_in_motion`.`section`.`start_date` AS `start_date`,
+        `physics_in_motion`.`section`.`end_date` AS `end_date`,
+        `physics_in_motion`.`student`.`student_id` AS `student_id`,
+        `physics_in_motion`.`member`.`first_name` AS `student_first_name`,
+        `physics_in_motion`.`member`.`last_name` AS `student_last_name`,
+        `physics_in_motion`.`student`.`school_name` AS `school_name`,
+        `physics_in_motion`.`section_student`.`dropped_section`
+    FROM
+        (((`physics_in_motion`.`section_student`
+        JOIN `physics_in_motion`.`section`)
+        JOIN `physics_in_motion`.`student`)
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        ((`physics_in_motion`.`student`.`student_id` = `physics_in_motion`.`section_student`.`student_id`)
+            AND (`physics_in_motion`.`section`.`section_id` = `physics_in_motion`.`section_student`.`section_id`)
+            AND (`physics_in_motion`.`student`.`student_id` = `physics_in_motion`.`member`.`member_id`))
+    ORDER BY `physics_in_motion`.`section`.`section_id`, `physics_in_motion`.`student`.`student_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`notice_to_section_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_section_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`notice_to_section_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`notice_to_section_view` AS
+    SELECT 
+        `physics_in_motion`.`notice_to_section`.`to_section_id` AS `to_section_id`,
+        `physics_in_motion`.`notice`.`notice_id` AS `notice_id`,
+        `physics_in_motion`.`notice`.`from_member_id` AS `from_member_id`,
+        `physics_in_motion`.`notice`.`response_to_notice_id` AS `response_to_notice_id`,
+        `physics_in_motion`.`notice`.`date_sent` AS `date_sent`,
+        `physics_in_motion`.`notice`.`notice_subject` AS `notice_subject`,
+        `physics_in_motion`.`notice`.`notice_text` AS `notice_text`,
+        `physics_in_motion`.`notice`.`flag_for_review` AS `flag_for_review`,
+        `physics_in_motion`.`member`.`first_name` AS `from_first_name`,
+        `physics_in_motion`.`member`.`last_name` AS `from_last_name`,
+        `physics_in_motion`.`member`.`member_type` AS `from_member_type`
+    FROM
+        ((`physics_in_motion`.`notice`
+        JOIN `physics_in_motion`.`notice_to_section`)
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        ((`physics_in_motion`.`notice`.`notice_id` = `physics_in_motion`.`notice_to_section`.`notice_id`)
+            AND (`physics_in_motion`.`notice`.`from_member_id` = `physics_in_motion`.`member`.`member_id`))
+    ORDER BY `physics_in_motion`.`notice`.`date_sent` , `physics_in_motion`.`notice`.`notice_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`section_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`section_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`section_view` AS
+    SELECT 
+        `physics_in_motion`.`section`.`section_id` AS `section_id`,
+        `physics_in_motion`.`section`.`section_name` AS `section_name`,
+        `physics_in_motion`.`section`.`start_date` AS `start_date`,
+        `physics_in_motion`.`section`.`end_date` AS `end_date`,
+        `physics_in_motion`.`professor`.`professor_id` AS `professor_id`,
+        `physics_in_motion`.`member`.`first_name` AS `professor_first_name`,
+        `physics_in_motion`.`member`.`last_name` AS `professor_last_name`,
+        `physics_in_motion`.`professor`.`school_name` AS `school_name`
+    FROM
+        ((`physics_in_motion`.`section`
+        JOIN `physics_in_motion`.`professor`)
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        ((`physics_in_motion`.`section`.`professor_id` = `physics_in_motion`.`professor`.`professor_id`)
+            AND (`physics_in_motion`.`professor`.`professor_id` = `physics_in_motion`.`member`.`member_id`))
+    ORDER BY `physics_in_motion`.`section`.`section_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`student_member_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`student_member_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`student_member_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`student_member_view` AS
+    SELECT 
+        `physics_in_motion`.`student`.`student_id` AS `student_id`,
+        `physics_in_motion`.`member`.`email` AS `email`,
+        `physics_in_motion`.`student`.`school_name` AS `school_name`,
+        `physics_in_motion`.`member`.`first_name` AS `first_name`,
+		`physics_in_motion`.`member`.`last_name` AS `last_name`
+    FROM
+        (`physics_in_motion`.`student`
+        JOIN `physics_in_motion`.`member`)
+    WHERE
+        (`physics_in_motion`.`student`.`student_id` = `physics_in_motion`.`member`.`member_id`)
+    ORDER BY `physics_in_motion`.`student`.`student_id`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`tutorial_lab_rating_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`tutorial_lab_rating_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`tutorial_lab_rating_view` ;
+USE `physics_in_motion`;
+CREATE 
+     OR REPLACE ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `physics_in_motion`.`tutorial_lab_rating_view` AS
+    SELECT 
+        `physics_in_motion`.`member`.`first_name`,
+        `physics_in_motion`.`member`.`last_name`,
+        `physics_in_motion`.`member`.`member_type` AS `member_type`,
+        `physics_in_motion`.`tutorial_lab`.`tutorial_lab_name` AS `tutorial_lab_name`,
+        `physics_in_motion`.`tutorial_lab_rating`.`tutorial_lab_rating_id` AS `tutorial_lab_rating_id`,
+        `physics_in_motion`.`tutorial_lab_rating`.`tutorial_lab_id` AS `tutorial_lab_id`,
+        `physics_in_motion`.`tutorial_lab_rating`.`member_id` AS `member_id`,
+        `physics_in_motion`.`tutorial_lab_rating`.`date_posted` AS `date_posted`,
+        `physics_in_motion`.`tutorial_lab_rating`.`rating` AS `rating`,
+        `physics_in_motion`.`tutorial_lab_rating`.`comments` AS `comments`,
+        `physics_in_motion`.`tutorial_lab_rating`.`flag_for_review` AS `flag_for_review`
+    FROM
+        ((`physics_in_motion`.`member`
+        JOIN `physics_in_motion`.`tutorial_lab_rating`)
+        JOIN `physics_in_motion`.`tutorial_lab`)
+    WHERE
+        ((`physics_in_motion`.`tutorial_lab_rating`.`member_id` = `physics_in_motion`.`member`.`member_id`)
+            AND (`physics_in_motion`.`tutorial_lab_rating`.`tutorial_lab_id` = `physics_in_motion`.`tutorial_lab`.`tutorial_lab_id`))
+    ORDER BY `physics_in_motion`.`tutorial_lab`.`tutorial_lab_id` , `physics_in_motion`.`tutorial_lab_rating`.`date_posted`;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`section_rating_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section_rating_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`section_rating_view` ;
+USE `physics_in_motion`;
+CREATE  OR REPLACE VIEW `section_rating_view` AS
+    SELECT 
+        section_rating.*,
+        section.section_name,
+        section.start_date, 
+        section.end_date,
+        section.professor_id,
+        professor.school_name,
+        member.first_name AS professor_first_name,
+        member.last_name AS professor_last_name
+    FROM
+        section,
+        section_rating,
+        professor,
+        member
+    WHERE
+        section_rating.section_id = section.section_id
+        AND section.professor_id = professor.professor_id
+        AND section.professor_id = member.member_id
+    ORDER BY section_rating.section_id , date_posted;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`homework_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`homework_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`homework_view` ;
+USE `physics_in_motion`;
+CREATE  OR REPLACE VIEW `homework_view` AS
+SELECT 
+	member.first_name AS student_first_name,
+	member.last_name AS student_last_name,
+	student.school_name,
+    homework.*
+FROM
+	homework, student, member
+WHERE
+	homework.student_id = student.student_id
+    AND homework.student_id = member.member_id
+ORDER BY
+	section_id, assignment_id, student_id;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -89,29 +89,29 @@ class MemberDataUtilities {
 	public function getMemberSentNotices($from_member_id, $mdb_control)
 	{
 		$notice_list = array();		
-		$controller = $mdb_control->getController("notice_view");
+		$controller = $mdb_control->getController("member_notice_view");
 		$notice_list = $controller->getByAttribute("from_member_id", $from_member_id);
 		
 		return $notice_list;
 	}
 	
 	
-	// Gets all notices from the database received by this section.
+	// Gets all notices from the database sent to this member.
 	public function getMemberInBoxNotices($to_member_id, $mdb_control)
 	{
 		$notice_list = array();		
-		$controller = $mdb_control->getController("notice_view");
+		$controller = $mdb_control->getController("member_notice_view");
 		$notice_list = $controller->getByAttribute("to_member_id", $to_member_id);
 		
 		return $notice_list;
 	}
 
 
-	// Gets all notices from the database received by this member.
-	public function getSectionInBoxNotices($to_section_id, $mdb_control)
+	// Gets all notices from the database received by this section.
+	public function getSectionNotices($to_section_id, $mdb_control)
 	{
 		$notice_list = array();		
-		$controller = $mdb_control->getController("notice_view");
+		$controller = $mdb_control->getController("section_notice_view");
 		$notice_list = $controller->getByAttribute("to_section_id", $to_section_id);
 		
 		return $notice_list;

@@ -20,9 +20,11 @@ class TutorialLabController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$lab = new Tutorial_Lab();
-				$lab->initialize($row['tutorial_lab_id'], $row['tutorial_lab_name'], $row['tutorial_lab_web_link'], $row['lab_status'], $row['tutorial_lab_introduction'], 
-							$row['prerequisites'], $row['key_topics'], $row['key_equations'], $row['description'], 
-							$row['instructions'], $row['date_first_available']);
+				$lab->initialize($row['tutorial_lab_id'], $row['tutorial_lab_name'], 
+						$row['tutorial_lab_web_link'], $row['lab_status'], 
+						$row['tutorial_lab_introduction'], $row['prerequisites'], 
+						$row['key_topics'], $row['key_equations'], $row['description'], 
+						$row['instructions'], $row['date_first_available']);
 				$dataArray[] = $lab;
 			}	
 		}
@@ -60,9 +62,11 @@ class TutorialLabController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		// The id will be auto-generated
-		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, lab_status, tutorial_lab_introduction, prerequisites, 
-				key_topics, key_equations, description, instructions, date_first_available) 
-		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', '$tutorial_lab_introduction', '$prerequisites', '$key_topics', 
+		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, lab_status, 
+				tutorial_lab_introduction, prerequisites, key_topics, key_equations, 
+				description, instructions, date_first_available) 
+		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', 
+				'$tutorial_lab_introduction', '$prerequisites', '$key_topics', 
 				'$key_equations', '$description', '$instructions', '$date_first_available')";
 		$result = mysqli_query($db_connection, $query);
 

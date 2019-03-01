@@ -5,7 +5,8 @@
 class Section_List_Of_Students_View_Controller extends DatabaseController {
 
 	public function __construct(){}
-	//($section_id, $section_name, $start_date, $end_date, $student_id, $first_name, $last_name, $school_name)
+	// ($section_id, $section_name, $start_date, $end_date, $student_id, $student_first_name, 
+	//  $student_last_name, $school_name, $dropped_section)
 	
 	protected function getData($db_result, $db_connection)
 	{
@@ -16,8 +17,11 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section_student_view = new Section_List_Of_Students_View();
-				$section_student_view->initialize($row['section_id'], $row['section_name'], $row['start_date'], $row['end_date'], 
-										$row['student_id'], $row['first_name'], $row['last_name'], $row['school_name']);
+				$section_student_view->initialize($row['section_id'], $row['section_name'], 
+										$row['start_date'], $row['end_date'], 
+										$row['student_id'], $row['student_first_name'], 
+										$row['student_last_name'], $row['school_name'], 
+										$row['dropped_section']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student_view;
 			}
@@ -40,14 +44,15 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 		$text = $section_student_view->get_start_date();
 		$end_date = $section_student_view->get_end_date();
 		$student_id = $section_student_view->get_student_id();
-		$first_name = $section_student_view->get_first_name();
-		$last_name = $section_student_view->get_last_name();
+		$student_first_name = $section_student_view->get_student_first_name();
+		$student_last_name = $section_student_view->get_student_last_name();
 		$school_name = $section_student_view->get_school_name();
+		$dropped_section = $section_student_view->get_dropped_section();
 		$table = $this->getTableName();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into $table (section_name, start_date, end_date, student_id, first_name, last_name, school_name) 
-				values('$section_name', '$text', '$end_date', '$student_id', '$first_name', '$last_name', '$school_name')";
+		$query = "insert into $table (section_name, start_date, end_date, student_id, student_first_name, student_last_name, school_name) 
+				values('$section_name', '$text', '$end_date', '$student_id', '$student_first_name', '$student_last_name', '$school_name', '$dropped_section')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -99,17 +104,21 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 				$value = $section_student_view->get_student_id();	
 				$query = "update $table set student_id = '$value' where section_id = '$section_id'";
 				break;
-			case 'first_name':
-				$value = $section_student_view->get_first_name();	
-				$query = "update $table set first_name = '$value' where section_id = '$section_id'";
+			case 'student_first_name':
+				$value = $section_student_view->get_student_first_name();	
+				$query = "update $table set student_first_name = '$value' where section_id = '$section_id'";
 				break;
-			case 'last_name':
-				$value = $section_student_view->get_last_name();	
-				$query = "update $table set last_name = '$value' where section_id = '$section_id'";
+			case 'student_last_name':
+				$value = $section_student_view->get_student_last_name();	
+				$query = "update $table set student_last_name = '$value' where section_id = '$section_id'";
 				break;
 			case 'school_name':
 				$value = $section_student_view->get_school_name();	
 				$query = "update $table set school_name = '$value' where section_id = '$section_id'";
+				break;
+			case 'dropped_section':
+				$value = $section_student_view->get_dropped_section();	
+				$query = "update $table set dropped_section = '$value' where section_id = '$section_id'";
 				break;
 		}
 		

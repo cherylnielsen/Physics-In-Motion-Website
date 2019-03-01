@@ -1,9 +1,9 @@
 <?php
 
 /***
-$assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
-$assignment_name, $date_due, $points_possible, $notes,
-$section_name, $professor_id, $professor_name, $school_name,
+$assignment_id, $section_id, $tutorial_lab_id, $assignment_name, 
+$date_assigned, $date_due, $points_possible, $notes,
+$section_name, $professor_id, $first_name, $last_name, $school_name,
 $tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
 ***/
 
@@ -21,9 +21,10 @@ class Assignment_View_Controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$assignment_view = new Assignment_View();
-				$assignment_view->initialize($row['assignment_id'], $row['section_id'], $row['tutorial_lab_id'],  $row['date_assigned'], 
-						$row['assignment_name'], $row['date_due'], $row['points_possible'], $row['notes'],
-						$row['section_name'], $row['professor_id'], $row['professor_name'],  $row['school_name'], 
+				$assignment_view->initialize($row['assignment_id'], $row['section_id'], $row['tutorial_lab_id'],  $row['assignment_name'], $row['date_assigned'], 
+						$row['date_due'], $row['points_possible'], $row['notes'],
+						$row['section_name'], $row['professor_id'], $row['first_name'],  
+						$row['last_name'], $row['school_name'], 
 						$row['tutorial_lab_name'], $row['tutorial_lab_introduction'], $row['tutorial_lab_web_link']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment_view;
@@ -41,52 +42,7 @@ class Assignment_View_Controller extends DatabaseController {
 	// The assignment_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$assignment_view)
 	{
-		$db_connection = get_db_connection();
-		$sucess = true;
-		
-		$section_id = $assignment_view->get_section_id();
-		$tutorial_lab_id = $assignment_view->get_tutorial_lab_id();
-		$assignment_name = $assignment_view->get_assignment_name();
-		$date_assigned = $assignment_view->get_date_assigned();
-		$date_due = $assignment_view->get_date_due();
-		$points_possible = $assignment_view->get_points_possible();
-		$notes = $assignment_view->get_notes();
-		$table = $this->getTableName();
-		
-		$section_name = $assignment_view->get_section_name();
-		$professor_id = $assignment_view->get_professor_id();
-		$professor_name = $assignment_view->get_professor_name();
-		$school_name = $assignment_view->get_school_name();
-		$tutorial_lab_name = $assignment_view->get_tutorial_lab_name();
-		$tutorial_lab_introduction = $assignment_view->get_tutorial_lab_introduction();
-		$tutorial_lab_web_link = $assignment_view->get_tutorial_lab_web_link();
-		
-		// The assignment_id will be auto-generated.
-		$query = "insert into $table (assignment_id, section_id, tutorial_lab_id, date_assigned, 
-									assignment_name, date_due, points_possible, notes,
-									section_name, professor_id, professor_name, school_name,
-									tutorial_lab_name, tutorial_lab_introduction, tutorial_lab_web_link) 
-			values ('$assignment_id', '$section_id', '$tutorial_lab_id', '$date_assigned', 
-						'$assignment_name', '$date_due', '$points_possible', '$notes',
-						'$section_name', '$professor_id', '$professor_name', '$school_name',
-						'$tutorial_lab_name', '$tutorial_lab_introduction', '$tutorial_lab_web_link')";
-		
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			// get the newly generated assignment_id
-			$assignment_view->set_assignment_id(mysql_insert_id($db_connection));		
-		}
-		else
-		{
-			$sucess = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_free_result($result);	
-		mysqli_close($db_connection);
-		return $sucess;		
+		return false;		
 	}
 
 
@@ -96,7 +52,7 @@ class Assignment_View_Controller extends DatabaseController {
 	
 		$assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
 		$assignment_name, $date_due, $points_possible, $notes,
-		$section_name, $professor_id, $professor_name, $school_name,
+		$section_name, $professor_id, $first_name, $school_name,
 		$tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
 	***/
 	public function updateAttribute($assignment_view, $key)
@@ -158,9 +114,14 @@ class Assignment_View_Controller extends DatabaseController {
 				$query = "update $table set professor_id = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case 'professor_name':
-				$value = $assignment_view->get_professor_name();	
-				$query = "update $table set professor_name = '$value' where 
+			case 'first_name':
+				$value = $assignment_view->get_first_name();	
+				$query = "update $table set first_name = '$value' where 
+							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				break;
+			case 'last_name':
+				$value = $assignment_view->get_last_name();	
+				$query = "update $table set last_name = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'school_name':
@@ -200,21 +161,7 @@ class Assignment_View_Controller extends DatabaseController {
 	
 	public function deleteFromDatabase($assignment_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$assignment_id = $assignment_view->get_assignment_id();
-		$table = $this->getTableName();
-		
-		$query = "delete from $table where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
-		
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		
-		mysqli_close($db_connection);
-		return $success;
+		return false;
 	}
 	
 

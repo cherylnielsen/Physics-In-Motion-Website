@@ -24,7 +24,7 @@ set date_submitted = "2018-02-03 22:00:00", points_earned = 20, was_graded = tru
 where homework_id = 1;
 update homework 
 set date_submitted = "2018-02-04 12:00:00", points_earned = 15, was_graded = true, hours = 2
-where homework_id = 1;
+where homework_id = 3;
 
 select * from homework;
 

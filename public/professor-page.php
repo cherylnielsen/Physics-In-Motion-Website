@@ -21,9 +21,10 @@
 
 <section class="main-content">
 	<?php include('../private/action/user-pages/MemberDataUtilities.php'); ?>
-	<?php include('../private/action/user-pages/MemberActions.php'); ?>
-	<?php include('../private/action/user-pages/MemberDisplayTables.php'); ?>
 	<?php include('../private/action/user-pages/MemberDisplayUtilities.php'); ?>
+	<?php include('../private/action/user-pages/MemberActions.php'); ?>
+	<?php include('../private/action/user-pages/DisplaySectionData.php'); ?>
+	<?php include('../private/action/user-pages/DisplayNotices.php'); ?>
 	<?php include('html-includes/users/professor-page-main-content.php'); ?>
 </section>
 		

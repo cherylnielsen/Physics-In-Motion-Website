@@ -227,7 +227,6 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice` (
   `date_sent` DATETIME NOT NULL,
   `notice_subject` VARCHAR(256) NOT NULL,
   `notice_text` VARCHAR(1000) NOT NULL,
-  `sent_high_priority` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `flag_for_review` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`notice_id`),
   CONSTRAINT `notice_from_member_id`
@@ -344,8 +343,6 @@ DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_member` ;
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_member` (
   `notice_id` INT UNSIGNED NOT NULL,
   `to_member_id` INT UNSIGNED NOT NULL,
-  `flag_read` TINYINT UNSIGNED NOT NULL DEFAULT 0,
-  `flag_important` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`notice_id`, `to_member_id`),
   CONSTRAINT `sent_to_member_notice_id`
     FOREIGN KEY (`notice_id`)
@@ -459,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_view` (`section_name`
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `professor_name` INT, `school_name` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `professor_id` INT, `first_name` INT, `last_name` INT, `school_name` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`tutorial_lab_rating_view`
@@ -467,9 +464,14 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_view` (`section_id` INT,
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`tutorial_lab_rating_view` (`member_name` INT, `tutorial_lab_name` INT, `tutorial_lab_rating_id` INT, `tutorial_lab_id` INT, `member_id` INT, `date_posted` INT, `rating` INT, `comments` INT, `flag_for_review` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`notice_view`
+-- Placeholder table for view `physics_in_motion`.`member_notice_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_view` (`to_section_id` INT, `to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `sent_high_priority` INT, `flag_for_review` INT, `flag_read` INT, `flag_important` INT, `from_member_name` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`member_notice_view` (`to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_first_name` INT, `from_last_name` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `physics_in_motion`.`section_notice_view`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_notice_view` (`to_section_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_first_name` INT, `from_last_name` INT);
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`student_member_view`
@@ -594,7 +596,8 @@ CREATE  OR REPLACE VIEW `section_view` AS
         section.start_date,
         section.end_date,
         professor.professor_id,
-        concat(member.first_name, ' ', member.last_name) AS professor_name,
+        member.first_name, 
+        member.last_name,
         professor.school_name
     FROM
         section,
@@ -628,28 +631,44 @@ CREATE  OR REPLACE VIEW `tutorial_lab_rating_view` AS
 		tutorial_lab.tutorial_lab_id, date_posted;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`notice_view`
+-- View `physics_in_motion`.`member_notice_view`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`notice_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`notice_view` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`member_notice_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`member_notice_view` ;
 USE `physics_in_motion`;
-CREATE  OR REPLACE VIEW `notice_view` AS
+CREATE  OR REPLACE VIEW `member_notice_view` AS
     SELECT 
-        to_section_id,
         to_member_id,
         notice.*,
-        flag_read,
-        flag_important,
-        concat(first_name, ' ', last_name) AS from_member_name
+        first_name AS from_first_name, 
+        last_name AS from_last_name
     FROM
-        notice 
-            JOIN
-		notice_to_member ON (notice.notice_id = notice_to_member.notice_id)
-            JOIN
-        member ON (notice.from_member_id = member.member_id)
-            LEFT OUTER JOIN
-        notice_to_section ON (notice.notice_id = notice_to_section.notice_id)
-    ORDER BY to_member_id , to_section_id , date_sent;
+        notice, notice_to_member, member
+	WHERE
+		notice.notice_id = notice_to_member.notice_id
+        AND notice.from_member_id = member.member_id
+    ORDER BY 
+		date_sent, notice.notice_id;
+
+-- -----------------------------------------------------
+-- View `physics_in_motion`.`section_notice_view`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `physics_in_motion`.`section_notice_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`section_notice_view` ;
+USE `physics_in_motion`;
+CREATE  OR REPLACE VIEW `section_notice_view` AS
+    SELECT 
+        to_section_id,
+        notice.*,
+        first_name AS from_first_name, 
+        last_name AS from_last_name
+    FROM
+        notice, notice_to_section, member
+	WHERE
+		notice.notice_id = notice_to_section.notice_id
+        AND notice.from_member_id = member.member_id
+    ORDER BY 
+		date_sent, notice.notice_id;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

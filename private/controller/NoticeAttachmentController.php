@@ -3,9 +3,7 @@
 
 class NoticeAttachmentController extends DatabaseController {
 
-  	
 	public function __construct() {}
-	
 	
 	
 	protected function getData($db_result, $db_connection)

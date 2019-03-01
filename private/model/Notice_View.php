@@ -22,21 +22,15 @@ class Notice_View {
 	// part of a notice chain
 	private $response_to_notice_id;
 	
-	// flag for high priority by the member who wrote and sent the notice
-	private $sent_high_priority;
-	// flag that the receiving member read the notice
-	private $flag_read;
-	// flag as important by the member who received the notice
-	private $flag_important;
 	// flag notice for questionable content, to be reviewed by administrator
 	private $flag_for_review;
 	
 	
 	public function __construct() {}
 	
-	public function initialize($notice_id, $from_member_id, $from_member_name, $to_member_id, $date_sent, $notice_subject, $notice_text, 
-								$response_to_notice_id = null, $to_section_id = null, $sent_high_priority = false, 
-								$flag_read = false, $flag_important = false, $flag_for_review = false)
+	public function initialize($notice_id, $from_member_id, $from_member_name, $to_member_id, 
+								$date_sent, $notice_subject, $notice_text, 
+								$response_to_notice_id = null, $to_section_id = null, $flag_for_review = false)
 	{
 		$this->notice_id = $notice_id;
 		$this->from_member_id = $from_member_id;
@@ -47,11 +41,7 @@ class Notice_View {
 		$this->notice_subject = $notice_subject;
 		$this->notice_text = $notice_text;
 		$this->response_to_notice_id = $response_to_notice_id;
-		
-		// the flags will all default to false
-		$this->sent_high_priority = $sent_high_priority;
-		$this->flag_read = $flag_read;
-		$this->flag_important = $flag_important;
+
 		$this->flag_for_review = $flag_for_review;
 	}
 	
@@ -134,36 +124,6 @@ class Notice_View {
 	public function set_response_to_notice_id($response_to_notice_id)
 	{
 		$this->response_to_notice_id = $response_to_notice_id;
-	}
-	
-	public function get_sent_high_priority()
-	{
-		return $this->sent_high_priority;
-	}
-
-	public function set_sent_high_priority($sent_high_priority)
-	{
-		$this->sent_high_priority = $sent_high_priority;
-	}
-	
-	public function get_flag_read()
-	{
-		return $this->flag_read;
-	}
-
-	public function set_flag_read($flag_read)
-	{
-		$this->flag_read = $flag_read;
-	}
-	
-	public function get_flag_important()
-	{
-		return $this->flag_important;
-	}
-
-	public function set_flag_important($flag_for_review)
-	{
-		$this->flag_important = $flag_important;
 	}
 	
 	public function get_flag_for_review()
