@@ -2,7 +2,7 @@
 
 
 /***
-Notice = ($notice_id, $from_member_id, $response_to_notice_id, $date_sent, $notice_subject, $notice_text, $sent_high_priority, $flag_for_review)
+Notice = ($notice_id, $from_member_id, $response_to_notice_id, $date_sent, $notice_subject, $notice_text, $flag_for_review)
 ***/
 class NoticeController extends DatabaseController {
 
@@ -19,9 +19,11 @@ class NoticeController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['notice_id'], $row['from_member_id'], $row['date_sent'], 
-							$row['notice_subject'], $row['notice_text'], $row['response_to_notice_id'], 
-							$row['sent_high_priority'], $row['flag_for_review']);
+				$notice->initialize($row['notice_id'], $row['from_member_id'], 
+							$row['date_sent'], 
+							$row['notice_subject'], $row['notice_text'], 
+							$row['response_to_notice_id'], 
+							$row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice;	
 			}
@@ -45,15 +47,14 @@ class NoticeController extends DatabaseController {
 		$notice_subject = $notice->get_notice_subject();
 		$notice_text = $notice->get_notice_text();
 		$response_to_notice_id = $notice->get_response_to_notice_id();
-		$sent_high_priority = $notice->get_sent_high_priority();
 		$flag_for_review = $notice->get_flag_for_review();
 		$table = $this->getTableName();
 		
 		// The notice_id will be auto-generated.
-		$query = "insert into $table (from_member_id, date_sent, response_to_notice_id, notice_subject, 
-							notice_text, sent_high_priority, flag_for_review) 
-				values('$from_member_id', 'now()', '$response_to_notice_id', '$notice_subject', 
-							'$notice_text', '$sent_high_priority', '$flag_for_review')";
+		$query = "insert into $table (from_member_id, date_sent, notice_subject, 
+							notice_text, response_to_notice_id, flag_for_review) 
+				values('$from_member_id', 'now()', '$notice_subject', 
+							'$notice_text', '$response_to_notice_id', '$flag_for_review')";
 							
 		$result = mysqli_query($db_connection, $query);
 
@@ -109,10 +110,6 @@ class NoticeController extends DatabaseController {
 			case 'response_to_notice_id':
 				$value = $notice->get_response_to_notice_id();	
 				$query = "update $table set response_to_notice_id = '$value' where notice_id = '$notice_id'";
-				break;
-			case 'sent_high_priority':
-				$value = $notice->get_sent_high_priority();	
-				$query = "update $table set sent_high_priority = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'flag_for_review':
 				$value = $notice->get_flag_for_review();	

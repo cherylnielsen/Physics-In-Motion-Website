@@ -5,7 +5,7 @@ class Administrator_Member_View_Controller extends DatabaseController
 {
 	
 	public function __construct() {}
-	// $administrator_id, $administrator_name, $email, $admin_type
+	// $administrator_id, $first_name, $last_name, $email, $admin_type
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,8 @@ class Administrator_Member_View_Controller extends DatabaseController
 			{
 				$administrator_member_view = new Administrator_Member_View();
 				$administrator_member_view->set_administrator_id($row['administrator_id']);
-				$administrator_member_view->set_administrator_name($row['administrator_name']);
+				$administrator_member_view->set_first_name($row['first_name']);
+				$administrator_member_view->set_last_name($row['last_name']);
 				$administrator_member_view->set_email($row['email']);
 				$administrator_member_view->set_admin_type($row['admin_type']);
 				// pushes each object onto the end of the array
@@ -47,9 +48,13 @@ class Administrator_Member_View_Controller extends DatabaseController
 			case 'administrator_id':
 				return false;
 				break;
-			case 'administrator_name':
-				$value = $administrator_member_view->get_administrator_name();
-				$query = "update $table set administrator_name = '$value' where administrator_id = '$administrator_id'";
+			case 'first_name':
+				$value = $administrator_member_view->get_first_name();
+				$query = "update $table set first_name = '$value' where administrator_id = '$administrator_id'";
+				break;
+			case 'last_name':
+				$value = $administrator_member_view->get_last_name();
+				$query = "update $table set last_name = '$value' where administrator_id = '$administrator_id'";
 				break;
 			case 'admin_type':
 				$value = $administrator_member_view->get_admin_type();
@@ -76,47 +81,13 @@ class Administrator_Member_View_Controller extends DatabaseController
 
 	public function saveNew(&$administrator_member_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$administrator_id = $administrator_member_view->get_administrator_id();
-		$administrator_name = $administrator_member_view->get_administrator_name();
-		$email = $administrator_member_view->get_email();
-		$admin_type = $administrator_member_view->get_admin_type();
-		$table = $this->getTableName();
-	
-		$query = "insert into $table (administrator_id, administrator_name, email, admin_type) 
-					values('$administrator_id', '$administrator_name', '$email', '$admin_type')";
-		$result = mysqli_query($db_connection, $query);
-
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $success;
-		
+		return false;
 	}
 
 
 	public function deleteFromDatabase($administrator_member_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$administrator_id = $administrator_member_view->get_administrator_id();
-		$table = $this->getTableName();
-		
-		$query = "delete from $table where administrator_id = $administrator_id";
-		
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		
-		mysqli_close($db_connection);
-		return $success;
+		return false;
 	}
 	
 

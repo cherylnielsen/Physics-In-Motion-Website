@@ -37,12 +37,10 @@ class NoticeToSectionController extends DatabaseController {
 		$sucess = true;
 		$notice_id = $notice_to_section->get_notice_id();
 		$to_section_id = $notice_to_section->get_to_section_id();
-		$flag_read = $notice_to_section->get_flag_read();
-		$flag_important = $notice_to_section->get_flag_important();
 		$table = $this->getTableName();
 		
-		$query = "insert into $table (notice_id, to_section_id, flag_read, flag_important) 
-				values('$notice_id', '$to_section_id', '$flag_read', '$flag_important')";
+		$query = "insert into $table (notice_id, to_section_id) 
+				values('$notice_id', '$to_section_id')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)

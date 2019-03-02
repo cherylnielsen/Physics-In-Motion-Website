@@ -5,7 +5,7 @@ class Student_Member_View_Controller extends DatabaseController
 {
 	
 	public function __construct() {}
-	// $student_id, $student_name, $email, $school_name
+	// $student_id, $first_name, $last_name, $email, $school_name
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,8 @@ class Student_Member_View_Controller extends DatabaseController
 			{
 				$student_member_view = new Student_Member_View();
 				$student_member_view->set_student_id($row['student_id']);
-				$student_member_view->set_student_name($row['student_name']);
+				$student_member_view->set_first_name($row['first_name']);
+				$student_member_view->set_last_name($row['last_name']);
 				$student_member_view->set_email($row['email']);
 				$student_member_view->set_school_name($row['school_name']);
 				// pushes each object onto the end of the array
@@ -47,9 +48,13 @@ class Student_Member_View_Controller extends DatabaseController
 			case 'student_id':
 				return false;
 				break;
-			case 'student_name':
-				$value = $student_member_view->get_student_name();
-				$query = "update $table set student_name = '$value' where student_id = '$student_id'";
+			case 'first_name':
+				$value = $student_member_view->get_first_name();
+				$query = "update $table set first_name = '$value' where student_id = '$student_id'";
+				break;
+			case 'last_name':
+				$value = $student_member_view->get_last_name();
+				$query = "update $table set last_name = '$value' where student_id = '$student_id'";
 				break;
 			case 'school_name':
 				$value = $student_member_view->get_school_name();
@@ -76,47 +81,13 @@ class Student_Member_View_Controller extends DatabaseController
 
 	public function saveNew(&$student_member_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$student_id = $student_member_view->get_student_id();
-		$student_name = $student_member_view->get_student_name();
-		$email = $student_member_view->get_email();
-		$school_name = $student_member_view->get_school_name();
-		$table = $this->getTableName();
-	
-		$query = "insert into $table (student_id, student_name, email, school_name) 
-					values('$student_id', '$student_name', '$email', '$school_name')";
-		$result = mysqli_query($db_connection, $query);
-
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $success;
-		
+		return false;
 	}
 
 
 	public function deleteFromDatabase($student_member_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$student_id = $student_member_view->get_student_id();
-		$table = $this->getTableName();
-		
-		$query = "delete from $table where student_id = $student_id";
-		
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		
-		mysqli_close($db_connection);
-		return $success;
+		return false;
 	}
 	
 

@@ -1,0 +1,134 @@
+<?php
+
+class MemberDataUtilities {
+	
+	public function __construct() {}
+
+	
+	// Gets the list of all students in this section.
+	public function getSectionListOfStudents($section_id, $mdb_control)
+	{
+		$student_list = array();
+		$controller = $mdb_control->getController("section_list_of_students_view");
+		$student_list = $controller->getByAttribute("section_id", $section_id);
+		
+		return $student_list;
+	}
+
+
+	// Gets the current sections from the database for this student.
+	public function getSectionList_ByStudent($student_id, $mdb_control)
+	{
+		$section_list = array();
+		$sections = array();
+		$controller = $mdb_control->getController("section_student");
+		$sections = $controller->getByAttribute("student_id", $student_id);
+		
+		$controller = $mdb_control->getController("section_view");
+		$num = count($sections);
+		
+		for($i = 0; $i < $num; $i++)
+		{
+			$section_id = $sections[$i]->get_section_id();
+			$next = array();
+			$next = $controller->getByAttribute("section_id", $section_id);
+			if(count($next) == 1)
+			{
+				$section_list[] = $next[0];
+			}
+		}
+		
+		return $section_list;
+	}
+	
+	
+	// Gets the current sections from the database for this professor.
+	public function getSectionList_ByProfessor($professor_id, $mdb_control)
+	{
+		$sections = array();
+		$controller = $mdb_control->getController("section_view");
+		$sections = $controller->getByAttribute("professor_id", $professor_id);
+		return $sections;
+	}
+
+	
+	// Gets all assignments from the database for this section.
+	public function getSectionAssignments($section_id, $mdb_control)
+	{
+		$assignment_list = array();
+		$controller = $mdb_control->getController("assignment_view");
+		$assignment_list = $controller->getByAttribute("section_id", $section_id);
+		
+		return $assignment_list;
+	}	
+	
+	
+	// Gets all homeworks from the database for this assignment in this section for all students.
+	public function getSectionHomework_ByAssignment($assignment_id, $section_id, $mdb_control)
+	{
+		$homework_list = array();
+		$controller = $mdb_control->getController("homework");
+		$homework_list = $controller->getByAttribute("assignment_id", $assignment_id, "section_id", $section_id);
+		
+		return $homework_list;
+	}
+	
+	
+	// Gets all homeworks from the database for this student in this section for all assignments.
+	public function getSectionHomework_ByStudent($student_id, $section_id, $mdb_control)
+	{
+		$homework_list = array();
+		$controller = $mdb_control->getController("homework");
+		$homework_list = $controller->getByAttributes("student_id", $student_id, "section_id", $section_id);
+		
+		return $homework_list;
+	}
+	
+	
+	// Gets all notices from the database sent by this member.
+	public function getMemberSentNotices($from_member_id, $mdb_control)
+	{
+		$notice_list = array();		
+		$controller = $mdb_control->getController("member_notice_view");
+		$notice_list = $controller->getByAttribute("from_member_id", $from_member_id);
+		
+		return $notice_list;
+	}
+	
+	
+	// Gets all notices from the database sent to this member.
+	public function getMemberInBoxNotices($to_member_id, $mdb_control)
+	{
+		$notice_list = array();		
+		$controller = $mdb_control->getController("member_notice_view");
+		$notice_list = $controller->getByAttribute("to_member_id", $to_member_id);
+		
+		return $notice_list;
+	}
+
+
+	// Gets all notices from the database received by this section.
+	public function getSectionNotices($to_section_id, $mdb_control)
+	{
+		$notice_list = array();		
+		$controller = $mdb_control->getController("section_notice_view");
+		$notice_list = $controller->getByAttribute("to_section_id", $to_section_id);
+		
+		return $notice_list;
+	}
+	
+	
+	// Gets all attachments from the database for this notice id.
+	public function getNoticeAttachments($notice_id, $mdb_control)
+	{
+		$attachment_list = array();
+		$controller = $mdb_control->getController("notice_attachment");
+		$notice_list = $controller->getByAttribute("notice_id", $notice_id);
+		
+		return $notice_list;
+	}
+	
+	
+}
+
+?>

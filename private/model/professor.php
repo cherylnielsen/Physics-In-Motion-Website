@@ -2,8 +2,8 @@
 
 class Professor {
 	
-	private $professor_id;	// key
-	private $school_name;
+	protected $professor_id;	// key
+	protected $school_name;
 
 	public function __construct() {}
 	

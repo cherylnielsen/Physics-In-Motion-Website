@@ -19,7 +19,8 @@ class SectionRatingController extends DatabaseController {
 			{
 				$rating = new Section_Rating();
 				$rating->initialize($row['section_rating_id'], $row['section_id'],  
-							$row['date_posted'], $row['rating'], $row['comments'], $row['flag_for_review']);
+							$row['date_posted'], $row['rating'], $row['comments'], 
+							$row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $rating;
 			}	

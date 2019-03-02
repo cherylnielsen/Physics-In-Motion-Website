@@ -18,8 +18,9 @@ class TutorialLabRatingController extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$rating = new Tutorial_Lab_Rating();
-				$rating->initialize($row['tutorial_lab_rating_id'], $row['tutorial_lab_id'], $row['member_id'], 
-							$row['date_posted'], $row['rating'], $row['comments'], $row['flag_for_review']);
+				$rating->initialize($row['tutorial_lab_rating_id'], $row['tutorial_lab_id'], 
+				$row['member_id'], $row['date_posted'], $row['rating'], $row['comments'], 
+				$row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $rating;
 			}	

@@ -6,7 +6,8 @@ class AssignmentController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, $date_due, $points_possible, $notes)
+	// ($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, 
+	//  $date_due, $points_possible, $notes)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,8 +19,10 @@ class AssignmentController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$assignment = new Assignment();
-				$assignment->initialize($row['assignment_id'], $row['section_id'], $row['tutorial_lab_id'],   
-						$row['date_assigned'], $row['assignment_name'], $row['date_due'], $row['points_possible'], $row['notes']);
+				$assignment->initialize($row['assignment_id'], $row['section_id'], 
+						$row['tutorial_lab_id'],   
+						$row['assignment_name'], $row['date_assigned'], $row['date_due'], 
+						$row['points_possible'], $row['notes']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment;
 			}	

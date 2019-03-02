@@ -3,22 +3,22 @@
 
 class Homework {
 	
-	private $homework_id; // key 
-	private $section_id;
-	private $assignment_id; 
-	private $student_id;		
+	protected $homework_id; // key 
+	protected $section_id;
+	protected $assignment_id; 
+	protected $student_id;		
 	// the homework produced
-	private $lab_summary;
-	private $lab_data;
-	private $graphs;
-	private $math;
-	private $hints;
-	private $chat_session;	
+	protected $lab_summary;
+	protected $lab_data;
+	protected $graphs;
+	protected $math;
+	protected $hints;
+	protected $chat_session;	
 	// the homework submitted
-	private $date_submitted;
-	private $points_earned;
-	private $was_graded;
-	private $hours;
+	protected $date_submitted;
+	protected $points_earned;
+	protected $was_graded;
+	protected $hours;
 			
 	public function __construct() {}
 	
@@ -81,16 +81,6 @@ class Homework {
 	{
 		$this->student_id = $student_id;
 	}	
-	
-	public function get_added_instructions()
-	{
-		return $this->added_instructions;
-	}
-
-	public function set_added_instructions($added_instructions)
-	{
-		$this->added_instructions = $added_instructions;
-	}
 	
 	public function get_lab_summary()
 	{

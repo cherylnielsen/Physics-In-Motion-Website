@@ -2,12 +2,12 @@
 
 class Section_Rating {
 	
-	private $section_rating_id; // key
-	private $section_id;
-	private $date_posted;
-	private $rating;
-	private $comments;
-	private $flag_for_review;
+	proteted $section_rating_id; // key
+	proteted $section_id;
+	proteted $date_posted;
+	proteted $rating;
+	proteted $comments;
+	proteted $flag_for_review;
 	
 	public function __construct() {}
 	

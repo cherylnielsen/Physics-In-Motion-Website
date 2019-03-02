@@ -2,19 +2,19 @@
 
 class Assignment {
 	
-	private $assignment_id; // key
-	private $section_id;	// key
-	private $tutorial_lab_id;
-	private $assignment_name;
-	private $date_assigned;
-	private $date_due;
-	private $points_possible;		
-	private $notes;	
+	protected $assignment_id; // key
+	protected $section_id;	// key
+	protected $tutorial_lab_id;
+	protected $assignment_name;
+	protected $date_assigned;
+	protected $date_due;
+	protected $points_possible;		
+	protected $notes;	
 	
 	public function __construct() {}
 
-	public function initialize($assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
-							$assignment_name, $date_due, $points_possible, $notes)
+	public function initialize($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, 
+							$date_assigned, $date_due, $points_possible, $notes)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->section_id = $section_id;

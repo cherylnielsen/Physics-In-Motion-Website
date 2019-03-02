@@ -17,8 +17,10 @@ class MemberController extends DatabaseController {
 			{
 				$the_member = new Member();
 				$the_member->initialize($row['member_id'], $row['member_type'], $row['member_name'], 
-							$row['member_password'], $row['date_registered'], $row['last_login'], $row['last_logoff'],
-							$row['first_name'], $row['last_name'], $row['email'], $row['registration_complete']);
+							$row['member_password'], $row['date_registered'], $row['last_login'], 
+							$row['last_logoff'],
+							$row['first_name'], $row['last_name'], $row['email'], 
+							$row['registration_complete']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $the_member;
 			}	
@@ -44,8 +46,8 @@ class MemberController extends DatabaseController {
 		$dataArray = $this->getData($result, $db_connection);
 		mysqli_close($db_connection);
 		$num = count($dataArray);
-		
-		if($num > 0)
+			
+		if($num == 1)
 		{	
 			$member = $dataArray[0];
 			$member_password = $member->get_member_password();
@@ -56,7 +58,8 @@ class MemberController extends DatabaseController {
 			}			
 		}
 		else
-		{	$member = null;
+		{	
+			$member = null; 
 		}
 		
 		return $member;
@@ -135,8 +138,8 @@ class MemberController extends DatabaseController {
 	
 	
 	// The member_id will be auto-generated, when the new member is added to the database table.
-	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff
-	//			$first_name, $last_name, $email, $registration_complete)
+	// Member ($member_id, $member_type, $member_name, $member_password, $date_registered, 
+	// $last_login, $last_logoff, $first_name, $last_name, $email, $registration_complete)
 	public function saveNew(&$member)
 	{
 		$db_connection = get_db_connection();
@@ -144,6 +147,8 @@ class MemberController extends DatabaseController {
 		$member_type = $member->get_member_type();
 		$password = $member->get_member_password();
 		$date = $member->get_date_registered();
+		$last_login = $member->get_last_login();
+		$last_logoff = $member->get_last_logoff();
 		$first_name = $member->get_first_name();
 		$last_name = $member->get_last_name();
 		$email = $member->get_email();
@@ -154,9 +159,9 @@ class MemberController extends DatabaseController {
 		$success = true;
 		// The member_id will be auto-generated.
 		$query = "insert into $table (member_type, member_name, member_password, date_registered, 
-						first_name, last_name, email, registration_complete) 
-				values('$member_type', '$name', '$password', '$date', '$first_name', '$last_name', 
-						'$email', '$registration_complete')";
+						last_login, last_logoff, first_name, last_name, email, registration_complete) 
+				values('$member_type', '$name', '$password', '$date', '$last_login', '$last_logoff', 
+						'$first_name', '$last_name', '$email', '$registration_complete')";
 		
 		$result = mysqli_query($db_connection, $query);			
 		

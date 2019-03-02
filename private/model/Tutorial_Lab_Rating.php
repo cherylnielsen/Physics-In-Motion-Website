@@ -2,18 +2,18 @@
 
 class Tutorial_Lab_Rating {
 	
-	private $tutorial_lab_rating_id; // key
-	private $tutorial_lab_id;
-	private $member_id;
-	private $date_posted;
-	private $rating;
-	private $comments;
-	private $flag_for_review;
+	protected $tutorial_lab_rating_id; // key
+	protected $tutorial_lab_id;
+	protected $member_id;
+	protected $date_posted;
+	protected $rating;
+	protected $comments;
+	protected $flag_for_review;
 	
 	public function __construct() {}
 	
-	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, $date_posted, 
-					$rating, $comments, $flag_for_review = false)
+	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, 
+					$date_posted, $rating, $comments, $flag_for_review = false)
 	{
 		$this->tutorial_lab_rating_id = $tutorial_lab_rating_id;
 		$this->tutorial_lab_id = $tutorial_lab_id;
@@ -21,6 +21,7 @@ class Tutorial_Lab_Rating {
 		$this->date_posted = $date_posted;
 		$this->rating = $rating;
 		$this->comments = $comments;
+		$this->flag_for_review = $flag_for_review;
 	}
 
 	

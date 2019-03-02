@@ -3,13 +3,15 @@
 class Member {
 	
 	private $member_id;	// key
+	private $member_name;
+	private $member_password;
+	private $member_type;
+	private $allowed_member_types = array('professor', 'student', 'administrator', 'blocked');
+	
 	private $first_name;
 	private $last_name;
 	private $email; 
-	private $member_type;
-	private $allowed_member_types = array('professor', 'student', 'administrator', 'blocked');
-	private $member_name;
-	private $member_password;
+	
 	private $date_registered;
 	private $last_login;
 	private $last_logoff;
@@ -63,7 +65,26 @@ class Member {
 			$this->member_type = "error";
 		}
 	}
+		
+	public function get_member_name()
+	{
+		return $this->member_name;
+	}
+
+	public function set_member_name($member_name)
+	{
+		$this->member_name = $member_name;
+	}
 	
+	public function get_member_password()
+	{
+		return $this->member_password;
+	}
+
+	public function set_member_password($member_password)
+	{
+		$this->member_password = $member_password;
+	}
 	
 	public function get_email()
 	{
@@ -93,26 +114,6 @@ class Member {
 	public function set_last_name($last_name)
 	{
 		$this->last_name = $last_name;
-	}
-	
-	public function get_member_name()
-	{
-		return $this->member_name;
-	}
-
-	public function set_member_name($member_name)
-	{
-		$this->member_name = $member_name;
-	}
-	
-	public function get_member_password()
-	{
-		return $this->member_password;
-	}
-
-	public function set_member_password($member_password)
-	{
-		$this->member_password = $member_password;
 	}
 	
 	public function get_date_registered()
@@ -153,6 +154,16 @@ class Member {
 	public function set_registration_complete($registration_complete)
 	{
 		$this->registration_complete = $registration_complete;
+	}
+	
+	public function get_allowed_member_types()
+	{
+		return $this->allowed_member_types;
+	}
+
+	public function set_allowed_member_types($allowed_member_types)
+	{
+		$this->allowed_member_types = $allowed_member_types;
 	}
 	
 	

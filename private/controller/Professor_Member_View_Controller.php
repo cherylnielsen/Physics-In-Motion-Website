@@ -3,9 +3,8 @@
 
 class Professor_Member_View_Controller extends DatabaseController
 {
-	
 	public function __construct() {}
-	// $professor_id, $professor_name, $email, $school_name
+	// $professor_id, $first_name, $last_name, $email, $school_name
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +17,8 @@ class Professor_Member_View_Controller extends DatabaseController
 			{
 				$professor_member_view = new Professor_Member_View();
 				$professor_member_view->set_professor_id($row['professor_id']);
-				$professor_member_view->set_professor_name($row['professor_name']);
+				$professor_member_view->set_first_name($row['first_name']);
+				$professor_member_view->set_first_name($row['last_name']);
 				$professor_member_view->set_email($row['email']);
 				$professor_member_view->set_school_name($row['school_name']);
 				// pushes each object onto the end of the array
@@ -47,9 +47,13 @@ class Professor_Member_View_Controller extends DatabaseController
 			case 'professor_id':
 				return false;
 				break;
-			case 'professor_name':
-				$value = $professor_member_view->get_professor_name();
-				$query = "update $table set professor_name = '$value' where professor_id = '$professor_id'";
+			case 'first_name':
+				$value = $professor_member_view->get_first_name();
+				$query = "update $table set first_name = '$value' where professor_id = '$professor_id'";
+				break;
+			case 'last_name':
+				$value = $professor_member_view->get_last_name();
+				$query = "update $table set last_name = '$value' where professor_id = '$professor_id'";
 				break;
 			case 'school_name':
 				$value = $professor_member_view->get_school_name();
@@ -76,47 +80,13 @@ class Professor_Member_View_Controller extends DatabaseController
 
 	public function saveNew(&$professor_member_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$professor_id = $professor_member_view->get_professor_id();
-		$professor_name = $professor_member_view->get_professor_name();
-		$email = $professor_member_view->get_email();
-		$school_name = $professor_member_view->get_school_name();
-		$table = $this->getTableName();
-	
-		$query = "insert into $table (professor_id, professor_name, email, school_name) 
-					values('$professor_id', '$professor_name', '$email', '$school_name')";
-		$result = mysqli_query($db_connection, $query);
-
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_close($db_connection);
-		return $success;
-		
+		$return false;
 	}
 
 
 	public function deleteFromDatabase($professor_member_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$professor_id = $professor_member_view->get_professor_id();
-		$table = $this->getTableName();
-		
-		$query = "delete from $table where professor_id = $professor_id";
-		
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		
-		mysqli_close($db_connection);
-		return $success;
+		return false;
 	}
 	
 

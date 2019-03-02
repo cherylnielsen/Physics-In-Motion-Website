@@ -11,7 +11,7 @@
 	
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
 	
-	<link href="css/home-summary.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/home-page-project-summary.css" rel="stylesheet" type="text/css" media="screen">
 	
 </head>
 <body>
@@ -22,7 +22,7 @@
 
 <section class="main-content">
 	<?php include('html-includes/template/logo-statement.php'); ?>
-	<?php include('html-includes/template/project-summary.html'); ?>
+	<?php include('html-includes/template/home-page-project-summary.html'); ?>
 </section>
 
 <?php include('html-includes/labs/new-labs-list.php'); ?>			
