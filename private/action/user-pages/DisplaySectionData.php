@@ -50,7 +50,7 @@ class DisplaySectionData
 		}
 		else
 		{
-			echo "<tr><th>Section</th><th>Student ID</th><th>Student Name</th><th>School</th><th>Start Date</th><th>End Date</th></tr>";
+			echo "<tr><th>Section</th><th>Student ID</th><th>Student Name</th><th>School</th><th>Start</th><th>End</th></tr>";
 			
 			for($i = 0; $i < $number_of_sections; $i++)
 			{
@@ -82,10 +82,13 @@ class DisplaySectionData
 		if($number_of_sections > 0)
 		{	
 			echo "<table class='student_section_summary-table'>
-					<tr><th colspan='6'>Section Details</th></tr>";
+					<tr><th colspan='5'>Section Details</th></tr>";
 
 			for($i = 0; $i < $number_of_sections; $i++)
 			{
+				echo "<tr><th>Section</th><th>Professor</th><th>School</th><th>Start</th>
+						<th>End</th></tr>";
+			
 				$this->displayUtility->displaySectionRow($section_list[$i]);
 				$section_id = $section_list[$i]->get_section_id();
 				
@@ -103,7 +106,8 @@ class DisplaySectionData
 					$assignment_id = $assignment_list[$j]->get_assignment_id();
 									
 					for($k = 0; $k < $number_of_homeworks; $k++)
-					{	$hmwk_assignment_id = $homework_list[$k]->get_assignment_id();
+					{	
+						$hmwk_assignment_id = $homework_list[$k]->get_assignment_id();
 						
 						if($hmwk_assignment_id == $assignment_id)
 						{	$this->displayUtility->displayHomeworkRow($homework_list[$k]);

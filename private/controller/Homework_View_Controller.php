@@ -16,9 +16,9 @@ class Homework_View_Controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$homework = new Homework();
+				$homework = new Homework_View();
 				
-				$homework->initialize($row['homework_id'], $row['section_id'], $row['assignment_id'], 
+				$homework->initializeView($row['homework_id'], $row['section_id'], $row['assignment_id'], 
 						$row['student_id'], $row['lab_summary'], $row['lab_data'], 
 						$row['graphs'], $row['math'], $row['hints'], $row['chat_session'], 
 						$row['date_submitted'], $row['points_earned'], $row['was_graded'], $row['hours'], $row['student_first_name'], $row['student_last_name'], $row['school_name']);

@@ -22,20 +22,20 @@ $last_name = $_SESSION["last_name"];
 
 $dataUtility = new MemberDataUtilities();
 $displayUtility = new MemberDisplayUtilities();
-$displayTables = new DisplaySectionData();
+$displaySections = new DisplaySectionData();
 $displayNotices = new DisplayNotices();
 
 echo "<h1 class=user-page>Welcome $first_name $last_name!</h1>";
 
 $section_list = array();
 $section_list = $dataUtility->getSectionList_ByStudent($student_id, $mdb_control);
-$displayTables->displaySectionTable($section_list);
+$displaySections->displaySectionTable($section_list, $mdb_control);
 echo "<br>";
 
-$displayTables->displaySectionSummary_ByStudent($student_id, $section_list, $mdb_control);
+$displaySections->displaySectionSummary_ByStudent($student_id, $section_list, $mdb_control);
 echo "<br>";
 
-$displayNotices->displaySectionNotices($section_list, $mdb_control);
+$displayNotices->displaySectionNoticeTable($section_list, $mdb_control);
 echo "<br>";
  
 echo '<br><a id="bottom" href="#top">return to top</a>';

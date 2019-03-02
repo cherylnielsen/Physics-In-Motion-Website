@@ -22,7 +22,7 @@ class Notice_View_Controller extends DatabaseController {
 			{
 				$notice_view = new Notice_View();
 				
-				$notice_view->initialize($row['notice_id'], $row['from_member_id'], 
+				$notice_view->initializeView($row['notice_id'], $row['from_member_id'], 
 					$row['date_sent'], $row['notice_subject'], $row['notice_text'], 
 					$row['from_first_name'], $row['from_last_name'], 
 					$row['from_member_type'],  

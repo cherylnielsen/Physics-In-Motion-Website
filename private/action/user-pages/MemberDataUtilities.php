@@ -20,21 +20,22 @@ class MemberDataUtilities {
 	public function getSectionList_ByStudent($student_id, $mdb_control)
 	{
 		$section_list = array();
-		$sections = array();
+		$student_sections = array();
 		$controller = $mdb_control->getController("section_student");
-		$sections = $controller->getByAttribute("student_id", $student_id);
+		$student_sections = $controller->getByAttribute("student_id", $student_id);
+		$num = count($student_sections);
 		
 		$controller = $mdb_control->getController("section_view");
-		$num = count($sections);
-		
+				
 		for($i = 0; $i < $num; $i++)
 		{
-			$section_id = $sections[$i]->get_section_id();
-			$next = array();
-			$next = $controller->getByAttribute("section_id", $section_id);
-			if(count($next) == 1)
+			$section_id = $student_sections[$i]->get_section_id();
+			$section = array();
+			$section = $controller->getByAttribute("section_id", $section_id);
+			
+			if(count($section) == 1)
 			{
-				$section_list[] = $next[0];
+				$section_list[] = $section[0];
 			}
 		}
 		
@@ -110,9 +111,25 @@ class MemberDataUtilities {
 	// Gets all notices from the database received by this section.
 	public function getSectionNotices($to_section_id, $mdb_control)
 	{
-		$notice_list = array();		
-		$controller = $mdb_control->getController("section_notice_view");
-		$notice_list = $controller->getByAttribute("to_section_id", $to_section_id);
+		$notices_to_section = array();		
+		$controller = $mdb_control->getController("notice_to_section");
+		$notices_to_section = $controller->getByAttribute("to_section_id", $to_section_id);
+		
+		$num_notices = count($notices_to_section);
+		$notice_list = array();	
+		$controller = $mdb_control->getController("notice_view");
+		
+		for($i = 0; $i < $num_notices; $i++)
+		{
+			$notice_id = $notices_to_section[$i]->get_notice_id();
+			$notice = array();
+			$notice = $controller->getByAttribute("notice_id", $notice_id);
+			
+			if(count($notice) == 1)
+			{
+				$section_list[] = $notice[0];
+			}
+		}
 		
 		return $notice_list;
 	}

@@ -19,7 +19,7 @@ class Tutorial_Lab_Rating_View_Controller extends DatabaseController {
 			{
 				$rating = new Tutorial_Lab_Rating_View();
 				
-				$rating->initialize($row['tutorial_lab_rating_id'], $row['tutorial_lab_id'], 
+				$rating->initializeView($row['tutorial_lab_rating_id'], $row['tutorial_lab_id'], 
 								$row['date_posted'], $row['rating'], $row['comments'], 
 								$row['tutorial_lab_name'], $row['member_id'], 
 								$row['member_type'], $row['first_name'], $row['last_name'], 

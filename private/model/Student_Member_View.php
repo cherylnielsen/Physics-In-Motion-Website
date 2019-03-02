@@ -9,7 +9,7 @@ class Student_Member_View  extends Student {
 	public function __construct() {}
 	
 
-	public function initialize($student_id, $first_name, $last_name, $email, $school_name)
+	public function initializeView($student_id, $first_name, $last_name, $email, $school_name)
 	{
 		$this->set_student_id($student_id);
 		$this->set_first_name($first_name);

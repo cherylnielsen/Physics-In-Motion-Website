@@ -6,12 +6,12 @@ class Section_Rating_View extends Section_View {
 		
 	public function __construct() {}
 	
-	public function initializeView($section_id, $section_name, $start_date, $end_date,
+	public function initializeRatingView($section_id, $section_name, $start_date, $end_date,
 						$professor_id, $professor_first_name, $professor_last_name, $school_name, $section_rating_id, $date_posted, 
 						$rating, $comments, $flag_for_review = false)
 	{
 		$this->initializeView($section_id, $section_name, $start_date, $end_date,
-								$professor_id, $professor_first_name, $professor_last_name, $school_name)
+								$professor_id, $professor_first_name, $professor_last_name, $school_name);
 					
 		$this->Section_Rating = new Section_Rating();
 		$this->Section_Rating->initialize($section_rating_id, $section_id, $date_posted, 

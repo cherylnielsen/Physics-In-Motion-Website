@@ -18,7 +18,7 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section_student_view = new Section_List_Of_Students_View();
-				$section_student_view->initialize($row['section_id'], $row['section_name'], 
+				$section_student_view->initializeView($row['section_id'], $row['section_name'], 
 										$row['start_date'], $row['end_date'], 
 										$row['student_id'], $row['student_first_name'], 
 										$row['student_last_name'], $row['school_name'], 

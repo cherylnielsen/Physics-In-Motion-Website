@@ -17,14 +17,13 @@ class Section_Rating_View_Controller extends DatabaseController {
 		{
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
-				$section_professor_view = new Section_View();
-				$section_professor_view->initialize($row['section_id'], $row['section_name'], 
-									$row['start_date'], $row['end_date'], 
-									$row['professor_id'], $row['professor_first_name'], 
-									$row['professor_last_name'], $row['school_name'],
-									$row['section_rating_id'],   
-									$row['date_posted'], $row['rating'], 
-									$row['comments'], $row['flag_for_review']);
+				$section_professor_view = new Section_Rating_View();
+				$section_professor_view->initializeRatingView($row['section_id'], 
+							$row['section_name'], $row['start_date'], $row['end_date'], 
+							$row['professor_id'], $row['professor_first_name'], 
+							$row['professor_last_name'], $row['school_name'],
+							$row['section_rating_id'], $row['date_posted'], $row['rating'], 
+							$row['comments'], $row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_professor_view;
 			}

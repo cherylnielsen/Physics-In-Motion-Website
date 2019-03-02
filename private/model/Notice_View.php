@@ -11,12 +11,12 @@ class Notice_View extends Notice{
 	
 	public function __construct() {}
 	
-	public function initialize($notice_id, $from_member_id, $date_sent, $notice_subject,
-						$notice_text, $from_first_name, $from_last_name, $from_member_type
+	public function initializeView($notice_id, $from_member_id, $date_sent, $notice_subject,
+						$notice_text, $from_first_name, $from_last_name, $from_member_type,
 						$response_to_notice_id = null, $flag_for_review = false)
 	{
 		$this->initialize($notice_id, $from_member_id, $date_sent, $notice_subject, 
-							$notice_text, $response_to_notice_id, $flag_for_review)
+							$notice_text, $response_to_notice_id, $flag_for_review);
 		
 		$this->from_first_name = $from_first_name; 
 		$this->from_last_name = $from_last_name; 

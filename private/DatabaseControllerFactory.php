@@ -25,38 +25,29 @@ class DatabaseControllerFactory
 		
 		switch($data_type)
 		{
-			case "member" :
-				$controller = new MemberController();
-				break;
-			case "full_member" :
-				$controller = new Full_MemberController();
-				break;
-			case "security_question" :
-				$controller = new SecurityQuestionController();
-				break;
-			case "student" :
-				$controller = new StudentController();
-				break;
-			case "professor" :
-				$controller = new ProfessorController();
-				break;
 			case "administrator" :
 				$controller = new AdministratorController();
 				break;
+			case "administrator_member_view" :
+				$controller = new Administrator_Member_View_Controller();
+				break;	
 			case "assignment" :
 				$controller = new AssignmentController();
-				break;
+				break;	
+			case "assignment_view" :
+				$controller = new Assignment_View_Controller();
+				break;					
 			case "homework" :
 				$controller = new HomeworkController();
 				break;
-			case "full_homework" :
-				$controller = new Full_HomeworkController();
-				break;
+			case "homework_view" :
+				$controller = new Homework_View_Controller();
+				break;	
+			case "member" :
+				$controller = new MemberController();
+				break;				
 			case "notice" :
 				$controller = new NoticeController();
-				break;
-			case "full_notice" :
-				$controller = new Full_NoticeController();
 				break;
 			case "notice_attachment" :
 				$controller = new NoticeAttachmentController();
@@ -67,51 +58,54 @@ class DatabaseControllerFactory
 			case "notice_to_section" :
 				$controller = new NoticeToSectionController();
 				break;
+			case "notice_view" :
+				$controller = new Notice_View_Controller();
+				break;			
+			case "professor" :
+				$controller = new ProfessorController();
+				break;
+			case "professor_member_view" :
+				$controller = new Professor_Member_View_Controller();
+				break;
+			case "quote" :
+				$controller = new QuoteController();
+				break;					
+			case "section" :
+				$controller = new SectionController();
+				break;
+			case "section_rating" :
+				$controller = new SectionRatingController();
+				break;	
+			case "section_student" :
+				$controller = new SectionStudentController();
+				break;	
+			case "section_list_of_students_view" :
+				$controller = new Section_List_Of_Students_View_Controller();
+				break;	
+			case "section_rating_view" :
+				$controller = new Section_Rating_View_Controller();
+				break;
+			case "section_view" :
+				$controller = new Section_View_Controller();
+				break;				
+			case "security_question" :
+				$controller = new SecurityQuestionController();
+				break;
+			case "student" :
+				$controller = new StudentController();
+				break;			
+			case "student_member_view" :
+				$controller = new Student_Member_View_Controller();
+				break;					
 			case "tutorial_lab" :
 				$controller  = new TutorialLabController();
 				break;
 			case "tutorial_lab_rating" :
 				$controller = new LabRatingController();
 				break;
-			case "quote" :
-				$controller = new QuoteController();
-				break;
-			case "section" :
-				$controller = new SectionController();
-				break;
-			case "full_section" :
-				$controller = new Full_SectionController();
-				break;
-			case "section_rating" :
-				$controller = new SectionRatingController();
-				break;
-			case "section_student" :
-				$controller = new SectionStudentController();
-				break;
-			case "student_member_view" :
-				$controller = new Student_Member_View_Controller();
-				break;
-			case "professor_member_view" :
-				$controller = new Professor_Member_View_Controller();
-				break;
-			case "administrator_member_view" :
-				$controller = new Administrator_Member_View_Controller();
-				break;
-			case "notice_view" :
-				$controller = new Notice_View_Controller();
-				break;
-			case "assignment_view" :
-				$controller = new Assignment_View_Controller();
-				break;
 			case "tutorial_lab_rating_view" :
 				$controller = new Tutorial_Lab_Rating_View_Controller();
-				break;
-			case "section_view" :
-				$controller = new Section_View_Controller();
-				break;
-			case "section_list_of_students_view" :
-				$controller = new Section_List_Of_Students_View_Controller();
-				break;
+				break;			
 		}
 		
 		if(isset($controller))

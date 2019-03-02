@@ -9,13 +9,13 @@ class Tutorial_Lab_Rating_View extends Tutorial_Lab_Rating {
 	
 	public function __construct() {}
 	
-	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, 
+	public function initializeView($tutorial_lab_rating_id, $tutorial_lab_id, 
 					$date_posted, $rating, $comments, $tutorial_lab_name, 
 					$member_id, $member_type, $first_name, $last_name, 
 					$flag_for_review = false)
 	{
 		$this->initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, 
-					$date_posted, $rating, $comments, $flag_for_review)
+					$date_posted, $rating, $comments, $flag_for_review);
 		
 		$this->tutorial_lab_name = $tutorial_lab_name;
 		$this->member_type = $member_type;
