@@ -21,7 +21,7 @@ class Tutorial_Lab {
 	public function __construct() {}
 
 	
-	public function initialize($tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, $lab_status, $tutorial_lab_introduction)
+	public function initialize($tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, 							$lab_status, $tutorial_lab_introduction)
 	{
 		$this->tutorial_lab_id = $tutorial_lab_id;
 		$this->tutorial_lab_name = $tutorial_lab_name;
@@ -31,6 +31,16 @@ class Tutorial_Lab {
 		$this->set_lab_status($lab_status);
 	}
 	
+	public function initializePart2($prerequisites, $key_topics, $key_equations, 
+							$description, $instructions, $date_first_available)
+	{
+		$this->prerequisites = $prerequisites;
+		$this->key_topics = $key_topics;
+		$this->key_equations = $key_equations;
+		$this->description = $description;
+		$this->instructions = $instructions;
+		$this->date_first_available = $date_first_available;
+	}
 	
 	public function get_tutorial_lab_id()
 	{

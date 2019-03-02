@@ -440,9 +440,9 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`administrator_member_view` (`adm
 CREATE TABLE IF NOT EXISTS `physics_in_motion`.`assignment_view` (`section_name` INT, `professor_id` INT, `professor_first_name` INT, `professor_last_name` INT, `school_name` INT, `tutorial_lab_name` INT, `tutorial_lab_introduction` INT, `tutorial_lab_web_link` INT, `assignment_id` INT, `section_id` INT, `tutorial_lab_id` INT, `assignment_name` INT, `date_assigned` INT, `date_due` INT, `points_possible` INT, `notes` INT);
 
 -- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`notice_to_member_view`
+-- Placeholder table for view `physics_in_motion`.`notice_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_member_view` (`to_member_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_first_name` INT, `from_last_name` INT, `from_member_type` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_view` (`notice_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_member_id` INT, `from_first_name` INT, `from_last_name` INT, `from_member_type` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`professor_member_view`
@@ -452,12 +452,7 @@ CREATE TABLE IF NOT EXISTS `physics_in_motion`.`professor_member_view` (`profess
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_list_of_students_view`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_list_of_students_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `student_id` INT, `student_first_name` INT, `student_last_name` INT, `school_name` INT, `dropped_section` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `physics_in_motion`.`notice_to_section_view`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `physics_in_motion`.`notice_to_section_view` (`to_section_id` INT, `notice_id` INT, `from_member_id` INT, `response_to_notice_id` INT, `date_sent` INT, `notice_subject` INT, `notice_text` INT, `flag_for_review` INT, `from_first_name` INT, `from_last_name` INT, `from_member_type` INT);
+CREATE TABLE IF NOT EXISTS `physics_in_motion`.`section_list_of_students_view` (`section_id` INT, `section_name` INT, `start_date` INT, `end_date` INT, `student_id` INT, `student_first_name` INT, `student_last_name` INT, `school_name` INT, `dropped_section` INT, `reviewed_section` INT);
 
 -- -----------------------------------------------------
 -- Placeholder table for view `physics_in_motion`.`section_view`
@@ -550,36 +545,34 @@ VIEW `physics_in_motion`.`assignment_view` AS
     ORDER BY `physics_in_motion`.`assignment`.`section_id` , `physics_in_motion`.`assignment`.`assignment_id`;
 
 -- -----------------------------------------------------
--- View `physics_in_motion`.`notice_to_member_view`
+-- View `physics_in_motion`.`notice_view`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_member_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`notice_to_member_view` ;
+DROP TABLE IF EXISTS `physics_in_motion`.`notice_view`;
+DROP VIEW IF EXISTS `physics_in_motion`.`notice_view` ;
 USE `physics_in_motion`;
 CREATE 
      OR REPLACE ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
     SQL SECURITY DEFINER
-VIEW `physics_in_motion`.`notice_to_member_view` AS
+VIEW `physics_in_motion`.`notice_view` AS
     SELECT 
-        `physics_in_motion`.`notice_to_member`.`to_member_id` AS `to_member_id`,
         `physics_in_motion`.`notice`.`notice_id` AS `notice_id`,
-        `physics_in_motion`.`notice`.`from_member_id` AS `from_member_id`,
         `physics_in_motion`.`notice`.`response_to_notice_id` AS `response_to_notice_id`,
         `physics_in_motion`.`notice`.`date_sent` AS `date_sent`,
         `physics_in_motion`.`notice`.`notice_subject` AS `notice_subject`,
         `physics_in_motion`.`notice`.`notice_text` AS `notice_text`,
         `physics_in_motion`.`notice`.`flag_for_review` AS `flag_for_review`,
+        `physics_in_motion`.`notice`.`from_member_id` AS `from_member_id`,
         `physics_in_motion`.`member`.`first_name` AS `from_first_name`,
         `physics_in_motion`.`member`.`last_name` AS `from_last_name`,
         `physics_in_motion`.`member`.`member_type` AS `from_member_type`
     FROM
-        ((`physics_in_motion`.`notice`
-        JOIN `physics_in_motion`.`notice_to_member`)
-        JOIN `physics_in_motion`.`member`)
+        `physics_in_motion`.`notice`
+            JOIN
+        `physics_in_motion`.`member`
     WHERE
-        ((`physics_in_motion`.`notice`.`notice_id` = `physics_in_motion`.`notice_to_member`.`notice_id`)
-            AND (`physics_in_motion`.`notice`.`from_member_id` = `physics_in_motion`.`member`.`member_id`))
-    ORDER BY `physics_in_motion`.`notice`.`date_sent` , `physics_in_motion`.`notice`.`notice_id`;
+        `physics_in_motion`.`notice`.`from_member_id` = `physics_in_motion`.`member`.`member_id`
+    ORDER BY date_sent , notice_id;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`professor_member_view`
@@ -625,7 +618,8 @@ VIEW `physics_in_motion`.`section_list_of_students_view` AS
         `physics_in_motion`.`member`.`first_name` AS `student_first_name`,
         `physics_in_motion`.`member`.`last_name` AS `student_last_name`,
         `physics_in_motion`.`student`.`school_name` AS `school_name`,
-        `physics_in_motion`.`section_student`.`dropped_section`
+        `physics_in_motion`.`section_student`.`dropped_section`,
+        `physics_in_motion`.`section_student`.`reviewed_section`
     FROM
         (((`physics_in_motion`.`section_student`
         JOIN `physics_in_motion`.`section`)
@@ -636,38 +630,6 @@ VIEW `physics_in_motion`.`section_list_of_students_view` AS
             AND (`physics_in_motion`.`section`.`section_id` = `physics_in_motion`.`section_student`.`section_id`)
             AND (`physics_in_motion`.`student`.`student_id` = `physics_in_motion`.`member`.`member_id`))
     ORDER BY `physics_in_motion`.`section`.`section_id`, `physics_in_motion`.`student`.`student_id`;
-
--- -----------------------------------------------------
--- View `physics_in_motion`.`notice_to_section_view`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `physics_in_motion`.`notice_to_section_view`;
-DROP VIEW IF EXISTS `physics_in_motion`.`notice_to_section_view` ;
-USE `physics_in_motion`;
-CREATE 
-     OR REPLACE ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `physics_in_motion`.`notice_to_section_view` AS
-    SELECT 
-        `physics_in_motion`.`notice_to_section`.`to_section_id` AS `to_section_id`,
-        `physics_in_motion`.`notice`.`notice_id` AS `notice_id`,
-        `physics_in_motion`.`notice`.`from_member_id` AS `from_member_id`,
-        `physics_in_motion`.`notice`.`response_to_notice_id` AS `response_to_notice_id`,
-        `physics_in_motion`.`notice`.`date_sent` AS `date_sent`,
-        `physics_in_motion`.`notice`.`notice_subject` AS `notice_subject`,
-        `physics_in_motion`.`notice`.`notice_text` AS `notice_text`,
-        `physics_in_motion`.`notice`.`flag_for_review` AS `flag_for_review`,
-        `physics_in_motion`.`member`.`first_name` AS `from_first_name`,
-        `physics_in_motion`.`member`.`last_name` AS `from_last_name`,
-        `physics_in_motion`.`member`.`member_type` AS `from_member_type`
-    FROM
-        ((`physics_in_motion`.`notice`
-        JOIN `physics_in_motion`.`notice_to_section`)
-        JOIN `physics_in_motion`.`member`)
-    WHERE
-        ((`physics_in_motion`.`notice`.`notice_id` = `physics_in_motion`.`notice_to_section`.`notice_id`)
-            AND (`physics_in_motion`.`notice`.`from_member_id` = `physics_in_motion`.`member`.`member_id`))
-    ORDER BY `physics_in_motion`.`notice`.`date_sent` , `physics_in_motion`.`notice`.`notice_id`;
 
 -- -----------------------------------------------------
 -- View `physics_in_motion`.`section_view`

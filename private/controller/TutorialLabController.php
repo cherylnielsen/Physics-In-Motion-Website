@@ -20,11 +20,15 @@ class TutorialLabController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$lab = new Tutorial_Lab();
+				
 				$lab->initialize($row['tutorial_lab_id'], $row['tutorial_lab_name'], 
 						$row['tutorial_lab_web_link'], $row['lab_status'], 
-						$row['tutorial_lab_introduction'], $row['prerequisites'], 
-						$row['key_topics'], $row['key_equations'], $row['description'], 
+						$row['tutorial_lab_introduction']);
+						
+				$lab->initializePart2($row['prerequisites'], $row['key_topics'], 
+						$row['key_equations'], $row['description'], 
 						$row['instructions'], $row['date_first_available']);
+						
 				$dataArray[] = $lab;
 			}	
 		}
@@ -41,6 +45,43 @@ class TutorialLabController extends DatabaseController {
 	{
 		$lab = new Tutorial_Lab();
 		$status_values = $lab->get_allowed_lab_status_values();
+	}
+	
+	
+	// The id will be auto-generated, when the new object is added to the database table.
+	public function saveNewPartial(&$tutorial_lab)
+	{
+		$db_connection = get_db_connection();
+		$sucess = true;
+		$tutorial_lab_name = $tutorial_lab->get_tutorial_lab_name();
+		$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
+		$lab_status = $tutorial_lab->get_lab_status();
+		$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
+		$table = $this->getTableName();
+		
+		// The id will be auto-generated
+		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, 
+				lab_status, tutorial_lab_introduction) 
+		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', 
+				'$tutorial_lab_introduction')";
+		$result = mysqli_query($db_connection, $query);
+
+		if($result)
+		{
+			// get the newly generated id
+			$tutorial_lab_id = mysql_insert_id($db_connection);
+			$tutorial_lab->set_tutorial_lab_id($tutorial_lab_id);	
+		}
+		else
+		{
+			$sucess = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_free_result($result);	
+		mysqli_close($db_connection);
+		return $sucess;
+		
 	}
 	
 	

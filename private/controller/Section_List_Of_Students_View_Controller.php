@@ -5,8 +5,9 @@
 class Section_List_Of_Students_View_Controller extends DatabaseController {
 
 	public function __construct(){}
-	// ($section_id, $section_name, $start_date, $end_date, $student_id, $student_first_name, 
-	//  $student_last_name, $school_name, $dropped_section)
+	// ($section_id, $section_name, $start_date, $end_date,
+	//   $student_id, $first_name, $last_name, $school_name,
+	//   $dropped_section, $reviewed_section)
 	
 	protected function getData($db_result, $db_connection)
 	{
@@ -21,7 +22,7 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 										$row['start_date'], $row['end_date'], 
 										$row['student_id'], $row['student_first_name'], 
 										$row['student_last_name'], $row['school_name'], 
-										$row['dropped_section']);
+										$row['dropped_section'], $row['reviewed_section']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student_view;
 			}
@@ -38,39 +39,7 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$section_student_view)
 	{
-		$sucess = true;
-		$db_connection = get_db_connection();
-		$section_name = $section_student_view->get_section_name();
-		$text = $section_student_view->get_start_date();
-		$end_date = $section_student_view->get_end_date();
-		$student_id = $section_student_view->get_student_id();
-		$student_first_name = $section_student_view->get_student_first_name();
-		$student_last_name = $section_student_view->get_student_last_name();
-		$school_name = $section_student_view->get_school_name();
-		$dropped_section = $section_student_view->get_dropped_section();
-		$table = $this->getTableName();
-		
-		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into $table (section_name, start_date, end_date, student_id, student_first_name, student_last_name, school_name) 
-				values('$section_name', '$text', '$end_date', '$student_id', '$student_first_name', '$student_last_name', '$school_name', '$dropped_section')";
-		$result = mysqli_query($db_connection, $query);
-
-		if($result)
-		{
-			// get the newly generated id
-			$section_id = mysql_insert_id($db_connection);
-			$section_student_view->set_section_id(section_id);				
-		}
-		else
-		{
-			$sucess = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-
-		mysqli_free_result($result);	
-		mysqli_close($db_connection);
-		return $sucess;
-		
+		return false;
 	}
 	
 	
@@ -120,6 +89,10 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 				$value = $section_student_view->get_dropped_section();	
 				$query = "update $table set dropped_section = '$value' where section_id = '$section_id'";
 				break;
+			case 'reviewed_section':
+				$value = $section_student_view->get_reviewed_section();	
+				$query = "update $table set reviewed_section = '$value' where section_id = '$section_id'";
+				break;
 		}
 		
 		$result = mysqli_query($db_connection, $query);
@@ -137,21 +110,7 @@ class Section_List_Of_Students_View_Controller extends DatabaseController {
 
 	public function deleteFromDatabase($section_student_view)
 	{
-		$db_connection = get_db_connection();
-		$success = true;
-		$section_id = $section_student_view->get_section_id();
-		$table = $this->getTableName();
-		
-		$query = "delete from $table where section_id = $section_id";
-		
-		if(!$result)
-		{
-			$success = false;
-			echo '<p>' . mysqli_error($db_connection) . '</p>';
-		}
-		
-		mysqli_close($db_connection);
-		return $success;
+		return false;
 	}
 
 }

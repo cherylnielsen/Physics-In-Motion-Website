@@ -16,7 +16,8 @@ class SectionController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section = new Section();
-				$section->initialize($row['section_id'], $row['section_name'], $row['professor_id'], 
+				$section->initialize($row['section_id'], $row['section_name'], 
+							$row['professor_id'], 
 							$row['start_date'], $row['end_date']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section;

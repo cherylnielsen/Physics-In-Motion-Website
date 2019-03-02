@@ -1,13 +1,14 @@
 <?php
 
 /***
-($notice_id, $from_member_id, $from_first_name, $from_last_name, 
-$from_member_type, $to_section_id, $date_sent, $notice_subject, 
-$notice_text, $response_to_notice_id, $flag_for_review)
+( $notice_id, $response_to_notice_id, $date_sent, $notice_subject, $notice_text, 
+$from_member_id, $from_first_name, $from_last_name, $from_member_type, 
+$to_member_id, $to_section_id, $flag_for_review )
 ***/
 
-class NoticeToSection_View_Controller extends DatabaseController {
+class Notice_View_Controller extends DatabaseController {
 
+  	
 	public function __construct() {}
 	
 	
@@ -20,11 +21,13 @@ class NoticeToSection_View_Controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$notice_view = new Notice_View();
+				
 				$notice_view->initialize($row['notice_id'], $row['from_member_id'], 
-						$row['from_first_name'], $row['from_last_name'], 
-						$row['from_member_type'], $row['to_section_id'], 
-						$row['date_sent'], $row['notice_subject'], $row['notice_text'], 
-						$row['response_to_notice_id'], $row['flag_for_review']);
+					$row['date_sent'], $row['notice_subject'], $row['notice_text'], 
+					$row['from_first_name'], $row['from_last_name'], 
+					$row['from_member_type'],  
+					$row['response_to_notice_id'], $row['flag_for_review']);
+					
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice_view;	
 			}
@@ -41,14 +44,14 @@ class NoticeToSection_View_Controller extends DatabaseController {
 	// The notice_id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$notice_view)
 	{
-		return false;		
+		return false;
 	}
 	
 	
 	
 	/***
 	// updates the given key with the new value in the database
-	($notice_id, $from_member_id, $to_section_id, $date_sent, $notice_subject, $notice_text, 
+	($notice_id, $from_member_id, $to_member_id, $date_sent, $notice_subject, $notice_text, 
 	$response_to_notice_id = null, $to_section_id = null, $flag_for_review)
 	***/
 	public function updateAttribute($notice_view, $key)
@@ -62,26 +65,6 @@ class NoticeToSection_View_Controller extends DatabaseController {
 		{
 			case 'notice_id':
 				return false;
-				break;
-			case 'from_member_id':
-				$value = $notice_view->get_from_member_id();	
-				$query = "update $table set from_member_id = '$value' where notice_id = '$notice_id'";
-				break;
-			case 'from_first_name':
-				$value = $notice_view->get_from_first_name();	
-				$query = "update $table set from_first_name = '$value' where notice_id = '$notice_id'";
-				break;
-			case 'from_last_name':
-				$value = $notice_view->get_from_last_name();	
-				$query = "update $table set from_last_name = '$value' where notice_id = '$notice_id'";
-				break;
-			case 'from_member_type':
-				$value = $notice_view->get_from_member_type();	
-				$query = "update $table set from_member_type = '$value' where notice_id = '$notice_id'";
-				break;
-			case 'to_section_id':
-				$value = $notice_view->get_to_section_id();	
-				$query = "update $table set to_section_id = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'date_sent':
 				$value = $notice_view->get_date_sent();	
@@ -98,6 +81,22 @@ class NoticeToSection_View_Controller extends DatabaseController {
 			case 'response_to_notice_id':
 				$value = $notice_view->get_response_to_notice_id();	
 				$query = "update $table set response_to_notice_id = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'from_member_id':
+				$value = $notice_view->get_from_member_id();	
+				$query = "update $table set from_member_id = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'from_first_name':
+				$value = $notice_view->get_from_first_name();	
+				$query = "update $table set from_first_name = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'from_last_name':
+				$value = $notice_view->get_from_last_name();	
+				$query = "update $table set from_last_name = '$value' where notice_id = '$notice_id'";
+				break;
+			case 'from_member_type':
+				$value = $notice_view->get_from_member_type();	
+				$query = "update $table set from_member_type = '$value' where notice_id = '$notice_id'";
 				break;
 			case 'flag_for_review':
 				$value = $notice_view->get_flag_for_review();	

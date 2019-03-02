@@ -3,15 +3,15 @@
 
 class Notice {
 	
-	private $notice_id; // key 
+	protected $notice_id; // key 
 	// the member who wrote the notice
-	private $from_member_id;
-	private $date_sent;
-	private $notice_subject;
-	private $notice_text;
-	private $response_to_notice_id;
+	protected $from_member_id;
+	protected $date_sent;
+	protected $notice_subject;
+	protected $notice_text;
+	protected $response_to_notice_id;
 	// flag for questionable notice content, can be set by any member
-	private $flag_for_review;
+	protected $flag_for_review;
 	
 	public function __construct() {}
 	

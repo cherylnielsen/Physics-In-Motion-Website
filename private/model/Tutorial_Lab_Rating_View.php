@@ -1,63 +1,28 @@
 <?php
 
-class Tutorial_Lab_Rating_View {
+class Tutorial_Lab_Rating_View extends Tutorial_Lab_Rating {
 	
-	private $tutorial_lab_rating_id; 
-	private $tutorial_lab_id;
 	private $tutorial_lab_name;
-	private $member_name;	
-	private $member_id;
-	private $date_posted;
-	private $rating;
-	private $comments;
-	private $flag_for_review;
+	private $member_type;
+	private $first_name;
+	private $last_name;
 	
 	public function __construct() {}
 	
-	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, 
-					$tutorial_lab_name, $member_name, $date_posted, 
-					$rating, $comments, $flag_for_review = false)
+	public function initialize($tutorial_lab_rating_id, $tutorial_lab_id, 
+					$date_posted, $rating, $comments, $tutorial_lab_name, 
+					$member_id, $member_type, $first_name, $last_name, 
+					$flag_for_review = false)
 	{
-		$this->tutorial_lab_rating_id = $tutorial_lab_rating_id;
-		$this->tutorial_lab_id = $tutorial_lab_id;
+		$this->initialize($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, 
+					$date_posted, $rating, $comments, $flag_for_review)
+		
 		$this->tutorial_lab_name = $tutorial_lab_name;
-		$this->member_name = $member_name;
-		$this->member_id = $member_id;
-		$this->date_posted = $date_posted;
-		$this->rating = $rating;
-		$this->comments = $comments;
+		$this->member_type = $member_type;
+		$this->first_name = $first_name;
+		$this->last_name = $last_name;
 	}
 
-	
-	public function get_tutorial_lab_rating_id()
-	{
-		return $this->tutorial_lab_rating_id;
-	}
-
-	public function set_tutorial_lab_rating_id($tutorial_lab_rating_id)
-	{
-		$this->tutorial_lab_rating_id = $tutorial_lab_rating_id;
-	}
-	
-	public function get_tutorial_lab_id()
-	{
-		return $this->tutorial_lab_id;
-	}
-
-	public function set_tutorial_lab_id($tutorial_lab_id)
-	{
-		$this->tutorial_lab_id = $tutorial_lab_id;
-	}
-	
-	public function get_member_id()
-	{
-		return $this->member_id;
-	}
-
-	public function set_member_id($member_id)
-	{
-		$this->member_id = $member_id;
-	}
 	
 	public function get_tutorial_lab_name()
 	{
@@ -69,56 +34,36 @@ class Tutorial_Lab_Rating_View {
 		$this->tutorial_lab_name = $tutorial_lab_name;
 	}
 	
-	public function get_member_name()
+	public function get_member_type()
 	{
-		return $this->member_name;
+		return $this->member_type;
 	}
 
-	public function set_member_name($member_name)
+	public function set_member_type($member_type)
 	{
-		$this->member_name = $member_name;
+		$this->member_type = $member_type;
 	}
 	
-	public function get_date_posted()
+	public function get_first_name()
 	{
-		return $this->date_posted;
+		return $this->first_name;
 	}
 
-	public function set_date_posted($date_posted)
+	public function set_first_name($first_name)
 	{
-		$this->date_posted = $date_posted;
+		$this->first_name = $first_name;
 	}
 	
-	public function get_rating()
+	public function get_last_name()
 	{
-		return $this->rating;
+		return $this->last_name;
 	}
 
-	public function set_rating($rating)
+	public function set_last_name($last_name)
 	{
-		$this->rating = $rating;
-	}
-	
-	public function get_comments()
-	{
-		return $this->comments;
+		$this->last_name = $last_name;
 	}
 
-	public function set_comments($comments)
-	{
-		$this->comments = $comments;
-	}
-	
-	public function get_flag_for_review()
-	{
-		return $this->flag_for_review;
-	}
-
-	public function set_flag_for_review($flag_for_review)
-	{
-		$this->flag_for_review = $flag_for_review;
-	}
-	
 	
 }
 

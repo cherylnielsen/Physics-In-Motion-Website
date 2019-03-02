@@ -11,12 +11,15 @@ class Section_List_Of_Students_View {
 	private $first_name;
 	private $last_name;
 	private $school_name;
+	private $dropped_section;
+	private $reviewed_section;
 	
 	public function __construct() {}
 	
 	
 	public function initialize($section_id, $section_name, $start_date, $end_date,
-								$student_id, $first_name, $last_name, $school_name)
+								$student_id, $first_name, $last_name, $school_name,
+								$dropped_section, $reviewed_section)
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
@@ -26,6 +29,8 @@ class Section_List_Of_Students_View {
 		$this->first_name = $first_name;
 		$this->last_name = $last_name;
 		$this->school_name = $school_name;
+		$this->dropped_section = $dropped_section;
+		$this->reviewed_section = $reviewed_section;
 	}
 	
 	
@@ -107,6 +112,26 @@ class Section_List_Of_Students_View {
 	public function set_school_name($school_name)
 	{
 		$this->school_name = $school_name;
+	}
+	
+	public function get_dropped_section()
+	{
+		return $this->dropped_section;
+	}
+
+	public function set_dropped_section($dropped_section)
+	{
+		$this->dropped_section = $dropped_section;
+	}
+	
+	public function get_reviewed_section()
+	{
+		return $this->reviewed_section;
+	}
+
+	public function set_reviewed_section($reviewed_section)
+	{
+		$this->reviewed_section = $reviewed_section;
 	}
 	
 	

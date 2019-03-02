@@ -19,8 +19,10 @@ class NoticeController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$notice = new Notice();
-				$notice->initialize($row['notice_id'], $row['from_member_id'], $row['date_sent'], 
-							$row['notice_subject'], $row['notice_text'], $row['response_to_notice_id'], 
+				$notice->initialize($row['notice_id'], $row['from_member_id'], 
+							$row['date_sent'], 
+							$row['notice_subject'], $row['notice_text'], 
+							$row['response_to_notice_id'], 
 							$row['flag_for_review']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice;	

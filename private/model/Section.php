@@ -12,7 +12,8 @@ class Section {
 	public function __construct() {}
 	
 	
-	public function initialize($section_id, $section_name, $professor_id, $start_date, $end_date)
+	public function initialize($section_id, $section_name, $professor_id, 
+								$start_date, $end_date)
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
