@@ -3,7 +3,7 @@
 /***
 $assignment_id, $section_id, $tutorial_lab_id, $assignment_name, 
 $date_assigned, $date_due, $points_possible, $notes,
-$section_name, $professor_id, $first_name, $last_name, $school_name,
+$section_name, $professor_id, $professor_first_name, $professor_last_name, $school_name,
 $tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
 ***/
 
@@ -21,11 +21,14 @@ class Assignment_View_Controller extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$assignment_view = new Assignment_View();
-				$assignment_view->initialize($row['assignment_id'], $row['section_id'], $row['tutorial_lab_id'],  $row['assignment_name'], $row['date_assigned'], 
+				$assignment_view->initializeView($row['assignment_id'], $row['section_id'], 
+						$row['tutorial_lab_id'],  $row['assignment_name'], $row['date_assigned'], 
 						$row['date_due'], $row['points_possible'], $row['notes'],
-						$row['section_name'], $row['professor_id'], $row['first_name'],  
-						$row['last_name'], $row['school_name'], 
-						$row['tutorial_lab_name'], $row['tutorial_lab_introduction'], $row['tutorial_lab_web_link']);
+						$row['section_name'], $row['professor_id'], 
+						$row['professor_first_name'], $row['professor_last_name'], 
+						$row['school_name'], 
+						$row['tutorial_lab_name'], $row['tutorial_lab_introduction'], 
+						$row['tutorial_lab_web_link']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment_view;
 			}	
@@ -52,7 +55,7 @@ class Assignment_View_Controller extends DatabaseController {
 	
 		$assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
 		$assignment_name, $date_due, $points_possible, $notes,
-		$section_name, $professor_id, $first_name, $school_name,
+		$section_name, $professor_id, $professor_first_name, $school_name,
 		$tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
 	***/
 	public function updateAttribute($assignment_view, $key)
@@ -114,14 +117,14 @@ class Assignment_View_Controller extends DatabaseController {
 				$query = "update $table set professor_id = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case 'first_name':
-				$value = $assignment_view->get_first_name();	
-				$query = "update $table set first_name = '$value' where 
+			case 'professor_first_name':
+				$value = $assignment_view->get_professor_first_name();	
+				$query = "update $table set professor_first_name = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case 'last_name':
-				$value = $assignment_view->get_last_name();	
-				$query = "update $table set last_name = '$value' where 
+			case 'professor_last_name':
+				$value = $assignment_view->get_professor_last_name();	
+				$query = "update $table set professor_last_name = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'school_name':

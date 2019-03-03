@@ -1,14 +1,15 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
-h1.user-page {
-	
+section.main-content {
+	float: left;
+	width: 75%;
+	padding: 0 0 1% 2%;
 }
-
 
 table {
 	table-layout: fixed;
-	border: 2px double #03AA0D;
+	border: 1px solid #03AA0D;
 	border-collapse: collapse;
 }
 

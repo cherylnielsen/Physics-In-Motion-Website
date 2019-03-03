@@ -10,8 +10,7 @@
 
 /* outermost container inside body */
 div.wrapper { 
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
 	margin: 1px;
 	/* background-color: #FDFAEC; */
 }
@@ -60,8 +59,7 @@ a#top {
 
 header{ 
 	height: 125px;
-	border-bottom: 4px double #03AA0D;
-	border-radius: 10px;
+	border: bottom: 2px solid #03AA0D;
 	/* background-color: #FDFAEC; */
 	background-color: #A7DAFA;
 }
@@ -89,8 +87,7 @@ div.logo-summary {
 }
 
 div.sign-in {
-	border: 4px double #03AA0D;
-	border-radius: 10px;	
+	border: 2px solid #03AA0D;
 	text-align: center;
 	padding: 1em 0.5em 0.5em 0.5em;
 	position: absolute;
@@ -112,15 +109,13 @@ input[type=button] {
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
 	padding: 5px 25px;
-	border-radius: 10px;
 	background-color: #A7DAFA;
 }
 
 aside.nav-quote {
 	float: left;
 	width: 15%;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
 	background-color: #A7DAFA;
 	position: relative;
 	left: -4px;
@@ -134,9 +129,9 @@ nav.navigation > a {
 
 
 hr {
-	border-style: solid;
-    border-width: 1px;
-    border-color: #01A209;
+	border: style: solid;
+    border: width: 2px;
+    border: color: #03AA0D;
 }
 
 div.quote {
@@ -157,8 +152,8 @@ section.new-labs {
 	float: right;
 	width: 25%;
 	text-align: center;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
+	border: radius: 10px;
 	padding-bottom: 1em;
 	background-color: #A7DAFA;
 	position: relative;
@@ -192,7 +187,6 @@ h1.new-status {
 footer {  
 	clear: both;
 	padding: 2%;
-	border-top: 4px double #03AA0D;
-	border-radius: 10px;
+	border: top: 2px solid #03AA0D;
 	background-color: #A7DAFA;
 }

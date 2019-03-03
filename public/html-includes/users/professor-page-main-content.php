@@ -22,34 +22,33 @@ $last_name = $_SESSION["last_name"];
 
 $dataUtility = new MemberDataUtilities();
 $displayUtility = new MemberDisplayUtilities();
-$displayTables = new DisplaySectionData();
+$displaySections = new DisplaySections();
+$displayNotices = new DisplayNotices();
 
 echo "<h1 class=user-page>Welcome $first_name $last_name!</h1>";
 
 $section_list = array();
 $section_list = $dataUtility->getSectionList_ByProfessor($professor_id, $mdb_control);
-$displayTables->displaySectionTable($section_list, $mdb_control);
+$displaySections->displaySectionTable($section_list, $mdb_control);
 echo "<br>";
 
-$displayTables->displaySectionSummary_ByProfessor($professor_id, $section_list, $mdb_control);
+$displaySections->displaySectionSummary_ByProfessor($professor_id, $section_list, $mdb_control);
 echo "<br>";
 
-$displayTables->displaySectionStudentLists($section_list, $mdb_control);
+$displaySections->displaySectionStudentList($section_list, $mdb_control);
 echo "<br>";
 
-$section_notice_list = array();
-$section_notice_list = $dataUtility->getSectionNotices($section_list, $mdb_control);
-$displayTables->displaySectionNoticeList($section_notice_list);
-echo "<br>";
-
-$member_notice_list = array();
-$member_notice_list = $dataUtility->getMemberSentNotices($professor_id, $mdb_control);
-$displayTables->displayMemberNoticeList($member_notice_list);
+$displayNotices->displaySectionNoticeTable($section_list, $mdb_control);
 echo "<br>";
 
 $member_notice_list = array();
 $member_notice_list = $dataUtility->getMemberInBoxNotices($professor_id, $mdb_control);
-$displayTables->displayMemberNoticeList($member_notice_list);
+$displayNotices->displayMemberInBoxNoticeTable($member_notice_list, $mdb_control);
+echo "<br>";
+
+$member_notice_list = array();
+$member_notice_list = $dataUtility->getMemberSentNotices($professor_id, $mdb_control);
+$displayNotices->displayMemberSentNoticeTable($member_notice_list, $mdb_control);
 echo "<br>";
 
 echo '<br><a id="bottom" href="#top">return to top</a>';

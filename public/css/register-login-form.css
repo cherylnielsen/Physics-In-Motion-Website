@@ -44,8 +44,7 @@ fieldset {
 	display: block;
 	padding: 0 1em 1em 1em;
 	margin-bottom: 1em;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
 	background-color: #A7DAFA;
 }
 
@@ -61,8 +60,7 @@ input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.5em;
-	border: 4px double #03AA0D;
-	border-radius: 5px;
+	border: 2px solid #03AA0D;
 	background-color: lightyellow;	
 }
 
@@ -80,7 +78,7 @@ input[type=submit], input[type=button] {
 }
 
 input:invalid {
-	border: 4px double red;
+	border: 1px: 2px solid red;
 	background-color: #ffd4d4;
 }
 

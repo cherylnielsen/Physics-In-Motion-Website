@@ -16,8 +16,10 @@ class MemberController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$the_member = new Member();
-				$the_member->initialize($row['member_id'], $row['member_type'], $row['member_name'], 
-							$row['member_password'], $row['date_registered'], $row['last_login'], 
+				$the_member->initialize($row['member_id'], $row['member_type'], 
+							$row['member_name'], 
+							$row['member_password'], $row['date_registered'], 
+							$row['last_login'], 
 							$row['last_logoff'],
 							$row['first_name'], $row['last_name'], $row['email'], 
 							$row['registration_complete']);
@@ -147,8 +149,8 @@ class MemberController extends DatabaseController {
 		$member_type = $member->get_member_type();
 		$password = $member->get_member_password();
 		$date = $member->get_date_registered();
-		$last_login = $member->get_last_login();
-		$last_logoff = $member->get_last_logoff();
+		// $last_login = null;  // new member
+		// $last_logoff = null; // new member
 		$first_name = $member->get_first_name();
 		$last_name = $member->get_last_name();
 		$email = $member->get_email();
@@ -158,9 +160,9 @@ class MemberController extends DatabaseController {
 		
 		$success = true;
 		// The member_id will be auto-generated.
-		$query = "insert into $table (member_type, member_name, member_password, date_registered, 
-						last_login, last_logoff, first_name, last_name, email, registration_complete) 
-				values('$member_type', '$name', '$password', '$date', '$last_login', '$last_logoff', 
+		$query = "insert into $table (member_type, member_name, member_password, 
+						date_registered, first_name, last_name, email, registration_complete) 
+				values('$member_type', '$name', '$password', '$date', 
 						'$first_name', '$last_name', '$email', '$registration_complete')";
 		
 		$result = mysqli_query($db_connection, $query);			

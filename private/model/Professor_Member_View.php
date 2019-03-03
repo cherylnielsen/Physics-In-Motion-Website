@@ -2,14 +2,15 @@
 
 class Professor_Member_View  extends Professor{
 	
-	private $first_name;	// key
+	private $first_name;	
 	private $last_name;
 	private $email; 
 	
 	public function __construct() {}
 	
 
-	public function initializeView($professor_id, $school_name, $first_name, $last_name, $email)
+	public function initializeView($professor_id, $school_name, $first_name, 
+									$last_name, $email)
 	{
 		$this->professor_id = $professor_id;
 		$this->school_name = $school_name;
@@ -48,7 +49,6 @@ class Professor_Member_View  extends Professor{
 	{
 		$this->email = $email;
 	}
-	
 	
 	
 }

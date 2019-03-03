@@ -14,14 +14,15 @@ class Assignment_View extends Assignment{
 	
 	public function __construct() {}
 
-	public function initializeView($assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
-						$assignment_name, $date_due, $points_possible, $notes,
+	public function initializeView($assignment_id, $section_id, $tutorial_lab_id, 
+						$assignment_name, $date_assigned, $date_due, 
+						$points_possible, $notes,
 						$section_name, $professor_id, $professor_first_name, 
 						$professor_last_name, $school_name,
 						$tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link)
 	{
 		$this->initialize($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, 
-							$date_assigned, $date_due, $points_possible, $notes)
+							$date_assigned, $date_due, $points_possible, $notes);
 		
 		$this->set_section_name($section_name);
 		$this->set_professor_id($professor_id);

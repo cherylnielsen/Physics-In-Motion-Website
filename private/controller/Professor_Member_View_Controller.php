@@ -80,7 +80,7 @@ class Professor_Member_View_Controller extends DatabaseController
 
 	public function saveNew(&$professor_member_view)
 	{
-		$return false;
+		return false;
 	}
 
 

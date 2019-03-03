@@ -1,6 +1,6 @@
 <?php
 
-class DisplaySectionData
+class DisplaySections
 {
 	private $displayUtility;
 	private $dataUtility;
@@ -25,7 +25,8 @@ class DisplaySectionData
 		}
 		else
 		{
-			echo "<tr><th>Section</th><th>Professor</th><th>School</th><th>Start Date</th><th>End Date</th></tr>";
+			echo "<tr><th>Section</th><th>Professor</th><th>School</th>
+					<th>Start Date</th><th>End Date</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
@@ -37,7 +38,7 @@ class DisplaySectionData
 	}
 	
 	
-	public function displaySectionStudentLists($section_list, $mdb_control)
+	public function displaySectionStudentList($section_list, $mdb_control)
 	{
 		echo "<table class='section-student-list-table'>
 				<tr><th colspan='5'>Section Memberships</th></tr>";
@@ -49,11 +50,12 @@ class DisplaySectionData
 			echo "<tr><td colspan='5'>Not currently in any sections</td></tr>";
 		}
 		else
-		{
-			echo "<tr><th>Section</th><th>Student ID</th><th>Student Name</th><th>School</th><th>Start Date</th><th>End Date</th></tr>";
-			
+		{			
 			for($i = 0; $i < $number_of_sections; $i++)
 			{
+				echo "<tr><th>Section</th><th>Professor</th><th>School</th>
+					<th>Start Date</th><th>End Date</th></tr>";
+				
 				$this->displayUtility->displaySectionRow($section_list[$i]);
 				$section_id = $section_list[$i]->get_section_id();
 				
@@ -61,10 +63,18 @@ class DisplaySectionData
 				$student_list = $this->dataUtility->getSectionListOfStudents($section_id, $mdb_control);
 				$number_of_students = count($student_list);
 				
-				for($j = 0; $j < $number_of_students; $j++)
-				{					
-					$this->displayUtility->displaySectionStudentRow($student_list[$j]);
-				}				
+				if($number_of_students > 0)
+				{				
+					echo "<tr><th>Section</th><th>Student ID</th><th>Student Name</th><th>School</th><th>Start</th><th>End</th></tr>";
+					for($j = 0; $j < $number_of_students; $j++)
+					{					
+						$this->displayUtility->displaySectionStudentRow($student_list[$j]);
+					}
+				}
+				else
+				{
+					echo "<tr><td colspan='5'>No students currently in this section.</td></tr>";
+				}
 			}
 			
 		}
@@ -82,10 +92,13 @@ class DisplaySectionData
 		if($number_of_sections > 0)
 		{	
 			echo "<table class='student_section_summary-table'>
-					<tr><th colspan='6'>Section Details</th></tr>";
+					<tr><th colspan='5'>Section Details</th></tr>";
 
 			for($i = 0; $i < $number_of_sections; $i++)
 			{
+				echo "<tr><th>Section</th><th>Professor</th><th>School</th>
+						<th>Start</th><th>End</th></tr>";
+			
 				$this->displayUtility->displaySectionRow($section_list[$i]);
 				$section_id = $section_list[$i]->get_section_id();
 				
@@ -103,7 +116,8 @@ class DisplaySectionData
 					$assignment_id = $assignment_list[$j]->get_assignment_id();
 									
 					for($k = 0; $k < $number_of_homeworks; $k++)
-					{	$hmwk_assignment_id = $homework_list[$k]->get_assignment_id();
+					{	
+						$hmwk_assignment_id = $homework_list[$k]->get_assignment_id();
 						
 						if($hmwk_assignment_id == $assignment_id)
 						{	$this->displayUtility->displayHomeworkRow($homework_list[$k]);
@@ -127,11 +141,11 @@ class DisplaySectionData
 		
 		if($number_of_sections > 0)
 		{	
-			echo "<table class='professor-section-summary-table'>
-					<tr><th colspan='6'>Section Details</th></tr>";
-
 			for($i = 0; $i < $number_of_sections; $i++)
 			{
+				echo "<table class='professor-section-summary-table'>
+					<tr><th colspan='6'>Section Details</th></tr>";
+					
 				$this->displayUtility->displaySectionRow($section_list[$i]);
 				$section_id = $section_list[$i]->get_section_id();
 				
