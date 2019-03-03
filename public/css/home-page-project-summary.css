@@ -17,8 +17,7 @@ img.summary {
 	display: block;
 	height: 200px;
 	width: 300px;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
 }
 
 img.right {

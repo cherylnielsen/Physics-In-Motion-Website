@@ -23,7 +23,7 @@
 	<?php include('../private/action/user-pages/MemberDataUtilities.php'); ?>
 	<?php include('../private/action/user-pages/MemberDisplayUtilities.php'); ?>
 	<?php include('../private/action/user-pages/MemberActions.php'); ?>
-	<?php include('../private/action/user-pages/DisplaySectionData.php'); ?>
+	<?php include('../private/action/user-pages/DisplaySections.php'); ?>
 	<?php include('../private/action/user-pages/DisplayNotices.php'); ?>
 	<?php include('html-includes/users/student-page-main-content.php'); ?>
 </section>

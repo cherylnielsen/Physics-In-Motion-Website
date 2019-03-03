@@ -22,7 +22,7 @@ $last_name = $_SESSION["last_name"];
 
 $dataUtility = new MemberDataUtilities();
 $displayUtility = new MemberDisplayUtilities();
-$displaySections = new DisplaySectionData();
+$displaySections = new DisplaySections();
 $displayNotices = new DisplayNotices();
 
 echo "<h1 class=user-page>Welcome $first_name $last_name!</h1>";

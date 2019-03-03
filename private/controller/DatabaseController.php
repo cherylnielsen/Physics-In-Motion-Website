@@ -3,7 +3,7 @@
 
 abstract class DatabaseController
 {
-	private $tableName; 	
+	protected $tableName; 	
 	
 	/***
 	Protected helper function.
@@ -75,6 +75,7 @@ abstract class DatabaseController
 	}
 	
 	
+	
 	/***
 	Queries the database for an array of objects that all have $key = $value.
 	Input: $key1, $key2 = the collumns of the database table to search.
@@ -118,7 +119,66 @@ abstract class DatabaseController
 	
 	
 	/***
-	Used to get the name of the database table used by that particular controller.
+	Queries the database for the object that has $primaryKey = $value.
+	Input: $primaryKey = the primary key of the database table that 
+						uniquely defines only one data row.
+	Input: $value = the value of the primary key to find.
+	Output: $dataObject = the single object with the data for that unique row.
+	***/
+	public function getByPrimaryKey($primaryKey, $value)
+	{
+		$table = $this->getTableName();
+		$db_connection = get_db_connection();
+		$dataArray = array();
+		
+		$query = "select * from $table where $key = '$value'";
+		
+		$result = mysqli_query($db_connection, $query);
+		$dataArray = $this->getData($result, $db_connection);					
+		mysqli_close($db_connection);		
+		$dataObject = null;
+		
+		if(count($dataArray) == 1)
+		{
+			$dataObject = $dataArray[0];
+		}
+		
+		return $dataObject;
+	}
+	
+	
+	/***
+	Queries the database for the object that has Primary Keys = values.
+	Input: $primaryKey1, $primaryKey2 = the primary keys of the database table 
+										that uniquely defines only one data row.
+	Input: $value1, $value2 = the values of the primary keys to find.
+	Output: $dataObject = the single object with the data for that unique row.
+	***/
+	public function getByPrimaryKeys($primaryKey1, $value1, $primaryKey2, $value2)
+	{
+		$table = $this->getTableName();
+		$db_connection = get_db_connection();
+		$dataArray = array();
+		
+		$query = "select * from $table where ($primaryKey1 = '$value1') 
+										AND ($primaryKey2 = '$value2')";
+		
+		$result = mysqli_query($db_connection, $query);
+		$dataArray = $this->getData($result, $db_connection);					
+		mysqli_close($db_connection);		
+		$dataObject = null;
+		
+		if(count($dataArray) == 1)
+		{
+			$dataObject = $dataArray[0];
+		}
+		
+		return $dataObject;
+	}
+	
+	
+	/***
+	Used to get the name of the database table used by a particular controller.
 	**/
 	public function getTableName()
 	{
@@ -126,7 +186,7 @@ abstract class DatabaseController
 	}
 
 	/***
-	Used to set the name of the database table used by that particular controller.
+	Used to set the name of the database table used by a particular controller.
 	**/
 	public function setTableName($tableName)
 	{

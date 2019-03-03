@@ -7,8 +7,8 @@ insert into notice (notice_id, from_member_id, response_to_notice_id, date_sent,
 values (1, 1, null, "2019-02-04 14:00:00", "subject 1", "notice text 1 more text and text"),
 (2, 1, null, "2019-02-04 15:00:00", "subject 2", "notice text 2 more text and text"),
 (3, 2, 1, "2019-02-04 16:00:00", "subject 1", "notice text 3 more text and text"),
-(4, 3, 2, "2019-02-05 14:00:00", "subject 2", "notice text 5 more text and text"),
-(5, 1, null, "2019-02-05 15:00:00", "subject 3", "notice text 6 more text and text"),
+(4, 3, 2, "2019-02-05 14:00:00", "subject 2", "notice text 4 more text and text"),
+(5, 1, null, "2019-02-05 15:00:00", "subject 3", "notice text 5 more text and text"),
 (6, 4, 5, "2019-02-05 15:00:00", "subject 3", "notice text 6 more text and text");
 
 SELECT * FROM notice;

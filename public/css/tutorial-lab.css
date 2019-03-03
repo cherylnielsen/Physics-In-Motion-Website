@@ -5,16 +5,7 @@ h1.logo-statement, h1.labs {
 	text-align: center;
 }
 
-/*
-h1.labs {
-	border: 4px double #03AA0D;
-	border-radius: 10px;
-	padding: 0.5em;
-	background-color: #A7DAFA;
-	text-align: center;
-	width: 100%;
-}
-*/
+
 section.main-content {
 	float: left;
 	width: 80%;
@@ -49,8 +40,6 @@ section.main-content {
 
 .grid-lab-info {
   display: grid;
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
   grid-template-columns: auto auto;
   padding: 0 20px;
 }
@@ -75,20 +64,18 @@ img.labs {
 img.lab-info {
 	height: 200px;
 	padding:  1.5em 1em;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
 }
 
 article.labs {
 	padding: 1em;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
 }
 
 article.lab-info {
 	padding: 1em;
-	border: 4px double #03AA0D;
-	border-radius: 10px;
+	border: 2px solid #03AA0D;
 }
 
 article.labs > h1,  article.labs > h2 {

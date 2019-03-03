@@ -79,8 +79,8 @@ class DatabaseControllerFactory
 			case "section_student" :
 				$controller = new SectionStudentController();
 				break;	
-			case "section_list_of_students_view" :
-				$controller = new Section_List_Of_Students_View_Controller();
+			case "section_students_view" :
+				$controller = new Section_Students_View_Controller();
 				break;	
 			case "section_rating_view" :
 				$controller = new Section_Rating_View_Controller();

@@ -44,17 +44,17 @@ class MemberDisplayUtilities
 	}
 	
 	
-	public function displaySectionStudentRow($section_list_of_students_view)
+	public function displaySectionStudentRow($section_students_view)
 	{
-		$section_id = $section_list_of_students_view->get_section_id();
-		$section_name = $section_list_of_students_view->get_section_name();
-		$student_id = $section_list_of_students_view->get_student_id();
-		$student_first_name = $section_list_of_students_view->get_student_first_name();
-		$student_last_name = $section_list_of_students_view->get_student_last_name();
-		$school_name = $section_list_of_students_view->get_school_name();
-		$start_date = $section_list_of_students_view->get_start_date();
+		$section_id = $section_students_view->get_section_id();
+		$section_name = $section_students_view->get_section_name();
+		$student_id = $section_students_view->get_student_id();
+		$student_first_name = $section_students_view->get_student_first_name();
+		$student_last_name = $section_students_view->get_student_last_name();
+		$school_name = $section_students_view->get_school_name();
+		$start_date = $section_students_view->get_start_date();
 		$start_date = $this->displayDate($start_date);
-		$end_date = $section_list_of_students_view->get_end_date();
+		$end_date = $section_students_view->get_end_date();
 		$end_date = $this->displayDate($end_date);
 		
 		echo "<tr><td>$section_id&nbsp:&nbsp$section_name</td><td>$student_id</td><td>$student_first_name&nbsp&nbsp$student_last_name</td><td>$school_name</td><td>$start_date</td><td>$end_date</td></tr>";
@@ -143,7 +143,23 @@ class MemberDisplayUtilities
 	}
 	
 		
-	
+	public function displayNoticeRow($notice_view)
+	{
+		$date_sent = $notice_view->get_date_sent();
+		$date_sent = $this->displayDateTime($date_sent);
+		$notice_id = $notice_view->get_notice_id();		
+		$response_to_notice_id = $notice_view->get_response_to_notice_id();
+		$notice_subject = $notice_view->get_notice_subject();
+		$notice_text = $notice_view->get_notice_text();
+		$from_member_id = $notice_view->get_from_member_id();
+		$from_first_name = $notice_view->get_from_first_name();
+		$from_last_name = $notice_view->get_from_last_name();
+		$from_member_type = $notice_view->get_from_member_type();
+		$flag_for_review = $notice_view->get_flag_for_review();
+		
+		
+		echo "<tr><td>$date_sent</td><td>$notice_id</td><td>$response_to_notice_id</td><td>$from_first_name&nbsp&nbsp$from_last_name</td><td>$from_member_type</td><td>$notice_subject</td><td>$notice_text</td><td>$flag_for_review</td></tr>";
+	}
 	
 }
 

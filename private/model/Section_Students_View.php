@@ -1,15 +1,15 @@
 <?php
 
 
-class Section_List_Of_Students_View {
+class Section_Students_View {
 	
 	private $section_id;
 	private $section_name;
 	private $start_date;
 	private $end_date;
 	private $student_id;
-	private $first_name;
-	private $last_name;
+	private $student_first_name;
+	private $student_last_name;
 	private $school_name;
 	private $dropped_section;
 	private $reviewed_section;
@@ -17,8 +17,8 @@ class Section_List_Of_Students_View {
 	public function __construct() {}
 	
 	
-	public function initialize($section_id, $section_name, $start_date, $end_date,
-								$student_id, $first_name, $last_name, $school_name,
+	public function initializeView($section_id, $section_name, $start_date, $end_date,
+								$student_id, $student_first_name, $student_last_name, $school_name,
 								$dropped_section, $reviewed_section)
 	{
 		$this->section_id = $section_id;
@@ -26,8 +26,8 @@ class Section_List_Of_Students_View {
 		$this->student_id = $student_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
-		$this->first_name = $first_name;
-		$this->last_name = $last_name;
+		$this->student_first_name = $student_first_name;
+		$this->student_last_name = $student_last_name;
 		$this->school_name = $school_name;
 		$this->dropped_section = $dropped_section;
 		$this->reviewed_section = $reviewed_section;
@@ -84,24 +84,24 @@ class Section_List_Of_Students_View {
 		$this->student_id = $student_id;
 	}
 	
-	public function get_first_name()
+	public function get_student_first_name()
 	{
-		return $this->first_name;
+		return $this->student_first_name;
 	}
 	
-	public function set_first_name($first_name)
+	public function set_student_first_name($student_first_name)
 	{
-		$this->first_name = $first_name;
+		$this->student_first_name = $student_first_name;
 	}
 	
-	public function get_last_name()
+	public function get_student_last_name()
 	{
-		return $this->last_name;
+		return $this->student_last_name;
 	}
 
-	public function set_last_name($last_name)
+	public function set_student_last_name($student_last_name)
 	{
-		$this->last_name = $last_name;
+		$this->student_last_name = $student_last_name;
 	}
 	
 	public function get_school_name()

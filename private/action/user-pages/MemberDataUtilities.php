@@ -9,7 +9,7 @@ class MemberDataUtilities {
 	public function getSectionListOfStudents($section_id, $mdb_control)
 	{
 		$student_list = array();
-		$controller = $mdb_control->getController("section_list_of_students_view");
+		$controller = $mdb_control->getController("section_students_view");
 		$student_list = $controller->getByAttribute("section_id", $section_id);
 		
 		return $student_list;
@@ -69,7 +69,7 @@ class MemberDataUtilities {
 	{
 		$homework_list = array();
 		$controller = $mdb_control->getController("homework");
-		$homework_list = $controller->getByAttribute("assignment_id", $assignment_id, "section_id", $section_id);
+		$homework_list = $controller->getByAttributes("assignment_id", $assignment_id, "section_id", $section_id);
 		
 		return $homework_list;
 	}
@@ -90,7 +90,7 @@ class MemberDataUtilities {
 	public function getMemberSentNotices($from_member_id, $mdb_control)
 	{
 		$notice_list = array();		
-		$controller = $mdb_control->getController("member_notice_view");
+		$controller = $mdb_control->getController("notice_view");
 		$notice_list = $controller->getByAttribute("from_member_id", $from_member_id);
 		
 		return $notice_list;
@@ -100,9 +100,25 @@ class MemberDataUtilities {
 	// Gets all notices from the database sent to this member.
 	public function getMemberInBoxNotices($to_member_id, $mdb_control)
 	{
-		$notice_list = array();		
-		$controller = $mdb_control->getController("member_notice_view");
-		$notice_list = $controller->getByAttribute("to_member_id", $to_member_id);
+		$notices_to_member = array();		
+		$controller = $mdb_control->getController("notice_to_member");
+		$notices_to_member = $controller->getByAttribute("to_member_id", $to_member_id);
+		
+		$num_notices = count($notices_to_member);
+		$notice_list = array();	
+		$controller = $mdb_control->getController("notice_view");
+		
+		for($i = 0; $i < $num_notices; $i++)
+		{
+			$notice_id = $notices_to_member[$i]->get_notice_id();
+			$notice = array();
+			$notice = $controller->getByAttribute("notice_id", $notice_id);
+			
+			if(count($notice) == 1)
+			{
+				$notice_list[] = $notice[0];
+			}
+		}
 		
 		return $notice_list;
 	}
@@ -127,7 +143,7 @@ class MemberDataUtilities {
 			
 			if(count($notice) == 1)
 			{
-				$section_list[] = $notice[0];
+				$notice_list[] = $notice[0];
 			}
 		}
 		
