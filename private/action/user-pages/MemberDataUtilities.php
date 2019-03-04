@@ -151,14 +151,28 @@ class MemberDataUtilities {
 	}
 	
 	
+	// tests if a notice is sent to a section instead of being sent to a member
+	public function isNoticeToSection($notice_id, $mdb_control)
+	{
+		$notices_to_section = array();		
+		$controller = $mdb_control->getController("notice_to_section");
+		$notices_to_section = $controller->getByAttribute("notice_id", $notice_id);
+		
+		$num_notices = count($notices_to_section);
+		$is_to_section = ($num_notices >= 1 ? true : false);
+		
+		return $is_to_section;
+	}
+	
+	
 	// Gets all attachments from the database for this notice id.
 	public function getNoticeAttachments($notice_id, $mdb_control)
 	{
 		$attachment_list = array();
 		$controller = $mdb_control->getController("notice_attachment");
-		$notice_list = $controller->getByAttribute("notice_id", $notice_id);
+		$attachment_list = $controller->getByAttribute("notice_id", $notice_id);
 		
-		return $notice_list;
+		return $attachment_list;
 	}
 	
 	

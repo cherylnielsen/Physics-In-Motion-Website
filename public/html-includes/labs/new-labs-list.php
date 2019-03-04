@@ -22,7 +22,7 @@ if((!is_null($labs_new)) AND ($length_labs_new > 0))
 			<img class="new-labs" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab" height="100">
 			<p>' . $lab->get_tutorial_lab_introduction() . '</p>';
 		echo '<p><a href="tutorial-information-page.php?num=' . $lab->get_tutorial_lab_id() . '&lab=' . $lab->get_tutorial_lab_web_link() . '.png">Learn More</a></p>
-			</article><hr>';
+			</article>';
 	}
 	
 	echo '<a id="bottom" href="index.php">return to top</a>

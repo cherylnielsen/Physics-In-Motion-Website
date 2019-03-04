@@ -143,7 +143,7 @@ class MemberDisplayUtilities
 	}
 	
 		
-	public function displayNoticeRow($notice_view)
+	public function displayNoticeRow($notice_view, $attachments)
 	{
 		$date_sent = $notice_view->get_date_sent();
 		$date_sent = $this->displayDateTime($date_sent);
@@ -157,8 +157,19 @@ class MemberDisplayUtilities
 		$from_member_type = $notice_view->get_from_member_type();
 		$flag_for_review = $notice_view->get_flag_for_review();
 		
+		echo "<tr>";
 		
-		echo "<tr><td>$date_sent</td><td>$notice_id</td><td>$response_to_notice_id</td><td>$from_first_name&nbsp&nbsp$from_last_name</td><td>$from_member_type</td><td>$notice_subject</td><td>$notice_text</td><td>$flag_for_review</td></tr>";
+		echo "<td>$date_sent</td><td>$notice_id</td><td>$response_to_notice_id</td><td>$from_first_name&nbsp&nbsp$from_last_name</td><td>$from_member_type</td><td>$notice_subject</td><td>$notice_text</td><td>$flag_for_review</td>";
+		
+		$num_attachments = count($attachments);
+		
+		for($i = 0; $i < $num_attachments; $i++)
+		{
+			$attached = $attachments[$i]->get_attachment();
+			echo "<td>$attached</td>";
+		}
+		
+		echo "</tr>";
 	}
 	
 }

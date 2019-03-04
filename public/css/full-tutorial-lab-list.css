@@ -1,0 +1,98 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+
+section.main-content {
+	float: left;
+	max-width: 80%;
+	margin-bottom: 2em;		
+}
+
+/* grid style full lab list page */
+
+.grid-container {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  grid-template-columns: auto auto auto auto;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 1200px) {
+	.grid-container {
+	  grid-template-columns: auto auto auto;	  
+	}
+}
+
+@media screen and (max-width: 950px) {
+	.grid-container {
+	  grid-template-columns: auto auto;	  
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.grid-container {
+	  display: block;	  
+	}
+}
+
+/* page style details */
+
+img.card {
+	max-height: 100px;
+	padding-bottom: 10px;	
+}
+
+article.card {
+	padding: 1em;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+}
+
+div.card-title {
+	min-height: 4em;
+}
+
+div.card-status {
+	min-height: 1em;
+}
+
+div.card-intro {
+	min-height: 12.5em;
+}
+
+div.ratings {
+	min-height: 2em;
+}
+
+a.card {
+	text-decoration: none;
+	color: black;
+	font-weight:normal;
+}
+
+h1, h2, h3 {
+	text-align: center;
+}
+
+.card-link {
+	padding-top: 10px;
+	padding-bottom: 5px;
+	text-decoration: underline;
+	color: blue;
+}
+
+a#bottom {
+	display: block;
+}
+
+.development-status {
+	color: #03AA0D;
+}
+
+.new-status {
+	color: red;
+}
+
+
+
+

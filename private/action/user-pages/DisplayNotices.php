@@ -31,17 +31,20 @@ class DisplayNotices
 				
 				$notice_list = array();
 				$notice_list = $this->dataUtility->getSectionNotices($section_id, $mdb_control);
-				$number_of_notices = count($notice_list);
+				$num_notices = count($notice_list);
 				
-				if($number_of_notices > 0)
+				if($num_notices > 0)
 				{
 					echo "<tr><th>Date</th><th>Notice ID</th><th>Response to Notice ID</th>
 						<th>From Name</th><th>From Member Type</th>
-						<th>Subject</th><th>Text</th><th>Flag For Review</th></tr>";
+						<th>Subject</th><th>Text</th><th>Flag For Review</th><th>Attachments</th></tr>";
 						
-					for($j = 0; $j < $number_of_notices; $j++)
-					{					
-						$this->displayUtility->displayNoticeRow($notice_list[$j]);
+					for($j = 0; $j < $num_notices; $j++)
+					{	
+						$attachments = array();
+						$notice_id = $notice_list[$j]->get_notice_id();
+						$attachments = $this->dataUtility->getNoticeAttachments($notice_id, $mdb_control);
+						$this->displayUtility->displayNoticeRow($notice_list[$j], $attachments);
 					}	
 				}
 				else
@@ -63,18 +66,23 @@ class DisplayNotices
 				
 		$num = count($notice_list);
 		
-		if($num <= 0)
+		if($num_notices > 0)
 		{
-			echo "<tr><td colspan='5'>Not currently in any sections</td></tr>";
-		}
-		else
-		{
-			echo "<tr><th>Section</th><th>Professor</th><th>School</th><th>Start Date</th><th>End Date</th></tr>";
+			echo "<tr><th>Date</th><th>Notice ID</th><th>Response to Notice ID</th>
+						<th>From Name</th><th>From Member Type</th>
+						<th>Subject</th><th>Text</th><th>Flag For Review</th><th>Attachments</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
-				$this->displayUtility->displayNoticeRow($notice_list[$i]);
+				$attachments = array();
+				$notice_id = $notice_list[$i]->get_notice_id();
+				$attachments = $this->dataUtility->getNoticeAttachments($notice_id, $mdb_control);
+				$this->displayUtility->displayNoticeRow($notice_list[$i], $attachments);
 			}
+		}
+		else
+		{
+			echo "<tr><th colspan='7'>No notices received from members yet.</th></tr>";
 		}
 		
 		echo "</table>";
@@ -88,18 +96,26 @@ class DisplayNotices
 				
 		$num = count($notice_list);
 		
-		if($num <= 0)
-		{
-			echo "<tr><td colspan='5'>Not currently in any sections</td></tr>";
-		}
-		else
+		if($num_notices > 0)
 		{
 			echo "<tr><th>Section</th><th>Professor</th><th>School</th><th>Start Date</th><th>End Date</th></tr>";
 			
 			for($i = 0; $i < $num; $i++)
 			{
-				$this->displayUtility->displayNoticeRow($notice_list[$i]);
+				$notice_id = $notice_list[$i]->get_notice_id();
+				$is_to_section = $this->dataUtility->isNoticeToSection($notice_id, $mdb_control);
+				
+				if(!$is_to_section)
+				{
+					$attachments = array();
+					$attachments = $this->dataUtility->getNoticeAttachments($notice_id, $mdb_control);
+					$this->displayUtility->displayNoticeRow($notice_list[$i], $attachments);
+				}
 			}
+		}
+		else
+		{
+			echo "<tr><th colspan='7'>No notices sent to members yet.</th></tr>";
 		}
 		
 		echo "</table>";

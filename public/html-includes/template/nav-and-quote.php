@@ -19,7 +19,7 @@ echo
 	}
 	
 	echo
-		'<a id="labs_pg_link" href="tutorial-labs-page.php">Tutorial Labs</a><hr>
+		'<a id="labs_pg_link" href="full-tutorial-labs-page.php">Tutorial Labs</a><hr>
 	</nav>';
 
 if(!is_null($quote))
@@ -29,7 +29,7 @@ if(!is_null($quote))
 			<h2 id='quote-title'>Quote of the Month</h2>
 			<q id='quote'>" . $quote->get_quote_text() . "</q>
 				<p id='quote-author'>&#45;" . $quote->get_author() . "</p>
-			<a id='quote-link' href=''>Previous Quotes</a>
+			<a id='quote-link' href='quote-page.php'>Previous Quotes</a>
 		</div>";
 }
 else

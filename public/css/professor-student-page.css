@@ -14,18 +14,26 @@ table {
 }
 
 th, td {
-	border: 1px solid #03AA0D;
 	padding: 5px;
+	border: 1px solid #03AA0D;
 	text-align: left;
-	width: 20%;
+	width: auto;
 }
 
-table th {
+th {
 	background-color: #A7DAFA;
 }
 
 tr:hover {
 	background-color:#DDD;
+}
+
+.btn {
+	display: inline-block;
+	border: none;
+	background-color: inherit;
+	padding: 5px;
+	cursor: pointer;	
 }
 
 @media screen and (max-width: 600px) {

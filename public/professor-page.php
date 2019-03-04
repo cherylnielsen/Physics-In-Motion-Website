@@ -16,16 +16,20 @@
 <body>
 <div class="wrapper">
 
-<?php include('html-includes/template/header.php'); ?>
-<?php include('html-includes/template/nav-and-quote.php'); ?>
+<?php
+	include('html-includes/template/header.php'); 
+	include('html-includes/template/nav-and-quote.php'); 
+?>
 
 <section class="main-content">
-	<?php include('../private/action/user-pages/MemberDataUtilities.php'); ?>
-	<?php include('../private/action/user-pages/MemberDisplayUtilities.php'); ?>
-	<?php include('../private/action/user-pages/MemberActions.php'); ?>
-	<?php include('../private/action/user-pages/DisplaySections.php'); ?>
-	<?php include('../private/action/user-pages/DisplayNotices.php'); ?>
-	<?php include('html-includes/users/professor-page-main-content.php'); ?>
+<?php 
+	include('../private/action/user-pages/MemberDataUtilities.php'); 
+	include('../private/action/user-pages/MemberDisplayUtilities.php'); 
+	include('../private/action/user-pages/MemberActions.php'); 
+	include('../private/action/user-pages/DisplaySections.php'); 
+	include('../private/action/user-pages/DisplayNotices.php'); 
+	include('html-includes/users/professor-page-main-content.php'); 
+?>
 </section>
 		
 <?php include('html-includes/template/footer.html'); ?>

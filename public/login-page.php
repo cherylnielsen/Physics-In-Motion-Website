@@ -19,18 +19,23 @@
 <body>
 <div class="wrapper">
 
-<?php include('html-includes/template/header.php'); ?>
-<?php include('html-includes/template/nav-and-quote.php'); ?>
-
+<?php
+	include('html-includes/template/header.php'); 
+	include('html-includes/template/nav-and-quote.php'); 
+?>
 
 <section class="main-content">
-	<?php include('html-includes/template/logo-statement.php'); ?>
-	<?php include('../private/action/login/login-action.php'); ?>
-	<?php include('html-includes/login/login-form.html'); ?>
+<?php 
+	include('html-includes/template/logo-statement.php'); 
+	include('../private/action/login/login-action.php'); 
+	include('html-includes/login/login-form.html'); 
+?>
 </section>
 
-<?php include('html-includes/labs/new-labs-list.php'); ?>			
-<?php include('html-includes/template/footer.html'); ?>
+<?php 
+	include('html-includes/labs/new-labs-list.php'); 	
+	include('html-includes/template/footer.html'); 
+?>
 
 </div><!-- end div.wrapper -->	
 </body>
