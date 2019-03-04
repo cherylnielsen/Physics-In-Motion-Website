@@ -49,15 +49,19 @@ article.card {
 }
 
 div.card-title {
-	min-height: 100px;
+	min-height: 4em;
 }
 
-div.card {
-	min-height: 200px;
+div.card-status {
+	min-height: 1em;
+}
+
+div.card-intro {
+	min-height: 12.5em;
 }
 
 div.ratings {
-	min-height: 150px;
+	min-height: 2em;
 }
 
 a.card {
@@ -66,12 +70,13 @@ a.card {
 	font-weight:normal;
 }
 
-h1, h2 {
+h1, h2, h3 {
 	text-align: center;
 }
 
-h2.card-link {
+.card-link {
 	padding-top: 10px;
+	padding-bottom: 5px;
 	text-decoration: underline;
 	color: blue;
 }
