@@ -32,7 +32,7 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	echo
 	'<div class="grid-lab-info">	
 	<article class="lab-info">
-		<img class="lab-info left" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">';
+		<img class="left" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">';
 		
 	echo "<div> $status" ;	
 				
@@ -46,7 +46,7 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	
 	echo 
 	'<article class="lab-info">
-		<img class="lab-info right" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
+		<img class="right" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
 		<div>
 			<h2>Prerequisites</h2>
 			<p>' . $introduction . '</p>
@@ -59,7 +59,7 @@ if((!is_null($labs)) AND (count($labs) > 0))
 
 	echo 
 	'<article class="lab-info">
-		<img class="lab-info left" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
+		<img class="left" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
 		<div>
 			<h2>Discription</h2>
 			<p>' . $introduction . '</p>
@@ -70,7 +70,7 @@ if((!is_null($labs)) AND (count($labs) > 0))
 	
 	echo 
 	'<article class="lab-info">
-		<img class="lab-info right" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
+		<img class="right" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab">
 		<div>
 			<h2>Instructions</h2>
 			<p>' . $introduction . '</p>
