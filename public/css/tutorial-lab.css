@@ -1,54 +1,21 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
-h1.logo-statement, h1.labs {
-	text-align: center;
-}
-
-
 section.main-content {
 	float: left;
-	width: 80%;
+	min-width: 80%;
 	margin-bottom: 2em;		
 }
 
-.grid-container {
-  display: grid;
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
-  grid-template-columns: auto auto auto auto;
-  padding: 0 20px;
-}
-
-@media screen and (max-width: 1200px) {
-	.grid-container {
-	  grid-template-columns: auto auto auto;	  
-	}
-}
-
-@media screen and (max-width: 950px) {
-	.grid-container {
-	  grid-template-columns: auto auto;	  
-	}
-}
-
-@media screen and (max-width: 700px) {
-	.grid-container {
-	  display: block;	  
-	}
-}
+/* grid style specific lab information page */
 
 .grid-lab-info {
   display: grid;
-  grid-template-columns: auto auto;
-  padding: 0 20px;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-template-columns: auto;
 }
 
-@media screen and (max-width: 1200px) {
-	.grid-lab-info {
-	  grid-template-columns: auto;	  
-	}
-}
 
 @media screen and (max-width: 950px) {
 	.grid-lab-info {
@@ -56,35 +23,33 @@ section.main-content {
 	}
 }
 
-img.labs {
-	height: 100px;
-	margin-bottom: 0.5em;
+/* page style details */
+
+h1, h2 {
+	text-align: center;
 }
 
 img.lab-info {
 	height: 200px;
-	padding:  1.5em 1em;
 	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	margin: 15px 25px 15px 0px;
 }
 
-article.labs {
-	padding: 1em;
-	border: 2px solid #03AA0D;
-	border-radius: 5px;
+img.right {
+	float: right;
 }
 
-article.lab-info {
-	padding: 1em;
-	border: 2px solid #03AA0D;
+img.left {
+	float: left;
 }
 
-article.labs > h1,  article.labs > h2 {
-	margin: 0 0 0.5em 0;
-	text-align: center;
+article.lab-info > div {
+	text-align: left;
 }
 
-a.labs {
-	margin: 0.5em 0;
+article.lab-info > div > h2, article.lab-info > div > h1 {
+	text-align: left;
 }
 
 a#bottom {

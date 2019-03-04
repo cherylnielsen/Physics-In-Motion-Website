@@ -25,6 +25,6 @@ section.new-labs {
 	padding: 2% 0 2% 0;		
 	position: relative;
 	right: 0;
-	border: 1px-left: none;
-	border: 1px-right: none;
+	border-left: none;
+	border-right: none;
 }

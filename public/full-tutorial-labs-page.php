@@ -10,7 +10,7 @@
 
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
 	
-	<link href="css/tutorial-lab.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/full-tutorial-lab-list.css" rel="stylesheet" type="text/css" media="screen">
 	
 	
 </head>

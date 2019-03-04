@@ -11,8 +11,8 @@
 /* outermost container inside body */
 div.wrapper { 
 	border: 2px solid #03AA0D;
-	margin: 1px;
-	/* background-color: #FDFAEC; */
+	border-radius: 10px;
+	margin: 0px;
 }
 
 /* Inner page link only shown on tablets, phones, 
@@ -44,6 +44,11 @@ h2 {
 	margin: 0.5em 0;
 }
 
+h3 {
+	font-size: 1.0em;
+	margin: 0.5em 0;
+}
+
 p {
 	margin: 0.5em 0;
 }
@@ -59,20 +64,20 @@ a#top {
 
 header{ 
 	height: 125px;
-	border: bottom: 2px solid #03AA0D;
-	/* background-color: #FDFAEC; */
+	border-bottom: 2px solid #03AA0D;
+	border-radius: 10px;
 	background-color: #A7DAFA;
 }
 
 div.logo {
 	width: 80%;
 	height: 125px;
-	padding: 0.5% 1%;	
 	background: url("../images/3D logo Physics in Motion 12 2 18.png");
 	background-origin: content-box;
 	background-position: left center;
 	background-repeat: no-repeat;
-	background-size:  100% 100%;	
+	background-size:  100% 80%;	
+	padding-left: 15px;
 }
 
 
@@ -88,6 +93,7 @@ div.logo-summary {
 
 div.sign-in {
 	border: 2px solid #03AA0D;
+	border-radius: 10px;
 	text-align: center;
 	padding: 1em 0.5em 0.5em 0.5em;
 	position: absolute;
@@ -116,9 +122,10 @@ aside.nav-quote {
 	float: left;
 	width: 15%;
 	border: 2px solid #03AA0D;
+	border-radius: 10px;
 	background-color: #A7DAFA;
 	position: relative;
-	left: -4px;
+	left: -2px;
 }
 
 nav.navigation > a {
@@ -129,9 +136,7 @@ nav.navigation > a {
 
 
 hr {
-	border: style: solid;
-    border: width: 2px;
-    border: color: #03AA0D;
+	border: 1px solid #03AA0D;
 }
 
 div.quote {
@@ -153,11 +158,9 @@ section.new-labs {
 	width: 25%;
 	text-align: center;
 	border: 2px solid #03AA0D;
-	border: radius: 10px;
+	border-radius: 10px;
 	padding-bottom: 1em;
 	background-color: #A7DAFA;
-	position: relative;
-	right: -4px;
 }
 
 article.new-labs {
@@ -165,6 +168,7 @@ article.new-labs {
 	margin-bottom: 0;
 	background-color: white;
 	text-align: center;
+	border-bottom: 2px solid #03AA0D;
 }
 
 img.new-labs {
@@ -187,6 +191,7 @@ h1.new-status {
 footer {  
 	clear: both;
 	padding: 2%;
-	border: top: 2px solid #03AA0D;
+	border-top: 2px solid #03AA0D;
+	border-radius: 10px;
 	background-color: #A7DAFA;
 }

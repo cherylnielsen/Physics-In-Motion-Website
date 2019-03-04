@@ -45,6 +45,7 @@ fieldset {
 	padding: 0 1em 1em 1em;
 	margin-bottom: 1em;
 	border: 2px solid #03AA0D;
+	border-radius: 10px;
 	background-color: #A7DAFA;
 }
 
@@ -61,6 +62,7 @@ input[type=text],  input[type=email], input[type=password] {
 	width: 96%;
 	padding: 0.5em;
 	border: 2px solid #03AA0D;
+	border-radius: 5px;
 	background-color: lightyellow;	
 }
 
@@ -78,12 +80,13 @@ input[type=submit], input[type=button] {
 }
 
 input:invalid {
-	border: 1px: 2px solid red;
+	border: 2px solid red;
+	border-radius: 5px;
 	background-color: #ffd4d4;
 }
 
 input[type=radio]:invalid {
-	outline: 3px solid red;
+	outline: 2px solid red;
 }
 
 .form-errors {

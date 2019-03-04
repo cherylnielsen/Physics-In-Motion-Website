@@ -32,8 +32,8 @@
 		margin: auto;
 		left: 0;
 		padding: 2%;
-		border: left: none;
-		border: right: none;
+		border-left: none;
+		border-right: none;
 	}
 
 	div.quote {
@@ -64,8 +64,8 @@
 		padding: 2% 0 2% 0;		
 		position: relative;
 		right: 0;
-		border: left: none;
-		border: right: none;
+		border-left: none;
+		border-right: none;
 	}
 
 }

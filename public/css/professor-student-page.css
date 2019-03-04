@@ -14,13 +14,12 @@ table {
 }
 
 th, td {
-	border: 1px solid #03AA0D;
 	padding: 5px;
 	text-align: left;
 	width: 20%;
 }
 
-table th {
+th {
 	background-color: #A7DAFA;
 }
 
