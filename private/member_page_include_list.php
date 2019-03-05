@@ -1,7 +1,6 @@
 <?php
 
-// set of helper classes for the display and action classes
-include('../private/action/user-pages/DataUtility.php'); 
+// helper classes for the display and action classes
 include('../private/action/user-pages/DisplayUtility.php'); 
 include('../private/action/user-pages/ActionUtility.php'); 
 // display classes for the main database models used
@@ -17,7 +16,6 @@ include('../private/action/user-pages/HomeworkAction.php');
 	
 	
 // set of helper classes for the display and action classes
-$dataUtility = new DataUtility();
 $displayUtility = new DisplayUtility();
 $actionUtility = new ActionUtility();
 // display classes for the main database models used

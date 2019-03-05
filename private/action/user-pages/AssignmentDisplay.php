@@ -3,12 +3,10 @@
 class AssignmentDisplay
 {
 	private $displayUtility;
-	private $dataUtility;
 	
 	public function __construct() 
 	{
 		$this->displayUtility = new DisplayUtility();
-		$this->dataUtility = new DataUtility();
 	}
 	
 	
@@ -60,7 +58,7 @@ class AssignmentDisplay
 				$assignment_id = $assignment_list[$i]->get_assignment_id();
 				
 				$student_list = array();
-				$student_list = $this->dataUtility->getAssignmentListOfStudents($assignment_id, $mdb_control);
+				$student_list = $this->getAssignmentListOfStudents($assignment_id, $mdb_control);
 				$number_of_students = count($student_list);
 				
 				if($number_of_students > 0)
@@ -103,11 +101,11 @@ class AssignmentDisplay
 				$assignment_id = $assignment_list[$i]->get_assignment_id();
 				
 				$assignment_list = array();
-				$assignment_list = $this->dataUtility->getAssignmentAssignments($assignment_id, $mdb_control);
+				$assignment_list = $this->getAssignmentAssignments($assignment_id, $mdb_control);
 				$number_of_assignments = count($assignment_list);
 				
 				$homework_list = array();
-				$homework_list = $this->dataUtility->getAssignmentHomework_ByStudent($student_id, $assignment_id, $mdb_control);
+				$homework_list = $this->getAssignmentHomework_ByStudent($student_id, $assignment_id, $mdb_control);
 				$number_of_homeworks = count($homework_list);
 					
 				for($j = 0; $j < $number_of_assignments; $j++)
@@ -150,7 +148,7 @@ class AssignmentDisplay
 				$assignment_id = $assignment_list[$i]->get_assignment_id();
 				
 				$assignment_list = array();
-				$assignment_list = $this->dataUtility->getAssignmentAssignments($assignment_id, $mdb_control);
+				$assignment_list = $this->getAssignmentAssignments($assignment_id, $mdb_control);
 				$number_of_assignments = count($assignment_list);
 					
 				for($j = 0; $j < $number_of_assignments; $j++)
@@ -159,7 +157,7 @@ class AssignmentDisplay
 					$assignment_id = $assignment_list[$j]->get_assignment_id();
 					
 					$homework_list = array();
-					$homework_list = $this->dataUtility->getAssignmentHomework_ByAssignment($assignment_id, $assignment_id, $mdb_control);
+					$homework_list = $this->getAssignmentHomework_ByAssignment($assignment_id, $assignment_id, $mdb_control);
 					$number_of_homeworks = count($homework_list);
 									
 					for($k = 0; $k < $number_of_homeworks; $k++)
@@ -174,7 +172,107 @@ class AssignmentDisplay
 	}
 
 	
+	// Gets all assignments from the database for this section.
+	public function getSectionAssignments($section_id, $mdb_control)
+	{
+		$assignment_list = array();
+		$controller = $mdb_control->getController("assignment_view");
+		$assignment_list = $controller->getByAttribute("section_id", $section_id);
+		
+		return $assignment_list;
+	}	
 	
+	
+	// Gets all homeworks from the database for this assignment in this section for all students.
+	public function getSectionHomework_ByAssignment($assignment_id, $section_id, $mdb_control)
+	{
+		$homework_list = array();
+		$controller = $mdb_control->getController("homework");
+		$homework_list = $controller->getByAttributes("assignment_id", $assignment_id, "section_id", $section_id);
+		
+		return $homework_list;
+	}
+	
+	
+	// Gets all homeworks from the database for this student in this section for all assignments.
+	public function getSectionHomework_ByStudent($student_id, $section_id, $mdb_control)
+	{
+		$homework_list = array();
+		$controller = $mdb_control->getController("homework");
+		$homework_list = $controller->getByAttributes("student_id", $student_id, "section_id", $section_id);
+		
+		return $homework_list;
+	}
+	
+	
+	
+	
+	public function displayAssignmentRow($assignment_view)
+	{
+		$assignment_name = $assignment_view->get_assignment_name();
+		$points_possible = $assignment_view->get_points_possible();
+		$notes = $assignment_view->get_notes();
+		
+		$lab_id = $assignment_view->get_tutorial_lab_id();
+		$lab_name = $assignment_view->get_tutorial_lab_name();
+		$lab_introduction = $assignment_view->get_tutorial_lab_introduction();
+		$lab_web_link = $assignment_view->get_tutorial_lab_web_link();
+		
+		$date_assigned = $assignment_view->get_date_assigned();
+		$date_assigned = $this->displayDate($date_assigned);
+		$date_due = $assignment_view->get_date_due();
+		$date_due = $this->displayDate($date_due);
+		
+		echo "<tr><th>Assigned</th><th>Due</th>
+				<th colspan='2'>Assignment</th>
+				<th>Points Possible</th></tr>";
+				
+		echo "<tr><th>Tutorial Lab</th><th>Link</th>
+				<th colspan='2'>Introduction</th>
+				<th>Professor's Notes</th></tr>";
+				
+		echo "<tr><td>$date_assigned</td><td>Due $date_due</td>
+				<td colspan='2'>$assignment_name</td>
+				<td>$points_possible points</td></tr>";
+				
+		echo "<tr><td>$lab_id&nbsp:&nbsp$lab_name</td>
+				<td>$lab_web_link</td>
+				<td colspan='2'>$lab_introduction</td>
+				<td>$notes</td></tr>";
+	}
+	
+	
+	public function displayHomeworkRow($homework)
+	{
+		$summary = $homework->get_lab_summary();		
+		$data = $homework->get_lab_data();		
+		$graphs = $homework->get_graphs();		
+		$math = $homework->get_math();		
+		$hints = $homework->get_hints();		
+		$chat_session = $homework->get_chat_session();
+		
+		$date_submitted = $homework->get_date_submitted();
+		$date_submitted = $this->displayDate($date_submitted);
+		
+		$points = $homework->get_points_earned();		
+		$graded = $homework->get_was_graded();	
+		$graded = $this->displayBoolean($graded);
+		$hours = $homework->get_hours();
+				
+		echo "<tr><th>Date Submitted</th><th>Points Earned</th>
+				<th>Graded ?</th><th>Hours</th><th>Summary</th></tr>";
+		
+		echo "<tr><td>$date_submitted</td><td>$points</td><td>$graded</td>
+				<td>$hours hours</td><td>$summary</td></tr>";
+				
+		echo "<tr><th>Data</th><th>Graphs</th>
+				<th>Math</th><th>Hints</th><th>Chat Session</th></tr>";
+				
+		echo "<tr><td>$data</td><td>$graphs</td>
+				<td>$math</td><td>$hints</td><td>$chat_session</td></tr>";
+	}
+	
+		
 	
 }
 

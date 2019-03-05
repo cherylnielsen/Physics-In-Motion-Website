@@ -24,13 +24,21 @@ $last_name = $_SESSION["last_name"];
 // display the responses as html.
 require_once('../private/member_page_include_list.php');
 
-echo "<h1 class=user-page>Welcome $first_name $last_name!</h1>";
+echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
+
+echo "<p>Click on a section to view more information.<p>";
 
 $section_list = array();
-$section_list = $dataUtility->getSectionList_ByProfessor($professor_id, $mdb_control);
-$sectionDisplay->displaySectionTable($section_list, $mdb_control);
+$section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
+$sectionDisplay->displaySectionMembershipTable($section_list, $mdb_control);
 echo "<br>";
 
+echo "<p>Click on a notice type for more information.<p>";
+
+$noticeDisplay->displayNoticeSummary($professor_id, $section_list, $mdb_control);
+echo "<br>";
+
+/*
 $sectionDisplay->displaySectionSummary_ByProfessor($professor_id, $section_list, $mdb_control);
 echo "<br>";
 
@@ -41,15 +49,15 @@ $noticeDisplay->displaySectionNoticeTable($section_list, $mdb_control);
 echo "<br>";
 
 $member_notice_list = array();
-$member_notice_list = $dataUtility->getMemberInBoxNotices($professor_id, $mdb_control);
+$member_notice_list = $noticeDisplay->getMemberInBoxNotices($professor_id, $mdb_control);
 $noticeDisplay->displayMemberInBoxNoticeTable($member_notice_list, $mdb_control);
 echo "<br>";
 
 $member_notice_list = array();
-$member_notice_list = $dataUtility->getMemberSentNotices($professor_id, $mdb_control);
+$member_notice_list = $noticeDisplay->getMemberSentNotices($professor_id, $mdb_control);
 $noticeDisplay->displayMemberSentNoticeTable($member_notice_list, $mdb_control);
 echo "<br>";
-
+*/
 echo '<br><a id="bottom" href="#top">return to top</a>';
 
 

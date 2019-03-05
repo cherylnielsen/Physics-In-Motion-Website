@@ -3,12 +3,10 @@
 class HomeworkDisplay
 {
 	private $displayUtility;
-	private $dataUtility;
 	
 	public function __construct() 
 	{
 		$this->displayUtility = new DisplayUtility();
-		$this->dataUtility = new DataUtility();
 	}
 	
 	
@@ -60,7 +58,7 @@ class HomeworkDisplay
 				$homework_id = $homework_list[$i]->get_homework_id();
 				
 				$student_list = array();
-				$student_list = $this->dataUtility->getHomeworkListOfStudents($homework_id, $mdb_control);
+				$student_list = $this->getHomeworkListOfStudents($homework_id, $mdb_control);
 				$number_of_students = count($student_list);
 				
 				if($number_of_students > 0)
@@ -103,11 +101,11 @@ class HomeworkDisplay
 				$homework_id = $homework_list[$i]->get_homework_id();
 				
 				$assignment_list = array();
-				$assignment_list = $this->dataUtility->getHomeworkAssignments($homework_id, $mdb_control);
+				$assignment_list = $this->getHomeworkAssignments($homework_id, $mdb_control);
 				$number_of_assignments = count($assignment_list);
 				
 				$homework_list = array();
-				$homework_list = $this->dataUtility->getHomeworkHomework_ByStudent($student_id, $homework_id, $mdb_control);
+				$homework_list = $this->getHomeworkHomework_ByStudent($student_id, $homework_id, $mdb_control);
 				$number_of_homeworks = count($homework_list);
 					
 				for($j = 0; $j < $number_of_assignments; $j++)
@@ -150,7 +148,7 @@ class HomeworkDisplay
 				$homework_id = $homework_list[$i]->get_homework_id();
 				
 				$assignment_list = array();
-				$assignment_list = $this->dataUtility->getHomeworkAssignments($homework_id, $mdb_control);
+				$assignment_list = $this->getHomeworkAssignments($homework_id, $mdb_control);
 				$number_of_assignments = count($assignment_list);
 					
 				for($j = 0; $j < $number_of_assignments; $j++)
@@ -159,7 +157,7 @@ class HomeworkDisplay
 					$assignment_id = $assignment_list[$j]->get_assignment_id();
 					
 					$homework_list = array();
-					$homework_list = $this->dataUtility->getHomeworkHomework_ByAssignment($assignment_id, $homework_id, $mdb_control);
+					$homework_list = $this->getHomeworkHomework_ByAssignment($assignment_id, $homework_id, $mdb_control);
 					$number_of_homeworks = count($homework_list);
 									
 					for($k = 0; $k < $number_of_homeworks; $k++)
