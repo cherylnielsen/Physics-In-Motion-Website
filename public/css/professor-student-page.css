@@ -7,25 +7,30 @@ section.main-content {
 	padding: 0 0 1% 2%;
 }
 
+div.overflow {
+	overflow-x:auto;
+}
+
 table.summary {
 	table-layout: fixed;
 	border: 2px solid #03AA0D;
-	border-collapse: collapse;
+	border-radius: 5px;
 }
 
 th, td {
 	padding: 5px 10px;	
 	text-align: left;
-	width: auto;
-	border: 1px solid #03AA0D;
+	width: auto;	
 }
 
 th {
 	background-color: #A7DAFA;
 }
 
+tr:nth-child(even){background-color: Gainsboro;}
+
 tr:hover {
-	background-color:#DDD;
+	background-color: Aquamarine;
 }
 
 

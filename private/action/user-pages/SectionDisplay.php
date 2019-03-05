@@ -35,7 +35,7 @@ class SectionDisplay
 	
 	public function displaySectionMembershipTable($section_list, $mdb_control)
 	{
-		echo "<table class='summary'>
+		echo "<div class='overflow'><table class='summary'>
 				<tr><th colspan='5'>Section Memberships</th></tr>";
 				
 		$num_sections = count($section_list);
@@ -59,7 +59,7 @@ class SectionDisplay
 			}
 		}
 		
-		echo "</table>";
+		echo "</table></div>";
 	}
 	
 	

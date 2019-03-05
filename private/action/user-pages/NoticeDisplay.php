@@ -12,7 +12,7 @@ class NoticeDisplay
 	
 	public function displayNoticeSummary($professor_id, $section_list, $mdb_control)
 	{
-		echo "<table class='summary'><tr><th colspan='3'>Notice Summary</th></tr>";
+		echo "<div class='overflow'><table class='summary'><tr><th colspan='3'>Notice Summary</th></tr>";
 		echo "<tr><th>Notice Type</th><th>Number of Notices</th></tr>";
 		
 		$notices = array();
@@ -41,7 +41,7 @@ class NoticeDisplay
 			echo "<tr><td><a href=''>Section $section_id&nbsp:&nbsp$section_name</a></td><td>$num_notices</td></tr>";
 		}
 		
-		echo "</table>";
+		echo "</table></div>";
 	}
 	
 	
