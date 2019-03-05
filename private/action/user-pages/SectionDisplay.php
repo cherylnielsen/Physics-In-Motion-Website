@@ -1,14 +1,14 @@
 <?php
 
-class DisplaySections
+class SectionDisplay
 {
 	private $displayUtility;
 	private $dataUtility;
 	
 	public function __construct() 
 	{
-		$this->displayUtility = new MemberDisplayUtilities();
-		$this->dataUtility = new MemberDataUtilities();
+		$this->displayUtility = new DisplayUtility();
+		$this->dataUtility = new DataUtility();
 	}
 	
 	

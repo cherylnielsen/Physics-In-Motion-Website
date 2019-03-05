@@ -1,14 +1,14 @@
 <?php
 
-class DisplayNotices
+class NoticeDisplay
 {
 	private $displayUtility;
 	private $dataUtility;
 	
 	public function __construct() 
 	{
-		$this->displayUtility = new MemberDisplayUtilities();
-		$this->dataUtility = new MemberDataUtilities();
+		$this->displayUtility = new DisplayUtility();
+		$this->dataUtility = new DataUtility();
 	}
 	
 	
@@ -64,7 +64,7 @@ class DisplayNotices
 		echo "<table class='section-membership-table'>
 				<tr><th colspan='5'>Member Notice In Box</th></tr>";
 				
-		$num = count($notice_list);
+		$num_notices = count($notice_list);
 		
 		if($num_notices > 0)
 		{
@@ -72,7 +72,7 @@ class DisplayNotices
 						<th>From Name</th><th>From Member Type</th>
 						<th>Subject</th><th>Text</th><th>Flag For Review</th><th>Attachments</th></tr>";
 			
-			for($i = 0; $i < $num; $i++)
+			for($i = 0; $i < $num_notices; $i++)
 			{
 				$attachments = array();
 				$notice_id = $notice_list[$i]->get_notice_id();
@@ -94,13 +94,13 @@ class DisplayNotices
 		echo "<table class='section-membership-table'>
 				<tr><th colspan='5'>Member Notices Sent</th></tr>";
 				
-		$num = count($notice_list);
+		$num_notices = count($notice_list);
 		
 		if($num_notices > 0)
 		{
 			echo "<tr><th>Section</th><th>Professor</th><th>School</th><th>Start Date</th><th>End Date</th></tr>";
 			
-			for($i = 0; $i < $num; $i++)
+			for($i = 0; $i < $num_notices; $i++)
 			{
 				$notice_id = $notice_list[$i]->get_notice_id();
 				$is_to_section = $this->dataUtility->isNoticeToSection($notice_id, $mdb_control);

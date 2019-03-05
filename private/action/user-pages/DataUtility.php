@@ -1,6 +1,6 @@
 <?php
 
-class MemberDataUtilities {
+class DataUtility {
 	
 	public function __construct() {}
 

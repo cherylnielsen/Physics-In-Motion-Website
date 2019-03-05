@@ -1,6 +1,6 @@
 <?php
 
-class MemberDisplayUtilities
+class DisplayUtility
 {	
 	public function __construct() {}
 	
