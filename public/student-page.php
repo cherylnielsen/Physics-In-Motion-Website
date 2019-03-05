@@ -22,11 +22,6 @@
 
 <section class="main-content">
 <?php 
-	include('../private/action/user-pages/MemberDataUtilities.php'); 
-	include('../private/action/user-pages/MemberDisplayUtilities.php'); 
-	include('../private/action/user-pages/MemberActions.php'); 
-	include('../private/action/user-pages/DisplaySections.php'); 
-	include('../private/action/user-pages/DisplayNotices.php'); 
 	include('html-includes/users/student-page-main-content.php'); 
 ?>
 </section>

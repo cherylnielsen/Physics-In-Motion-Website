@@ -1,6 +1,6 @@
 <?php
 
-class MemberActions
+class ActionUtility
 {
 	public function __construct() {}
 	

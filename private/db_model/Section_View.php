@@ -6,6 +6,7 @@ class Section_View extends Section {
 	private $professor_first_name;
 	private $professor_last_name;
 	private $school_name;
+
 	
 	public function __construct() {}
 	
