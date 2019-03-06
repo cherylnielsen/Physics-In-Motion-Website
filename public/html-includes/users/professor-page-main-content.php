@@ -24,19 +24,14 @@ $last_name = $_SESSION["last_name"];
 // display the responses as html.
 require_once('../private/member_page_include_list.php');
 
-echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
+echo "<h2 class=welcome>Welcome $first_name $last_name!</h2>";
 
 echo "<p>Click on a section to view more information.<p>";
-
 $section_list = array();
 $section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
 $sectionDisplay->displaySectionMembershipTable($section_list, $mdb_control);
-echo "<br>";
-
 echo "<p>Click on a notice type for more information.<p>";
-
 $noticeDisplay->displayNoticeSummary($professor_id, $section_list, $mdb_control);
-echo "<br>";
 
 /*
 $sectionDisplay->displaySectionSummary_ByProfessor($professor_id, $section_list, $mdb_control);

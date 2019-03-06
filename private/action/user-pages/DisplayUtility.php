@@ -31,23 +31,26 @@ class DisplayUtility
 	}
 	
 	
-	public function displayBoolean($oneZero)
+	public function displaySectionActions()
 	{
-		if($oneZero)
-		{
-			return "Yes";
-		}
-		else
-		{
-			return "No";
-		}			
+		echo "<table class='summary actions'>
+				<tr><th>Actions</th></tr>";
+				
+		echo "<tr><td><button class='summaryButton' onclick='showStudentList();'>
+				Show/Hide Student List</button></td></tr>";
+		echo "<tr><td><button class='summaryButton' onclick='showAssignmentList();'>
+				Show/Hide Assignment List</button></td></tr>";
+		echo "<tr><td><button class='summaryButton' onclick='addSectionAssignment();'>
+				Add Assignment</button></td></tr>";
+		echo "<tr><td><button class='summaryButton' onclick='showSectionNotices();'>
+				Show/Hide Section Notices</button></td></tr>";
+		echo "<tr><td><button class='summaryButton' onclick='addSectionNotice();'>
+				Write Section Notice</button></td></tr>";
+		
+		echo "</table>";
 	}
 	
 	
-	
-	
-	
 }
-
  
 ?>

@@ -10,14 +10,14 @@
 		
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>	
 	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
-	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">	
+	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">
 	
 </head>
 <body>	
 <div class="wrapper">
 <?php
 	include('html-includes/template/header.php');
-	include('html-includes/template/nav-and-quote.php'); 
+	include('html-includes/template/main-navigation-and-quote.php'); 
 ?>
 
 <section class="main-content">

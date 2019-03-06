@@ -11,6 +11,7 @@
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>	
 	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">
+	<script src="javascript/member-actions.js" ></script>
 	
 </head>
 <body>
@@ -23,10 +24,10 @@
 
 <section class="main-content">
 <?php 
-	include('html-includes/users/professor-page-main-content.php'); 
+	include('html-includes/users/professor-section-content.php'); 
 ?>
 </section>
-		
+
 <?php include('html-includes/template/footer.html'); ?>
 
 </div><!-- end div.wrapper -->	

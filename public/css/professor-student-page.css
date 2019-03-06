@@ -7,32 +7,76 @@ section.main-content {
 	padding: 0 0 1% 2%;
 }
 
+
+h1.welcome {
+	margin-bottom: 20px;
+}
+
+
 div.overflow {
 	overflow-x:auto;
 }
 
-table.summary {
+table {
 	table-layout: fixed;
 	border: 2px solid #03AA0D;
-	border-radius: 5px;
+	border-radius: 7px;
+	margin-bottom: 20px;
+}
+
+table.actions, table.shortview {
+	width: 245px;
 }
 
 th, td {
 	padding: 5px 10px;	
 	text-align: left;
-	width: auto;	
+	width: auto;
 }
 
 th {
 	background-color: #A7DAFA;
 }
 
-tr:nth-child(even){background-color: Gainsboro;}
-
-tr:hover {
-	background-color: Aquamarine;
+tr:nth-child(even){
+	background-color: Gainsboro;
 }
 
+tr:hover {
+	background-color: #81fd8a;
+}
+
+nav.secondary-navigation {
+	float: right;
+	position: relative;
+	left: 65px;
+}
+
+.summaryButton {
+	background-color: inherit;
+	border: none;
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	color: blue;
+}
+
+.button { 
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	padding: 5px 15px;
+	background-color:#A7DAFA;
+	margin: 0.25em;
+	font-weight: 900;
+	border: 1px solid #03AA0D;
+	border-radius: 7px;
+	display: block;
+	cursor: pointer;
+	width: 100%;
+}
+
+.button:hover {
+	background-color: #81fd8a;
+}
 
 @media screen and (max-width: 600px) {
 	
