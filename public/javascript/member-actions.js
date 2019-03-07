@@ -1,7 +1,7 @@
 /* JavaScript for member pages. */
 
 
-function showStudentList($section_id)
+function showStudentList()
 {
 	var listDiv = document.getElementById("studentListDiv");
 	
@@ -15,7 +15,8 @@ function showStudentList($section_id)
 	}
 }
 
-function showAssignmentList($section_id)
+
+function showAssignmentList()
 {
 	var listDiv = document.getElementById("assignmentListDiv");
 	
@@ -30,9 +31,9 @@ function showAssignmentList($section_id)
 }
 
 
-function addSectionAssignment($section_id)
+function showHomeworkList()
 {
-	var listDiv = document.getElementById("assignmentListDiv");
+	var listDiv = document.getElementById("homeworkListDiv");
 	
 	if( listDiv.style.display === "none" )
 	{
@@ -45,9 +46,9 @@ function addSectionAssignment($section_id)
 }
 
 
-function showSectionNotices($section_id)
+function showSectionNotices()
 {
-	var listDiv = document.getElementById("studentListDiv");
+	var listDiv = document.getElementById("sectionNoticeDiv");
 	
 	if( listDiv.style.display === "none" )
 	{
@@ -60,9 +61,9 @@ function showSectionNotices($section_id)
 }
 
 
-function addSectionNotice($section_id)
+function showMemberNotices()
 {
-	var listDiv = document.getElementById("studentListDiv");
+	var listDiv = document.getElementById("memberNoticeDiv");
 	
 	if( listDiv.style.display === "none" )
 	{
@@ -72,16 +73,25 @@ function addSectionNotice($section_id)
 	{
 		listDiv.style.display = "none";
 	}
+}
+
+
+function addAssignment()
+{
+	
+}
+
+
+function writeNotice()
+{
+	
 }
 
 
 /**
-
 function init()
-{
-	
+{	
 }
 
 document.addEventListener( "DOMContentLoaded" , init , false );
-
 **/

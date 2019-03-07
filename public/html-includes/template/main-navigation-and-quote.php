@@ -22,7 +22,7 @@ echo
 		'<a id="labs_pg_link" href="full-tutorial-labs-page.php" class="navigation">Tutorial Labs</a><hr>
 	</nav>';
 
-if(!is_null($quote))
+if(isset($quote))
 {
 	echo
 		"<div class='quote'>
@@ -31,10 +31,6 @@ if(!is_null($quote))
 				<p id='quote-author'>&#45;" . $quote->get_author() . "</p>
 			<a id='quote-link' href='quote-page.php'>Previous Quotes</a>
 		</div>";
-}
-else
-{
-	echo '<p> Opps: error! </p>';
 }
 
 echo '</aside>';

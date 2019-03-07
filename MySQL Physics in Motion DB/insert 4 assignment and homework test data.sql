@@ -4,8 +4,8 @@ use physics_in_motion;
 
 /* assignments */
 insert into assignment (assignment_id, section_id, tutorial_lab_id, assignment_name, date_due, points_possible, notes)
-values (1, 101, 101, "assignment 1 name", "2019-02-01 10:0:0", "2018-02-04 23:59:0", 20, "notes for assignment 1"), 
-(2, 101, 102, "assignment 2 name", "2019-02-01 10:10:0", "2018-02-04 23:59:0", 20, "notes for assignment 2");
+values (1, 101, 101, "assignment name", "2019-02-01 10:0:0", "2019-02-04 23:59:0", 20, "notes for assignment 1"), 
+(2, 101, 102, "assignment name", "2019-02-05 10:10:0", "2019-02-08 23:59:0", 20, "notes for assignment 2");
 
 select * from assignment;
 

@@ -8,90 +8,68 @@ class AssignmentDisplay
 	{
 		$this->displayUtility = new DisplayUtility();
 	}
-	
-	/***
-	public function displayHomeworkSummary_ByStudent($student_id, $assignment_list, $mdb_control)
-	{
-		$assignment_list = array();		
-		$homework_list = array();
-		$number_of_assignments = count($assignment_list);
-		
-		if($number_of_assignments > 0)
-		{	
-			echo "<table class='student_assignment_summary-table'>
-					<tr><th colspan='5'>Assignment Details</th></tr>";
 
-			for($i = 0; $i < $number_of_assignments; $i++)
-			{
-				echo "<tr><th>Assignment</th><th>Professor</th><th>School</th>
-						<th>Start</th><th>End</th></tr>";
-			
-				$this->displayUtility->displayAssignmentRow($assignment_list[$i]);
-				$assignment_id = $assignment_list[$i]->get_assignment_id();
-				
-				$assignment_list = array();
-				$assignment_list = $this->getAssignmentAssignments($assignment_id, $mdb_control);
-				$number_of_assignments = count($assignment_list);
-				
-				$homework_list = array();
-				$homework_list = $this->getAssignmentHomework_ByStudent($student_id, $assignment_id, $mdb_control);
-				$number_of_homeworks = count($homework_list);
-					
-				for($j = 0; $j < $number_of_assignments; $j++)
-				{					
-					$this->displayUtility->displayAssignmentRow($assignment_list[$j]);
-					$assignment_id = $assignment_list[$j]->get_assignment_id();
-									
-					for($k = 0; $k < $number_of_homeworks; $k++)
-					{	
-						$hmwk_assignment_id = $homework_list[$k]->get_assignment_id();
-						
-						if($hmwk_assignment_id == $assignment_id)
-						{	$this->displayUtility->displayHomeworkRow($homework_list[$k]);
-							break;
-						}
-					}					
-				}// end assignment loop		
-				
-			} // end assignment loop
-		}
-		
-		echo "</table>";
-	}
-	**/
 
-	public function displaySectionAssignments($section_id, $assignment_list, $mdb_control)
+	public function displaySectionAssignments($section_id, $mdb_control)
 	{
+		$assignment_list = array();
+		$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
 		$num_assignments = count($assignment_list);
+		$row = array();
 		
+		echo "<table class='summary assignments'><tr><th colspan='8'>
+				<a href=''>Assignments</a></th></tr>";
+					
 		if($num_assignments > 0)
-		{	
+		{						
 			for($i = 0; $i < $num_assignments; $i++)
 			{
-				echo "<table class='summary'>
-					<tr><th colspan='6'>Assignment Details</th></tr>";
-					
-				$this->displayAssignmentRow($assignment_list[$i]);
-				$assignment_id = $assignment_list[$i]->get_assignment_id();
-					
-				// gets homeworks submitted from all students for this assignment
-				$homework_list = array();
-				$homework_list = $this->getHomeworkByAssignment($assignment_id, $section_id, $mdb_control);
-				$number_of_homeworks = count($homework_list);
-								
-				echo "<tr><th colspan='6'>Homework Submitted</th></tr>";
-								
-				for($j = 0; $j < $number_of_homeworks; $j++)
-				{	
-					$date_submitted = $homework_list[$j]->get_date_submitted();
-					$this->displayHomeworkRow($homework_list[$j]);
-				}											
+				$row[$i] = $this->displayAssignmentRow($assignment_list[$i]);
+			} 
+			
+			echo "<tr>" . $row[0]['header'] . "</tr>";
+			
+			for($i = 0; $i < $num_assignments; $i++)
+			{
+				echo "<tr>" . $row[$i]['data'] . "</tr>";
 			} 
 		}
 		else
 		{
-			echo "<tr><td colspan='6'>No assignments for this section.</td></tr>";
+			echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
 		}
+		
+		echo "</table>";
+	}
+	
+	
+	public function displaySubmittedHomework($section_id, $mdb_control)
+	{
+		$assignment_list = array();
+		$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
+		$num_assignments = count($assignment_list);
+		
+		echo "<table class='summary homework'><tr><th colspan='8'>
+				<a href=''>Homework Submitted</a></th></tr>";
+				
+		if($num_assignments === 0)
+		{
+			echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
+		}
+		
+		for($i = 0; $i < $num_assignments; $i++)
+		{
+			$homework_list = array();
+			$homework_list = $this->getHomeworkByAssignment($assignment_id, $section_id, $mdb_control);
+			$num_homework = count($homework_list);
+			
+			for($j = 0; $j < $num_assignments; $j++)
+			{
+				
+			}			
+		} 
+
+		
 		
 		echo "</table>";
 	}
@@ -130,8 +108,43 @@ class AssignmentDisplay
 	}
 	
 	
+	public function displayPointsEarnedRow($homework_list)
+	{		
+		$num_assignments = count($homework_list);
+		$headerRow;
+		$gradeRow;
+		$row = array();
+			
+		
+		for($i = 0; $i < $num_assignments; $i++)
+		{
+			$assignment_id = $homework_list[$i]->get_assignment_id();	
+			$graded = $homework_list[$i]->get_was_graded();	
+			$was_graded = $graded ? "Yes" : "No";
+			$points = $homework_list[$i]->get_points_earned();
+			$points = $graded ? $points : "not graded";
+			$date_submitted = $homework_list[$i]->get_date_submitted();
+			
+			if(isset($date_submitted))
+			{
+				$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
+			}
+			else
+			{
+				$date_submitted = "not submitted";
+			}
+				
+			$row[$i]['header'] = "<th>Assignment ID</th><th>Submitted</th><th>Points Earned</th>";
+			$row[$i]['data'] = "<td>Assignment $assignment_id</td><td>$date_submitted</td><td>$points</td>";			
+		}
+		
+		return $row;
+	}
+	
+	
 	public function displayAssignmentRow($assignment_view)
 	{
+		$assignment_id = $assignment_view->get_assignment_id();
 		$assignment_name = $assignment_view->get_assignment_name();
 		$points_possible = $assignment_view->get_points_possible();
 		$notes = $assignment_view->get_notes();
@@ -142,26 +155,20 @@ class AssignmentDisplay
 		$lab_web_link = $assignment_view->get_tutorial_lab_web_link();
 		
 		$date_assigned = $assignment_view->get_date_assigned();
-		$date_assigned = $this->displayUtility->displayDate($date_assigned);
+		$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
 		$date_due = $assignment_view->get_date_due();
-		$date_due = $this->displayUtility->displayDate($date_due);
+		$date_due = $this->displayUtility->displayDateShort($date_due);
 		
-		echo "<tr><th>Assigned</th><th>Due</th>
-				<th colspan='2'>Assignment</th>
-				<th>Points Possible</th></tr>";
+		$row = array();
+		$row['header'] =  "<th colspan='2'>Assignment</th><th>Date Assigned</th><th>Date Due</th>
+				<th>Tutorial Lab</th><th>Points Possible</th><th>Professor's Notes</th>";
 				
-		echo "<tr><th>Tutorial Lab</th><th>Link</th>
-				<th colspan='2'>Introduction</th>
-				<th>Professor's Notes</th></tr>";
+		$row['data'] =  "<td>$assignment_id</td><td>$assignment_name</td>
+				<td>$date_assigned</td><td>$date_due</td>
+				<td>$lab_id&nbsp:&nbsp$lab_name</td>
+				<td>$points_possible Points</td><td><a href=''>$notes</a></td>";
 				
-		echo "<tr><td>$date_assigned</td><td>Due $date_due</td>
-				<td colspan='2'>$assignment_name</td>
-				<td>$points_possible points</td></tr>";
-				
-		echo "<tr><td>$lab_id&nbsp:&nbsp$lab_name</td>
-				<td>$lab_web_link</td>
-				<td colspan='2'>$lab_introduction</td>
-				<td>$notes</td></tr>";
+		return $row;
 	}
 	
 	
@@ -171,7 +178,7 @@ class AssignmentDisplay
 		
 		if(isset($date_submitted))
 		{
-			$date_submitted = $this->displayUtility->displayDate($date_submitted);
+			$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
 			
 			$summary = $homework_view->get_lab_summary();		
 			$data = $homework_view->get_lab_data();		
@@ -179,10 +186,16 @@ class AssignmentDisplay
 			$math = $homework_view->get_math();		
 			$hints = $homework_view->get_hints();		
 			$chat_session = $homework_view->get_chat_session();
+			
 			$points = $homework_view->get_points_earned();		
 			$graded = $homework_view->get_was_graded();	
 			$was_graded = $graded ? "Yes" : "No";
 			$hours = $homework_view->get_hours();
+			
+			$student_id = $homework_view->get_student_id();
+			$student_first_name = $homework_view->get_student_first_name();
+			$student_last_name = $homework_view->get_student_last_name();
+			$assignment_id = $homework_view->get_assignment_id();
 			
 			echo "<tr><th>Date Submitted</th><th>Points Earned</th>
 				<th>Graded ?</th><th>Hours</th><th>Summary</th></tr>";
@@ -201,7 +214,9 @@ class AssignmentDisplay
 			echo "<tr><td colspan='6'>No homework submitted.</td></tr>";
 		}		
 	}
+	
+	
+	
 }
-
  
 ?>
