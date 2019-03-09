@@ -5,7 +5,7 @@ function showStudentList()
 {
 	var listDiv = document.getElementById("studentListDiv");
 	
-	if( listDiv.style.display === "none" )
+	if( listDiv.style.display == "none" )
 	{
 		listDiv.style.display = "block";
 	}
@@ -20,7 +20,7 @@ function showAssignmentList()
 {
 	var listDiv = document.getElementById("assignmentListDiv");
 	
-	if( listDiv.style.display === "none" )
+	if( listDiv.style.display == "none" )
 	{
 		listDiv.style.display = "block";
 	}
@@ -35,7 +35,7 @@ function showHomeworkList()
 {
 	var listDiv = document.getElementById("homeworkListDiv");
 	
-	if( listDiv.style.display === "none" )
+	if( listDiv.style.display == "none" )
 	{
 		listDiv.style.display = "block";
 	}
@@ -50,7 +50,7 @@ function showSectionNotices()
 {
 	var listDiv = document.getElementById("sectionNoticeDiv");
 	
-	if( listDiv.style.display === "none" )
+	if( listDiv.style.display == "none" )
 	{
 		listDiv.style.display = "block";
 	}
@@ -61,11 +61,11 @@ function showSectionNotices()
 }
 
 
-function showMemberNotices()
+function showMemberInBoxNotices()
 {
-	var listDiv = document.getElementById("memberNoticeDiv");
+	var listDiv = document.getElementById("memberInBoxNoticeDiv");
 	
-	if( listDiv.style.display === "none" )
+	if( listDiv.style.display == "none" )
 	{
 		listDiv.style.display = "block";
 	}
@@ -75,8 +75,32 @@ function showMemberNotices()
 	}
 }
 
+function showMemberSentNotices()
+{
+	var listDiv = document.getElementById("memberSentNoticeDiv");
+	
+	if( listDiv.style.display == "none" )
+	{
+		listDiv.style.display = "block";
+	}
+	else
+	{
+		listDiv.style.display = "none";
+	}
+}
+
+function showNotice($noticeArray)
+{
+	
+}
 
 function addAssignment()
+{
+	
+}
+
+
+function gradeAssignment()
 {
 	
 }
@@ -88,10 +112,7 @@ function writeNotice()
 }
 
 
-/**
-function init()
-{	
-}
 
-document.addEventListener( "DOMContentLoaded" , init , false );
-**/
+
+
+

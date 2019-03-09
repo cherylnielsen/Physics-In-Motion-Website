@@ -4,27 +4,48 @@
 section.main-content {
 	float: left;
 	padding: 0 0 1% 2%;
-	width: 55%;
-}
-
-nav.secondary-navigation {
-	float: left;
+	width: 60%;
 }
 
 h1.welcome {
 	margin-bottom: 20px;
 }
 
+table h2 {
+	margin: 0;
+}
+
+p.info {
+	margin-top: 20px;
+}
+
+div.overflow {
+	overflow: auto;
+	margin: 30px 0;
+}
+
+article.notice-window {
+	float: right;
+}
+
+/* tables */
+
+table.actions {
+	float: right;
+	position: relative;
+	top: -2px;
+	right: -2px;
+}
+
 table {
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-	margin-bottom: 20px;
 }
 
-table.actions, table.shortview {
-	width: 180px;
-	margin: -2px 0;
+table.noticeSummary {
+	margin: 30px 0;
 }
+
 
 th, td {
 	padding: 5px 10px;	
@@ -35,13 +56,23 @@ th {
 	background-color: #A7DAFA;
 }
 
+td.center {
+	text-align: center;
+}
+
 tr:nth-child(even){
+	background-color: Gainsboro;
+}
+
+table.notice-header tr:nth-child(even){
 	background-color: Gainsboro;
 }
 
 tr:hover {
 	background-color: #81fd8a;
 }
+
+/* buttons */
 
 .summaryButton {
 	background-color: inherit;
@@ -51,18 +82,12 @@ tr:hover {
 	color: blue;
 }
 
-.button { 
+button.showNotice {
+	background-color: inherit;
+	border: none;
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
-	padding: 5px 15px;
-	background-color:#A7DAFA;
-	margin: 0.25em;
-	font-weight: 900;
-	border: 1px solid #03AA0D;
-	border-radius: 7px;
-	display: block;
-	cursor: pointer;
-	width: 100%;
+	color: black;
 }
 
 .button:hover {

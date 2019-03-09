@@ -3,12 +3,10 @@
 class SectionDisplay
 {
 	private $displayUtility;
-	private $homeworkUtility;
 	
 	public function __construct() 
 	{
 		$this->displayUtility = new DisplayUtility();
-		$this->homeworkUtility = new AssignmentDisplay();
 	}
 	
 	
@@ -81,8 +79,7 @@ class SectionDisplay
 	
 	public function displaySectionShortList($section_list, $mdb_control)
 	{
-		echo "<table class='shortview' >
-				<tr><th>Section Memberships</th></tr>";
+		echo "<tr><th>Section Memberships</th></tr>";
 				
 		$num_sections = count($section_list);
 		
@@ -96,13 +93,11 @@ class SectionDisplay
 			{			
 				$section_id = $section_list[$i]->get_section_id();
 				$section_name = $section_list[$i]->get_section_name();
-				$link = "<a href='professor-section-page.php?section_id=$section_id'>";
+				$link = "<a href='professor-section-page.php?section_id=$section_id' class='member-link'>";
 				$tableRow = "<td>$link" . "Section $section_id&nbsp:&nbsp$section_name</a></td>";
 				echo "<tr>$tableRow</tr>";
 			}
 		}
-		
-		echo "</table>";
 	}
 	
 	
@@ -146,8 +141,7 @@ class SectionDisplay
 	public function displaySectionStudentList($section_id, $mdb_control)
 	{
 		echo "<table class='summary students'>
-				<tr><th colspan='5'><a href=''>Section $section_id Student Members 
-				</a></th></tr>";
+				<tr><th colspan='5'>Section $section_id Student Members</th></tr>";
 		
 		$student_list = array();
 		$student_list = $this->getSectionStudentList($section_id, $mdb_control);
@@ -210,58 +204,6 @@ class SectionDisplay
 		return $row;
 		
 	}
-	
-
-/**
-	public function displaySectionSummary_ByStudent($student_id, $section_list, $mdb_control)
-	{
-		$assignment_list = array();		
-		$homework_list = array();
-		$number_of_sections = count($section_list);
-		
-		if($number_of_sections > 0)
-		{	
-			echo "<table class='student_section_summary-table'>
-					<tr><th colspan='5'>Section Details</th></tr>";
-
-			for($i = 0; $i < $number_of_sections; $i++)
-			{
-				echo "<tr><th>Section</th><th>Professor</th><th>School</th>
-						<th>Start</th><th>End</th></tr>";
-			
-				$this->sectionViewInteractiveRow($section_list[$i]);
-				$section_id = $section_list[$i]->get_section_id();
-				
-				$assignment_list = array();
-				$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
-				$number_of_assignments = count($assignment_list);
-				
-				$homework_list = array();
-				$homework_list = $this->getSectionHomework_ByStudent($student_id, $section_id, $mdb_control);
-				$number_of_homeworks = count($homework_list);
-					
-				for($j = 0; $j < $number_of_assignments; $j++)
-				{					
-					$this->displayAssignmentRow($assignment_list[$j]);
-					$assignment_id = $assignment_list[$j]->get_assignment_id();
-									
-					for($k = 0; $k < $number_of_homeworks; $k++)
-					{	
-						$hmwk_assignment_id = $homework_list[$k]->get_assignment_id();
-						
-						if($hmwk_assignment_id == $assignment_id)
-						{	$this->displayHomeworkRow($homework_list[$k]);
-							break;
-						}
-					}					
-				}// end assignment loop		
-				
-			} // end section loop
-		}
-		
-		echo "</table>";
-	}
-**/
 
 
 	

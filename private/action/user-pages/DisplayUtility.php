@@ -10,6 +10,19 @@ class DisplayUtility
 		if(isset($date_time))
 		{
 			$time = strtotime($date_time);
+			$formated_date_time = date("D, m/d/y g:i A", $time);
+			return $formated_date_time;
+		}		
+		
+		return null;
+	}
+	
+	
+	public function displayDateTimeLong($date_time)
+	{
+		if(isset($date_time))
+		{
+			$time = strtotime($date_time);
 			$formated_date_time = date("D, M d, Y g:i A", $time);
 			return $formated_date_time;
 		}		

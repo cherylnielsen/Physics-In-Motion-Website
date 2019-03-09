@@ -8,18 +8,40 @@
 	
 	<meta name="Keywords" content="professor, professor services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
 		
-	<?php include('html-includes/template/common-db-and-css-links.php'); ?>	
+	<?php 
+		require_once('html-includes/template/common-db-and-css-links.php'); 	
+		require_once('../private/member_page_include_list.php');
+	?>
 	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">
+	<script src="javascript/member-actions.js" ></script>
 	
 </head>
 <body>
 <div class="wrapper">
 
 <?php
+	if (session_status() == PHP_SESSION_NONE) 
+	{
+		session_start();
+	}
+	
+	if(!isset($_SESSION['professor_id']))
+	{
+		$url = "login-page.php";
+		header("Location: $url");
+		exit();
+	}
+
+	$professor_id = $_SESSION['professor_id'];
+	$first_name = $_SESSION["first_name"];
+	$last_name = $_SESSION["last_name"];
+
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php'); 
+	include('html-includes/template/main-navigation-and-quote.php');
+	include('html-includes/users/professor-notice-navigation.php');
 ?>
+
 
 <section class="main-content">
 <?php 

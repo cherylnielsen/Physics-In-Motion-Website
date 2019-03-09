@@ -12,9 +12,9 @@ select * from assignment;
 /* student homework */
 insert into homework (homework_id, section_id, assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session)
 values (1, 101, 1, 2, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
-(2, 101, 2, 2, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat"),
-(3, 101, 1, 3, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
-(4, 101, 2, 3, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat");
+(2, 101, 2, 2, "the summary", "the data", "the graphs", "the math", "the hints", "the chat"),
+(3, 101, 1, 3, "the summary", "the data", "the graphs", "the math", "the hints", "the chat"),
+(4, 101, 2, 3, "the summary", "the data", "the graphs", "the math", "the hints", "the chat");
 
 select * from homework;
 
