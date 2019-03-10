@@ -1,6 +1,6 @@
 <?php
 
-echo "<h2 class=welcome>Welcome $first_name $last_name!</h2>";
+echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
 echo "<p class='info'>Click on a section to view.</p><br>";
 
 $section_list = array();

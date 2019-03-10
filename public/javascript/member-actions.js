@@ -89,10 +89,22 @@ function showMemberSentNotices()
 	}
 }
 
-function showNotice($noticeArray)
+
+function showSelectedNotice(notice_id)
 {
+	var ID = "notice" + notice_id;
+	var showDiv = document.getElementById(ID);
 	
+	if( showDiv.style.display == "none" )
+	{
+		showDiv.style.display = "block";
+	}
+	else
+	{
+		showDiv.style.display = "none";
+	}
 }
+
 
 function addAssignment()
 {

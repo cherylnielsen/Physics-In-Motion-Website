@@ -51,7 +51,7 @@ class SectionDisplay
 	public function displaySectionMembershipTable($section_list, $mdb_control)
 	{
 		echo "<table class='summary'>
-				<tr><th colspan='5'>Section Memberships</th></tr>";
+				<tr><th colspan='5'><h2>Section Memberships</h2></th></tr>";
 				
 		$num_sections = count($section_list);
 		
@@ -141,7 +141,7 @@ class SectionDisplay
 	public function displaySectionStudentList($section_id, $mdb_control)
 	{
 		echo "<table class='summary students'>
-				<tr><th colspan='5'>Section $section_id Student Members</th></tr>";
+				<tr><th colspan='5'><h2>Section $section_id Student Members</h2></th></tr>";
 		
 		$student_list = array();
 		$student_list = $this->getSectionStudentList($section_id, $mdb_control);

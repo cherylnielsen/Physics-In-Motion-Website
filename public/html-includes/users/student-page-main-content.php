@@ -24,7 +24,7 @@ $last_name = $_SESSION["last_name"];
 // display the responses as html.
 require_once('../private/member_page_include_list.php');
 
-echo "<h2 class=user-page>Welcome $first_name $last_name!</h2>";
+echo "<h1 class=user-page>Welcome $first_name $last_name!</h1>";
 
 echo "<p>Click on a section to view more information.<p>";
 $section_list = array();

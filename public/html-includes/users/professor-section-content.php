@@ -14,7 +14,7 @@
 <div>
 <?php
 	// Welcome headings
-	echo "<h2 class=welcome>Welcome $first_name $last_name!</h2>";
+	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
 	$sectionDisplay->displaySectionWelcome($section_id, $mdb_control);	
 ?>	
 </div>

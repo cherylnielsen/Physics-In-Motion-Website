@@ -7,11 +7,22 @@ section.main-content {
 	width: 60%;
 }
 
+.fullSelectedNotice {
+	/*display: none;*/
+	background-color: white;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+}
+
+.flag-for-review {
+	color: red;
+}
+
 h1.welcome {
 	margin-bottom: 20px;
 }
 
-table h2 {
+table h2, table h1 {
 	margin: 0;
 }
 
@@ -24,9 +35,6 @@ div.overflow {
 	margin: 30px 0;
 }
 
-article.notice-window {
-	float: right;
-}
 
 /* tables */
 
@@ -46,7 +54,6 @@ table.noticeSummary {
 	margin: 30px 0;
 }
 
-
 th, td {
 	padding: 5px 10px;	
 	text-align: left;
@@ -61,15 +68,58 @@ td.center {
 }
 
 tr:nth-child(even){
-	background-color: Gainsboro;
+	background-color: #e6e6e6;
 }
 
 table.notice-header tr:nth-child(even){
-	background-color: Gainsboro;
+	background-color: #e6e6e6;
 }
 
 tr:hover {
 	background-color: #81fd8a;
+}
+
+/* display selected notice */
+
+table.selectedNotice {
+	border: none;
+	width: 100%;
+	background-color: lightyellow;
+	/*display: none;*/
+}
+
+table.selectedNotice tr:hover {
+	background-color: lightyellow;
+}
+
+table.selectedNotice tr:nth-child(even){
+	background-color: lightyellow;
+}
+
+td.right {
+	text-align: right;
+}
+
+td.bold {
+	font-weight: 900;
+	font-size: 1.2em;
+}
+
+th.highlight {
+	background-color: #81fd8a;
+}
+
+table hr {
+	border-bottom: 1px solid Gainsboro;
+}
+
+td.response {
+	background-color: #e6e6e6;
+	border-radius: 10px;
+}
+
+div.selectedNotice {
+	display: none;
 }
 
 /* buttons */
@@ -82,7 +132,7 @@ tr:hover {
 	color: blue;
 }
 
-button.showNotice {
+button.showNoticeButton {
 	background-color: inherit;
 	border: none;
 	font-family: "Times New Roman", "serif";
