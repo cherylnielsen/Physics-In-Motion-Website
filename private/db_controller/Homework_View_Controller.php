@@ -3,9 +3,10 @@
 class Homework_View_Controller extends DatabaseController {
 
 	public function __construct(){}
-	// ($homework_id, $section_id, $assignment_id, $student_id, $lab_summary, 
+	// ($homework_id, $section_id, $assignment_id, $assignment_name,
+	// $tutorial_lab_id, $student_id, $lab_summary, 
 	// $lab_data, $graphs, $math, $hints, $chat_session,
-	// $date_submitted, $points_earned, $was_graded, $hours)
+	// $date_submitted, $points_possible, $points_earned, $was_graded, $hours)
 
 
 	protected function getData($db_result, $db_connection)
@@ -18,10 +19,13 @@ class Homework_View_Controller extends DatabaseController {
 			{
 				$homework = new Homework_View();
 				
-				$homework->initializeView($row['homework_id'], $row['section_id'], $row['assignment_id'], 
+				$homework->initializeView($row['homework_id'], $row['section_id'], 
+						$row['assignment_id'], $row['assignment_name'], $row['tutorial_lab_id'], 
 						$row['student_id'], $row['lab_summary'], $row['lab_data'], 
 						$row['graphs'], $row['math'], $row['hints'], $row['chat_session'], 
-						$row['date_submitted'], $row['points_earned'], $row['was_graded'], $row['hours'], $row['student_first_name'], $row['student_last_name'], $row['school_name']);
+						$row['date_submitted'], $row['student_first_name'], $row['student_last_name'], 
+						$row['school_name'], $row['points_possible'], 
+						$row['points_earned'], $row['was_graded'], $row['hours']);
 				
 				// pushes each object onto the end of the array
 				$dataArray[] = $homework;
@@ -36,10 +40,27 @@ class Homework_View_Controller extends DatabaseController {
 	}
 	
 	
-	// For homework, the ids are auto-generated.
-	public function saveNew(&$homework)
+	public function getOneHomeworkView($section_id, $assignment_id, $student_id)
 	{
-		return false;
+		$table = $this->getTableName();
+		$db_connection = get_db_connection();
+		$dataArray = array();
+		
+		$query = "select * from $table where (section_id = '$section_id') 
+										AND (assignment_id = '$assignment_id')
+										AND (student_id = '$student_id')";
+		
+		$result = mysqli_query($db_connection, $query);
+		$dataArray = $this->getData($result, $db_connection);					
+		mysqli_close($db_connection);		
+		$dataObject = null;
+		
+		if(count($dataArray) === 1)
+		{
+			$dataObject = $dataArray[0];
+		}
+		
+		return $dataObject;
 	}
 	
 	
@@ -64,6 +85,14 @@ class Homework_View_Controller extends DatabaseController {
 			case 'assignment_id':
 				$value = $homework->get_assignment_id();	
 				$query = "update $table set assignment_id = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'assignment_name':
+				$value = $homework->get_assignment_name();	
+				$query = "update $table set assignment_name = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'tutorial_lab_id':
+				$value = $homework->get_tutorial_lab_id();	
+				$query = "update $table set tutorial_lab_id = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'student_id':
 				$value = $homework->get_student_id();	
@@ -96,6 +125,10 @@ class Homework_View_Controller extends DatabaseController {
 			case 'date_submitted':
 				$value = $homework->get_date_submitted();	
 				$query = "update $table set date_submitted = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'points_possible':
+				$value = $homework->get_points_possible();	
+				$query = "update $table set points_possible = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'points_earned':
 				$value = $homework->get_points_earned();	
@@ -135,6 +168,13 @@ class Homework_View_Controller extends DatabaseController {
 		return $success;		
 	}
 
+	
+	// For homework, the ids are auto-generated.
+	public function saveNew(&$homework)
+	{
+		return false;
+	}
+	
 	
 	public function deleteFromDatabase($homework)
 	{

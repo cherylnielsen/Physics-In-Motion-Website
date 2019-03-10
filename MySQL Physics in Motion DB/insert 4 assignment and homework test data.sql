@@ -4,17 +4,17 @@ use physics_in_motion;
 
 /* assignments */
 insert into assignment (assignment_id, section_id, tutorial_lab_id, assignment_name, date_due, points_possible, notes)
-values (1, 101, 101, "assignment 1 name", "2019-02-01 10:0:0", "2018-02-04 23:59:0", 20, "notes for assignment 1"), 
-(2, 101, 102, "assignment 2 name", "2019-02-01 10:10:0", "2018-02-04 23:59:0", 20, "notes for assignment 2");
+values (1, 101, 101, "assignment name", "2019-02-01 10:0:0", "2019-02-04 23:59:0", 20, "notes for assignment 1"), 
+(2, 101, 102, "assignment name", "2019-02-05 10:10:0", "2019-02-08 23:59:0", 20, "notes for assignment 2");
 
 select * from assignment;
 
 /* student homework */
 insert into homework (homework_id, section_id, assignment_id, student_id, lab_summary, lab_data, graphs, math, hints, chat_session)
 values (1, 101, 1, 2, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
-(2, 101, 2, 2, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat"),
-(3, 101, 1, 3, "the summary for assignment 1", "the data", "the graphs", "the math", "the hints", "the chat"),
-(4, 101, 2, 3, "the summary for assignment 2", "the data", "the graphs", "the math", "the hints", "the chat");
+(2, 101, 2, 2, "the summary", "the data", "the graphs", "the math", "the hints", "the chat"),
+(3, 101, 1, 3, "the summary", "the data", "the graphs", "the math", "the hints", "the chat"),
+(4, 101, 2, 3, "the summary", "the data", "the graphs", "the math", "the hints", "the chat");
 
 select * from homework;
 

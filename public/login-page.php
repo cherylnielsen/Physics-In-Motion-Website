@@ -21,7 +21,7 @@
 
 <?php
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/nav-and-quote.php'); 
+	include('html-includes/template/main-navigation-and-quote.php'); 
 ?>
 
 <section class="main-content">

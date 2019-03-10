@@ -131,7 +131,7 @@ abstract class DatabaseController
 		$db_connection = get_db_connection();
 		$dataArray = array();
 		
-		$query = "select * from $table where $key = '$value'";
+		$query = "select * from $table where $primaryKey = '$value'";
 		
 		$result = mysqli_query($db_connection, $query);
 		$dataArray = $this->getData($result, $db_connection);					

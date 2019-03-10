@@ -10,6 +10,19 @@ class DisplayUtility
 		if(isset($date_time))
 		{
 			$time = strtotime($date_time);
+			$formated_date_time = date("D, m/d/y g:i A", $time);
+			return $formated_date_time;
+		}		
+		
+		return null;
+	}
+	
+	
+	public function displayDateTimeLong($date_time)
+	{
+		if(isset($date_time))
+		{
+			$time = strtotime($date_time);
 			$formated_date_time = date("D, M d, Y g:i A", $time);
 			return $formated_date_time;
 		}		
@@ -18,7 +31,7 @@ class DisplayUtility
 	}
 	
 	
-	public function displayDate($date_time)
+	public function displayDateLong($date_time)
 	{
 		if(isset($date_time))
 		{
@@ -31,23 +44,19 @@ class DisplayUtility
 	}
 	
 	
-	public function displayBoolean($oneZero)
+	public function displayDateShort($date_time)
 	{
-		if($oneZero)
+		if(isset($date_time))
 		{
-			return "Yes";
-		}
-		else
-		{
-			return "No";
-		}			
+			$time = strtotime($date_time);
+			$formated_date = date("D, m/d/y", $time);
+			return $formated_date;
+		}		
+		
+		return null;
 	}
 	
 	
-	
-	
-	
 }
-
  
 ?>

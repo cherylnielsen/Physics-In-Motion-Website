@@ -7,12 +7,10 @@ include('../private/action/user-pages/ActionUtility.php');
 include('../private/action/user-pages/SectionDisplay.php'); 
 include('../private/action/user-pages/NoticeDisplay.php'); 
 include('../private/action/user-pages/AssignmentDisplay.php');
-include('../private/action/user-pages/HomeworkDisplay.php');
 // actions for the forms used by members
 include('../private/action/user-pages/SectionAction.php'); 
 include('../private/action/user-pages/NoticeAction.php'); 
 include('../private/action/user-pages/AssignmentAction.php');
-include('../private/action/user-pages/HomeworkAction.php'); 
 	
 	
 // set of helper classes for the display and action classes
@@ -22,11 +20,9 @@ $actionUtility = new ActionUtility();
 $sectionDisplay = new SectionDisplay();
 $noticeDisplay = new NoticeDisplay();
 $assignmentDisplay = new AssignmentDisplay();
-$homeworkDisplay = new HomeworkDisplay();
 // actions for the forms used by members
 $SectionAction = new SectionAction();
 $NoticeAction = new NoticeAction();
 $AssignmentAction = new AssignmentAction();
-$HomeworkAction = new HomeworkAction();
 
 ?>

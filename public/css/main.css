@@ -76,7 +76,7 @@ div.logo {
 	background-origin: content-box;
 	background-position: left center;
 	background-repeat: no-repeat;
-	background-size:  100% 80%;	
+	background-size:  50% 80%;	
 	padding-left: 15px;
 }
 
@@ -102,7 +102,7 @@ div.sign-in {
 	background-color: #A7DAFA;
 	font-size: 1em;
 	font-weight: 600;
-	height: 102px;
+	height: 101px;
 }
 
 div.sign-in > * {
@@ -128,12 +128,11 @@ aside.nav-quote {
 	top: -2px;
 }
 
-nav.navigation > a {
+a.navigation {
 	display: inline-block;
 	padding: 1em;
-	width: 80%;
+	width: 83%;
 }
-
 
 hr {
 	border: 1px solid #03AA0D;
