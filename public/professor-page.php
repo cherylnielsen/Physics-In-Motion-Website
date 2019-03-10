@@ -42,7 +42,6 @@
 	include('html-includes/users/professor-notice-navigation.php');
 ?>
 
-
 <section class="main-content">
 <?php 
 	include('html-includes/users/professor-page-main-content.php'); 

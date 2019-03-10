@@ -6,8 +6,7 @@
 <?php
 	$section_list = array();
 	$section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
-	$sectionDisplay->displaySectionShortList($section_list, $mdb_control);
-
+	$sectionDisplay->displaySectionShortList($section_list, $mdb_control, "professor");
 ?>
 	
 		<tr><th>Show / Hide</th></tr>
