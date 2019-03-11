@@ -2,11 +2,11 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Physics in Motion: Student Services</title>
+	<title>Physics in Motion: Professor Services</title>
 	
-	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Student services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Professors or Students.">
+	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Professor services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Professors or Students.">
 	
-	<meta name="Keywords" content="student, student services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
+	<meta name="Keywords" content="professor, professor services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
 		
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
@@ -17,7 +17,7 @@
 	<script src="javascript/member-actions.js" ></script>
 	
 </head>
-<body>	
+<body>
 <div class="wrapper">
 
 <?php
@@ -26,27 +26,25 @@
 		session_start();
 	}
 	
-	if(!isset($_SESSION['student_id']))
+	if(!isset($_SESSION['administrator_id']))
 	{
 		$url = "login-register-page.php?form_type=login";
 		header("Location: $url");
 		exit();
 	}
 
-	$student_id = $_SESSION['student_id'];
+	$administrator_id = $_SESSION['administrator_id'];
 	$first_name = $_SESSION["first_name"];
 	$last_name = $_SESSION["last_name"];
-	//$section_id = $_GET["section_id"];
 
 	include('html-includes/template/header.php'); 
 	include('html-includes/template/main-navigation-and-quote.php');
-	include('html-includes/navigation/student-notice-navigation.php');
+	include('html-includes/navigation/admin-notice-navigation.php');
 ?>
-
 
 <section class="main-content">
 <?php 
-	include('html-includes/users/student-page-main-content.php'); 
+	include('html-includes/users/admin-page-main-content.php'); 
 ?>
 </section>
 		

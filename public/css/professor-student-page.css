@@ -38,16 +38,16 @@ div.overflow {
 
 /* tables */
 
+table {
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+}
+
 table.actions {
 	float: right;
 	position: relative;
 	top: -2px;
 	right: -2px;
-}
-
-table {
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
 }
 
 table.noticeSummary {
@@ -85,7 +85,6 @@ table.selectedNotice {
 	border: none;
 	width: 100%;
 	background-color: lightyellow;
-	/*display: none;*/
 }
 
 table.selectedNotice tr:hover {

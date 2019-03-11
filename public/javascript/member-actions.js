@@ -106,22 +106,7 @@ function showSelectedNotice(notice_id)
 }
 
 
-function addAssignment()
-{
-	
-}
 
-
-function gradeAssignment()
-{
-	
-}
-
-
-function writeNotice()
-{
-	
-}
 
 
 

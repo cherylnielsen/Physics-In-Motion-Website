@@ -48,6 +48,7 @@ class NoticeDisplay
 	public function displaySectionNoticeTable($section_list, $mdb_control)
 	{
 		echo "<table class='notice-table'>
+				<caption>Click on a notice to view.</caption>
 				<tr><th colspan='7'><h2>Section Notices</h2></th></tr>";
 				
 		$number_of_sections = count($section_list);
@@ -94,6 +95,7 @@ class NoticeDisplay
 		$num_notices = count($notice_list);
 		
 		echo "<table class='notice-table'>
+				<caption>Click on a notice to view.</caption>
 				<tr><th colspan='7'><h2>Member Notice In Box</h2></th></tr>";
 		echo "<tr><th>Date</th><th>Subject</th><th>From</th>
 				<th>Attachment</th><th>Flags</th></tr>";
@@ -122,6 +124,7 @@ class NoticeDisplay
 		$num_notices = count($notice_list);
 		
 		echo "<table class='notice-table'>
+				<caption>Click on a notice to view.</caption>
 				<tr><th colspan='7'><h2>Member Notices Sent</h2></th></tr>";
 		echo "<tr><th>Date</th><th>Subject</th><th>Sent To</th>
 				<th>Attachment</th><th>Flags</th></tr>";
@@ -419,6 +422,7 @@ class NoticeDisplay
 		echo "</table></div>";
 		
 	}
+	
 	
 	
 }

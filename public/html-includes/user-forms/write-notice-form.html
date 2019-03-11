@@ -1,0 +1,77 @@
+
+<?php
+	
+	$section_list = array();
+	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
+									$sectionDisplay, $professor_id, $mdb_control);
+	$admin_list = array();
+	$admin_list = $displayUtility->getListAdminIDNames($mdb_control);
+	
+?>
+
+<div class="form-errors" id="form_errors"></div>
+
+<form id="write_notice_form" action="professor-form-page.php?form_type=write_notice" 
+		method="POST" enctype="multipart/form-data">
+	
+	<fieldset>
+	
+		<h2 class="form">Write Notice</h2>		
+		<p>Date: &nbsp&nbsp <?php echo date('D, M d, Y');?></p>		
+		<p>From: &nbsp 
+		<?php echo $_SESSION['first_name'] . '&nbsp &nbsp' . $_SESSION['last_name']; ?>
+		</p><br>
+				
+		<label>To Section: &nbsp&nbsp 
+			<div class="form-select"><select id="send_to_section" name="send_to_section">
+				<?php
+					for($i = 0; $i < count($section_list); $i++)
+					{
+						$section_id = $section_list[$i]['id'];
+						$name = $section_list[$i]['name'];
+						echo "<option value='$section_id' >$name</option>";
+					}				
+				?>
+			</select></div>
+		</label><br>
+
+		<label>To Administrator: &nbsp&nbsp 
+			<div class="form-select"><select id="send_to_admin" name="send_to_admin">
+				<?php
+					for($i = 0; $i < count($admin_list); $i++)
+					{
+						$admin_id = $admin_list[$i]['id'];
+						$name = $admin_list[$i]['name'];
+						echo "<option value='$admin_id' >$name</option>";
+					}				
+				?>
+			</select></div>
+		</label><br>
+				
+		<label>Subject: <br><input type="text" name="subject" required 
+			value="<?php if (isset($_POST['subject'])) echo $_POST['subject']; ?>" >
+		</label><br><br>
+		
+		<label>Attachments: 
+			<div class="attachments">
+				<button class="btn">Browse ...</button>
+				<input type="file" name="attachments[]" multiple id="attachments">
+			</div>
+		</label>
+		
+		<div id="file_attachments"></div><br>
+		
+		<label>Message: <br><textarea name="notice_text" rows="10" cols="50" 
+			spellcheck="true" 
+			value="<?php if (isset($_POST['notice_text'])) 
+					echo $_POST['notice_text']; ?>" ></textarea>
+		</label><br>	
+		
+		<div class="formButtonDiv">
+			<input type="submit" value="Send">		
+			<input type="reset" value="Reset">	
+		</div>
+				
+	</fieldset>
+	
+</form>

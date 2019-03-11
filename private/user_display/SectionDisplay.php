@@ -26,7 +26,7 @@ class SectionDisplay
 	}
 	
 	
-	public function sectionViewInteractiveRow($section_view)
+	public function sectionMembershipRow($section_view, $member_type)
 	{
 		$section_id = $section_view->get_section_id();
 		$section_name = $section_view->get_section_name();
@@ -39,7 +39,18 @@ class SectionDisplay
 		$date_time = $section_view->get_end_date();
 		$end_date = $this->displayUtility->displayDateLong($date_time);
 		
-		$link = "<a href='professor-section-page.php?section_id=$section_id'>";
+		$link = "";
+		
+		switch ($member_type)
+		{
+			case "student":
+				$link = "<a href='student-section-page.php?section_id=$section_id'>";
+				break;
+			case "professor":
+				$link = "<a href='professor-section-page.php?section_id=$section_id'>";
+				break;
+		}
+		
 		$row = "<td>$link" . "Section $section_id&nbsp:&nbsp$section_name</a></td>		
 				<td>$first_name&nbsp&nbsp$last_name</td> 
 				<td>$school_name</td><td>$start_date</td><td>$end_date</td>";
@@ -48,9 +59,10 @@ class SectionDisplay
 	}
 	
 	
-	public function displaySectionMembershipTable($section_list, $mdb_control)
+	public function displaySectionMembershipTable($section_list, $mdb_control, $member_type)
 	{
 		echo "<table class='summary'>
+				<caption>Click on a section to view.</caption>
 				<tr><th colspan='5'><h2>Section Memberships</h2></th></tr>";
 				
 		$num_sections = count($section_list);
@@ -67,7 +79,7 @@ class SectionDisplay
 			for($i = 0; $i < $num_sections; $i++)
 			{			
 				$section_id = $section_list[$i]->get_section_id();
-				$tableRow = $this->sectionViewInteractiveRow($section_list[$i]);
+				$tableRow = $this->sectionMembershipRow($section_list[$i], $member_type);
 				
 				echo "<tr>$tableRow</tr>";
 			}
@@ -77,11 +89,10 @@ class SectionDisplay
 	}
 	
 	
-	public function displaySectionShortList($section_list, $mdb_control)
-	{
-		echo "<tr><th>Section Memberships</th></tr>";
-				
+	public function displaySectionShortList($section_list, $mdb_control, $member_type)
+	{			
 		$num_sections = count($section_list);
+		$link = "";
 		
 		if($num_sections <= 0)
 		{
@@ -93,7 +104,19 @@ class SectionDisplay
 			{			
 				$section_id = $section_list[$i]->get_section_id();
 				$section_name = $section_list[$i]->get_section_name();
-				$link = "<a href='professor-section-page.php?section_id=$section_id' class='member-link'>";
+				
+				switch ($member_type)
+				{
+					case "student":
+						$link = "<a href='student-section-page.php?section_id=$section_id' 
+								class='member-link'>";
+						break;
+					case "professor":
+						$link = "<a href='professor-section-page.php?section_id=$section_id' 
+								class='member-link'>";
+						break;
+				}
+				
 				$tableRow = "<td>$link" . "Section $section_id&nbsp:&nbsp$section_name</a></td>";
 				echo "<tr>$tableRow</tr>";
 			}

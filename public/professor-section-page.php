@@ -28,7 +28,7 @@
 	
 	if(!isset($_SESSION['professor_id']))
 	{
-		$url = "login-page.php";
+		$url = "login-register-page.php?form_type=login";
 		header("Location: $url");
 		exit();
 	}
@@ -40,20 +40,16 @@
 
 	include('html-includes/template/header.php'); 
 	include('html-includes/template/main-navigation-and-quote.php'); 
-	include('html-includes/users/professor-section-navigation.php');
+	include('html-includes/navigation/professor-section-navigation.php');
 ?>
 
 <section class="main-content">
-<?php 
-	
+<?php 	
 	include('html-includes/users/professor-section-content.php'); 
 ?>
 </section>
  	
-<?php 
-	
-	include('html-includes/template/footer.html'); 
-?>
+<?php include('html-includes/template/footer.html');  ?>
 
 </div><!-- end div.wrapper -->	
 </body>

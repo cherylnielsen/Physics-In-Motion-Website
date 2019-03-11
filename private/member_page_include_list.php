@@ -1,16 +1,16 @@
 <?php
 
 // helper classes for the display and action classes
-include('../private/action/user-pages/DisplayUtility.php'); 
-include('../private/action/user-pages/ActionUtility.php'); 
+include('../private/user_display/DisplayUtility.php'); 
+include('../private/user_action/ActionUtility.php'); 
 // display classes for the main database models used
-include('../private/action/user-pages/SectionDisplay.php'); 
-include('../private/action/user-pages/NoticeDisplay.php'); 
-include('../private/action/user-pages/AssignmentDisplay.php');
+include('../private/user_display/SectionDisplay.php'); 
+include('../private/user_display/NoticeDisplay.php'); 
+include('../private/user_display/AssignmentDisplay.php');
 // actions for the forms used by members
-include('../private/action/user-pages/SectionAction.php'); 
-include('../private/action/user-pages/NoticeAction.php'); 
-include('../private/action/user-pages/AssignmentAction.php');
+include('../private/user_action/SectionAction.php'); 
+include('../private/user_action/NoticeAction.php'); 
+include('../private/user_action/AssignmentAction.php');
 	
 	
 // set of helper classes for the display and action classes

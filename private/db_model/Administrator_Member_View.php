@@ -1,6 +1,6 @@
 <?php
 
-class Administrator_Member_View extends Administrator{
+class Administrator_Member_View extends Administrator {
 	
 	private $first_name;
 	private $last_name;
@@ -28,6 +28,16 @@ class Administrator_Member_View extends Administrator{
 	public function set_first_name($first_name)
 	{
 		$this->first_name = $first_name;
+	}
+	
+	public function get_last_name()
+	{
+		return $this->last_name;
+	}
+	
+	public function set_last_name($last_name)
+	{
+		$this->last_name = $last_name;
 	}
 	
 	public function get_email()

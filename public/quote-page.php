@@ -11,6 +11,8 @@
 	
 	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
 	
+	<link href="css/quote.css" rel="stylesheet" type="text/css" media="screen">
+	
 </head>
 <body>
 <div class="wrapper">
