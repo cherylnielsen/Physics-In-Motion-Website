@@ -1,0 +1,95 @@
+
+<?php
+	
+	$section_list = array();
+	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
+									$sectionDisplay, $professor_id, $mdb_control);
+?>
+
+<div class="form-errors" id="form_errors"></div>
+
+<form id="assignmentForm" action="professor-form-page.php?form_type=add_assignment" 
+		method="POST" enctype="multipart/form-data">
+	
+	<fieldset>
+	
+		<h2 class="form">Add or Edit Assignment:</h2>
+		<br>
+		
+		<label><input type="radio" name="member_type" value="add_assignment" required
+			 >&nbsp;Add New Assignment</label><br>
+		<label><input type="radio" name="member_type" value="edit_assignment" 
+			>&nbsp;Edit Existing Assignment</label><br><br>
+		
+		<div id="edit-assignment">		
+			<label>Assignment to Edit: &nbsp&nbsp 
+			<div class="form-select"><select id="assignment" name="assignment">
+				<?php
+					for($i = 0; $i < count($assignment_list); $i++)
+					{
+						$assignment_id = $assignment_list[$i]['id'];
+						$name = $assignment_list[$i]['name'];
+						echo "<option value='$assignment_id' >$name</option>";
+					}				
+				?>
+			</select></div></label>
+		</div><br>
+		
+		<label>Date <br><input type="text" name="date_assigned" readonly 
+			value="<?php echo date('D, m/d/y');?>" >
+		</label><br><br>
+		
+		<label>Assignment Name: <br><input type="text" name="assignment_name" required >
+		</label><br><br>
+				
+		<label>Section: &nbsp&nbsp 
+			<div class="form-select"><select id="section" name="section" required >
+				<?php
+					for($i = 0; $i < count($section_list); $i++)
+					{
+						$section_id = $section_list[$i]['id'];
+						$name = $section_list[$i]['name'];
+						echo "<option value='$section_id' >$name</option>";
+					}				
+				?>
+			</select></div>
+		</label><br>
+	
+		<label>Tutorial Lab: &nbsp&nbsp 
+			<div class="form-select"><select id="tutorial_lab" name="tutorial_lab" required >
+				<?php
+					for($i = 0; $i < count($tutorial_lab_list); $i++)
+					{
+						$section_id = $tutorial_lab_list[$i]['id'];
+						$name = $tutorial_lab_list[$i]['name'];
+						echo "<option value='$tutorial_lab_id' >$name</option>";
+					}				
+				?>
+			</select></div>
+		</label><br>
+		
+		<label>Date Due <br><input type="date" name="date_due" required 
+		min=<?php echo date('Y-m-d'); ?> 
+			value="<?php if (isset($_POST['date_due'])) echo $_POST['date_due']; ?>" >
+		</label><br><br>
+		
+		<label>Points Possible <br><input type="number" name="points_possible"  min="0" required 
+			value="<?php if (isset($_POST['points_possible'])) echo $_POST['points_possible']; ?>" >
+		</label><br><br>
+		
+		<label>Attachments: 
+			<div class="attachments">
+				<button class="btn">Browse ...</button>
+				<input type="file" name="attachments[]" multiple id="attachments">
+			</div>
+		</label>
+		
+		<div id="file_attachments"></div><br>
+		
+		<input type="submit" value="Send">
+		<input type="reset" value="Reset">
+		<button type="button" onclick="cancelNotice()">Cancel</button>
+		
+	</fieldset>
+	
+</form>

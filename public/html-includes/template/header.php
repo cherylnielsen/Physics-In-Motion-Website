@@ -18,8 +18,8 @@
 	{
 		echo
 		'<div class="sign-in">
-			<a href="login-page.php">Sign In</a><br>
-			<a href="register-page.php">Create Account</a>		
+			<a href="login-register-page.php?form_type=login">Sign In</a><br>
+			<a href="login-register-page.php?form_type=register">Create Account</a>		
 		</div>';
 	}
 	else

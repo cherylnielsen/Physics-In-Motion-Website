@@ -256,7 +256,9 @@ class RegisterUtilities
 		
 		if($found_username && $found_email)
 		{
-			$form_errors[] = 'Try again, or <a id="sign-in" href="login-page.php">Sign In,</a> or <a id="forgot_login" href="">Forgot Member Name / Password?</a>';
+			$form_errors[] = 'Try again, or <a id="sign-in" 
+			href="login-register-page.php?form_type=login">
+			Sign In,</a> or <a id="forgot_login" href="">Forgot Member Name / Password?</a>';
 			$ok = false;
 		}
 		

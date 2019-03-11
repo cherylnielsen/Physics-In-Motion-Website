@@ -3,6 +3,10 @@
 <nav id='secondary-navigation'>
 <table class='summary actions'>
 
+	<tr><th>Section Memberships</th></tr>	
+	<tr><td><a href="student-page.php" class="actionButton">
+				Student Pages</a></td></tr>
+					
 <?php
 	$section_list = array();
 	$section_list = $sectionDisplay->getSectionList_ByStudent($student_id, $mdb_control);

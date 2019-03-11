@@ -28,7 +28,7 @@
 	
 	if(!isset($_SESSION['student_id']))
 	{
-		$url = "login-page.php";
+		$url = "login-register-page.php?form_type=login";
 		header("Location: $url");
 		exit();
 	}
@@ -40,7 +40,7 @@
 
 	include('html-includes/template/header.php'); 
 	include('html-includes/template/main-navigation-and-quote.php'); 
-	include('html-includes/users/student-section-navigation.php');
+	include('html-includes/navigation/student-section-navigation.php');
 ?>
 
 <section class="main-content">

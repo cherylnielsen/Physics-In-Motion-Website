@@ -5,7 +5,6 @@ echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
 $section_list = array();
 $section_list = $sectionDisplay->getSectionList_ByStudent($student_id, $mdb_control);
 $sectionDisplay->displaySectionMembershipTable($section_list, $mdb_control, "student");
-$noticeDisplay->displayNoticeSummary($student_id, $section_list, $mdb_control);
 
 ?>
 

@@ -3,6 +3,10 @@
 <nav id='secondary-navigation'>
 <table class='summary actions'>
 
+	<tr><th>Section Memberships</th></tr>	
+	<tr><td><a href="professor-page.php" class="actionButton">
+				Professor Pages</a></td></tr>
+				
 <?php
 	$section_list = array();
 	$section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
@@ -18,8 +22,9 @@
 				Member Sent Notices</button></td></tr>
 		
 		<tr><th>Actions</th></tr>
-		<tr><td><button class='summaryButton' onclick='writeNotice();'>
-				Write Notice</button></td></tr>
+		<tr><td><a href="professor-form-page.php?form_type=write_notice" 
+					class="actionButton">Write Notice</a></td></tr>
+		
 	</table>
 </nav>
 

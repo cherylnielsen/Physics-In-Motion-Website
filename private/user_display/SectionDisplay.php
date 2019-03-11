@@ -90,8 +90,7 @@ class SectionDisplay
 	
 	
 	public function displaySectionShortList($section_list, $mdb_control, $member_type)
-	{
-		echo "<tr><th>Section Memberships</th></tr>";				
+	{			
 		$num_sections = count($section_list);
 		$link = "";
 		

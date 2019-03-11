@@ -2,7 +2,7 @@
 
 	require_once('../../../private/DatabaseControllerFactory.php'); 
 	$mdb_control = new DatabaseControllerFactory();
-	require_once('../../../private/action/login/login-utilities.php'); 
+	require_once('../../../private/login/login-utilities.php'); 
 	
 	if (session_status() == PHP_SESSION_NONE) 
 	{

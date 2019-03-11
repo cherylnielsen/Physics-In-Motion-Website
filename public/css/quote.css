@@ -1,0 +1,29 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+
+section.main-content {
+	float: left;
+	width: 55%;
+	padding: 0 0 1% 2%;
+}
+
+h1.quotes, h1.logo-statement {
+	padding-top: 0.5em;
+}
+
+section.quotes {
+	padding: 0.5em;
+}
+
+article.quotes p {
+	padding-left: 2em;
+}
+
+section.quotes article:nth-child(odd)
+{
+	background-color: lightyellow;
+}
+
+article.quotes {
+	padding: 1em;
+}

@@ -42,7 +42,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		if($ok) 
 		{
 			// Redirect the new member to the login page
-			$url = "login-page.php";
+			$url = "login-register-page.php?form_type=login";
 			header("Location: $url");
 			exit();
 		}

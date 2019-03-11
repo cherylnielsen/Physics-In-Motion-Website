@@ -424,6 +424,7 @@ class NoticeDisplay
 	}
 	
 	
+	
 }
 
 ?>
