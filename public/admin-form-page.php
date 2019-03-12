@@ -44,7 +44,7 @@
 
 <section class="main-content">
 <?php 	
-	include('html-includes/users/admin-section-content.php'); 
+	include('html-includes/users/admin-form-content.php'); 
 ?>
 </section>
  	

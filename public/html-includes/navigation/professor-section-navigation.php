@@ -15,17 +15,17 @@
 	
 		<tr><th>Show / Hide</th></tr>
 		<tr><td><button class='summaryButton' onclick='showStudentList();'>
-				 Student List</button></td></tr>
+			Student List</button></td></tr>
 		<tr><td><button class='summaryButton' onclick='showAssignmentList();'>
-				Assignment List</button></td></tr>
+			Assignment List</button></td></tr>
 		<tr><td><button class='summaryButton' onclick='showHomeworkList();'>
-				Homework List</button></td></tr>
+			Homework List</button></td></tr>
 		
 		<tr><th>Actions</th></tr>
 		<tr><td><a href="professor-form-page.php?form_type=add_assignment" 
-					class="actionButton">Add Assignment</a></td></tr>
-		<tr><td><a href="professor-form-page.php?form_type=grade_homework" 
-					class="actionButton">Grade Assignment</a></td></tr>
+			class="actionButton">Add Assignment</a></td></tr>
+		<tr><td><a href="professor-form-page.php?form_type=write_notice" 
+			class="actionButton">Write Notice</a></td></tr>
 	</table>
 	
 </nav>

@@ -5,7 +5,7 @@
 
 	<tr><th>Section Memberships</th></tr>	
 	<tr><td><a href="student-page.php" class="actionButton">
-				Student Pages</a></td></tr>
+			Student Pages</a></td></tr>
 					
 <?php
 	$section_list = array();
@@ -15,9 +15,20 @@
 	
 		<tr><th>Show / Hide</th></tr>
 		<tr><td><button class='summaryButton' onclick='showAssignmentList();'>
-				Assignment List</button></td></tr>
+			Assignment List</button></td></tr>
 		<tr><td><button class='summaryButton' onclick='showHomeworkList();'>
-				Homework List</button></td></tr>
+			Homework List</button></td></tr>
+		<tr><td><button class='summaryButton' onclick='showSectionNotices();'>
+			Section Notices</button></td></tr>
+		<tr><td><button class='summaryButton' onclick='showMemberInBoxNotices();'>
+			Member In Box Notices</button></td></tr>
+		<tr><td><button class='summaryButton' onclick='showMemberSentNotices();'>
+			Member Sent Notices</button></td></tr>
+		
+		<tr><th>Actions</th></tr>
+		<tr><td><a href="student-form-page.php?form_type=write_notice" 
+			class="actionButton">Write Notice</a></td></tr>
+					
 	</table>
 	
 </nav>
