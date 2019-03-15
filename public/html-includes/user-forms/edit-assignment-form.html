@@ -1,0 +1,128 @@
+
+<!--professor-form-page.php?form_type=edit_assignment& ... -->
+<?php
+
+$section_id = "";
+$section_name = "";
+$assignment_id = "";
+$assignment_name = "";
+
+
+
+
+
+$controller = $mdb_control->getController("assignment");
+$assignment = $controller->getByPrimaryKeys("assignment_id", "$assignment_id", 
+											"section_id", "$section_id");
+
+$tutorial_lab_list = array();
+$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
+
+					
+?>
+
+<div class="form-errors" id="form_errors"></div>
+
+<form id="assignmentForm" action="professor-form-page.php?form_type=edit_assignment" 
+		method="POST" enctype="multipart/form-data">
+	
+	<fieldset>
+	
+		<input type="hidden" name="assignment_id" value="<?php echo "$assignment_id" ?>" >
+		<input type="hidden" name="section_id" value="<?php echo "$section_id" ?>" >
+		
+		<h2 class="form">Edit Assignment</h2>
+		
+		<p>Date: &nbsp&nbsp <?php echo date('D, M d, Y');?></p>	
+		<br class="form">
+		
+		<p>Section: &nbsp&nbsp
+		<?php 
+			if ((isset($_GET['section_id'])) && (isset($_GET['section_name'])))
+			{
+				echo "Section " . $_GET['section_id'] . ' : ' . $_GET['section_name']; 
+			}
+		?>
+		</p><br class="form">
+		
+		<p>Assignment to Edit: &nbsp&nbsp
+		<?php 
+			if ((isset($_GET['assignment_id'])) && (isset($_GET['assignment_name'])))
+			{
+				echo "Assignment " . $_GET['assignment_id'] . ' : ' . $_GET['assignment_name']; 
+			}
+		?>
+		</p><br class="form">
+		
+	</fieldset>
+	
+	<fieldset id="editAssignmentSet">
+		
+		<br>
+		<label>Assignment Name: <br><input type="text" name="assignment_name" required 
+			value="<?php 			
+				if (isset($_POST['assignment_name']))
+				{
+					echo $_POST['assignment_name']; 
+				}
+				else if (isset($_GET['assignment_name']))
+				{
+					echo $_GET['assignment_name'];
+				}			
+			?>" >
+		</label><br class="form">
+	
+		<label>Tutorial Lab: &nbsp&nbsp 
+			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
+				<option value='' ></option>
+				
+				<?php
+					for($i = 0; $i < count($tutorial_lab_list); $i++)
+					{
+						$section_id = $tutorial_lab_list[$i]['id'];
+						$name = $tutorial_lab_list[$i]['name'];
+						$str = "<option value='$tutorial_lab_id' >$name</option>";
+						
+						if (isset($_POST['tutorial_lab_id']))
+						{
+							if(strcmp($_POST['tutorial_lab_id'], $tutorial_lab_id) == 0)
+							{
+								$str = "<option value='$tutorial_lab_id' selected >$name</option>";
+							}
+						}
+						
+						echo "$str";
+					}				
+				?>
+				
+			</select></div>
+		</label><br class="form"><br class="form">
+		
+		<label>Date Due: <br><input type="date" name="date_due" required 
+		min=<?php echo date('Y-m-d'); ?> 
+			value="<?php if (isset($_POST['date_due'])) echo $_POST['date_due']; ?>" >
+		</label><br class="form">
+		
+		<label>Points Possible: <br><input type="number" name="points_possible"  
+			min="0" max="1000" required
+			value="<?php if (isset($_POST['points_possible'])) echo $_POST['points_possible']; ?>" >
+		</label><br class="form">
+		
+		<label>Attachments: Select one or more files.
+			<div class="fileDiv"> 				
+				<input type="file" name="attachments" id="attachments" 
+					multiple onchange="showFileNames()">
+			</div>
+		</label>
+		<p id="fileListing"></p><br class="form">
+		
+		<div class="formButtonDiv">
+			<input type="submit" value="Send">		
+			<input type="reset" value="Reset" onclick="clearText()">
+			<a href="professor-page.php" class="button">Cancel</a>
+		</div>
+	
+	</fieldset>
+	
+	
+</form>

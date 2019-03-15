@@ -2,7 +2,7 @@
 /* CSS Document */
 
 section.main-content {
-	width: 40%;
+	width: 55%;
 }
 
 h1.form, h2.form {
@@ -24,6 +24,11 @@ form > * {
 	margin: 0.5em;
 }
 
+br.form {
+	display: block;
+	margin: 4px 0;
+}
+
 fieldset {
 	display: block;
 	padding: 0 1em 1em 1em;
@@ -33,11 +38,11 @@ fieldset {
 	background-color: #A7DAFA;
 }
 
-
 input[type=text],  textarea {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.3em;
+	padding-left: 7px;
 	border: 2px solid #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
@@ -49,8 +54,47 @@ input[type=checkbox] {
 	margin: 0.5em 0;
 }
 
+input[type=number] {
+	width: 6em;
+	height: 1.5em;
+	margin: 0.5em 0;
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
+	background-color: lightyellow;	
+	padding-left: 7px;
+	padding-right: 3px;
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+}
+
+input[type=date] {
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	height: 1.5em;
+	margin: 0.5em 0;
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
+	background-color: lightyellow;	
+	padding-left: 7px;
+}
+
 div.formButtonDiv {
 	float: right;
+	padding-right: 2%;
+}
+
+a.button { 
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	padding: 5px 20px ;
+	background-color: #03CA0D;
+	margin: 0.75em 0.5em;
+	font-weight: bold;
+	border-radius: 5px;
+	text-decoration: none;
+	border: 2px solid white;
+	border-style: outset;
+	color: black;
 }
 
 input[type=submit] { 
@@ -80,27 +124,28 @@ input[type=reset] {
 	margin: 0 5em;
 }
 
-div.attachments Button {
-	font-family: "Times New Roman", "serif";
-	font-size: 1em;
-	padding: 3px 15px ;
-	margin: 0.25em;
-	font-weight: bold;
-	background-color: #03CA0D;
-	border-radius: 5px;
+ul {
+	padding-left: 40px;
 }
 
-input[type=file] {
-	background: transparent;
-	border: none;
-	position: relative;
-	right: 106px;
-	top: 3px;
+div.fileDiv {
 	font-family: "Times New Roman", "serif";
-	font-size: 1.3em;
-	width: 106px;
-	opacity: 0;
+	font-size: 1em;	
+	margin: 0.25em 0;
+	padding: 2px;
+	font-weight: bold;
+	border-radius: 5px;
+	border: 2px solid #03AA0D;
+	background-color: lightyellow;
+	width: 96%;
 }
+
+
+input[type=file] {
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+}
+
 
 div.form-select {
 	background-color: lightyellow;
@@ -110,6 +155,7 @@ div.form-select {
 	width: 300px;
 	padding: 3px;
 	text-align: right;
+	margin: 0.25em 0;
 }
 
 div.form-select select {

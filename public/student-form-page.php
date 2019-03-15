@@ -40,7 +40,7 @@
 
 	include('html-includes/template/header.php'); 
 	include('html-includes/template/main-navigation-and-quote.php'); 
-	include('html-includes/navigation/student-section-navigation.php');
+	include('html-includes/navigation/student-navigation.php');
 ?>
 
 <section class="main-content">

@@ -4,20 +4,13 @@
 	<meta charset="ISO-8859-1">
 	
 	<?php
-		$form_type = $_GET["form_type"];
-		
-		switch($form_type)
-		{
-			case "add_assignment":
-				echo "<title>Physics in Motion: Assignment Form</title>";
-				break;
-			case "grade_homework":
-				echo "<title>Physics in Motion: Grade Homework</title>";
-				break;
-			case "write_notice":
-				echo "<title>Physics in Motion: Write Notice</title>";
-				break;
-		}		
+		$form_type = $_GET["form_type"];		
+		$strArray = array();
+		$strArray = explode("_", $form_type);
+		$form_name = implode(" ", $strArray);
+		$form_name = ucwords($form_name);		
+		echo "<title>Physics in Motion: $form_name</title>";
+		$form_file_name = "html-includes/user-forms/" . implode("-", $strArray) . "-form.html";		
 	?>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Professor services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Professors or Students.">
@@ -71,21 +64,8 @@
 
 <section class="main-content">
 <?php 
-
 	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
-	
-	switch($form_type)
-	{
-		case "add_assignment":
-			include('html-includes/user-forms/add-assignment-form.html'); 
-			break;
-		case "grade_homework":
-			include('html-includes/user-forms/grade-homework-form.html'); 
-			break;
-		case "write_notice":
-			include('html-includes/user-forms/write-notice-form.html'); 
-			break;
-	}	
+	include($form_file_name);
 ?>
 </section>
 		

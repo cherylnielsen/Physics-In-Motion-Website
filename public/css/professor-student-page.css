@@ -48,6 +48,7 @@ table.actions {
 	position: relative;
 	top: -2px;
 	right: -2px;
+	background-color: #A7DAFA;
 }
 
 table.noticeSummary {
@@ -63,6 +64,12 @@ th {
 	background-color: #A7DAFA;
 }
 
+table.actions th {
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
+	background-color: lightyellow;
+}
+
 td.center {
 	text-align: center;
 }
@@ -73,6 +80,10 @@ tr:nth-child(even){
 
 table.notice-header tr:nth-child(even){
 	background-color: #e6e6e6;
+}
+
+table.actions tr:nth-child(even){
+	background-color: inherit;
 }
 
 tr:hover {
@@ -104,8 +115,10 @@ td.bold {
 	font-size: 1.2em;
 }
 
-th.highlight {
-	background-color: #81fd8a;
+th.sectionRowHeader {
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
+	background-color: #A7DAFA;
 }
 
 table hr {
@@ -141,6 +154,17 @@ button.showNoticeButton {
 
 .button:hover {
 	background-color: #81fd8a;
+}
+
+button.table-button {
+	background-color: inherit;
+	border: none;
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	color: blue;
+	text-decoration: underline;
+	font-weight: 900;
+	cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {

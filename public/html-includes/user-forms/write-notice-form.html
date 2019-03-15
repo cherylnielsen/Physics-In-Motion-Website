@@ -20,10 +20,11 @@
 		<p>Date: &nbsp&nbsp <?php echo date('D, M d, Y');?></p>		
 		<p>From: &nbsp 
 		<?php echo $_SESSION['first_name'] . '&nbsp &nbsp' . $_SESSION['last_name']; ?>
-		</p><br>
+		</p><br class="form">
 				
 		<label>To Section: &nbsp&nbsp 
 			<div class="form-select"><select id="send_to_section" name="send_to_section">
+				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($section_list); $i++)
 					{
@@ -33,10 +34,11 @@
 					}				
 				?>
 			</select></div>
-		</label><br>
+		</label><br class="form"><br class="form">
 
 		<label>To Administrator: &nbsp&nbsp 
 			<div class="form-select"><select id="send_to_admin" name="send_to_admin">
+				<option value='' ></option> 
 				<?php
 					for($i = 0; $i < count($admin_list); $i++)
 					{
@@ -46,30 +48,32 @@
 					}				
 				?>
 			</select></div>
-		</label><br>
+		</label><br class="form"><br class="form">
 				
 		<label>Subject: <br><input type="text" name="subject" required 
 			value="<?php if (isset($_POST['subject'])) echo $_POST['subject']; ?>" >
-		</label><br><br>
+		</label><br class="form">
 		
-		<label>Attachments: 
-			<div class="attachments">
-				<button class="btn">Browse ...</button>
-				<input type="file" name="attachments" multiple id="attachments">
+		
+		<label>Attachments: Select one or more files.
+			<div class="fileDiv"> 				
+				<input type="file" name="attachments" id="attachments" 
+					multiple onchange="showFileNames()">
 			</div>
 		</label>
+		<p id="fileListing"></p><br class="form">
 		
-		<div id="file_attachments"></div><br>
 		
-		<label>Message: <br><textarea name="notice_text" rows="10" cols="50" 
-			spellcheck="true" 
-			value="<?php if (isset($_POST['notice_text'])) 
-					echo $_POST['notice_text']; ?>" ></textarea>
-		</label><br>	
+		<label>Message: <br><textarea name="noticeText" rows="10" cols="50" 
+			spellcheck="true" required 
+			value="<?php if (isset($_POST['noticeText'])) 
+					echo $_POST['noticeText']; ?>" ></textarea>
+		</label><br class="form">	
 		
 		<div class="formButtonDiv">
 			<input type="submit" value="Send">		
-			<input type="reset" value="Reset">	
+			<input type="reset" value="Reset" onclick="clearText()">
+			<a href="professor-page.php" class="button">Cancel</a>
 		</div>
 				
 	</fieldset>

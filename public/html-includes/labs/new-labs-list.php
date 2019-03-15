@@ -13,16 +13,22 @@ if((!is_null($labs_new)) AND ($length_labs_new > 0))
 	
 	for($i = 0; $i < $length_labs_new; $i++) 
 	{	
-		$lab = $labs_new[$i];
-		$web = $lab->get_tutorial_lab_web_link();
+		$web = $labs_new[$i]->get_tutorial_lab_web_link();
+		$name = $labs_new[$i]->get_tutorial_lab_name();
+		$intro = $labs_new[$i]->get_tutorial_lab_introduction();
+		$lab_id = $labs_new[$i]->get_tutorial_lab_id();
 		
-		echo '<article class="new-labs">
-			<h2>' . $lab->get_tutorial_lab_name() . '</h2>
+		
+		echo '<article class="new-labs">';
+		echo '<h2>' . $name . '</h2>
 			<h1 class="new-status"> NEW! </h1>
-			<img class="new-labs" src="images/labs/' . $lab->get_tutorial_lab_web_link() . '.png" alt="image of the lab" height="100">
-			<p>' . $lab->get_tutorial_lab_introduction() . '</p>';
-		echo '<p><a href="tutorial-information-page.php?num=' . $lab->get_tutorial_lab_id() . '&lab=' . $lab->get_tutorial_lab_web_link() . ">Learn More</a></p>
-			</article>";
+			<img class="new-labs" src="images/labs/' . $web . '.png" 
+					alt="image of the lab" height="100">
+			<p>' . $intro . '</p>';
+			
+		echo '<p><a href="tutorial-information-page.php?num=' . $lab_id . 
+					'&lab=' . $web . '">Learn More</a></p>';
+		echo '</article>';
 	}
 	
 	echo '<a id="bottom" href="index.php">return to top</a></section>';

@@ -113,6 +113,23 @@ class DisplayUtility
 	}
 	
 	
+	public function getListTutorialLabIDNames($mdb_control)
+	{
+		$labs = array();
+		$labs = $mdb_control->getController("tutorial_lab")->getAllData();
+		$tutorial_lab_list = array();
+		
+		for($i = 0; $i < count($labs); $i++)
+		{
+			$lab_id = $labs[$i]->get_tutorial_lab_id();
+			$lab_name = $labs[$i]->get_tutorial_lab_name();
+			$tutorial_lab_list[$i]['name'] = "Tutorial Lab " . $lab_id . " : " . $lab_name;
+			$tutorial_lab_list[$i]['id'] = $lab_id;
+		}
+		
+		return $tutorial_lab_list;
+	}
+	
 	
 }
  

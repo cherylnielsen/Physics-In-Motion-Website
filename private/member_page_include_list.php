@@ -21,8 +21,8 @@ $sectionDisplay = new SectionDisplay();
 $noticeDisplay = new NoticeDisplay();
 $assignmentDisplay = new AssignmentDisplay();
 // actions for the forms used by members
-$SectionAction = new SectionAction();
-$NoticeAction = new NoticeAction();
-$AssignmentAction = new AssignmentAction();
+$sectionAction = new SectionAction();
+$noticeAction = new NoticeAction();
+$assignmentAction = new AssignmentAction();
 
 ?>

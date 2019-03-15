@@ -19,8 +19,9 @@
 <div id='assignmentListDiv' class='overflow'>
 <?php
 	// List of assignments for this section
-	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control);
+	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, true);
 ?>
+	
 </div>
 
 <div id='homeworkListDiv' class='overflow'>
