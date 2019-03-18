@@ -4,8 +4,10 @@ $quote = $mdb_control->getController("quote")->getQuoteOfTheMonth();
 ?>
 
 <aside class="nav-quote">
-	<nav class="navigation">		
+	<nav class="navigation">	
+	
 		<a id="home_pg_link" href="index.php" class="navigation">Home Page</a><hr>
+		
 		<a id="labs_pg_link" href="full-tutorial-labs-page.php" class="navigation">
 			Tutorial Labs</a><hr>
 		
@@ -13,7 +15,7 @@ $quote = $mdb_control->getController("quote")->getQuoteOfTheMonth();
 				class="navigation">Student Pages</a><hr>
 	
 		<a id="professor_pg_link" href="professor-page.php" 
-				class="navigation">Professor Pages</a><hr>
+				class="navigation">Professor Pages</a>
 
 <?php	
 	if(isset($_SESSION["administrator_id"]))

@@ -60,7 +60,7 @@ class NoticeDisplay
 				$section_id = $section_list[$i]->get_section_id();
 				$section_name = $section_list[$i]->get_section_name();
 				
-				echo "<tr><th colspan='7' class='highlight'>
+				echo "<tr><th colspan='7' class='sectionRowHeader'>
 						<h2>Section $section_id&nbsp:&nbsp$section_name</h2></th></tr>";
 				echo "<tr><th>Date</th><th>Subject</th><th>From</th>
 						<th>Attachment</th><th>Flags</th></tr>";

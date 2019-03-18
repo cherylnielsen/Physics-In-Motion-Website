@@ -65,6 +65,32 @@ class ProfessorController extends DatabaseController{
 	}
 
 
+	public function updateAll($professor)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$professor_id = $professor->get_professor_id();	
+				
+		// data to be updated			
+		$school_name = $professor->get_school_name();
+					
+		$query = "UPDATE $table 
+					SET school_name = '$school_name'
+					WHERE professor_id = '$professor_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+
 	
 	public function saveNew(&$professor)
 	{

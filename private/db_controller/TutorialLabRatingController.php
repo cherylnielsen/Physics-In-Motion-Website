@@ -61,8 +61,7 @@ class TutorialLabRatingController extends DatabaseController {
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
-
-		mysqli_free_result($result);	
+	
 		mysqli_close($db_connection);
 		return $sucess;
 		
@@ -70,7 +69,7 @@ class TutorialLabRatingController extends DatabaseController {
 
 
 	// updates the given key with the new value in the database
-	//($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, $date_posted, $rating, $comments)
+	//($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, $date_posted, $rating, $comments, $flag_for_review)
 	public function updateAttribute($tutorial_lab_rating, $key)
 	{
 		$db_connection = get_db_connection();
@@ -121,6 +120,43 @@ class TutorialLabRatingController extends DatabaseController {
 		return $success;		
 	}
 
+	
+	public function updateAll($tutorial_lab_rating)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$tutorial_lab_rating_id = $tutorial_lab_rating->get_tutorial_lab_rating_id();
+		
+		// data to be updated			
+		$tutorial_lab_id = $tutorial_lab_rating->get_tutorial_lab_id();
+		$member_id = $tutorial_lab_rating->get_member_id();
+		$date_posted = $tutorial_lab_rating->get_date_posted();
+		$rating = $tutorial_lab_rating->get_rating();
+		$comments = $tutorial_lab_rating->get_comments();
+		$flag_for_review = $tutorial_lab_rating->get_flag_for_review();
+			
+		$query = "UPDATE $table 
+					SET tutorial_lab_id = '$tutorial_lab_id',
+						member_id = '$member_id',
+						date_posted = '$date_posted',
+						rating = '$rating',
+						comments = '$comments',
+						flag_for_review = '$flag_for_review'
+					WHERE tutorial_lab_rating_id = '$tutorial_lab_rating_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 	
 	public function deleteFromDatabase($tutorial_lab_rating)
 	{

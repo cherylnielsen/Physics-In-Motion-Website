@@ -13,7 +13,6 @@
 		require_once('../private/member_page_include_list.php');
 	?>
 	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
-	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
 	
 </head>

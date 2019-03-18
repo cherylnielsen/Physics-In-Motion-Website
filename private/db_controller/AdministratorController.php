@@ -65,6 +65,33 @@ class AdministratorController extends DatabaseController {
 	}
 
 	
+	public function updateAll($administrator)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$administrator_id = $administrator->get_administrator_id();
+		
+		// data to be updated			
+		$admin_type = $administrator->get_admin_type();
+			
+		$query = "UPDATE $table 
+					SET admin_type = '$admin_type'
+					WHERE administrator_id = '$administrator_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function saveNew(&$administrator)
 	{
 		$db_connection = get_db_connection();

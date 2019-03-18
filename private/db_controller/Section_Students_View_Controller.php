@@ -38,13 +38,6 @@ class Section_Students_View_Controller extends DatabaseController {
 	}
 
 
-	// The id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$section_student_view)
-	{
-		return false;
-	}
-	
-	
 	// updates the given key with the new value in the database
 	//($section_id, $section_name, $start_date, $end_date)
 	public function updateAttribute($section_student_view, $key)
@@ -110,6 +103,24 @@ class Section_Students_View_Controller extends DatabaseController {
 	}
  
 
+	// database view objects do not do full updates
+	// due to multiple tables being involved
+	public function updateAll($section_student_view)
+	{
+		return false;
+	}
+	
+	
+	// database view objects do new database entries
+	// due to multiple tables being involved
+	public function saveNew(&$section_student_view)
+	{
+		return false;
+	}
+
+
+	// database view objects do not delete objects from the database
+	// due to multiple tables being involved
 	public function deleteFromDatabase($section_student_view)
 	{
 		return false;

@@ -1,18 +1,36 @@
 /* JavaScript for write notice form. */
 
-// the file input for attachments for the form
-var input = document.getElementById('attachments');
-// the div where the filenames will be shown
-var infoArea = document.getElementById('file_attachments');
 
-// event listener attached to the file input 
-input.addEventListener('change', showFileName );
-
-function showFileName( event ) 
+function showFileNames()
 {
-	var input = event.srcElement;	
-	var fileName = input.files[0].name; 
-	// shows like a tool tip with mouse hover, not as text on the screen
-	infoArea.textContent = '<p>File name: ' + fileName + '</p>';
+	var attachments = document.getElementById("attachments");
+	var numfiles = document.getElementById("numfiles");
+	var fileListStr = "";
+	var file;
+
+	if (attachments.files.length == 0) 
+	{
+	  fileListStr = "Select one or more files.";
+	} 
+	else if (attachments.files.length >= 2)
+	{
+		fileListStr += "<ul>";
+		for (var i = 0; i < attachments.files.length; i++) 
+		{
+			file = attachments.files[i];
+			fileListStr += "<li>" + file.name + "</li>";
+			//fileListStr += file.name + "<br>";
+		}
+		fileListStr += "</ul>";
+	}
+ 
+	document.getElementById("fileListing").innerHTML = fileListStr;
 }
+
+
+function clearText()
+{
+	document.getElementById("fileListing").innerHTML = "";
+}
+
 

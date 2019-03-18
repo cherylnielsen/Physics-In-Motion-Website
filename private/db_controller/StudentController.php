@@ -64,6 +64,34 @@ class StudentController extends DatabaseController
 	}
 
 
+	public function updateAll($student)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$student_id = $student->get_student_id();
+		
+		// data to be updated			
+		$school_name = $student->get_school_name();
+		$notice_id = $student->get_notice_id();
+					
+		$query = "UPDATE $table 
+					SET school_name = '$school_name'
+					WHERE notice_id = '$notice_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function saveNew(&$student)
 	{
 		$db_connection = get_db_connection();

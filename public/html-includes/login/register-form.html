@@ -35,44 +35,20 @@
 			required pattern="^[a-zA-Z0-9 \-\'\.]+$"></label>
 		<br>
 		
-		<?php if(!isset($_POST['member_type'])) 
-			{
-				echo
-				'<label><input type="radio" name="member_type" value="student" required>&nbsp;Student</label>
-				<br>
-				<label><input type="radio" name="member_type" value="professor" v>&nbsp;Professor</label>
-				<br>';
-			}
-			else
-			{
-				switch ($_POST['member_type'])
-				{
-					case "student":
-					echo
-						'<label for="student"><input type="radio" name="member_type" id="student" value="student" 
-						checked required>&nbsp;Student</label>
-						<br>
-						<label for="professor"><input type="radio" name="member_type" id="professor" value="professor" 
-						required>&nbsp;Professor</label>
-						<br>';
-					break;
-					case "professor":
-					echo
-						'<label><input type="radio" name="member_type" value="student"
-						required>&nbsp;Student</label>
-						<br>
-						<label><input type="radio" name="member_type" value="professor" 
-						checked required>&nbsp;Professor</label>
-						<br>';
-					break;
-				}
-			}
-		?>
+		<label><input type="radio" name="member_type" value="student" required 
+			<?php if (isset($_POST['member_type']) && $member_type == "student") 
+			echo "checked";?> >&nbsp;Student</label>
+		<br>
 			
+		<label><input type="radio" name="member_type" value="professor" 
+			<?php if (isset($_POST['member_type']) && $member_type == "professor") 
+			echo "checked";?> >&nbsp;Professor</label>
+		<br>
+					
 	</fieldset>
 	
-	
 	<fieldset class="login-info" id="login-info">
+	
 		<h2>Sign In Information:</h2>
 		<p>The Member Name and Password are required to have:</p>
 		<ul>
@@ -105,6 +81,7 @@
 			value="<?php if (isset($_POST['password_confirm'])) echo $_POST['password_confirm']; ?>"
 			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
 		<br>
+		
 	</fieldset>
 	
 	<input type="submit" value="Create Account">		

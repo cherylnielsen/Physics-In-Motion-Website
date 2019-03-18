@@ -39,7 +39,7 @@
 
 	include('html-includes/template/header.php'); 
 	include('html-includes/template/main-navigation-and-quote.php'); 
-	include('html-includes/navigation/admin-section-navigation.php');
+	include('html-includes/navigation/admin-navigation.php');
 ?>
 
 <section class="main-content">

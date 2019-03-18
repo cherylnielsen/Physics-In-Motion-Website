@@ -55,7 +55,6 @@ class NoticeAttachmentController extends DatabaseController {
 			$notice_attachment->set_notice_attachment_id($notice_attachment_id);
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		
@@ -98,6 +97,35 @@ class NoticeAttachmentController extends DatabaseController {
 		return $success;		
 	}
 
+	
+	public function updateAll($notice_attachment)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$notice_attachment_id = $notice_attachment->get_notice_attachment_id();
+		
+		// data to be updated			
+		$notice_id = $notice_attachment->get_notice_id();
+		$attachment = $notice_attachment->get_attachment();
+			
+		$query = "UPDATE $table 
+					SET notice_id = '$notice_id',
+						attachment = '$attachment'
+					WHERE notice_attachment_id = '$notice_attachment_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 	
 	public function deleteFromDatabase($notice_attachment)
 	{

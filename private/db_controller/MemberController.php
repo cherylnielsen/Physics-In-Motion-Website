@@ -139,6 +139,50 @@ class MemberController extends DatabaseController {
 	}
 	
 	
+	public function updateAll($member)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$member_id = $member->get_member_id();
+		
+		// data to be updated			
+		$member_type = $member->get_member_type();
+		$member_name = $member->get_member_name();
+		$member_password = $member->get_member_password();		
+		$date_registered = $member->get_date_registered();
+		$last_login = $member->get_last_login();
+		$last_logoff = $member->get_last_logoff();		
+		$first_name = $member->get_first_name();
+		$last_name = $member->get_last_name();
+		$email = $member->get_email();
+		$registration_complete = $member->get_registration_complete();
+			
+		$query = "UPDATE $table 
+					SET member_type = '$member_type',
+						member_name = '$member_name',
+						member_password = '$member_password',
+						date_registered = '$date_registered',
+						last_login = '$last_login',
+						last_logoff = '$last_logoff',
+						first_name = '$first_name',
+						email = '$email',
+						registration_complete = '$registration_complete' 
+					WHERE member_id = '$member_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	// The member_id will be auto-generated, when the new member is added to the database table.
 	// Member ($member_id, $member_type, $member_name, $member_password, $date_registered, 
 	// $last_login, $last_logoff, $first_name, $last_name, $email, $registration_complete)

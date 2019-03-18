@@ -12,21 +12,21 @@ class AssignmentDisplay
 	}
 
 
-	public function displaySectionAssignments($section_id, $mdb_control)
+	public function displaySectionAssignments($section_id, $mdb_control, $for_profesor)
 	{
 		$assignment_list = array();
 		$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
 		$num_assignments = count($assignment_list);
 		$row = array();
 		
-		echo "<table class='summary assignments'><tr><th colspan='8'>
+		echo "<table class='summary assignments'><tr><th colspan='10'>
 				Assignments</th></tr>";
 					
 		if($num_assignments > 0)
 		{						
 			for($i = 0; $i < $num_assignments; $i++)
 			{
-				$row[$i] = $this->displayAssignmentRow($assignment_list[$i]);
+				$row[$i] = $this->displayAssignmentRow($assignment_list[$i], $for_profesor);
 			} 
 			
 			echo "<tr>" . $row[0]['header'] . "</tr>";
@@ -42,6 +42,7 @@ class AssignmentDisplay
 		}
 		
 		echo "</table>";
+		
 	}
 	
 	
@@ -75,7 +76,7 @@ class AssignmentDisplay
 			{						
 				for($j = 0; $j < $num_homework; $j++)
 				{
-					$row[$j] = $this->displayHomeworkRow($homework_list[$j]);
+					$row[$j] = $this->displayProfessorHomeworkRow($homework_list[$j]);
 				} 
 				
 				echo "<tr>" . $row[0]['header'] . "</tr>";
@@ -176,10 +177,12 @@ class AssignmentDisplay
 	}
 	
 	
-	public function displayAssignmentRow($assignment_view)
+	public function displayAssignmentRow($assignment_view, $for_profesor)
 	{
 		$assignment_id = $assignment_view->get_assignment_id();
 		$assignment_name = $assignment_view->get_assignment_name();
+		$section_id = $assignment_view->get_section_id();
+		$section_name = $assignment_view->get_section_name();
 		$points_possible = $assignment_view->get_points_possible();
 		$notes = $assignment_view->get_notes();
 		
@@ -194,19 +197,34 @@ class AssignmentDisplay
 		$date_due = $this->displayUtility->displayDateShort($date_due);
 		
 		$row = array();
-		$row['header'] =  "<th colspan='2'>Assignment</th><th>Date Assigned</th><th>Date Due</th>
+		
+		$header = "<th colspan='2'>Assignment</th><th>Date Assigned</th><th>Date Due</th>
 				<th>Tutorial Lab</th><th>Points Possible</th><th>Professor's Notes</th>";
-				
-		$row['data'] =  "<td>$assignment_id</td><td>$assignment_name</td>
+		
+		$data =  "<td>$assignment_id</td><td>$assignment_name</td>
 				<td>$date_assigned</td><td>$date_due</td>
 				<td>$lab_id&nbsp:&nbsp$lab_name</td>
-				<td>$points_possible Points</td><td><a href=''>$notes</a></td>";
+				<td>$points_possible Points</td>
+				<td><a href=''>$notes</a></td>";
+				
+		if($for_profesor)
+		{					
+			$url = "professor-form-page.php?form_type=edit_assignment";
+			$url .= "&assignment_id=$assignment_id&section_id=$section_id";
+			
+			$header = "<th>Edit Assignment</th>" . $header; 	
+			$dataEdit = "<td><a href='$url' class='assignment_button' >Edit</a></td>"; 					
+			$data = $dataEdit . $data;	
+		}
+				
+		$row['header'] =  $header;
+		$row['data'] =  $data;
 				
 		return $row;
 	}
 	
 	
-	public function displayHomeworkRow($homework_view)
+	public function displayProfessorHomeworkRow($homework_view)
 	{		
 		$date_submitted = $homework_view->get_date_submitted();
 		$date_submitted = $this->displayUtility->displayDateShort($date_submitted);

@@ -5,15 +5,16 @@
 		session_start();
 	}
 	
+	
 	echo
 	'<header>
 		<div class="logo">	
 			<a id="top" href="index.php"><h1>&nbsp;</h1></a>
-			<h1 class="logo-print-view">Physics in Motion</h1><!-- text for print view only-->
-			<!--Used background image instead of img tag because it was the only way to get correct automatic 
-			resizing of width when using a fixed hight in all of the tested browser types.-->
+			<!-- text for print view only-->
+			<h1 class="logo-print-view">Physics in Motion</h1>
 		</div>';
-	
+		
+		
 	if(!isset($_SESSION['member_id']))
 	{
 		echo

@@ -52,8 +52,7 @@ class SectionStudentController extends DatabaseController {
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
-
-		mysqli_free_result($result);	
+	
 		mysqli_close($db_connection);
 		return $sucess;
 	}
@@ -65,27 +64,22 @@ class SectionStudentController extends DatabaseController {
 	{
 		$db_connection = get_db_connection();
 		$success = true;
-		$section_id = $section->get_section_id();	
+		$section_id = $section_student->get_section_id();	
 		$student_id = $section_student->get_student_id();
 		$table = $this->getTableName();
 		
 		switch ($key)
 		{
 			case 'section_id':
-				$value = $section->get_section_id();	
-				$query = "update $table set section_id = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
-				break;
-				break;
 			case 'student_id':
-				$value = $section->get_student_id();	
-				$query = "update $table set student_id = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
+				return false;
 				break;
 			case 'dropped_section':
-				$value = $section->get_dropped_section();	
+				$value = $section_student->get_dropped_section();	
 				$query = "update $table set dropped_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
 				break;
 			case 'reviewed_section':
-				$value = $section->get_reviewed_section();	
+				$value = $section_student->get_reviewed_section();	
 				$query = "update $table set reviewed_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
 				break;
 		}
@@ -102,7 +96,37 @@ class SectionStudentController extends DatabaseController {
 		return $success;		
 	}
 
+	
+	public function updateAll($security_question)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$section_id = $section_student->get_section_id();	
+		$student_id = $section_student->get_student_id();
+		
+		// data to be updated			
+		$dropped_section = $student->get_dropped_section();
+		$reviewed_section = $student->get_reviewed_section();
+					
+		$query = "UPDATE $table 
+					SET dropped_section = '$dropped_section',
+						reviewed_section = '$reviewed_section'
+					WHERE (section_id = '$section_id') AND (student_id = '$student_id')";
+						
+		$result = mysqli_query($db_connection, $query);
 
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function deleteFromDatabase($section_student)
 	{
 		$db_connection = get_db_connection();

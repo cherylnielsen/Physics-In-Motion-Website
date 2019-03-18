@@ -49,7 +49,6 @@ class NoticeToSectionController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		
@@ -59,6 +58,14 @@ class NoticeToSectionController extends DatabaseController {
 	// NOTHING to update, both items in the table form the joint primary key for each row
 	// ($notice_id, $to_section_id)
 	public function updateAttribute($notice_to_section, $key)
+	{
+		return false;		
+	}
+	
+	
+	// NOTHING to update, both items in the table form the joint primary key for each row
+	// ($notice_id, $to_section_id)
+	public function updateAll($notice_to_section)
 	{
 		return false;		
 	}

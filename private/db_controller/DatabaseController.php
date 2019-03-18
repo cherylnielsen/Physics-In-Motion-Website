@@ -33,10 +33,18 @@ abstract class DatabaseController
 	Updates the database with the new value for the given key.
 	Input: $data_object = the data object that needs updating in the database.
 	Input: $key = the key that needs to be updated for that object.
-	Input: $value = the new value to be set for that key.
 	Output: $success = true if the key was able to be updated in the database.
 	***/
 	abstract public function updateAttribute($data_object, $key);
+	
+	
+	/***
+	Updates the database with all the new values from the given data_object.
+	This does not change the primary keys of the data object.
+	Input: $data_object = the data object that needs updating in the database.
+	Output: $success = true if the data object was able to be updated in the database.
+	***/
+	abstract public function updateAll($data_object);
 		
 	
 	/*** 
