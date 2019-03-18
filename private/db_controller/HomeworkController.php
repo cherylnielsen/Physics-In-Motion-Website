@@ -78,7 +78,6 @@ class HomeworkController extends DatabaseController {
 			$member->set_homework_id($homework_id);
 		}
 		
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

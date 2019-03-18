@@ -55,7 +55,6 @@ class NoticeAttachmentController extends DatabaseController {
 			$notice_attachment->set_notice_attachment_id($notice_attachment_id);
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

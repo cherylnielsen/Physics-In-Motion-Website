@@ -7,59 +7,88 @@ class NoticeAction
 	public function processWriteNoticeForm($mdb_control)
 	{
 		$sucess = true;
-		$controller = $mdb_control->getController("assignment");
-		$assignment = new Assignment();
 		
-		$section_id = $_POST['section_id'];		
-		$tutorial_lab_id = $_POST['tutorial_lab_id']; 
-		$points_possible = $_POST['points_possible'];
-		
+		$from_member_id = $_POST['from_member_id'];		
+		$to_section_id = $_POST['to_section_id']; 
+		$to_member_id = $_POST['to_member_id'];
+		$notice_subject = $_POST['notice_subject'];
+		$notice_text = $_POST['notice_text'];		
+		$response_to_notice_id = $_POST['response_to_notice_id'];  
 		// convert dates to mysql format
 		$date_sent = $_POST['date_sent'];	
 		$mysql_date_sent = date('Y-m-d H:i:s', strtotime($date_sent));				
-		$date_due = $_POST['date_due']; 		
-		$mysql_date_due = date('Y-m-d H:i:s', strtotime($date_due));
 				
-		// test assignment_name for unsafe characters because it is input from text box
-		$assignment_name = $_POST['assignment_name'];
+		// test text box input for alpha-numeric character limits
+		echo "<div class='form-errors' >";
 		
-		if (!preg_match("/^[a-zA-Z0-9 \-]*$/", $assignment_name)) 
+		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $notice_subject)) 
 		{
-			echo "<p>Assignment Name can only contain letters, numbers, dashes, and white space.</p>";  
+			echo "<p>Subjects can only contain letters, numbers, spaces, 
+					and the following characters .',-_&()</p>";  
 			return false;
 		}
 		
-		// sanitize assignment_name because it is input from text box
+		if (!preg_match("/^[a-zA-Z0-9 .';,()?!&%_\-]*$/", $notice_text)) 
+		{
+			echo "<p>Messages  can only contain letters, numbers, spaces, 
+					and the following characters .';,-_()?!&%</p>";   
+			return false;
+		}
+		
+		echo "</div>";
+		
+		// sanitize text box inputs for safety
 		$db_con = get_db_connection();		
-		$name = stripslashes(strip_tags(trim($assignment_name)));
-		$assignment_name = mysqli_real_escape_string($db_con, $name);
+		$str = stripslashes(strip_tags(trim($notice_subject)));
+		$notice_subject = mysqli_real_escape_string($db_con, $str);	
+		$str = stripslashes(strip_tags(trim($notice_text)));
+		$notice_text = mysqli_real_escape_string($db_con, $str);
 		
 		//db_linked_files/assignment
 		//$new_notes = ??;	
 		// call function to test file types, etc.
 		$attachments = null;
 		
-		switch ($form_type)
+		
+		$controller = $mdb_control->getController("notice");
+		$notice = new Notice();		
+		$notice_id = null; 
+		$flag_for_review = false;
+		
+		$notice->initialize($notice_id, $from_member_id, $mysql_date_sent, 
+							$notice_subject, $notice_text);
+					
+		$sucess = $controller->saveNew($notice);		
+		if(!$sucess) { return false; }				
+		$notice_id = $notice->get_notice_id(); 		
+		
+		
+		if(isset($to_section_id))
 		{
-			case "edit_assignment":				
-				$assignment_id = $_POST['assignment_id']; 
-				
-				$assignment->initialize($assignment_id, $section_id, $tutorial_lab_id, 
-							$assignment_name, $mysql_date_sent, $mysql_date_due, 
-							$points_possible, $attachments);
-							
-				$sucess = $controller->updateAll($assignment);
-				break;
-				
-			case "add_assignment":
-				$assignment_id = null; 
-				
-				$assignment->initialize($assignment_id, $section_id, $tutorial_lab_id, 
-							$assignment_name, $mysql_date_sent, $mysql_date_due, 
-							$points_possible, $attachments);
-							
-				$sucess = $controller->saveNew($assignment);
-				break;
+			if($to_section_id !== "")
+			{
+				$controller = $mdb_control->getController("notice_to_section");
+				$notice_to_section = new NoticeToSection();
+				$notice_to_section->initialize($notice_id, $to_section_id);
+				$sucess = $controller->saveNew($notice_to_section);
+				if(!$sucess) { return false; }
+			}
+		}
+		
+		if(isset($to_member_id))
+		{
+			if($to_member_id !== "")
+			{
+				$controller = $mdb_control->getController("notice_to_member");
+				$notice_to_member = new NoticeToMember();
+				$notice_to_member->initialize($notice_id, $to_member_id);
+				$sucess = $controller->saveNew($notice_to_member);
+				if(!$sucess) { return false; }
+			}
+		}
+		
+		if(isset($attachments))
+		{			
 		}
 		
 		return $sucess;				

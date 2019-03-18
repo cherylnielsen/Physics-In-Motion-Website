@@ -45,11 +45,21 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 			$url = "login-register-page.php?form_type=login";
 			header("Location: $url");
 			exit();
+			
+			/**
+			$_SESSION['registration_complete'] = false;
+			$url = "complete_registration_page.php";
+			header("Location: $url");
+			exit();
+			**/
 		}
 		else
 		{
-			echo'<div class="form-errors"><p>Sorry, we goofed!:</p>
-				<p>Registration could not be saved. Please try again later.</p></div>';
+			echo'<div class="form-errors">
+					<p>Sorry, we goofed!:</p>
+					<p>Registration could not be saved. 
+						Please try again later.</p>
+				</div>';
 		}
 		
 	}

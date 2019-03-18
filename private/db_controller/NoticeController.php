@@ -43,19 +43,33 @@ class NoticeController extends DatabaseController {
 		$db_connection = get_db_connection();
 		$sucess = true;
 		$from_member_id = $notice->get_from_member_id();
-		$from_date_sent = $notice->get_date_sent();
+		$date_sent = $notice->get_date_sent();
 		$notice_subject = $notice->get_notice_subject();
 		$notice_text = $notice->get_notice_text();
 		$response_to_notice_id = $notice->get_response_to_notice_id();
+		$response_to_notice_id = (empty($response_to_notice_id) ? -1 :  $response_to_notice_id);		
 		$flag_for_review = $notice->get_flag_for_review();
-		$table = $this->getTableName();
+		$flag_for_review = ($flag_for_review ? 1 : 0);	
+		$table = $this->getTableName();		
 		
-		// The notice_id will be auto-generated.
-		$query = "insert into $table (from_member_id, date_sent, notice_subject, 
-							notice_text, response_to_notice_id, flag_for_review) 
-				values('$from_member_id', 'now()', '$notice_subject', 
-							'$notice_text', '$response_to_notice_id', '$flag_for_review')";
-							
+		if(empty($response_to_notice_id) || $response_to_notice_id < 0)
+		{
+			// The notice_id will be auto-generated.
+			$query = "insert into $table (from_member_id, date_sent, notice_subject, 
+							notice_text, flag_for_review) 
+					values('$from_member_id', '$date_sent', '$notice_subject', 
+							'$notice_text', '$flag_for_review')";
+		}
+		else
+		{
+			// The notice_id will be auto-generated.
+			$query = "insert into $table (from_member_id, date_sent, notice_subject, 
+							notice_text, flag_for_review, response_to_notice_id) 
+					values('$from_member_id', '$date_sent', '$notice_subject', 
+							'$notice_text', '$flag_for_review', '$response_to_notice_id')";
+		}
+		
+						
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -70,7 +84,6 @@ class NoticeController extends DatabaseController {
 			$notice->set_notice_id($notice_id);
 		}
 
-		mysqli_free_result($result);
 		mysqli_close($db_connection);
 		return $sucess;
 		

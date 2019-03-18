@@ -60,8 +60,7 @@ class SectionRatingController extends DatabaseController {
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
-
-		mysqli_free_result($result);	
+	
 		mysqli_close($db_connection);
 		return $sucess;
 		

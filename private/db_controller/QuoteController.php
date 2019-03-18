@@ -48,7 +48,7 @@ class QuoteController extends DatabaseController {
 		$query = "select * from $table where (month_posted = MONTH(NOW())) AND (year_posted = YEAR(NOW()))";
 		$result = mysqli_query($db_connection, $query);
 		$dataArray = $this->getData($result, $db_connection);
-		mysqli_free_result($result);
+
 		mysqli_close($db_connection);
 			
 		if(count($dataArray) > 0)
@@ -88,7 +88,6 @@ class QuoteController extends DatabaseController {
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
-		mysqli_free_result($result);	
 		mysqli_close($db_connection);
 		return $sucess;
 		

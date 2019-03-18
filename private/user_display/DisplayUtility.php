@@ -111,6 +111,24 @@ class DisplayUtility
 	}
 	
 	
+	public function getMemberList($mdb_control)
+	{
+		$admin_list = array();
+		$admin_list = $this->getListAdministratorIDName($mdb_control);
+		
+		$professor_list = array();
+		$professor_list = $this->getListProfessorIDName($mdb_control);
+		
+		$student_list = array();
+		$student_list = $this->getListStudentIDName($mdb_control);
+		
+		$member_list = array();
+		$member_list = array_merge($admin_list, $professor_list, $student_list);
+		
+		return $member_list;
+	}
+	
+	
 	public function getListAdministratorIDName($mdb_control)
 	{
 		$member_list = array();		

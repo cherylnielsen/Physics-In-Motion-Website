@@ -4,6 +4,10 @@ require_once('login-utilities.php');
 	
 If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+	// remove all session variables from any users
+	session_unset(); 
+	session_destroy();
+	
 	$login_utility = new LoginUtilities();
 	
 	$membername = $_POST['membername'];
@@ -56,7 +60,6 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 					$_SESSION['first_name'] = $member->get_first_name();
 					$_SESSION['last_name'] = $member->get_last_name();	
 					$_SESSION['member_type'] = $member->get_member_type();
-					$_SESSION['complete'] = $member->get_registration_complete();
 					
 					switch($member_type)
 					{
@@ -77,7 +80,9 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 							break;
 					}
 					
-					if(!$_SESSION['complete'])
+					$_SESSION['registration_complete'] = $member->get_registration_complete();
+					
+					if(!$_SESSION['registration_complete'])
 					{
 						$url = "complete_registration_page.php";
 					}

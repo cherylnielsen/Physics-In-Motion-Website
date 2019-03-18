@@ -7,29 +7,40 @@ class AssignmentAction
 	public function processAssignmentForm($mdb_control, $form_type)
 	{
 		$sucess = true;
-		$controller = $mdb_control->getController("assignment");
-		$assignment = new Assignment();
 		
 		$section_id = $_POST['section_id'];		
 		$tutorial_lab_id = $_POST['tutorial_lab_id']; 
 		$points_possible = $_POST['points_possible'];
+		$assignment_name = $_POST['assignment_name'];
 		
 		// convert dates to mysql format
 		$date_assigned = $_POST['date_assigned'];	
 		$mysql_date_assigned = date('Y-m-d H:i:s', strtotime($date_assigned));				
 		$date_due = $_POST['date_due']; 		
 		$mysql_date_due = date('Y-m-d H:i:s', strtotime($date_due));
-				
-		// test assignment_name for unsafe characters because it is input from text box
-		$assignment_name = $_POST['assignment_name'];
 		
-		if (!preg_match("/^[a-zA-Z0-9 \-]*$/", $assignment_name)) 
+		// test text box input for alpha-numeric character limits
+		echo "<div class='form-errors' >";
+		
+		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $assignment_name)) 
 		{
-			echo "<p>Assignment Name can only contain letters, numbers, dashes, and white space.</p>";  
+			echo "<p>Assignment Names can only contain letters, numbers, spaces, 
+					and the following characters .',-_&()</p>";  
 			return false;
 		}
 		
-		// sanitize assignment_name because it is input from text box
+		if (filter_var($points_possible, FILTER_VALIDATE_INT) === false) 
+		{
+			echo "<p>Points Possible must be a positive integer.</p>";  
+			return false;
+		}
+		else if($points_possible < 0)
+		{
+			echo "<p>Points Possible must be a positive integer.</p>";  
+			return false;
+		}
+		
+		// sanitize text box inputs for safety
 		$db_con = get_db_connection();		
 		$name = stripslashes(strip_tags(trim($assignment_name)));
 		$assignment_name = mysqli_real_escape_string($db_con, $name);
@@ -38,6 +49,9 @@ class AssignmentAction
 		//$new_notes = ??;	
 		// call function to test file types, etc.
 		$attachments = null;
+		
+		$controller = $mdb_control->getController("assignment");
+		$assignment = new Assignment();
 		
 		switch ($form_type)
 		{

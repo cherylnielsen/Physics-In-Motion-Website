@@ -57,8 +57,7 @@ class SecurityQuestionController extends DatabaseController {
 			$security_question_id = mysqli_insert_id($db_connection);
 			$security_question->set_security_question_id($security_question_id);
 		}
-		
-		mysqli_free_result($result);	
+			
 		mysqli_close($db_connection);
 		return $sucess;
 	}
