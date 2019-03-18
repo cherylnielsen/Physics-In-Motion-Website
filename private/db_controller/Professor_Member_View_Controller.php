@@ -78,12 +78,24 @@ class Professor_Member_View_Controller extends DatabaseController
 	}
 
 
+	// database view objects do not do full updates
+	// due to multiple tables being involved
+	public function updateAll($professor_member_view)
+	{
+		return false;
+	}
+	
+	
+	// database view objects do new database entries
+	// due to multiple tables being involved
 	public function saveNew(&$professor_member_view)
 	{
 		return false;
 	}
 
 
+	// database view objects do not delete objects from the database
+	// due to multiple tables being involved
 	public function deleteFromDatabase($professor_member_view)
 	{
 		return false;

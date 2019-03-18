@@ -125,8 +125,52 @@ class TutorialLabController extends DatabaseController {
 
 		mysqli_free_result($result);	
 		mysqli_close($db_connection);
-		return $sucess;
+		return $sucess;		
+	}
+	
+	
+	public function updateAll($tutorial_lab)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$tutorial_lab_id = $tutorial_lab->get_tutorial_lab_id();
 		
+		// data to be updated			
+		$tutorial_lab_name = $tutorial_lab->get_tutorial_lab_name();
+		$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
+		$lab_status = $tutorial_lab->get_lab_status();
+		$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
+		$prerequisites = $tutorial_lab->get_prerequisites();
+		$key_topics = $tutorial_lab->get_key_topics();
+		$key_equations = $tutorial_lab->get_key_equations();
+		$instructions = $tutorial_lab->get_instructions();
+		$description = $tutorial_lab->get_description();
+		$date_first_available = $tutorial_lab->get_date_first_available();
+			
+		$query = "UPDATE $table 
+					SET tutorial_lab_name = '$tutorial_lab_name',
+						tutorial_lab_web_link = '$tutorial_lab_web_link',
+						lab_status = '$lab_status',
+						tutorial_lab_introduction = '$tutorial_lab_introduction',
+						prerequisites = '$prerequisites',
+						key_topics = '$key_topics'
+						key_equations = '$key_equations',						
+						instructions = '$instructions',
+						description = '$description'
+						date_first_available = '$date_first_available'
+					WHERE tutorial_lab_id = '$tutorial_lab_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
 	}
 	
 	

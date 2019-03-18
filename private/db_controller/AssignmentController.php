@@ -86,14 +86,8 @@ class AssignmentController extends DatabaseController {
 		switch ($key)
 		{
 			case 'assignment_id':
-				$value = $assignment->get_assignment_id();	
-				$query = "update $table set assignment_id = '$value' 
-							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
-				break;
 			case 'section_id':
-				$value = $assignment->get_section_id();	
-				$query = "update $table set section_id = '$value' 
-							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+				return false;
 				break;
 			case 'tutorial_lab_id':
 				$value = $assignment->get_tutorial_lab_id();	
@@ -139,6 +133,45 @@ class AssignmentController extends DatabaseController {
 		return $success;		
 	}
 
+	
+	public function updateAll($assignment)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$assignment_id = $assignment->get_assignment_id();
+		$section_id = $assignment->get_section_id();
+		
+		// data to be updated			
+		$tutorial_lab_id = $assignment->get_tutorial_lab_id();
+		$assignment_name = $assignment->get_assignment_name();
+		$date_assigned = $assignment->get_date_assigned();
+		$date_due = $assignment->get_date_due();
+		$points_possible = $assignment->get_points_possible();
+		$notes = $assignment->get_notes();
+			
+		$query = "UPDATE $table 
+					SET tutorial_lab_id = '$tutorial_lab_id',
+						assignment_name = '$assignment_name',
+						date_assigned = '$date_assigned',
+						date_due = '$date_due',
+						points_possible = '$points_possible',
+						notes = '$notes'
+					WHERE (assignment_id = '$assignment_id') 
+						AND (section_id = '$section_id')";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 	
 	public function deleteFromDatabase($assignment)
 	{

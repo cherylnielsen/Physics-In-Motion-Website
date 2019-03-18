@@ -106,6 +106,37 @@ class SecurityQuestionController extends DatabaseController {
 	}
 
 
+	public function updateAll($security_question)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$security_question_id = $security_question->get_security_question_id();
+		
+		// data to be updated			
+		$member_id = $security_question->get_member_id();
+		$question = $security_question->get_question();
+		$answer = $security_question->get_answer();
+					
+		$query = "UPDATE $table 
+					SET member_id = '$member_id',
+						question = '$question',
+						answer = '$answer'
+					WHERE security_question_id = '$security_question_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function deleteFromDatabase($security_question)
 	{
 		$db_connection = get_db_connection();

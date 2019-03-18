@@ -139,7 +139,40 @@ class QuoteController extends DatabaseController {
 		return $success;		
 	}
 
+	
+	public function updateAll($quote)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$quote_id = $quote->get_quote_id();	
+				
+		// data to be updated			
+		$author = $quote->get_author();
+		$quote_text = $quote->get_quote_text();
+		$month_posted = $quote->get_month_posted();
+		$year_posted = $quote->get_year_posted();
+					
+		$query = "UPDATE $table 
+					SET author = '$author',
+						quote_text = '$quote_text',
+						month_posted = '$month_posted',
+						year_posted = '$year_posted'
+					WHERE quote_id = '$quote_id'";
+						
+		$result = mysqli_query($db_connection, $query);
 
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function deleteFromDatabase($quote)
 	{
 		$db_connection = get_db_connection();

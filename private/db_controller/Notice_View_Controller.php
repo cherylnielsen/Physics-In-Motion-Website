@@ -41,14 +41,6 @@ class Notice_View_Controller extends DatabaseController {
 	}
 	
 	
-	// The notice_id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$notice_view)
-	{
-		return false;
-	}
-	
-	
-	
 	/***
 	// updates the given key with the new value in the database
 	($notice_id, $from_member_id, $to_member_id, $date_sent, $notice_subject, $notice_text, 
@@ -115,13 +107,30 @@ class Notice_View_Controller extends DatabaseController {
 		mysqli_close($db_connection);
 		return $success;		
 	}
-
 	
-	public function deleteFromDatabase($notice_view)
+	
+	// database view objects do not do full updates
+	// due to multiple tables being involved
+	public function updateAll($notice_view)
 	{
 		return false;
 	}
 	
+	
+	// database view objects do new database entries
+	// due to multiple tables being involved
+	public function saveNew(&$notice_view)
+	{
+		return false;
+	}
+
+
+	// database view objects do not delete objects from the database
+	// due to multiple tables being involved
+	public function deleteFromDatabase($notice_view)
+	{
+		return false;
+	}
 	
 	
 }

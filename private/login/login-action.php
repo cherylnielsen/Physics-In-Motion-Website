@@ -55,6 +55,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 					$_SESSION['member_id'] = $member_id;
 					$_SESSION['first_name'] = $member->get_first_name();
 					$_SESSION['last_name'] = $member->get_last_name();	
+					$_SESSION['member_type'] = $member->get_member_type();
 					$_SESSION['complete'] = $member->get_registration_complete();
 					
 					switch($member_type)

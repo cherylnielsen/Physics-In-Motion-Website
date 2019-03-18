@@ -91,28 +91,8 @@ class DisplayUtility
 		
 		return $section_names;
 	}
-	
-	
-	public function getListAdminIDNames($mdb_control)
-	{
-		$admins = array();
-		$admin_names = array();
-		$control = $mdb_control->getController("administrator_member_view");
-		$admins = $control->getAllData();
-		
-		for($i = 0; $i < count($admins); $i++)
-		{
-			$admin_id = $admins[$i]->get_administrator_id();
-			$first = $admins[$i]->get_first_name();
-			$last = $admins[$i]->get_last_name();
-			$admin_names[$i]['id'] = "$admin_id"; 
-			$admin_names[$i]['name'] = "$first $last"; 
-		}
-		
-		return $admin_names;
-	}
-	
-	
+
+
 	public function getListTutorialLabIDNames($mdb_control)
 	{
 		$labs = array();
@@ -129,6 +109,70 @@ class DisplayUtility
 		
 		return $tutorial_lab_list;
 	}
+	
+	
+	public function getListAdministratorIDName($mdb_control)
+	{
+		$member_list = array();		
+		$member_view = array();
+		
+		$control = $mdb_control->getController("administrator_member_view");
+		$member_view = $control->getAllData();
+				
+		for($i = 0; $i < count($member_view); $i++)
+		{
+			$member_list[$i]['id'] = $member_view[$i]->get_administrator_id();
+			$member_list[$i]['type'] = "administrator";
+			$first = $member_view[$i]->get_first_name();
+			$last = $member_view[$i]->get_last_name();
+			$member_list[$i]['name'] = "$first $last"; 
+		}
+
+		return $member_list;
+	}
+	
+	
+	public function getListProfessorIDName($mdb_control)
+	{	
+		$member_list = array();
+		$member_view = array();
+		
+		$control = $mdb_control->getController("professor_member_view");
+		$member_view = $control->getAllData();
+		
+		for($i = 0; $i < count($member_view); $i++)
+		{
+			$member_list[$i]['id'] = $member_view[$i]->get_professor_id();
+			$member_list[$i]['type'] = "professor";
+			$first = $member_view[$i]->get_first_name();
+			$last = $member_view[$i]->get_last_name();
+			$member_list[$i]['name'] = "$first $last"; 
+		}
+
+		return $member_list;
+	}
+	
+	
+	public function getListStudentIDName($mdb_control)
+	{
+		$member_list = array();
+		$member_view = array();
+		
+		$control = $mdb_control->getController("student_member_view");
+		$member_view = $control->getAllData();		
+		
+		for($i = 0; $i < count($member_view); $i++)
+		{
+			$member_list[$i]['id'] = $member_view[$i]->get_student_id();
+			$member_list[$i]['type'] = "student";
+			$first = $member_view[$i]->get_first_name();
+			$last = $member_view[$i]->get_last_name();
+			$member_list[$i]['name'] = "$first $last"; 
+		}
+		
+		return $member_list;
+	}
+
 	
 	
 }

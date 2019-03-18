@@ -78,13 +78,25 @@ class Administrator_Member_View_Controller extends DatabaseController
 		return $success;		
 	}
 
-
+	
+	// database view objects do not do full updates
+	// due to multiple tables being involved
+	public function updateAll($administrator_member_view)
+	{
+		return false;
+	}
+	
+	
+	// database view objects do new database entries
+	// due to multiple tables being involved
 	public function saveNew(&$administrator_member_view)
 	{
 		return false;
 	}
 
 
+	// database view objects do not delete objects from the database
+	// due to multiple tables being involved
 	public function deleteFromDatabase($administrator_member_view)
 	{
 		return false;

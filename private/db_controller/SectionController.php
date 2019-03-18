@@ -112,6 +112,39 @@ class SectionController extends DatabaseController {
 	}
  
 
+	public function updateAll($section)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$section_id = $section->get_section_id();	
+				
+		// data to be updated			
+		$section_name = $section->get_section_name();
+		$professor_id = $section->get_professor_id();
+		$start_date = $section->get_start_date();
+		$end_date = $section->get_end_date();
+					
+		$query = "UPDATE $table 
+					SET section_name = '$section_name',
+						professor_id = '$professor_id',
+						start_date = '$start_date',
+						end_date = '$end_date'
+					WHERE section_id = '$section_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function deleteFromDatabase($section)
 	{
 		$db_connection = get_db_connection();

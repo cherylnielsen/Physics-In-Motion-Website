@@ -166,6 +166,46 @@ class HomeworkController extends DatabaseController {
 	}
 
 	
+	public function updateAll($homework)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$homework_id = $homework->get_homework_id();
+		
+		// data to be updated			
+		$section_id = $homework->get_section_id();
+		$assignment_id = $homework->get_assignment_id();
+			
+		$query = "UPDATE $table 
+					SET section_id = '$section_id',
+						assignment_id = '$assignment_id',
+						student_id = '$student_id',
+						lab_summary = '$lab_summary',
+						lab_data = '$lab_data',
+						graphs = '$graphs',
+						math = '$math',
+						hints = '$hints',
+						chat_session = '$chat_session',
+						date_submitted = '$date_submitted',
+						points_earned = '$points_earned',
+						was_graded = '$was_graded',
+						hours = '$hours'
+					WHERE homework_id = '$homework_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
+	
 	public function deleteFromDatabase($homework)
 	{
 		$db_connection = get_db_connection();

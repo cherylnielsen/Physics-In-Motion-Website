@@ -37,13 +37,6 @@ class Tutorial_Lab_Rating_View_Controller extends DatabaseController {
 		return $dataArray;
 	}
 	
-	
-	// The tutorial_lab_rating_id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$tutorial_lab_rating_view)
-	{
-		return false;
-	}
-
 
 	// updates the given key with the new value in the database
 	// ($tutorial_lab_rating_id, $tutorial_lab_id, $member_id, $tutorial_lab_name, 
@@ -116,6 +109,24 @@ class Tutorial_Lab_Rating_View_Controller extends DatabaseController {
 	}
 
 	
+	// database view objects do not do full updates
+	// due to multiple tables being involved
+	public function updateAll($tutorial_lab_rating_view)
+	{
+		return false;
+	}
+	
+	
+	// database view objects do new database entries
+	// due to multiple tables being involved
+	public function saveNew(&$tutorial_lab_rating_view)
+	{
+		return false;
+	}
+
+
+	// database view objects do not delete objects from the database
+	// due to multiple tables being involved
 	public function deleteFromDatabase($tutorial_lab_rating_view)
 	{
 		return false;

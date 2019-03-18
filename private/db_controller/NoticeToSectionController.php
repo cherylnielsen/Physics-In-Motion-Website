@@ -62,6 +62,14 @@ class NoticeToSectionController extends DatabaseController {
 	{
 		return false;		
 	}
+	
+	
+	// NOTHING to update, both items in the table form the joint primary key for each row
+	// ($notice_id, $to_section_id)
+	public function updateAll($notice_to_section)
+	{
+		return false;		
+	}
 
 	
 	public function deleteFromDatabase($notice_to_section)

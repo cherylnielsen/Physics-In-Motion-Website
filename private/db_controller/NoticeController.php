@@ -129,6 +129,43 @@ class NoticeController extends DatabaseController {
 		return $success;		
 	}
 
+
+	public function updateAll($notice)
+	{
+		$success = true;
+		$db_connection = get_db_connection();
+		$table = $this->getTableName();
+		$notice_id = $notice->get_notice_id();
+		
+		// data to be updated			
+		$from_member_id = $notice->get_from_member_id();
+		$response_to_notice_id = $notice->get_response_to_notice_id();
+		$from_date_sent = $notice->get_date_sent();
+		$notice_subject = $notice->get_notice_subject();
+		$notice_text = $notice->get_notice_text();
+		$flag_for_review = $notice->get_flag_for_review();
+			
+		$query = "UPDATE $table 
+					SET from_member_id = '$from_member_id',
+						response_to_notice_id = '$response_to_notice_id',
+						from_date_sent = '$from_date_sent',
+						notice_subject = '$notice_subject',
+						notice_text = '$notice_text',
+						flag_for_review = '$flag_for_review'
+					WHERE notice_id = '$notice_id'";
+						
+		$result = mysqli_query($db_connection, $query);
+
+		if(!$result)
+		{
+			$success = false;
+			echo '<p>' . mysqli_error($db_connection) . '</p>';
+		}
+
+		mysqli_close($db_connection);
+		return $success;
+	}
+	
 	
 	public function deleteFromDatabase($notice)
 	{

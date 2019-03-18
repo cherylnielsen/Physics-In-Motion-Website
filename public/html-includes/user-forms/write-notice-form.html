@@ -1,11 +1,52 @@
 
 <?php
 	
+	If($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		$is_ok = $noticeAction->processAssignmentForm($mdb_control, $form_type);
+		
+		if($is_ok)
+		{
+			echo "<div class='form_errors' id='form_errors' >
+					<p>The update was processed successfully.</p>
+					</div>";
+		}
+		else
+		{
+			echo "<div class='form_errors' id='form_errors' >
+					<p>Sorry, the system was unable to process the update.</p>
+					</div>";
+		}
+	}
+	
+	
 	$section_list = array();
 	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
 									$sectionDisplay, $professor_id, $mdb_control);
 	$admin_list = array();
-	$admin_list = $displayUtility->getListAdminIDNames($mdb_control);
+	$admin_list = $displayUtility->getListAdministratorIDName($mdb_control);
+	
+	$student_list = array();
+	$student_list = $displayUtility->getListAdministratorIDName($mdb_control);
+	
+	$professor_list = array();
+	$professor_list = $displayUtility->getListAdministratorIDName($mdb_control);
+	
+	
+	//$flag_for_review = false;
+	$date_sent = $noticeAction->date(D, m/d/Y);
+	$from_first_name = $_SESSION["first_name"];
+	$from_last_name = $_SESSION["last_name"];	
+	$from_member_id = $_SESSION["member_id"];
+	
+	// checks GET and POST, if not set, returns empty string	
+	$notice_subject = $noticeAction->getNoticeSubject();
+	$notice_text = $noticeAction->getNoticeText();
+	$to_section_id = $noticeAction->getToSectionID();
+	$to_member_id = $noticeAction->getToMemberID();		
+	$response_to_notice_id = $noticeAction->getResponseToNoticeID();
+	
+	//$attachments or files? = $noticeAction->getAttachments();
 	
 ?>
 
@@ -15,46 +56,64 @@
 		method="POST" enctype="multipart/form-data">
 	
 	<fieldset>
-	
+		
+		<input type="hidden" name="date_sent" value="<?php echo "$date_sent" ?>" >				
+		<input type="hidden" name="from_member_id" value="<?php echo "$from_member_id" ?>" >
+		<input type="hidden" name="from_first_name" value="<?php echo "$from_first_name" ?>" >
+		<input type="hidden" name="from_last_name" value="<?php echo "$from_last_name" ?>" >
+		<input type="hidden" name="flag_for_review" value="false" >
+		
 		<h2 class="form">Write Notice</h2>		
-		<p>Date: &nbsp&nbsp <?php echo date('D, M d, Y');?></p>		
-		<p>From: &nbsp 
-		<?php echo $_SESSION['first_name'] . '&nbsp &nbsp' . $_SESSION['last_name']; ?>
-		</p><br class="form">
+		<p>Date: &nbsp&nbsp <?php echo "$date_sent" ?></p>		
+		<p>From: &nbsp <?php echo "$from_first_name &nbsp $from_last_name"; ?></p>
+		<br class="form">
 				
 		<label>To Section: &nbsp&nbsp 
-			<div class="form-select"><select id="send_to_section" name="send_to_section">
+			<div class="form-select"><select id="to_section_id" name="to_section_id">
 				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($section_list); $i++)
 					{
-						$section_id = $section_list[$i]['id'];
+						$sec_id = $section_list[$i]['id'];
 						$name = $section_list[$i]['name'];
-						echo "<option value='$section_id' >$name</option>";
+						echo "<option value='$sec_id' >$name</option>";
+						
+						if(strcmp($to_section_id, $sec_id) === 0)
+						{
+							$str = "<option value='$sec_id' selected >$name</option>";
+						}
+						
+						echo "$str";
 					}				
 				?>
 			</select></div>
 		</label><br class="form"><br class="form">
-
-		<label>To Administrator: &nbsp&nbsp 
-			<div class="form-select"><select id="send_to_admin" name="send_to_admin">
+		
+		<label>To Member: &nbsp&nbsp 
+			<div class="form-select"><select id="to_member_id" name="to_member_id">
 				<option value='' ></option> 
 				<?php
-					for($i = 0; $i < count($admin_list); $i++)
+					for($i = 0; $i < count($member_list); $i++)
 					{
-						$admin_id = $admin_list[$i]['id'];
-						$name = $admin_list[$i]['name'];
-						echo "<option value='$admin_id' >$name</option>";
-					}				
+						$sec_id = $member_list[$i]['id'];
+						$name = $member_list[$i]['name'];
+						echo "<option value='$member_id' >$name</option>";
+						
+						if(strcmp($to_member_id, $member_id) === 0)
+						{
+							$str = "<option value='$member_id' selected >$name</option>";
+						}
+						
+						echo "$str";
+					}
 				?>
 			</select></div>
 		</label><br class="form"><br class="form">
 				
-		<label>Subject: <br><input type="text" name="subject" required 
-			value="<?php if (isset($_POST['subject'])) echo $_POST['subject']; ?>" >
+		<label>Subject: <br><input type="text" name="notice_subject" required 
+			value='<?php echo "$notice_subject"; ?>' >
 		</label><br class="form">
-		
-		
+				
 		<label>Attachments: Select one or more files.
 			<div class="fileDiv"> 				
 				<input type="file" name="attachments" id="attachments" 
@@ -64,10 +123,9 @@
 		<p id="fileListing"></p><br class="form">
 		
 		
-		<label>Message: <br><textarea name="noticeText" rows="10" cols="50" 
+		<label>Message: <br><textarea name="notice_text" rows="10" cols="50" 
 			spellcheck="true" required 
-			value="<?php if (isset($_POST['noticeText'])) 
-					echo $_POST['noticeText']; ?>" ></textarea>
+			value='<?php echo "$notice_text"; ?>' ></textarea>
 		</label><br class="form">	
 		
 		<div class="formButtonDiv">

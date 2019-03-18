@@ -41,14 +41,6 @@ class Assignment_View_Controller extends DatabaseController {
 		return $dataArray;
 	}
 	
-
-	// The assignment_id will be auto-generated, when the new object is added to the database table.
-	public function saveNew(&$assignment_view)
-	{
-		return false;		
-	}
-
-
 	
 	/***
 		updates the given key with the new value in the database 
@@ -162,6 +154,24 @@ class Assignment_View_Controller extends DatabaseController {
 	}
 
 	
+	// database view objects do not do full updates
+	// due to multiple tables being involved
+	public function updateAll($assignment_view)
+	{
+		return false;
+	}
+	
+	
+	// database view objects do new database entries
+	// due to multiple tables being involved
+	public function saveNew(&$assignment_view)
+	{
+		return false;
+	}
+
+
+	// database view objects do not delete objects from the database
+	// due to multiple tables being involved
 	public function deleteFromDatabase($assignment_view)
 	{
 		return false;

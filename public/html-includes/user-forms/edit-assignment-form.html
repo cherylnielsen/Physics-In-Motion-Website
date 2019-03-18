@@ -2,56 +2,74 @@
 <!--professor-form-page.php?form_type=edit_assignment& ... -->
 <?php
 
-$section_id = "";
-$section_name = "";
-$assignment_id = "";
-$assignment_name = "";
+If($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+	$is_ok = $assignmentAction->processAssignmentForm($mdb_control, $form_type);
+	
+	if($is_ok)
+	{
+		echo "<div class='form_errors' id='form_errors' >
+				<p>The update was processed successfully.</p>
+				</div>";
+	}
+	else
+	{
+		echo "<div class='form_errors' id='form_errors' >
+				<p>Sorry, the system was unable to process the update.</p>
+				</div>";
+	}
+}
 
 
-
-
-
-$controller = $mdb_control->getController("assignment");
-$assignment = $controller->getByPrimaryKeys("assignment_id", "$assignment_id", 
-											"section_id", "$section_id");
+// checks GET and POST, if not set, returns empty string
+$section_id = $assignmentAction->getSectionID();
+$assignment_id = $assignmentAction->getAssignmentID();
 
 $tutorial_lab_list = array();
 $tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
 
+$controller = $mdb_control->getController("assignment_view");
+$assignment_view = $controller->getByPrimaryKeys("assignment_id", 
+						"$assignment_id", "section_id", "$section_id");								
+
+
+// checks GET and POST, if not set, returns the existing object values,
+// if the assignment_view object is null, then returns the empty string
+$date_assigned = $assignmentAction->getDateAssignedEdit($assignment_view);
+$assignment_name = $assignmentAction->getAssignmentNameEdit($assignment_view);
+$section_name = $assignmentAction->getSectionNameEdit($assignment_view);
+$date_due = $assignmentAction->getDateDueEdit($assignment_view);
+$points_possible = $assignmentAction->getPointsPossibleEdit($assignment_view);
+$tutorial_lab_id = $assignmentAction->getTutorialLabIDEdit($assignment_view);
+//$attachments or files? = $assignmentAction->getAttachments();
 					
 ?>
 
-<div class="form-errors" id="form_errors"></div>
 
-<form id="assignmentForm" action="professor-form-page.php?form_type=edit_assignment" 
-		method="POST" enctype="multipart/form-data">
+
+<form 	id="editForm" 
+		action="professor-form-page.php?form_type=edit_assignment" 
+		method="POST" 
+		enctype="multipart/form-data" >
 	
 	<fieldset>
 	
 		<input type="hidden" name="assignment_id" value="<?php echo "$assignment_id" ?>" >
+		<input type="hidden" name="assignment_name" value="<?php echo "$assignment_name" ?>" >
 		<input type="hidden" name="section_id" value="<?php echo "$section_id" ?>" >
+		<input type="hidden" name="section_name" value="<?php echo "$section_name" ?>" >
+		<input type="hidden" name="date_assigned" value="<?php echo "$date_assigned" ?>" >
 		
-		<h2 class="form">Edit Assignment</h2>
-		
-		<p>Date: &nbsp&nbsp <?php echo date('D, M d, Y');?></p>	
+		<h2 class="form">Edit Assignment</h2>		
+		<p>Date Assigned: &nbsp&nbsp <?php echo "$date_assigned";?></p>	
 		<br class="form">
 		
 		<p>Section: &nbsp&nbsp
-		<?php 
-			if ((isset($_GET['section_id'])) && (isset($_GET['section_name'])))
-			{
-				echo "Section " . $_GET['section_id'] . ' : ' . $_GET['section_name']; 
-			}
-		?>
+			<?php echo "Section $section_id : $section_name"; ?>
 		</p><br class="form">
 		
 		<p>Assignment to Edit: &nbsp&nbsp
-		<?php 
-			if ((isset($_GET['assignment_id'])) && (isset($_GET['assignment_name'])))
-			{
-				echo "Assignment " . $_GET['assignment_id'] . ' : ' . $_GET['assignment_name']; 
-			}
-		?>
+			<?php  echo "Assignment $assignment_id : $assignment_name"; ?>
 		</p><br class="form">
 		
 	</fieldset>
@@ -60,16 +78,7 @@ $tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
 		
 		<br>
 		<label>Assignment Name: <br><input type="text" name="assignment_name" required 
-			value="<?php 			
-				if (isset($_POST['assignment_name']))
-				{
-					echo $_POST['assignment_name']; 
-				}
-				else if (isset($_GET['assignment_name']))
-				{
-					echo $_GET['assignment_name'];
-				}			
-			?>" >
+			pattern="^[a-zA-Z0-9 \-\'\.]+$" value='<?php echo "$assignment_name"; ?>' >
 		</label><br class="form">
 	
 		<label>Tutorial Lab: &nbsp&nbsp 
@@ -79,16 +88,13 @@ $tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
 				<?php
 					for($i = 0; $i < count($tutorial_lab_list); $i++)
 					{
-						$section_id = $tutorial_lab_list[$i]['id'];
+						$lab_id = $tutorial_lab_list[$i]['id'];
 						$name = $tutorial_lab_list[$i]['name'];
-						$str = "<option value='$tutorial_lab_id' >$name</option>";
+						$str = "<option value='$lab_id' >$name</option>";
 						
-						if (isset($_POST['tutorial_lab_id']))
+						if(strcmp($tutorial_lab_id, $lab_id) === 0)
 						{
-							if(strcmp($_POST['tutorial_lab_id'], $tutorial_lab_id) == 0)
-							{
-								$str = "<option value='$tutorial_lab_id' selected >$name</option>";
-							}
+							$str = "<option value='$lab_id' selected >$name</option>";
 						}
 						
 						echo "$str";
@@ -99,13 +105,12 @@ $tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
 		</label><br class="form"><br class="form">
 		
 		<label>Date Due: <br><input type="date" name="date_due" required 
-		min=<?php echo date('Y-m-d'); ?> 
-			value="<?php if (isset($_POST['date_due'])) echo $_POST['date_due']; ?>" >
+			value='<?php echo "$date_due"; ?>' >
 		</label><br class="form">
 		
 		<label>Points Possible: <br><input type="number" name="points_possible"  
 			min="0" max="1000" required
-			value="<?php if (isset($_POST['points_possible'])) echo $_POST['points_possible']; ?>" >
+			value='<?php echo "$points_possible"; ?>' >
 		</label><br class="form">
 		
 		<label>Attachments: Select one or more files.
@@ -117,9 +122,11 @@ $tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
 		<p id="fileListing"></p><br class="form">
 		
 		<div class="formButtonDiv">
-			<input type="submit" value="Send">		
-			<input type="reset" value="Reset" onclick="clearText()">
-			<a href="professor-page.php" class="button">Cancel</a>
+			<input type="submit" value="Save Changes">		
+			<?php
+				$str = "professor-section-page.php?section_id=$section_id";
+				echo "<a href='$str' class='button'>Cancel</a>";
+			?>		
 		</div>
 	
 	</fieldset>

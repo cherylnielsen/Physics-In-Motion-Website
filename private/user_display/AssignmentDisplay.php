@@ -76,7 +76,7 @@ class AssignmentDisplay
 			{						
 				for($j = 0; $j < $num_homework; $j++)
 				{
-					$row[$j] = $this->displayHomeworkRow($homework_list[$j], true);
+					$row[$j] = $this->displayProfessorHomeworkRow($homework_list[$j]);
 				} 
 				
 				echo "<tr>" . $row[0]['header'] . "</tr>";
@@ -208,13 +208,11 @@ class AssignmentDisplay
 				<td><a href=''>$notes</a></td>";
 				
 		if($for_profesor)
-		{
-			$header = "<th>Edit Assignment</th>" . $header; 
-			
+		{					
 			$url = "professor-form-page.php?form_type=edit_assignment";
-			$url .= "&assignment_id=$assignment_id&assignment_name=$assignment_name";
-			$url .= "&section_id=$section_id&section_name=$section_name";
+			$url .= "&assignment_id=$assignment_id&section_id=$section_id";
 			
+			$header = "<th>Edit Assignment</th>" . $header; 	
 			$dataEdit = "<td><a href='$url' class='assignment_button' >Edit</a></td>"; 					
 			$data = $dataEdit . $data;	
 		}
@@ -226,7 +224,7 @@ class AssignmentDisplay
 	}
 	
 	
-	public function displayHomeworkRow($homework_view, $for_profesor)
+	public function displayProfessorHomeworkRow($homework_view)
 	{		
 		$date_submitted = $homework_view->get_date_submitted();
 		$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
