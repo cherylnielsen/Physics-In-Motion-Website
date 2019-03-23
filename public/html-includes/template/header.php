@@ -6,12 +6,18 @@
 	}
 	
 	
+	echo '<header>';
+		
 	echo
-	'<header>
-		<div class="logo">	
-			<a id="top" href="index.php"><h1>&nbsp;</h1></a>
-			<!-- text for print view only-->
-			<h1 class="logo-print-view">Physics in Motion</h1>
+		'<div class="logo">
+			<a href="index.php" class="cornerLogo">
+				<img class="cornerLogo" src="images/wide logo as of 2016.JPG" 
+					alt="Physics In Motion">
+			</a>		
+				
+			<a id="top" href="index.php">
+				<h1 class="logo">Physics in Motion</h1>
+			</a>
 		</div>';
 		
 		

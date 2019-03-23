@@ -4,7 +4,37 @@
 section.main-content {
 	float: left;
 	padding: 0 0 1% 2%;
-	width: 60%;
+	width: 75%;
+}
+
+
+aside.second-navigation {
+	border-left: 2px solid #03AA0D;
+	border-right: 2px solid #03AA0D;
+	background-color: #A7DAFA;
+	width: 100%;
+	text-align: left;
+	position: relative;
+	left: -2px;
+}
+
+
+a.navigation, button.navigation {
+	background-color: inherit;
+	border: none;
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+	color: blue;
+	text-align: left;
+	font-weight: 900;
+}
+
+h2.navigation {
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	text-align: center;
+	padding: 0.25em 0;
+	background-color: lightyellow;
 }
 
 .fullSelectedNotice {
@@ -35,20 +65,15 @@ div.overflow {
 	margin: 30px 0;
 }
 
+a.assignment_link {
+	margin: 5px;
+}
 
 /* tables */
 
 table {
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-}
-
-table.actions {
-	float: right;
-	position: relative;
-	top: -2px;
-	right: -2px;
-	background-color: #A7DAFA;
 }
 
 table.noticeSummary {
@@ -64,11 +89,7 @@ th {
 	background-color: #A7DAFA;
 }
 
-table.actions th {
-	border: 2px solid #03AA0D;
-	border-radius: 5px;
-	background-color: lightyellow;
-}
+
 
 td.center {
 	text-align: center;
@@ -82,9 +103,6 @@ table.notice-header tr:nth-child(even){
 	background-color: #e6e6e6;
 }
 
-table.actions tr:nth-child(even){
-	background-color: inherit;
-}
 
 tr:hover {
 	background-color: #81fd8a;
@@ -136,13 +154,7 @@ div.selectedNotice {
 
 /* buttons */
 
-.summaryButton {
-	background-color: inherit;
-	border: none;
-	font-family: "Times New Roman", "serif";
-	font-size: 1em;
-	color: blue;
-}
+
 
 button.showNoticeButton {
 	background-color: inherit;
@@ -156,18 +168,19 @@ button.showNoticeButton {
 	background-color: #81fd8a;
 }
 
-button.table-button {
-	background-color: inherit;
-	border: none;
+.table-button {
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
-	color: blue;
-	text-decoration: underline;
-	font-weight: 900;
-	cursor: pointer;
+	padding: 5px 10px;
+	background-color: #03CA0D;
+	margin: 0.75em 0.5em;
+	font-weight: bold;
+	border-radius: 5px;
+	text-decoration: none;
+	border: 2px solid white;
+	border-style: outset;
+	color: black;
 }
 
-@media screen and (max-width: 600px) {
-	
-}
-  
+.table-button:active {
+  transform: translateX(-2px);

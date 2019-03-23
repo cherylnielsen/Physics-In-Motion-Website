@@ -21,8 +21,8 @@
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
 	?>
-	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
-	<link href="css/professor-student-form.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-forms.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
 	<script src="javascript/member-forms.js" ></script>
 	
@@ -49,17 +49,7 @@
 	$form_type = $_GET["form_type"];
 
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php');
-	
-	if(strcmp($form_type, "write_notice") !== 0)
-	{
-		include('html-includes/navigation/professor-section-navigation.php');
-	}
-	else
-	{
-		include('html-includes/navigation/professor-notice-navigation.php');
-	}
-	
+	include('html-includes/navigation/main-navigation-and-quote.php');	
 ?>
 
 <section class="main-content">

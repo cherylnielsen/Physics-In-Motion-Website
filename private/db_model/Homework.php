@@ -19,12 +19,14 @@ class Homework {
 	protected $points_earned;
 	protected $was_graded;
 	protected $hours;
+	protected $filepath;
 			
 	public function __construct() {}
 	
 	public function initialize($homework_id, $section_id, $assignment_id, $student_id, 
 								$lab_summary, $lab_data, $graphs, $math, $hints, $chat_session,
-								$date_submitted, $points_earned = 0, $was_graded = false, $hours = 0)
+								$date_submitted, $filepath, 
+								$points_earned = 0, $was_graded = false, $hours = 0)
 	{
 		$this->homework_id = $homework_id;
 		$this->section_id = $section_id;
@@ -37,6 +39,7 @@ class Homework {
 		$this->hints = $hints;
 		$this->chat_session = $chat_session;
 		$this->date_submitted = $date_submitted;
+		$this->filepath = $filepath;
 		$this->points_earned = $points_earned;
 		$this->hours = $hours;
 		$this->was_graded = $was_graded;	
@@ -180,6 +183,16 @@ class Homework {
 	public function set_was_graded($was_graded)
 	{
 		$this->was_graded = $was_graded;
+	}
+	
+	public function get_filepath()
+	{
+		return $this->filepath;
+	}
+
+	public function set_filepath($filepath)
+	{
+		$this->filepath = $filepath;
 	}
 	
 }

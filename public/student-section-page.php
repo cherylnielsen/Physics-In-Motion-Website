@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
+	
 	<title>Physics in Motion: Student Services</title>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Student services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Students or Students.">
@@ -12,8 +13,10 @@
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
 	?>
-	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-forms.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
+
 	
 </head>
 <body>
@@ -38,8 +41,7 @@
 	$section_id = $_GET["section_id"];
 
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php'); 
-	include('html-includes/navigation/student-navigation.php');
+	include('html-includes/navigation/main-navigation-and-quote.php'); 
 ?>
 
 <section class="main-content">

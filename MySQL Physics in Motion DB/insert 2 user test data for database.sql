@@ -18,6 +18,5 @@ insert into administrator (administrator_id, admin_type)
 values (4, 'general');
 
 select * from professor;
-select * from professor;
 select * from student;
 select * from member;

@@ -5,7 +5,7 @@ class HomeworkController extends DatabaseController {
 	public function __construct(){}
 	// ($homework_id, $section_id, $assignment_id, $student_id, $lab_summary, 
 	// $lab_data, $graphs, $math, $hints, $chat_session,
-	// $date_submitted, $points_earned, $was_graded, $hours)
+	// $date_submitted, $filepath, $points_earned, $was_graded, $hours)
 
 
 	protected function getData($db_result, $db_connection)
@@ -21,7 +21,7 @@ class HomeworkController extends DatabaseController {
 				$homework->initialize($row['homework_id'], $row['section_id'], $row['assignment_id'], 
 							$row['student_id'], 
 							$row['lab_summary'], $row['lab_data'], $row['graphs'], $row['math'], 
-							$row['hints'], $row['chat_session'], $row['date_submitted'],
+							$row['hints'], $row['chat_session'], $row['date_submitted'], $row['filepath'], 
 							$row['points_earned'], $row['was_graded'], $row['hours']);
 				
 				// pushes each object onto the end of the array
@@ -52,6 +52,7 @@ class HomeworkController extends DatabaseController {
 		$hints = $homework->get_hints(); 
 		$chat_session = $homework->get_chat_session();
 		$date_submitted = $submission->get_date_submitted();
+		$filepath = $submission->get_filepath();
 		$points_earned = $submission->get_points_earned();
 		$was_graded = $submission->get_was_graded();
 		$hours = $submission->get_hours();
@@ -59,9 +60,10 @@ class HomeworkController extends DatabaseController {
 		$table = $this->getTableName();
 
 		$query = "insert into $table (section_id, assignment_id, student_id, lab_summary, lab_data, 
-						graphs, math, hints, chat_session, date_submitted, points_earned, was_graded, hours) 
+						graphs, math, hints, chat_session, date_submitted, 
+						filepath, points_earned, was_graded, hours) 
 				values ('$section_id', '$assignment_id', '$student_id', '$lab_summary', '$lab_data', 
-						'$graphs', '$math', '$hints', '$chat_session', '$date_submitted', 
+						'$graphs', '$math', '$hints', '$chat_session', '$date_submitted', '$filepath', 
 						'$points_earned', '$was_graded', '$hours')";
 						
 		$result = mysqli_query($db_connection, $query);
@@ -138,6 +140,10 @@ class HomeworkController extends DatabaseController {
 				$value = $homework->get_date_submitted();	
 				$query = "update $table set date_submitted = '$value' where homework_id = '$homework_id'";
 				break;
+			case 'filepath':
+				$value = $homework->get_filepath();	
+				$query = "update $table set filepath = '$value' where homework_id = '$homework_id'";
+				break;
 			case 'points_earned':
 				$value = $homework->get_points_earned();	
 				$query = "update $table set points_earned = '$value' where homework_id = '$homework_id'";
@@ -187,6 +193,7 @@ class HomeworkController extends DatabaseController {
 						hints = '$hints',
 						chat_session = '$chat_session',
 						date_submitted = '$date_submitted',
+						filepath = '$filepath', 
 						points_earned = '$points_earned',
 						was_graded = '$was_graded',
 						hours = '$hours'

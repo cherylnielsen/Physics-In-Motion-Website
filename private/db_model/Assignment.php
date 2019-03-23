@@ -9,12 +9,12 @@ class Assignment {
 	protected $date_assigned;
 	protected $date_due;
 	protected $points_possible;		
-	protected $notes;	
+	
 	
 	public function __construct() {}
 
 	public function initialize($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, 
-							$date_assigned, $date_due, $points_possible, $notes)
+							$date_assigned, $date_due, $points_possible)
 	{
 		$this->assignment_id = $assignment_id;
 		$this->section_id = $section_id;
@@ -23,7 +23,7 @@ class Assignment {
 		$this->date_assigned = $date_assigned;
 		$this->date_due = $date_due;	
 		$this->points_possible = $points_possible;
-		$this->notes = $notes;
+		
 	}
 	
 	
@@ -97,15 +97,6 @@ class Assignment {
 		$this->points_possible = $points_possible;
 	}
 	
-	public function get_notes()
-	{
-		return $this->notes;
-	}
-
-	public function set_notes($notes)
-	{
-		$this->notes = $notes;
-	}
 	
 }
 

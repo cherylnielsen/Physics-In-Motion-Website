@@ -1,3 +1,4 @@
 # files to be ignored by GitHub repository
 db_access.php
-db_linked_files/*.*
+dbLinkedFiles/*.*
+attachments/*.*

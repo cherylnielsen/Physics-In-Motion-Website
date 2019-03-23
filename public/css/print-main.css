@@ -7,10 +7,15 @@ div.sign-in {
 	display: none;
 }
 
-h1.logo-print-view {
+h1.logo {
 	display: inline-block;
 	position: absolute;
 	top: 0;
+}
+
+img.cornerLogo {
+	width: 150px;
+	
 }
 
 aside.nav-quote {
@@ -26,4 +31,8 @@ h1.summary {
 	top: 0;
 	left: 0;
 	font-size: 1.1em;
+}
+
+#secondary-navigation{
+	display: none;
 }

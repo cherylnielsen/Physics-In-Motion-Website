@@ -12,7 +12,7 @@
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
 	?>
-	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
 	
 </head>
@@ -37,7 +37,7 @@
 	$last_name = $_SESSION["last_name"];
 
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php');
+	include('html-includes/navigation/main-navigation-and-quote.php');
 	include('html-includes/navigation/admin-navigation.php');
 ?>
 

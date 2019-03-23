@@ -26,19 +26,22 @@ class AssignmentAction
 		{
 			echo "<p>Assignment Names can only contain letters, numbers, spaces, 
 					and the following characters .',-_&()</p>";  
-			return false;
+			$sucess = false;
 		}
 		
 		if (filter_var($points_possible, FILTER_VALIDATE_INT) === false) 
 		{
 			echo "<p>Points Possible must be a positive integer.</p>";  
-			return false;
+			$sucess = false;
 		}
 		else if($points_possible < 0)
 		{
 			echo "<p>Points Possible must be a positive integer.</p>";  
-			return false;
+			$sucess = false;
 		}
+		
+		echo "</div>";
+		if(!$sucess) { return false; }
 		
 		// sanitize text box inputs for safety
 		$db_con = get_db_connection();		
@@ -77,6 +80,16 @@ class AssignmentAction
 		}
 		
 		return $sucess;				
+	}
+	
+	
+	public function submitHomework($homework_id, $mdb_control)
+	{
+		$homework = new Homework();	
+		$hmwk_control = $mdb_control->getController("homework");
+		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
+		$homework->set_date_submitted(date("Y/m/d"));
+		$hmwk_control->updateAttribute($homework, "date_submitted");
 	}
 	
 	

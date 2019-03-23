@@ -5,12 +5,11 @@
 @media screen and (max-width: 600px) {
 
 	header{ 
-		height: 108px;
+		height: 125px;
 	}
 
 	div.logo {
-		width: 60%;
-		height: 108px;
+		background:  none;
 	}
 
 	a {
@@ -21,8 +20,9 @@
 	div.sign-in {
 		position: absolute;
 		top: 0;
-		right: 0;		
-		padding: 0.5em 1em 0 1em;
+		right: 0;	
+		width: 53%;
+		padding: 1em 0.5em 0.5em 0.5em;
 	}
 
 	aside.nav-quote {
@@ -34,6 +34,7 @@
 		padding: 2%;
 		border-left: none;
 		border-right: none;
+		
 	}
 
 	div.quote {
@@ -46,9 +47,9 @@
 	}
 
 	a#new-labs {
-	display: inline-block;
-	margin: 0.5em 0 0 1.5em;
-}
+		display: inline-block;
+		margin: 0.5em 0 0 1.5em;
+	}
 
 	section.main-content {
 		clear: both;

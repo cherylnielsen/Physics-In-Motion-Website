@@ -20,9 +20,13 @@
 
 <section class="main-body" >
 	<?php include('html-includes/navigation/main-navigation-and-quote.php'); ?>
-		<section class="main-content">	
-			<?php include('html-includes/template/logo-statement.php'); ?>
-			<?php include('html-includes/template/home-page-project-summary.html'); ?>
+		<section class="main-content">
+			<div class="form-errors">
+				<br><h2>Sorry, this is a temporary filler page for pages that do not yet exist 
+					or are a work in progress.</h2><br>
+				<img alt="Physics in Motion" src="images/wide logo as of 2016.JPG"
+					class="templinkpageimg">
+			</div>
 		</section>
 	<?php include('html-includes/labs/new-labs-list.php'); ?>	
 </section>	

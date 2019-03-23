@@ -2,8 +2,17 @@
 /* CSS Document */
 /* changes to css for medium size screens */
 
+
 div.logo {
-	width: 70%;
+	background-size:  40% 75%;
+}
+
+div.sign-in {
+	position: absolute;
+	top: 0;
+	right: 0;	
+	width: 200px;
+	padding: 1em 0.5em 0.5em 0.5em;
 }
 
 a#new-labs {

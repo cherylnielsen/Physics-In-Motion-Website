@@ -2,7 +2,7 @@
 /* CSS Document */
 
 section.main-content {
-	width: 55%;
+	width: 75%;
 }
 
 h1.form, h2.form {
@@ -11,6 +11,12 @@ h1.form, h2.form {
 
 h1.welcome {
 	padding: 0.5em 0 0 0.5em;
+}
+
+div.form-errors {
+	color: red;
+	font-weight: 900;
+	margin: 0 5em;
 }
 
 form {
@@ -78,6 +84,12 @@ input[type=date] {
 	padding-left: 7px;
 }
 
+input:invalid, textarea:invalid {
+	border: 2px solid red;
+	border-radius: 5px;
+	background-color: #ffd4d4;
+}
+
 div.formButtonDiv {
 	float: right;
 	padding-right: 2%;
@@ -116,12 +128,6 @@ input[type=reset] {
 	margin: 0.75em 0.5em;
 	font-weight: bold;
 	border-radius: 5px;
-}
-
-div.form-errors {
-	color: red;
-	font-weight: 900;
-	margin: 0 5em;
 }
 
 ul {

@@ -16,13 +16,14 @@ class Homework_View extends Homework {
 	public function initializeView($homework_id, $section_id, $assignment_id, 
 								$assignment_name, $tutorial_lab_id, $student_id, 
 								$lab_summary, $lab_data, $graphs, $math, $hints, $chat_session,
-								$date_submitted, $student_first_name, $student_last_name, $school_name,
+								$date_submitted, $filepath, 
+								$student_first_name, $student_last_name, $school_name,
 								$points_possible,
 								$points_earned = 0, $was_graded = false, $hours = 0)
 	{
 		$this->initialize($homework_id, $section_id, $assignment_id, $student_id, 
 								$lab_summary, $lab_data, $graphs, $math, $hints, $chat_session,
-								$date_submitted, $points_earned, $was_graded, $hours);
+								$date_submitted, $filepath, $points_earned, $was_graded, $hours);
 								
 		$this->student_first_name = $student_first_name;
 		$this->student_last_name = $student_last_name;

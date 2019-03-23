@@ -34,6 +34,9 @@ class DatabaseControllerFactory
 			case "assignment" :
 				$controller = new AssignmentController();
 				break;	
+			case "assignment_attachment":
+				$controller = new AssignmentAttachmentController();
+				break;
 			case "assignment_view" :
 				$controller = new Assignment_View_Controller();
 				break;					

@@ -1,49 +1,29 @@
 
 <?php
+	$cancelURL = $noticeAction->returnURL();	
 	
-	If($_SERVER['REQUEST_METHOD'] == 'POST')
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$is_ok = $noticeAction->processWriteNoticeForm($mdb_control, $form_type);
 		
 		if($is_ok)
-		{
-			echo "<div class='form-errors' >
-					<p>The update was processed successfully.</p>
-					</div>";
-					
-			switch($_SESSION['member_type'])
-			{
-				case "professor":
-					$url = "professor-page.php";
-					break;
-				case "student":
-					$url = "student-page.php";
-					break;
-				case "administrator":
-					$url = "administrator-page.php";
-					break;
-			}
-			
-			header("Location: $url");
+		{	
+			header("Location: $cancelURL");
 			exit();
 		}
 		else
 		{
 			echo "<div class='form-errors' >
-					<p>Sorry, the system was unable to process the update.</p>
-					</div>";
-		}
-		
+					<p>Sorry, the system was unable to send the notice.</p>
+					</div><br>";
+		}		
 	}
 	
 	
-	$section_list = array();
-	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
-									$sectionDisplay, $professor_id, $mdb_control);
-	
 	$member_list = array();
-	$member_list = $displayUtility->getMemberList($mdb_control);
-	
+	$member_list = $displayUtility->getMemberList($mdb_control);		
+	$section_list = array();	
+	$section_list = $noticeAction->getSectionList($displayUtility, $sectionDisplay, $mdb_control);	
 	
 	//$flag_for_review = false;
 	$date_sent = date("m/d/Y");
@@ -63,8 +43,7 @@
 ?>
 
 
-<form id="write_notice_form" action="professor-form-page.php?form_type=write_notice" 
-		method="POST" enctype="multipart/form-data">
+<form id='write_notice_form' method='POST' enctype='multipart/form-data'>
 	
 	<fieldset>
 		
@@ -124,11 +103,13 @@
 			</select></div>
 		</label><br class="form"><br class="form">
 				
+				
 		<label>Subject: <br><input type="text" name="notice_subject" required 
 			value='<?php echo "$notice_subject"; ?>' >
 		</label><br class="form">
 				
-		<label>Attachments: Select one or more files.
+				
+		<label>Attachments: Select one or more files. (Optional)
 			<div class="fileDiv"> 				
 				<input type="file" name="attachments" id="attachments" 
 					multiple onchange="showFileNames()">
@@ -141,9 +122,10 @@
 			spellcheck="true" required ><?php echo "$notice_text"; ?></textarea>
 		</label><br class="form">	
 		
+		
 		<div class="formButtonDiv">
-			<input type="submit" value="Send">		
-			<a href="professor-page.php" class="button">Cancel</a>
+			<input type="submit" value="Send">	
+			<a href='<?php echo "$cancelURL" ?>' class='button'>Cancel</a>
 		</div>
 				
 	</fieldset>

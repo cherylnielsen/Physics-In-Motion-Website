@@ -1,5 +1,15 @@
+<?php
 
-
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		if(isset($_POST['submit_homework']))
+		{
+			$homework2SubmitID = $_POST['submit_homework'];
+			$assignmentAction->submitHomework($homework2SubmitID, $mdb_control);
+		}		
+	}
+		
+?>
 
 <div>
 <?php

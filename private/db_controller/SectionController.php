@@ -18,7 +18,8 @@ class SectionController extends DatabaseController {
 				$section = new Section();
 				$section->initialize($row['section_id'], $row['section_name'], 
 							$row['professor_id'], 
-							$row['start_date'], $row['end_date']);
+							$row['start_date'], $row['end_date'],
+							$row['section_description']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section;
 			}
@@ -40,12 +41,17 @@ class SectionController extends DatabaseController {
 		$section_name = $section->get_section_name();
 		$professor_id = $section->get_professor_id();
 		$text = $section->get_start_date();
+		$start_date = $section->get_start_date();
 		$end_date = $section->get_end_date();
+		$section_description = $section->get_section_description();
 		$table = $this->getTableName();
 		
 		// The id will be auto-generated, when the new object is added to the database table.
-		$query = "insert into $table (section_name, professor_id, start_date, end_date) 
-				values('$section_name', '$professor_id', '$text', '$end_date')";
+		$query = "insert into $table (section_name, professor_id, 
+					start_date, end_date, section_description) 
+				values('$section_name', '$professor_id', '$text', 
+					'$start_date', '$end_date', '$section_description')";
+					
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -96,6 +102,10 @@ class SectionController extends DatabaseController {
 				$value = $section->get_end_date();	
 				$query = "update $table set end_date = '$value' where section_id = '$section_id'";
 				break;
+			case 'section_description':
+				$value = $section->get_section_description();	
+				$query = "update $table set section_description = '$value' where section_id = '$section_id'";
+				break;
 		}
 		
 		$result = mysqli_query($db_connection, $query);
@@ -128,7 +138,8 @@ class SectionController extends DatabaseController {
 					SET section_name = '$section_name',
 						professor_id = '$professor_id',
 						start_date = '$start_date',
-						end_date = '$end_date'
+						end_date = '$end_date',
+						section_description = '$section_description'
 					WHERE section_id = '$section_id'";
 						
 		$result = mysqli_query($db_connection, $query);

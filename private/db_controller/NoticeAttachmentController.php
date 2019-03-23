@@ -15,7 +15,8 @@ class NoticeAttachmentController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$notice_attachment = new Notice_Attachment();
-				$notice_attachment->initialize($row['notice_attachment_id'], $row['notice_id'], $row['attachment']);
+				$notice_attachment->initialize($row['notice_attachment_id'], $row['notice_id'], 
+									$row['filename'], $row['filepath']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $notice_attachment;	
 			}
@@ -35,12 +36,13 @@ class NoticeAttachmentController extends DatabaseController {
 		$db_connection = get_db_connection();
 		$sucess = true;
 		$notice_id = $notice_attachment->get_notice_id();
-		$attachment = $notice_attachment->get_attachment();
+		$filename = $notice_attachment->get_filename();
+		$filepath = $notice_attachment->get_filepath();
 		$table = $this->getTableName();
 		
 		// The notice_attachment_id will be auto-generated.
 		$query = "insert into $table (notice_id, attachment) 
-				values('$notice_id', '$attachment')";
+				values('$notice_id', '$filename', '$filepath')";
 		$result = mysqli_query($db_connection, $query);
 
 		if(!$result)
@@ -62,7 +64,7 @@ class NoticeAttachmentController extends DatabaseController {
 	
 	
 	// updates the given key with the new value in the database 
-	// ($notice_attachment_id, $notice_id, $attachment)
+	// ($notice_attachment_id, $notice_id, $filename)
 	public function updateAttribute($notice_attachment, $key)
 	{
 		$db_connection = get_db_connection();
@@ -79,9 +81,13 @@ class NoticeAttachmentController extends DatabaseController {
 				$value = $notice_attachment->get_notice_id();	
 				$query = "update $table set notice_id = '$value' where notice_attachment_id = '$notice_attachment_id'";
 				break;
-			case 'attachment':
-				$value = $notice_attachment->get_attachment();	
-				$query = "update $table set attachment = '$value' where notice_attachment_id = '$notice_attachment_id'";
+			case 'filename':
+				$value = $notice_attachment->get_filename();	
+				$query = "update $table set filename = '$value' where notice_attachment_id = '$notice_attachment_id'";
+				break;
+			case 'filepath':
+				$value = $notice_attachment->get_filepath();	
+				$query = "update $table set filepath = '$value' where notice_attachment_id = '$notice_attachment_id'";
 				break;
 		}
 		
@@ -107,11 +113,13 @@ class NoticeAttachmentController extends DatabaseController {
 		
 		// data to be updated			
 		$notice_id = $notice_attachment->get_notice_id();
-		$attachment = $notice_attachment->get_attachment();
+		$filename = $notice_attachment->get_filename();
+		$filepath = $notice_attachment->get_filepath();
 			
 		$query = "UPDATE $table 
 					SET notice_id = '$notice_id',
-						attachment = '$attachment'
+						filename = '$filename',
+						filepath = '$filepath'
 					WHERE notice_attachment_id = '$notice_attachment_id'";
 						
 		$result = mysqli_query($db_connection, $query);
