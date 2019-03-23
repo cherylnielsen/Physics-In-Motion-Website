@@ -4,7 +4,7 @@ class AssignmentDisplay
 {
 	private $displayUtility;
 	private $sectionDisplay;
-	private $base_path = "attachments";
+	private $filebase = "attachments";
 	
 	public function __construct() 
 	{
@@ -230,9 +230,11 @@ class AssignmentDisplay
 			$attachment_id = $attachments[$i]->get_assignment_attachment_id();
 			$filepath = $attachments[$i]->get_filepath();
 			$filename = $attachments[$i]->get_filename();
-			$attachment_link = $this->base_path . "/$filepath/$filename";
-			$attachment_list .= "<a href='$attachment_link' download
-									class='assignment_link'>$filename</a>";
+			$attachment_link = $this->filebase . "/$filepath/$filename";
+			
+			//requires a base of file path inside the public folder
+			$attachment_list .= "<a href='$attachment_link' download 
+								class='assignment_link'>$filename</a>";
 		}
 					
 		$data .=  "<td>$attachment_list</td>";		
