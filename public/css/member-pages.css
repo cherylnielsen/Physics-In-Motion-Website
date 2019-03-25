@@ -8,42 +8,6 @@ section.main-content {
 }
 
 
-aside.second-navigation {
-	border-left: 2px solid #03AA0D;
-	border-right: 2px solid #03AA0D;
-	background-color: #A7DAFA;
-	width: 100%;
-	text-align: left;
-	position: relative;
-	left: -2px;
-}
-
-
-a.navigation, button.navigation {
-	background-color: inherit;
-	border: none;
-	font-family: "Times New Roman", "serif";
-	font-size: 1em;
-	color: blue;
-	text-align: left;
-	font-weight: 900;
-}
-
-h2.navigation {
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-	text-align: center;
-	padding: 0.25em 0;
-	background-color: lightyellow;
-}
-
-.fullSelectedNotice {
-	/*display: none;*/
-	background-color: white;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-}
-
 .flag-for-review {
 	color: red;
 }
@@ -65,7 +29,7 @@ div.overflow {
 	margin: 30px 0;
 }
 
-a.assignment_link {
+a.assignment_link, a.notice_link {
 	margin: 5px;
 }
 
@@ -80,6 +44,10 @@ table.noticeSummary {
 	margin: 30px 0;
 }
 
+table.notice-table {
+	min-width: 70%;
+}
+
 th, td {
 	padding: 5px 10px;	
 	text-align: left;
@@ -89,20 +57,13 @@ th {
 	background-color: #A7DAFA;
 }
 
-
-
 td.center {
 	text-align: center;
 }
 
-tr:nth-child(even){
-	background-color: #e6e6e6;
+tr{
+	background-color: white;
 }
-
-table.notice-header tr:nth-child(even){
-	background-color: #e6e6e6;
-}
-
 
 tr:hover {
 	background-color: #81fd8a;
@@ -110,18 +71,26 @@ tr:hover {
 
 /* display selected notice */
 
+.selectedNotice {
+	min-width: 100%;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
 table.selectedNotice {
-	border: none;
-	width: 100%;
 	background-color: lightyellow;
+	border-collapse: collapse;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
 }
 
 table.selectedNotice tr:hover {
-	background-color: lightyellow;
+	background-color: white;
 }
 
-table.selectedNotice tr:nth-child(even){
-	background-color: lightyellow;
+tr.selectedNotice {
+	display: none;
+	background-color: #A7DAFA;
 }
 
 td.right {
@@ -148,13 +117,7 @@ td.response {
 	border-radius: 10px;
 }
 
-div.selectedNotice {
-	display: none;
-}
-
 /* buttons */
-
-
 
 button.showNoticeButton {
 	background-color: inherit;
@@ -162,6 +125,8 @@ button.showNoticeButton {
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
 	color: black;
+	width: 100%;
+	height: 100%;
 }
 
 .button:hover {
@@ -173,7 +138,7 @@ button.showNoticeButton {
 	font-size: 1em;
 	padding: 5px 10px;
 	background-color: #03CA0D;
-	margin: 0.75em 0.5em;
+	margin: 0.25em 0;
 	font-weight: bold;
 	border-radius: 5px;
 	text-decoration: none;
@@ -184,3 +149,17 @@ button.showNoticeButton {
 
 .table-button:active {
   transform: translateX(-2px);
+}
+
+input[type=number].table-input {
+	width: 4em;
+	height: 1.5em;
+	margin: 0.25em 0;
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
+	background-color: lightyellow;	
+	padding-left: 7px;
+	padding-right: 3px;
+	font-family: "Times New Roman", "serif";
+	font-size: 1em;
+}

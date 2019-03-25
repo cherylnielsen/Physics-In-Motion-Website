@@ -21,7 +21,7 @@
 <section class="main-body" >
 	<?php include('html-includes/navigation/main-navigation-and-quote.php'); ?>
 		<section class="main-content">	
-			<?php include('html-includes/template/logo-statement.php'); ?>
+			<?php include('html-includes/template/logo-statement.html'); ?>
 			<?php include('html-includes/template/home-page-project-summary.html'); ?>
 		</section>
 	<?php include('html-includes/labs/new-labs-list.php'); ?>	

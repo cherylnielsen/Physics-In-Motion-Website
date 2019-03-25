@@ -46,7 +46,7 @@ class SectionDisplay
 		{
 			case "student":
 				$student_id = $_SESSION['student_id'];
-				$link = "<a href='student-section-page.php?section_id=$section_id'>";
+				$link = "<a href='student-home-page.php?section_id=$section_id'>";
 				
 				$controller = $mdb_control->getController("section_student");
 				$section_student = $controller->getByPrimaryKeys(
@@ -55,7 +55,7 @@ class SectionDisplay
 				break;
 				
 			case "professor":
-				$link = "<a href='professor-section-page.php?section_id=$section_id'>";
+				$link = "<a href='professor-home-page.php?section_id=$section_id'>";
 				break;
 		}
 		
@@ -112,91 +112,49 @@ class SectionDisplay
 	}
 	
 	
-	public function displaySectionShortList($section_list, $mdb_control, $member_type)
+	public function getSectionShortList($section_list, $mdb_control, $member_type)
 	{			
 		$num_sections = count($section_list);
-		$num_listed = 0;
-		$link = "";
+		$short_list = array();
 		
 		if($num_sections <= 0)
 		{
-			echo "<p class='navigation'>No current sections</p>";
-			return;
+			return $short_list;
 		}		
 		
-		if($member_type == "student")
-		{			
-			for($i = 0; $i < $num_sections; $i++)
-			{	
-				$section_id = $section_list[$i]->get_section_id();
-				$section_name = $section_list[$i]->get_section_name();
-				
+		for($i = 0; $i < $num_sections; $i++)
+		{	
+			$section_id = $section_list[$i]->get_section_id();
+			$section_name = $section_list[$i]->get_section_name();
+			$today = new DateTime("now");
+			
+			$date_time = $section_list[$i]->get_start_date();
+			$start_date = $this->displayUtility->displayDateLong($date_time);
+			$start = new DateTime($start_date);
+			
+			$date_time = $section_list[$i]->get_end_date();
+			$end_date = $this->displayUtility->displayDateLong($date_time);
+			$end = new DateTime($end_date);		
+			$dropped_section = false;
+					
+			if($member_type == "student")
+			{						
 				$student_id = $_SESSION['student_id'];
 				$controller = $mdb_control->getController("section_student");
 				$section_student = $controller->getByPrimaryKeys(
 									"section_id", $section_id, "student_id", $student_id);
 				$dropped_section = $section_student->get_dropped_section();
-								
-				$date_time = $section_list[$i]->get_start_date();
-				$start_date = $this->displayUtility->displayDateLong($date_time);		
-				$date_time = $section_list[$i]->get_end_date();
-				$end_date = $this->displayUtility->displayDateLong($date_time);
-						
-				$today = new DateTime("now");
-				$end = new DateTime($end_date);
-				$start = new DateTime($start_date);
-				
-				if((!$dropped_section) && ($start <= $today) && ($today <= $end)) 
-				{
-					$num_listed++;
-					
-					$link = "<a href='student-section-page.php?section_id=$section_id' 
-								class='navigation'>Section 
-								$section_id&nbsp:&nbsp$section_name
-							</a>";
-							
-					echo "$link";
-				}
 			}
 			
-			if($num_listed == 0)
+			if((!$dropped_section) && ($start <= $today) && ($today <= $end))
 			{
-				echo "<p class='navigation'>No current sections</p>";
-			}
+				$short_list[$i]['id'] = $section_id;
+				$short_list[$i]['name'] = $section_name;
+			}			
 		}
 		
-		
-		if($member_type == "professor")
-		{
-			for($i = 0; $i < $num_sections; $i++)
-			{
-				
-				$section_id = $section_list[$i]->get_section_id();
-				$section_name = $section_list[$i]->get_section_name();
-				
-				$date_time = $section_list[$i]->get_start_date();
-				$start_date = $this->displayUtility->displayDateLong($date_time);		
-				$date_time = $section_list[$i]->get_end_date();
-				$end_date = $this->displayUtility->displayDateLong($date_time);
-						
-				$today = new DateTime("now");
-				$end = new DateTime($end_date);
-				$start = new DateTime($start_date);
-				
-				if(($start <= $today) && ($today <= $end))
-				{
-					$num_listed++;
-					
-					$link = "<a href='professor-section-page.php?section_id=$section_id' 
-								class='navigation'>Section 
-								$section_id&nbsp:&nbsp$section_name
-							</a>";
-						
-					echo "$link";
-				}
-			}
-		}
-		
+			return $short_list;	
+			
 	}
 	
 	

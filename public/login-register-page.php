@@ -38,7 +38,7 @@
 
 <section class="main-content">
 <?php 
-	include('html-includes/template/logo-statement.php'); 	
+	include('html-includes/template/logo-statement.html'); 	
 	
 	$loggedIn = isset($_SESSION['member_id']);
 	

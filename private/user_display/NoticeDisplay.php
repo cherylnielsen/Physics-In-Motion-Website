@@ -3,6 +3,7 @@
 class NoticeDisplay
 {
 	private $displayUtility;
+	private $filebase = "attachments";
 	
 	public function __construct() 
 	{
@@ -10,38 +11,110 @@ class NoticeDisplay
 	}
 	
 	
-	public function displayNoticeSummary($professor_id, $section_list, $mdb_control)
+	public function displayNoticeSummary($member_id, $section_list, $mdb_control)
 	{
-		echo "<table class='summary noticeSummary'><tr><th colspan='3'><h2>Notice Summary</h2></th></tr>";
-		echo "<tr><th>Notice Type</th><th>Number of Notices</th></tr>";
+		// 3 rows:
+		// num notices today
+		// num notices in last 7 days
+		// total num notices
+		// n cols: inbox, sent, section 1, section 2, ...
 		
+		$numOfNoticesArray = array();
+		
+		// in box notices 		
 		$notices = array();
-		$notices = $this->getMemberInBoxNotices($professor_id, $mdb_control);
-		$num_notices_inbox = count($notices);
+		$notices = $this->getMemberInBoxNotices($member_id, $mdb_control);		
+		$numOfNoticesArray['inbox'] = $this->numberNotices($notices);
 		
+		// sent notices 		
 		$notices = array();
-		$notices = $this->getMemberSentNotices($professor_id, $mdb_control);
-		$num_notices_sent = count($notices);		
+		$notices = $this->getMemberSentNotices($member_id, $mdb_control);	
+		$numOfNoticesArray['sent'] = $this->numberNotices($notices);	
 		
-		echo "<tr><td>Member&nbsp:&nbspIn Box&nbsp/&nbspSent</td>";
-		echo "<td>In Box (" . $num_notices_inbox . ")&nbsp/&nbspSent (" . $num_notices_sent . ")</td></tr>";
+		// table headings		
+		$table_heading = "<table class='summary'>
+				<tr><th colspan='10'><h2>Notice Summary</h2></th></tr>
+				<tr><th> </th><th>In Box</th><th>Sent</th>"; 				
+				
+		// section notices & table headings continued
 		
 		$numSections = count($section_list);
 		
 		for($i = 0; $i < $numSections; $i++)
 		{
 			$section_id = $section_list[$i]->get_section_id();
-			$section_name = $section_list[$i]->get_section_name();
+			$table_heading = $table_heading . "<th>Section $section_id</th>";
 			
+			// section notices			
 			$notices = array();
-			$notices = $this->getSectionNotices($section_id, $mdb_control);
-			$num_notices = count($notices);
-			
-			echo "<tr><td>Section $section_id&nbsp:&nbsp$section_name</td>
-					<td class='center'>$num_notices</td></tr>";
+			$notices = $this->getSectionNotices($section_id, $mdb_control);						
+			$numOfNoticesArray[$section_id] = $this->numberNotices($notices);
 		}
 		
+		// display the table 
+		
+		$table_heading = "$table_heading</tr>";				
+		echo "$table_heading";		
+		
+		$row_24hr = "<tr><th>Last 24 Hours</th><td>" . $numOfNoticesArray['inbox']['oneDay'] . "</td>
+						<td>" . $numOfNoticesArray['sent']['oneDay'] . "</td>";
+		$row_7day = "<tr><th>Last 7 Days</th><td>" . $numOfNoticesArray['inbox']['oneWeek'] . "</td>
+						<td>" . $numOfNoticesArray['sent']['oneWeek'] . "</td>";
+		$row_total = "<tr><th>Total Notices</th><td>" . $numOfNoticesArray['inbox']['total'] . "</td>
+						<td>" . $numOfNoticesArray['sent']['total'] . "</td>";
+		
+		for($i = 0; $i < $numSections; $i++)
+		{
+			$section_id = $section_list[$i]->get_section_id();
+			
+			$day = $numOfNoticesArray[$section_id]['oneDay'];
+			$week = $numOfNoticesArray[$section_id]['oneWeek'];
+			$total = $numOfNoticesArray[$section_id]['total'];
+			
+			$row_24hr .= "<td>$day</td>";
+			$row_7day .= "<td>$week</td>";
+			$row_total .= "<td>$total</td>";
+		}
+			
+		$row_24hr .= "</tr>";
+		$row_7day .= "</tr>";
+		$row_total .= "</tr>";
+		
+		echo "$row_24hr";
+		echo "$row_7day";
+		echo "$row_total";
 		echo "</table>";
+		
+	}
+	
+	
+	public function numberNotices($notice_list)
+	{
+		$number = array();
+		$numNotices = count($notice_list);
+		$numLast7Days = 0;	
+		$numOneDay = 0;		
+		$yesterday = new DateTime("-1 day");
+		$weekAgo = new DateTime("-1 week");
+		$today = new DateTime("now");
+		
+		//$date = $today->format('Y-m-d H:i:s');
+		//echo "<br>today = $date<br>";
+		
+		for($i = 0; $i < $numNotices; $i++)
+		{
+			$sent = $notice_list[$i]->get_date_sent();		
+			$dateSent = new DateTime($sent);
+			
+			if($yesterday <= $dateSent) { $numOneDay++; }
+			if($weekAgo <= $dateSent) { $numLast7Days++; }
+		}
+		
+		$number['oneDay'] = $numOneDay;
+		$number['oneWeek'] = $numLast7Days;
+		$number['total'] = $numNotices;
+		
+		return $number;
 	}
 	
 	
@@ -61,9 +134,9 @@ class NoticeDisplay
 				$section_name = $section_list[$i]->get_section_name();
 				
 				echo "<tr><th colspan='7' class='sectionRowHeader'>
-						<h2>Section $section_id&nbsp:&nbsp$section_name</h2></th></tr>";
-				echo "<tr><th>Date</th><th>Subject</th><th>From</th>
-						<th>Attachment</th><th>Flags</th></tr>";
+						<h2>Section $section_id&nbsp:&nbsp$section_name</h2></th></tr>
+						<tr><th>Date</th><th>From</th><th>Subject</th>
+						<th>Attachments</th><th>Flags</th></tr>";
 				
 				$notice_list = array();
 				$notice_list = $this->getSectionNotices($section_id, $mdb_control);
@@ -76,7 +149,7 @@ class NoticeDisplay
 						$attachments = array();
 						$notice_id = $notice_list[$j]->get_notice_id();
 						$attachments = $this->getNoticeAttachments($notice_id, $mdb_control);
-						$this->displayNoticeRow($notice_list[$j], $attachments, $mdb_control);
+						$this->displayNoticeRow("section", $notice_list[$j], $attachments, $mdb_control);
 					}	
 				}
 				else
@@ -94,11 +167,11 @@ class NoticeDisplay
 	{
 		$num_notices = count($notice_list);
 		
-		echo "<table class='notice-table'>
+		echo "<table class='notice-table inbox'>
 				<caption>Click on a notice to view.</caption>
-				<tr><th colspan='7'><h2>Member Notice In Box</h2></th></tr>";
-		echo "<tr><th>Date</th><th>Subject</th><th>From</th>
-				<th>Attachment</th><th>Flags</th></tr>";
+				<tr><th colspan='7'><h2>Member Notice In Box</h2></th></tr>
+				<tr><th>Date</th><th>From</th><th>Subject</th>
+				<th>Attachments</th><th>Flags</th></tr>";
 		
 		$num_notices = count($notice_list);
 				
@@ -112,7 +185,7 @@ class NoticeDisplay
 			$attachments = array();
 			$notice_id = $notice_list[$i]->get_notice_id();					
 			$attachments = $this->getNoticeAttachments($notice_id, $mdb_control);
-			$this->displayNoticeRow($notice_list[$i], $attachments, $mdb_control);
+			$this->displayNoticeRow("inbox", $notice_list[$i], $attachments, $mdb_control);
 		}
 		
 		echo "</table>";
@@ -125,15 +198,15 @@ class NoticeDisplay
 		
 		echo "<table class='notice-table'>
 				<caption>Click on a notice to view.</caption>
-				<tr><th colspan='7'><h2>Member Notices Sent</h2></th></tr>";
-		echo "<tr><th>Date</th><th>Subject</th><th>Sent To</th>
-				<th>Attachment</th><th>Flags</th></tr>";
+				<tr><th colspan='7'><h2>Member Notices Sent</h2></th></tr>
+				<tr><th>Date</th><th>To</th><th>Subject</th>
+				<th>Attachments</th><th>Flags</th></tr>";
 				
 		$num_notices = count($notice_list);
 				
 		if($num_notices === 0)
 		{
-			echo "<tr><th colspan='10'>No Notices</th></tr>";
+			echo "<tr><th colspan='7'>No Notices</th></tr>";
 		}
 				
 		for($i = 0; $i < $num_notices; $i++)
@@ -141,7 +214,7 @@ class NoticeDisplay
 			$attachments = array();
 			$notice_id = $notice_list[$i]->get_notice_id();					
 			$attachments = $this->getNoticeAttachments($notice_id, $mdb_control);
-			$this->displayNoticeSentRow($notice_list[$i], $attachments, $mdb_control);
+			$this->displayNoticeRow("sent", $notice_list[$i], $attachments, $mdb_control);
 		}
 		
 		echo "</table>";
@@ -296,12 +369,13 @@ class NoticeDisplay
 	}
 	
 	
-	public function displayNoticeRow($notice_view, $attachments, $mdb_control)
+	public function displayNoticeRow($notice_type, $notice_view, $attachments, $mdb_control)
 	{
 		$date_sent = $notice_view->get_date_sent();
 		$date_sent = $this->displayUtility->displayDateTime($date_sent);
 		$notice_id = $notice_view->get_notice_id();		
 		$response_to_notice_id = $notice_view->get_response_to_notice_id();		
+		
 		$from_member_id = $notice_view->get_from_member_id();
 		$from_first_name = $notice_view->get_from_first_name();
 		$from_last_name = $notice_view->get_from_last_name();
@@ -318,62 +392,47 @@ class NoticeDisplay
 		$flag_for_review = $notice_view->get_flag_for_review();
 		$flagged = $flag_for_review ? "flagged" : " &nbsp ";
 		$num = count($attachments);
-		$has_attachments = ($num >= 1) ? "attachments" : " &nbsp ";
+		$has_attachments = ($num >= 1) ? "attachments" : " ";
 		
-		echo "<tr>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$date_sent</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$notice_subject ...</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$from_first_name&nbsp&nbsp$from_last_name</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$has_attachments</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$flagged</button></td>
-				</tr>";	
+		$divID = $notice_type . '_' . $notice_id;
 		
-		echo "<tr><td colspan='10'>";
+		
+		echo "<tr>";
+		echo '<td><button class="showNoticeButton" 
+				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+				$date_sent . '</button></td>';	
+						
+		if($notice_type == "sent") // sent to someone else
+		{
+			echo '<td><button class="showNoticeButton" 
+				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+				$sent_to_members . ' ' . $sent_to_sections . '</button></td>';	
+		}
+		else // in box or section
+		{
+			echo '<td><button class="showNoticeButton" 
+				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+				$from_first_name . '&nbsp&nbsp' . $from_last_name . '</button></td>';
+		}
+		
+		echo '<td><button class="showNoticeButton" 
+				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+				$notice_subject . '</button></td>';	
+		
+		echo '<td><button class="showNoticeButton" 
+				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+				$has_attachments . '</button></td>';
+				
+		echo '<td><button class="showNoticeButton" 
+				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+				$flagged . '</button></td>';
+		
+		echo "</tr>";
+		
+		echo "<tr id='$divID' class='selectedNotice' >
+				<td colspan='7'>";
 				$this->displaySelectedNotice($notice_view, $attachments, $mdb_control);
 		echo "</td></tr>";	
-	}
-	
-	
-	public function displayNoticeSentRow($notice_view, $attachments, $mdb_control)
-	{
-		$date_sent = $notice_view->get_date_sent();
-		$date_sent = $this->displayUtility->displayDateTime($date_sent);
-		$notice_id = $notice_view->get_notice_id();		
-		$response_to_notice_id = $notice_view->get_response_to_notice_id();	
-		
-		$notice_subject = $notice_view->get_notice_subject();
-		$notice_subject = substr($notice_subject, 0, 30);
-		$notice_text = $notice_view->get_notice_text();
-		$notice_text = substr($notice_text, 0, 30);
-		
-		$flag_for_review = $notice_view->get_flag_for_review();
-		$flagged = $flag_for_review ? "flagged" : " &nbsp ";
-		$num = count($attachments);
-		$has_attachments = ($num >= 1) ? "attachments" : " &nbsp ";
-		
-		$sent_to_members = $this->getNoticeToMemberNames($notice_id, $mdb_control);
-		$sent_to_sections = $this->getNoticeToSectionIDs($notice_id, $mdb_control);
-		
-		echo "<tr>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$date_sent</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$notice_subject ...</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$sent_to_members</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$has_attachments</button></td>
-				<td><button class='showNoticeButton' onclick='showSelectedNotice($notice_id);'>
-				$flagged</button></td>
-				</tr>";	
-		echo "<tr><td colspan='10'>";
-				$this->displaySelectedNotice($notice_view, $attachments, $mdb_control);
-		echo "</td></tr>";				
 	}
 	
 	
@@ -398,28 +457,35 @@ class NoticeDisplay
 		$sent_to_sections = $this->getNoticeToSectionIDs($notice_id, $mdb_control);
 		
 		$num_attachments = count($attachments);
-		$attachment_string = " ";
-		
+		$attachment_string = "";
+						
 		for($i = 0; $i < $num_attachments; $i++)
 		{
-			$num = $i + 1;
-			$attachment_string .=  "<a href=''>attachment_$num</a> ";
+			$filepath = $attachments[$i]->get_filepath();
+			$filename = $attachments[$i]->get_filename();
+			$url = $this->filebase . "/$filepath/$filename";
+			$attachment_link = "<a href='$url' download 
+					class='notice_link'>$filename</a>";
+			$attachment_string .= $attachment_link . ', ';
 		}
 		
-		
-		echo "<div id='notice$notice_id' class='selectedNotice'>
-				<table class='selectedNotice'>";
+		echo "<table class='selectedNotice'>";
 				
-		echo "<tr><td class='bold'>$notice_subject</td>
-				<td class='flag-for-review right'>$flagged</td>
-				<td class='right'>$date_sent</td></tr>
-				<tr><td class='bold'>From: $from_first_name&nbsp&nbsp$from_last_name</td></tr>
-				<tr><td colspan='3'>To: $sent_to_members $sent_to_sections</td></tr>
-				<tr><td colspan='3'><hr></td></tr>
-				<tr><td colspan='3'>$attachment_string</td></tr>
-				<tr><td colspan='3'>$notice_text</td></tr>";
-		
-		echo "</table></div>";
+		echo "<tr><td class='bold'>$notice_subject</td><td class='right'>$date_sent</td></tr>
+				<tr><td class='bold'>
+						From: $from_first_name&nbsp&nbsp$from_last_name</td>
+						<td class='flag-for-review right'>$flagged</td></tr>
+				<tr><td colspan='2'>To: $sent_to_members, $sent_to_sections</td></tr>
+				<tr><td colspan='2'><hr></td></tr>";
+				
+		if($num_attachments > 0)
+		{
+			echo "<tr><td colspan='2'>$attachment_string</td></tr>
+					<tr><td colspan='2'><hr></td></tr>";
+		}
+				
+		echo "<tr><td colspan='2'>$notice_text</td></tr>";		
+		echo "</table>";
 		
 	}
 	

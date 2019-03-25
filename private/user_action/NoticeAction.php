@@ -4,10 +4,8 @@ class NoticeAction
 {
 	public function __construct() {}
 
-	public function processWriteNoticeForm($mdb_control)
-	{
-		$sucess = true;
-		
+	public function processWriteNoticeForm($mdb_control, &$error)
+	{		
 		$from_member_id = $_POST['from_member_id'];		
 		$to_section_id = $_POST['to_section_id']; 
 		$to_member_id = $_POST['to_member_id'];
@@ -18,8 +16,8 @@ class NoticeAction
 		$date_sent = $_POST['date_sent'];	
 		$mysql_date_sent = date('Y-m-d H:i:s', strtotime($date_sent));				
 				
-		// test text box input for alpha-numeric character limits
-		$error = "<div class='form-errors' >";
+		$sucess = true;
+		$error = " ";
 		
 		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $notice_subject)) 
 		{
@@ -54,11 +52,10 @@ class NoticeAction
 			$sucess = false;
 		}
 		
-		$error .= "</div>";
-		
 		if(!$sucess) 
 		{ 
-			echo "$error";
+			$error .= "<p>Sorry, the system was unable to process the update.</p>";
+			$error = "<h2>ERROR: </h2>" . $error . "<br>";
 			return false; 
 		}
 		
@@ -121,13 +118,13 @@ class NoticeAction
 		switch($_SESSION['member_type'])
 		{
 			case "professor":
-				$url = "professor-page.php";
+				$url = "professor-home-page.php?notices=page";
 				break;
 			case "student":
-				$url = "student-page.php";
+				$url = "student-home-page.php?notices=page";
 				break;
 			case "administrator":
-				$url = "administrator-page.php";
+				$url = "administrator-home-page.php?notices=page";
 				break;
 		}
 			

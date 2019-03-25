@@ -1,6 +1,21 @@
 /* JavaScript for member pages. */
 
+function showSelectedNotice(rowID)
+{
+	var row = document.getElementById(rowID);
+	
+	if( row.style.display == "none" )
+	{
+		row.style.display = "table-row";
+	}
+	else
+	{
+		row.style.display = "none";
+	}
 
+}
+		
+		
 function showStudentList()
 {
 	var listDiv = document.getElementById("studentListDiv");
@@ -75,6 +90,7 @@ function showMemberInBoxNotices()
 	}
 }
 
+
 function showMemberSentNotices()
 {
 	var listDiv = document.getElementById("memberSentNoticeDiv");
@@ -90,20 +106,7 @@ function showMemberSentNotices()
 }
 
 
-function showSelectedNotice(notice_id)
-{
-	var ID = "notice" + notice_id;
-	var showDiv = document.getElementById(ID);
-	
-	if( showDiv.style.display == "none" )
-	{
-		showDiv.style.display = "block";
-	}
-	else
-	{
-		showDiv.style.display = "none";
-	}
-}
+
 
 
 

@@ -9,8 +9,9 @@
 		$strArray = explode("_", $form_type);
 		$form_name = implode(" ", $strArray);
 		$form_name = ucwords($form_name);		
-		echo "<title>Physics in Motion: $form_name</title>";
+		echo "<title>Physics in Motion: Student $form_name</title>";
 		$form_file_name = "html-includes/user-forms/" . implode("-", $strArray) . "-form.html";		
+		$form_processor	= "html-includes/user-forms/" . implode("-", $strArray) . "-action.php";
 	?>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Student services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Students or Students.">
@@ -48,11 +49,12 @@
 	$last_name = $_SESSION["last_name"];
 	$form_type = $_GET["form_type"];
 
+	include($form_processor);
 	include('html-includes/template/header.php'); 
 	include('html-includes/navigation/main-navigation-and-quote.php'); 
 ?>
 
-<section class="main-content">
+<section class="main-content-forms">
 <?php 
 	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
 	include($form_file_name);

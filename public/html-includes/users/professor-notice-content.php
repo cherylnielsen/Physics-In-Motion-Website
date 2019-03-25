@@ -1,23 +1,16 @@
-<?php
-
-echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
-
-$section_list = array();
-$section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
-$sectionDisplay->displaySectionMembershipTable($section_list, $mdb_control, "professor");
-
-?>
 
 <div id='sectionNoticeDiv' class='overflow'>
 <?php
-	// List of notices for this section with links to view
+	// List of section notices 
+	$section_list = array();
+	$section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
 	$noticeDisplay->displaySectionNoticeTable($section_list, $mdb_control);
 ?>
 </div>
 
 <div id='memberInBoxNoticeDiv' class='overflow'>
 <?php
-	// List of member notices received & sent with links to view
+	// List of member notices received 
 	$member_notice_list = array();
 	$member_notice_list = $noticeDisplay->getMemberInBoxNotices($professor_id, $mdb_control);
 	$noticeDisplay->displayMemberInBoxNoticeTable($member_notice_list, $mdb_control);
@@ -26,6 +19,7 @@ $sectionDisplay->displaySectionMembershipTable($section_list, $mdb_control, "pro
 
 <div id='memberSentNoticeDiv' class='overflow'>
 <?php
+	// List of member notices sent 
 	$member_notice_list = array();
 	$member_notice_list = $noticeDisplay->getMemberSentNotices($professor_id, $mdb_control);
 	$noticeDisplay->displayMemberSentNoticeTable($member_notice_list, $mdb_control);

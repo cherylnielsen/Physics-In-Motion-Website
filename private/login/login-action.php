@@ -66,17 +66,17 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 						case "student":
 							$_SESSION['student_id'] = $member_id;
 							$_SESSION['school_name'] = $user->get_school_name();
-							$url = "student-page.php";
+							$url = "student-home-page.php";
 							break;
 						case "professor":
 							$_SESSION['professor_id'] = $member_id;
 							$_SESSION['school_name'] = $user->get_school_name();
-							$url = "professor-page.php";
+							$url = "professor-home-page.php";
 							break;
 						case "administrator":
 							$_SESSION['administrator_id'] = $member_id;
 							$_SESSION['admin_type'] = $user->get_admin_type();
-							$url = "administrator-page.php";
+							$url = "admin-home-page.php";
 							break;
 					}
 					

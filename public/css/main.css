@@ -137,54 +137,10 @@ section.main-body {
 	clear: both;
 }
 
-aside.nav-quote {
-	float: left;
-	width: 16%;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-	background-color: #A7DAFA;
-	position: relative;
-	left: -2px;
-	top: -2px;
-}
-
-nav {
-	padding: 5px 0;
-}
-
-a.navigation {
-	display: block;
-	padding: 0.25em 1em;
-	width: 83%;
-	text-decoration: none;
-}
-
-button.navigation {
-	display: block;
-	padding: 0.25em 1em;
-	width: 83%;
-	text-decoration: none;
-	border: none;
-}
-
-hr {
-	border: 1px solid #03AA0D;
-}
-
-div.quote {
-	padding: 1em;
-	border-top: 2px solid #03AA0D;
-	border-radius: 10px;
-	background-color: lightyellow;
-}
-
-div.quote > h2 {
-	margin: 0 0 1em 0;
-}
 
 section.main-content {
 	float: left;
-	width: 55%;
+	width: 54%;
 	padding: 0 0 1% 2%;
 }
 

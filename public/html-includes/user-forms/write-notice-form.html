@@ -1,25 +1,5 @@
 
-<?php
-	$cancelURL = $noticeAction->returnURL();	
-	
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$is_ok = $noticeAction->processWriteNoticeForm($mdb_control, $form_type);
-		
-		if($is_ok)
-		{	
-			header("Location: $cancelURL");
-			exit();
-		}
-		else
-		{
-			echo "<div class='form-errors' >
-					<p>Sorry, the system was unable to send the notice.</p>
-					</div><br>";
-		}		
-	}
-	
-	
+<?php	
 	$member_list = array();
 	$member_list = $displayUtility->getMemberList($mdb_control);		
 	$section_list = array();	
@@ -40,8 +20,9 @@
 	
 	//$attachments or files? = $noticeAction->getAttachments();
 	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
+	
 ?>
-
 
 <form id='write_notice_form' method='POST' enctype='multipart/form-data'>
 	

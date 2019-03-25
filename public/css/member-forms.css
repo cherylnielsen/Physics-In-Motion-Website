@@ -1,8 +1,10 @@
 @charset "ISO-8859-1";
 /* CSS Document */
 
-section.main-content {
-	width: 75%;
+section.main-content-forms {
+	float: left;
+	width: 54%;
+	padding: 0 0 1% 2%;
 }
 
 h1.form, h2.form {

@@ -3,27 +3,28 @@
 
 section.main-content {
 	float: left;
-	width: 55%;
+	width: 54%;
 	padding: 0 0 1% 2%;
 }
 
-h1.quotes, h1.logo-statement {
+h1.logo-statement {
 	padding-top: 0.5em;
 }
 
-section.quotes {
+h1.quotes {
 	padding: 0.5em;
+	margin: 0;
+	border-bottom: 2px solid #03AA0D;
+	border-radius: 10px;
+	background-color: #A7DAFA;
 }
 
-article.quotes p {
-	padding-left: 2em;
-}
-
-section.quotes article:nth-child(odd)
-{
-	background-color: lightyellow;
+section.quotes {
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	text-align: center;
 }
 
 article.quotes {
-	padding: 1em;
+	padding-top: 1.5em;
 }

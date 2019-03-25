@@ -55,8 +55,9 @@ class AssignmentDisplay
 		$row = array();
 		$header = "";
 		
-		echo "<table class='summary homework'><tr>
-				<th colspan='18'><h2>Homework Submitted</h2></th></tr>";
+		echo "<form id='professorHmwkTableForm' method='POST'>
+				<table class='summary'><tr>
+					<th colspan='18'><h2>Homework Submitted</h2></th></tr>";
 				
 		if($num_assignments === 0)
 		{
@@ -108,7 +109,7 @@ class AssignmentDisplay
 		$row = array();
 		
 		echo "<form id='studentHmwkTableForm' method='POST'>
-				<table class='summary homework'><tr>
+				<table class='summary'><tr>
 					<th colspan='18'><h2>Homework</h2></th></tr>";
 				
 		if($num_assignments === 0)
@@ -140,6 +141,54 @@ class AssignmentDisplay
 		
 		echo "</table></form>";
 	}
+	
+	
+	public function displayNumAssignmentsDueSoon($section_list, $mdb_control)
+	{
+		$numSections = count($section_list);
+		$numDueSoon = array();
+		
+		//$number['dueNow'] = $numDueNow;
+		//$number['nextWeek'] = $numNextWeek;
+		
+		for($i = 0; $i < $numSections; $i++)
+		{
+			$section_id = $section_list[$i]->get_section_id();
+			$assignment_list = array();
+			$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
+			$numDueSoon[$section_id] = $this->getAssignmentsDueSoon($assignment_list);
+		}
+		
+		$table_heading = "<table class='summary'>
+				<tr><th colspan='10'><h2>Assignment Summary</h2></th></tr>"; 	
+							
+		echo "$table_heading";		
+		
+		$table_heading = "<tr><th> </th>";
+		$row_24hr = "<tr><th>Due in 24-48 Hours</th>";
+		$row_7day = "<tr><th>Due in Next 7 Days</th>";
+		
+		for($i = 0; $i < $numSections; $i++)
+		{
+			$section_id = $section_list[$i]->get_section_id();			
+			$day = $numDueSoon[$section_id]['dueNow'];
+			$week = $numDueSoon[$section_id]['nextWeek'];
+			
+			$table_heading .= "<th>Section $section_id</th>";
+			$row_24hr .= "<td>$day</td>";
+			$row_7day .= "<td>$week</td>";			
+		}
+		
+		$table_heading .= "</tr>";	
+		$row_24hr .= "</tr>";
+		$row_7day .= "</tr>";		
+		
+		echo "$table_heading";
+		echo "$row_24hr";
+		echo "$row_7day";		
+		echo "</table>";
+		
+	}	
 	
 
 	// Gets all assignments from the database for this section.
@@ -183,6 +232,35 @@ class AssignmentDisplay
 		$homework = $controller->getOneHomeworkView($section_id, $assignment_id, $student_id);
 		
 		return $homework;
+	}
+	
+	
+	public function getAssignmentsDueSoon($assignment_list)
+	{
+		$number = array();
+		$numAssignments = count($assignment_list);
+		$numNextWeek = 0;	
+		$numDueNow = 0;		
+		$nextWeek = new DateTime("+1 week");
+		$dayOr2 = new DateTime("+2 day");
+		$yesterday = new DateTime("-1 day");
+		
+		//$date = $today->format('D, m/d/Y');
+		//echo "<br>today = $date<br>";
+		
+		for($i = 0; $i < $numAssignments; $i++)
+		{
+			$due = $assignment_list[$i]->get_date_due();		
+			$dateDue = new DateTime($due);
+			
+			if(($yesterday <= $dateDue) && ($dateDue <= $dayOr2)) { $numDueNow++; }
+			if(($yesterday <= $dateDue) && ($dateDue <= $nextWeek)) { $numNextWeek++; }
+		}
+		
+		$number['dueNow'] = $numDueNow;
+		$number['nextWeek'] = $numNextWeek;
+	
+		return $number;
 	}
 	
 	
@@ -231,8 +309,7 @@ class AssignmentDisplay
 			$filepath = $attachments[$i]->get_filepath();
 			$filename = $attachments[$i]->get_filename();
 			$attachment_link = $this->filebase . "/$filepath/$filename";
-			
-			//requires a base of file path inside the public folder
+
 			$attachment_list .= "<a href='$attachment_link' download 
 								class='assignment_link'>$filename</a>";
 		}
@@ -286,20 +363,32 @@ class AssignmentDisplay
 			$hours = $homework_view->get_hours();
 			$points_possible = $homework_view->get_points_possible();
 			
+			$filepath = $homework_view->get_filepath();
+			$url = $this->filebase . "/$filepath/$summary";
+			$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
+			$homework_set = "homework_set_$homework_id.zip";
+			$url = $this->filebase . "/$filepath/$homework_set";
+			$homework_set_link = "<a href='$url' download 
+						class='assignment_link'>$homework_set</a>";
 			
 			if(!$graded)
 			{
-				$points_earned = "<button class='table-button' name='grade_homework'
-									value='$homework_id'>Grade Homework</button>";
+				$points_earned = "<input type='number' name='grade_$homework_id' 
+									class='table-input' min='0' max='$points_possible'>
+									<button class='table-button' name='grade_homework_id'
+									value='$homework_id'>Grade</button>";
 			}			
 			
-			$row['data'] = "<td>$section_id</td><td>$assignment_id</td><td>$assignment_name</td>
+			$row['data'] = "<td>$section_id</td>
+				<td>$assignment_id</td><td>$assignment_name</td>
 				<td>$tutorial_lab_id</td><td>$student_id</td>
 				<td>$student_first_name&nbsp&nbsp$student_last_name</td>
-				<td>$date_submitted</td><td class='center'>$points_possible</td>
+				<td>$date_submitted</td>
+				<td class='center'>$points_possible</td>
 				<td class='center'>$points_earned</td>
-				<td>$hours hours</td><td><a href=''>$summary</a></td>
-				<td><a href=''>Homework Set</a></td>";
+				<td>$hours hours</td>				
+				<td>$summary_link</td>
+				<td>$homework_set_link</td>";
 		}
 		else
 		{			
@@ -353,12 +442,22 @@ class AssignmentDisplay
 			$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
 		}
 			
-		$row['data'] = "<td>$section_id</td><td>$assignment_id</td><td>$assignment_name</td>
+		$filepath = $homework_view->get_filepath();
+		$url = $this->filebase . "/$filepath/$summary";
+		$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
+		$homework_set = "homework_set_$homework_id.zip";
+		$url = $this->filebase . "/$filepath/$homework_set";
+		$homework_set_link = "<a href='$url' download 
+						class='assignment_link'>$homework_set</a>";
+						
+		$row['data'] = "<td>$section_id</td>
+			<td>$assignment_id</td><td>$assignment_name</td>
 			<td>$tutorial_lab_id</td>
 			<td>$date_submitted</td><td class='center'>$points_possible</td>
 			<td class='center'>$points_earned</td>
-			<td>$hours hours</td><td><a href=''>$summary</a></td>
-			<td><a href=''>Homework Set</a></td>";
+			<td>$hours hours</td>
+			<td>$summary_link</td>
+			<td>$homework_set_link</td>";
 
 		return $row;
 		

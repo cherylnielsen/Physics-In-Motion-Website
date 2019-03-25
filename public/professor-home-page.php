@@ -42,7 +42,22 @@
 
 <section class="main-content">
 <?php 
-	include('html-includes/users/professor-page-main-content.php'); 
+	echo "<h1 class=welcome>Welcome Professor $first_name $last_name!</h1>";
+	
+	if(isset($_GET["section_id"]))
+	{
+		$section_id = $_GET["section_id"];
+		include('html-includes/users/professor-section-content.php');
+	}
+	else if(isset($_GET["notices"]))
+	{
+		include('html-includes/users/professor-notice-content.php');
+	}
+	else
+	{
+		include('html-includes/users/professor-home-content.php'); 
+	}
+	
 ?>
 </section>
 		

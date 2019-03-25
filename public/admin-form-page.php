@@ -2,7 +2,17 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Physics in Motion: Administrator Services</title>
+	
+	<?php
+		$form_type = $_GET["form_type"];		
+		$strArray = array();
+		$strArray = explode("_", $form_type);
+		$form_name = implode(" ", $strArray);
+		$form_name = ucwords($form_name);		
+		echo "<title>Physics in Motion: Administrator $form_name</title>";
+		$form_file_name = "html-includes/user-forms/" . implode("-", $strArray) . "-form.html";	
+		$form_processor	= "html-includes/user-forms/" . implode("-", $strArray) . "-action.php";		
+	?>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Administrator services to be decided. Sending notices to administrators or Students.">
 	
@@ -36,15 +46,17 @@
 	$administrator_id = $_SESSION['administrator_id'];
 	$first_name = $_SESSION["first_name"];
 	$last_name = $_SESSION["last_name"];
+	$form_type = $_GET["form_type"];
 
+	include($form_processor);
 	include('html-includes/template/header.php'); 
 	include('html-includes/navigation/main-navigation-and-quote.php'); 
-	include('html-includes/navigation/admin-navigation.php');
 ?>
 
-<section class="main-content">
+<section class="main-content-forms">
 <?php 	
-	include('html-includes/users/admin-form-content.php'); 
+	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
+	include($form_file_name);
 ?>
 </section>
  	

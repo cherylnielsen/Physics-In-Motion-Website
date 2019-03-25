@@ -11,10 +11,10 @@
 		
 ?>
 
+
 <div>
 <?php
 	// Welcome headings
-	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
 	$sectionDisplay->displaySectionWelcome($section_id, $mdb_control);	
 ?>	
 </div>
@@ -32,7 +32,6 @@
 	$assignmentDisplay->displayStudentHomework($section_id, $student_id, $mdb_control);
 ?>
 </div>
-
 
 <a id="bottom" href="#top">return to top</a>
 
