@@ -9,6 +9,7 @@ require_once('db_access.php');
 require_once('db_model/Administrator.php');
 require_once('db_model/Assignment.php');
 require_once('db_model/Homework.php');
+require_once('db_model/Assignment_Attachment.php');
 require_once('db_model/Member.php');
 require_once('db_model/Notice.php');
 require_once('db_model/NoticeToMember.php');
@@ -24,11 +25,13 @@ require_once('db_model/Student.php');
 require_once('db_model/Tutorial_Lab.php');
 require_once('db_model/Tutorial_Lab_Rating.php');
 
+// The parent controller class for the database tables and views
+require_once('DatabaseController.php');
 
 // The controller classes for each of the database tables
-require_once('db_controller/DatabaseController.php');
 require_once('db_controller/AdministratorController.php');
 require_once('db_controller/AssignmentController.php');
+require_once('db_controller/AssignmentAttachmentController.php');
 require_once('db_controller/HomeworkController.php');
 require_once('db_controller/MemberController.php');
 require_once('db_controller/NoticeController.php');

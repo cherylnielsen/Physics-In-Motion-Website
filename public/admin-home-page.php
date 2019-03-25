@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Physics in Motion: Professor Services</title>
+	<title>Physics in Motion: Administrator Services</title>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Professor services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Professors or Students.">
 	
@@ -12,7 +12,7 @@
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
 	?>
-	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
 	
 </head>
@@ -25,25 +25,38 @@
 		session_start();
 	}
 	
-	if(!isset($_SESSION['professor_id']))
+	if(!isset($_SESSION['administrator_id']))
 	{
 		$url = "login-register-page.php?form_type=login";
 		header("Location: $url");
 		exit();
 	}
 
-	$professor_id = $_SESSION['professor_id'];
+	$administrator_id = $_SESSION['administrator_id'];
 	$first_name = $_SESSION["first_name"];
 	$last_name = $_SESSION["last_name"];
 
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php');
-	include('html-includes/navigation/professor-notice-navigation.php');
+	include('html-includes/navigation/main-navigation-and-quote.php');
+	include('html-includes/navigation/admin-navigation.php');
 ?>
 
 <section class="main-content">
 <?php 
-	include('html-includes/users/professor-page-main-content.php'); 
+	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
+	
+	if(isset($_GET["section"]))
+	{
+		include('html-includes/users/admin-section-content.php');
+	}
+	else if(isset($_GET["notices"]))
+	{
+		include('html-includes/users/admin-notice-content.php');
+	}
+	else
+	{
+		include('html-includes/users/admin-home-content.php'); 
+	}
 ?>
 </section>
 		

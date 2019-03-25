@@ -4,15 +4,17 @@ class Notice_Attachment {
 	
 	private $notice_attachment_id; // key 
 	private $notice_id;
-	private $attachment;
+	private $filename;
+	private $filepath;
 	
 	public function __construct() {}
 	
-	public function initialize($notice_attachment_id, $notice_id, $attachment)
+	public function initialize($notice_attachment_id, $notice_id, $filename, $filepath)
 	{
 		$this->notice_attachment_id = $notice_attachment_id;
 		$this->notice_id = $notice_id;
-		$this->attachment = $attachment;
+		$this->filename = $filename;
+		$this->filepath = $filepath;
 	}
 	
 	
@@ -36,17 +38,28 @@ class Notice_Attachment {
 		$this->notice_id = $notice_id;
 	}
 	
-	public function get_attachment()
+	public function get_filename()
 	{
-		return $this->attachment;
+		return $this->filename;
 	}
 
-	public function set_attachment($attachment)
+	public function set_filename($filename)
 	{
-		$this->attachment = $attachment;
+		$this->filename = $filename;
+	}
+	
+	public function get_filepath()
+	{
+		return $this->filepath;
+	}
+
+	public function set_filepath($filepath)
+	{
+		$this->filepath = $filepath;
 	}
 	
 	
 }
+
 
 ?>

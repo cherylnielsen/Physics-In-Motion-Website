@@ -1,25 +1,6 @@
 
 <!--professor-form-page.php?form_type=add_assignment -->
 <?php	
-
-	If($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$is_ok = $assignmentAction->processAssignmentForm($mdb_control, $form_type);
-		
-		if($is_ok)
-		{
-			echo "<div class='form_errors' id='form_errors' >
-					<p>The update was processed successfully.</p>
-					</div>";
-		}
-		else
-		{
-			echo "<div class='form_errors' id='form_errors' >
-					<p>Sorry, the system was unable to process the update.</p>
-					</div>";
-		}
-	}
-	
 	
 	$section_list = array();
 	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
@@ -38,14 +19,11 @@
 	$tutorial_lab_id = $assignmentAction->getTutorialLabID();
 	//$attachments or files? = $assignmentAction->getAttachments();
 	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
+	
 ?>
 
-<div class="form-errors" id="form_errors"></div>
-
-<form id="addAssignmentForm" 
-		action="professor-form-page.php?form_type=add_assignment" 
-		method="POST" 
-		enctype="multipart/form-data">
+<form id="addAssignmentForm" method="POST" enctype="multipart/form-data">
 	
 	<fieldset>
 	
@@ -109,7 +87,7 @@
 			min="0" max="1000" required  value="<?php echo "$points_possible"; ?>" >
 		</label><br class="form">
 		
-		<label>Attachments: Select one or more files.
+		<label>Attachments: Select one or more files.  (Optional)
 			<div class="fileDiv"> 				
 				<input type="file" name="attachments" id="attachments" 
 					multiple onchange="showFileNames()">
@@ -120,8 +98,8 @@
 		<div class="formButtonDiv">
 			<input type="submit" value="Save Assignment">		
 			<?php
-				$str = "professor-section-page.php?section_id=$section_id";
-				echo "<a href='$str' class='button'>Cancel</a>";
+				$cancelURL = "professor-section-page.php?section_id=$section_id";
+				echo "<a href='$cancelURL' class='button'>Cancel</a>";
 			?>		
 		</div>
 		

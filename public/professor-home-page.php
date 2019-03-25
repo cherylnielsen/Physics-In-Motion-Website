@@ -12,7 +12,7 @@
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
 	?>
-	<link href="css/professor-student-page.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
 	
 </head>
@@ -35,20 +35,33 @@
 	$professor_id = $_SESSION['professor_id'];
 	$first_name = $_SESSION["first_name"];
 	$last_name = $_SESSION["last_name"];
-	$section_id = $_GET["section_id"];
 
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php'); 
-	include('html-includes/navigation/professor-section-navigation.php');
+	include('html-includes/navigation/main-navigation-and-quote.php');
 ?>
 
 <section class="main-content">
-<?php 	
-	include('html-includes/users/professor-section-content.php'); 
+<?php 
+	echo "<h1 class=welcome>Welcome Professor $first_name $last_name!</h1>";
+	
+	if(isset($_GET["section_id"]))
+	{
+		$section_id = $_GET["section_id"];
+		include('html-includes/users/professor-section-content.php');
+	}
+	else if(isset($_GET["notices"]))
+	{
+		include('html-includes/users/professor-notice-content.php');
+	}
+	else
+	{
+		include('html-includes/users/professor-home-content.php'); 
+	}
+	
 ?>
 </section>
- 	
-<?php include('html-includes/template/footer.html');  ?>
+		
+<?php include('html-includes/template/footer.html'); ?>
 
 </div><!-- end div.wrapper -->	
 </body>

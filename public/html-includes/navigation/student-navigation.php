@@ -1,36 +1,67 @@
 
-<!-- Tables of links to other sections and section related actions -->
-<nav id='secondary-navigation'>
-<table class='summary actions'>
+<!-- Student links and related actions -->
 
-	<tr><th>Section Memberships</th></tr>	
-	<tr><td><a href="student-page.php" class="actionButton">
-			Student Pages</a></td></tr>
-					
 <?php
-	$section_list = array();
-	$section_list = $sectionDisplay->getSectionList_ByStudent($student_id, $mdb_control);
-	$sectionDisplay->displaySectionShortList($section_list, $mdb_control, "student");
-?>
+
+$page = $_SERVER['REQUEST_URI'];
+$pageOK = strpos($page, "student");
+
+if(isset($_SESSION["student_id"]) && isset($_SESSION["member_type"]))
+{
+	if(($_SESSION["member_type"] === "student") && ($pageOK !== false))
+	{
+	?>	
+		<nav class='second-navigation'>	
+			<h2 class='navigation'>Current Sections</h2>						
+	<?php
 	
-		<tr><th>Show / Hide</th></tr>
-		<tr><td><button class='summaryButton' onclick='showAssignmentList();'>
-			Assignment List</button></td></tr>
-		<tr><td><button class='summaryButton' onclick='showHomeworkList();'>
-			Homework List</button></td></tr>
-		<tr><td><button class='summaryButton' onclick='showSectionNotices();'>
-			Section Notices</button></td></tr>
-		<tr><td><button class='summaryButton' onclick='showMemberInBoxNotices();'>
-			Member In Box Notices</button></td></tr>
-		<tr><td><button class='summaryButton' onclick='showMemberSentNotices();'>
-			Member Sent Notices</button></td></tr>
+		$section_list = array();
+		$section_list = $sectionDisplay->getSectionList_ByStudent($student_id, $mdb_control);
+		$short_list = $sectionDisplay->getSectionShortList($section_list, $mdb_control, "student");
+		$num_sections = count($short_list);
 		
-		<tr><th>Actions</th></tr>
-		<tr><td><a href="student-form-page.php?form_type=write_notice" 
-			class="actionButton">Write Notice</a></td></tr>
-					
-	</table>
-	
+		if($num_sections == 0)
+		{
+			echo "<p class='navigation'>No current sections</p>";
+		}	
+		
+		for($i = 0; $i < $num_sections; $i++)
+		{		
+			$section_id = $short_list[$i]['id'];
+			$section_name = $short_list[$i]['name'];
+			
+			echo "<a href='student-home-page.php?section_id=$section_id' 
+					class='navigation'>Section $section_id&nbsp:&nbsp$section_name </a>";
+		}	
+		
+		if(!isset($_GET["form_type"]))
+		{
+			if(isset($_GET["section_id"]))
+			{
+			?>	
+				<h2 class='navigation'>Show / Hide</h2>
+				<button class='navigation' onclick='showAssignmentList();'>Assignment List</button>
+				<button class='navigation' onclick='showHomeworkList();'>Homework List</button>					
+			<?php
+			}
+			
+			if(isset($_GET["notices"]))
+			{
+			?>
+				<h2 class='navigation'>Show / Hide</h2>
+				<button class='navigation' onclick='showSectionNotices();'>Section Notices</button>
+				<button class='navigation' onclick='showMemberInBoxNotices();'>Member In Box</button>
+				<button class='navigation' onclick='showMemberSentNotices();'>Member Sent</button>
+			<?php
+			}
+		}	
+?>
+		<h2 class='navigation'>Actions</h2>
+		<a href="student-home-page.php?notices=page" class="navigation">View Notices</a>
+		<a href="student-form-page.php?form_type=write_notice" class="navigation">Write Notice</a>
+				
 </nav>
+<!-- end SESSION if blocks -->
+<?php 	}	} 	?>
 
 

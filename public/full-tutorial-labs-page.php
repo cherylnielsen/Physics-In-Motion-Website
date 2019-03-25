@@ -18,10 +18,10 @@
 <div class="wrapper">
 
 <?php include('html-includes/template/header.php'); ?>
-<?php include('html-includes/template/main-navigation-and-quote.php'); ?>
+<?php include('html-includes/navigation/main-navigation-and-quote.php'); ?>
 
 <section class="main-content">
-	<?php include('html-includes/template/logo-statement.php'); ?>
+	<?php include('html-includes/template/logo-statement.html'); ?>
 	<?php include('html-includes/labs/full-tutorial-lab-list.php'); ?>
 </section>
 			

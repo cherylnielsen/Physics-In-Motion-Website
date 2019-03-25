@@ -4,10 +4,8 @@ class AssignmentAction
 {
 	public function __construct() {}
 
-	public function processAssignmentForm($mdb_control, $form_type)
-	{
-		$sucess = true;
-		
+	public function processAssignmentForm($mdb_control, $form_type, &$form_errors)
+	{		
 		$section_id = $_POST['section_id'];		
 		$tutorial_lab_id = $_POST['tutorial_lab_id']; 
 		$points_possible = $_POST['points_possible'];
@@ -19,25 +17,32 @@ class AssignmentAction
 		$date_due = $_POST['date_due']; 		
 		$mysql_date_due = date('Y-m-d H:i:s', strtotime($date_due));
 		
-		// test text box input for alpha-numeric character limits
-		echo "<div class='form-errors' >";
+		$sucess = true;
+		$form_errors = " ";
 		
 		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $assignment_name)) 
 		{
-			echo "<p>Assignment Names can only contain letters, numbers, spaces, 
+			$form_errors .=  "<p>Assignment Names can only contain letters, numbers, spaces, 
 					and the following characters .',-_&()</p>";  
-			return false;
+			$sucess = false;
 		}
 		
 		if (filter_var($points_possible, FILTER_VALIDATE_INT) === false) 
 		{
-			echo "<p>Points Possible must be a positive integer.</p>";  
-			return false;
+			$form_errors .=  "<p>Points Possible must be a positive integer.</p>";  
+			$sucess = false;
 		}
 		else if($points_possible < 0)
 		{
-			echo "<p>Points Possible must be a positive integer.</p>";  
-			return false;
+			$form_errors .=  "<p>Points Possible must be a positive integer.</p>";  
+			$sucess = false;
+		}
+		
+		if(!$sucess) 
+		{ 
+			$form_errors .=  "<p>Sorry, the system was unable to process the update.</p>";
+			$form_errors = "<h2>ERROR: </h2>" . $form_errors . "<br>";
+			return false; 
 		}
 		
 		// sanitize text box inputs for safety
@@ -77,6 +82,41 @@ class AssignmentAction
 		}
 		
 		return $sucess;				
+	}
+	
+	
+	public function submitHomework($homework_id, $mdb_control)
+	{
+		$sucess = true;
+		
+		$homework = new Homework();	
+		$hmwk_control = $mdb_control->getController("homework");
+		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
+		$homework->set_date_submitted(date("Y/m/d"));
+		
+		$sucess = $hmwk_control->updateAttribute($homework, "date_submitted");		
+		return $sucess;
+	}
+	
+	
+	public function gradeHomework($homework_id, $points_earned, $mdb_control)
+	{
+		$sucess = true;
+		
+		$homework = new Homework();	
+		$hmwk_control = $mdb_control->getController("homework");
+		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
+		$homework->set_points_earned($points_earned);
+		$homework->set_was_graded(true);
+		
+		$sucess = $hmwk_control->updateAttribute($homework, "points_earned");
+		
+		if($sucess) 
+		{ 
+			$sucess = $hmwk_control->updateAttribute($homework, "was_graded"); 
+		}
+		
+		return $sucess;
 	}
 	
 	

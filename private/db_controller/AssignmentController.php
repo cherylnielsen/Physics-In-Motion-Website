@@ -7,7 +7,7 @@ class AssignmentController extends DatabaseController {
 	
 	public function __construct() {}
 	// ($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, 
-	//  $date_due, $points_possible, $notes)
+	//  $date_due, $points_possible)
 
 
 	protected function getData($db_result, $db_connection)
@@ -22,7 +22,7 @@ class AssignmentController extends DatabaseController {
 				$assignment->initialize($row['assignment_id'], $row['section_id'], 
 						$row['tutorial_lab_id'],   
 						$row['assignment_name'], $row['date_assigned'], $row['date_due'], 
-						$row['points_possible'], $row['notes']);
+						$row['points_possible']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment;
 			}	
@@ -48,12 +48,11 @@ class AssignmentController extends DatabaseController {
 		$date_assigned = $assignment->get_date_assigned();
 		$date_due = $assignment->get_date_due();
 		$points_possible = $assignment->get_points_possible();
-		$notes = $assignment->get_notes();
 		$table = $this->getTableName();
 		
 		// The assignment_id will be auto-generated.
-		$query = "insert into $table (section_id, tutorial_lab_id, assignment_name, date_assigned, date_due, points_possible, notes) 
-			values ('$section_id', '$tutorial_lab_id', '$assignment_name', '$date_assigned', '$date_due', '$points_possible', '$notes')";
+		$query = "insert into $table (section_id, tutorial_lab_id, assignment_name, date_assigned, date_due, points_possible) 
+			values ('$section_id', '$tutorial_lab_id', '$assignment_name', '$date_assigned', '$date_due', '$points_possible')";
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -74,7 +73,7 @@ class AssignmentController extends DatabaseController {
 
 
 	// updates the given key with the new value in the database 
-	//($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, $date_due, $points_possible, $notes)
+	//($assignment_id, $section_id, $tutorial_lab_id, $assignment_name, $date_assigned, $date_due, $points_possible)
 	public function updateAttribute($assignment, $key)
 	{
 		$db_connection = get_db_connection();
@@ -113,12 +112,8 @@ class AssignmentController extends DatabaseController {
 				$query = "update $table set points_possible = '$value' 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
-			case 'notes':
-				$value = $assignment->get_notes();	
-				$query = "update $table set notes = '$value' where 
-							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
-				break;
 		}
+		
 		
 		$result = mysqli_query($db_connection, $query);
 
@@ -147,15 +142,14 @@ class AssignmentController extends DatabaseController {
 		$date_assigned = $assignment->get_date_assigned();
 		$date_due = $assignment->get_date_due();
 		$points_possible = $assignment->get_points_possible();
-		$notes = $assignment->get_notes();
+		
 			
 		$query = "UPDATE $table 
 					SET tutorial_lab_id = '$tutorial_lab_id',
 						assignment_name = '$assignment_name',
 						date_assigned = '$date_assigned',
 						date_due = '$date_due',
-						points_possible = '$points_possible',
-						notes = '$notes'
+						points_possible = '$points_possible'
 					WHERE (assignment_id = '$assignment_id') 
 						AND (section_id = '$section_id')";
 						

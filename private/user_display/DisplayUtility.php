@@ -91,6 +91,24 @@ class DisplayUtility
 		
 		return $section_names;
 	}
+	
+	
+	public function getListSectionIDNames_All($mdb_control)
+	{
+		$sections = array();
+		$section_names = array();
+		$sections = $mdb_control->getController("tutorial_lab")->getAllData();
+		
+		for($i = 0; $i < count($sections); $i++)
+		{
+			$sec_id = $sections[$i]->get_section_id();
+			$sec_name = $sections[$i]->get_section_name();
+			$section_names[$i]['id'] = "$sec_id"; 
+			$section_names[$i]['name'] = "Section $sec_id : $sec_name"; 
+		}
+		
+		return $section_names;
+	}
 
 
 	public function getListTutorialLabIDNames($mdb_control)

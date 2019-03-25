@@ -23,7 +23,8 @@ class Homework_View_Controller extends DatabaseController {
 						$row['assignment_id'], $row['assignment_name'], $row['tutorial_lab_id'], 
 						$row['student_id'], $row['lab_summary'], $row['lab_data'], 
 						$row['graphs'], $row['math'], $row['hints'], $row['chat_session'], 
-						$row['date_submitted'], $row['student_first_name'], $row['student_last_name'], 
+						$row['date_submitted'], $row['filepath'], 
+						$row['student_first_name'], $row['student_last_name'], 
 						$row['school_name'], $row['points_possible'], 
 						$row['points_earned'], $row['was_graded'], $row['hours']);
 				
@@ -125,6 +126,10 @@ class Homework_View_Controller extends DatabaseController {
 			case 'date_submitted':
 				$value = $homework_view->get_date_submitted();	
 				$query = "update $table set date_submitted = '$value' where homework_id = '$homework_id'";
+				break;
+			case 'filepath':
+				$value = $homework_view->get_filepath();	
+				$query = "update $table set filepath = '$value' where homework_id = '$homework_id'";
 				break;
 			case 'points_possible':
 				$value = $homework_view->get_points_possible();	

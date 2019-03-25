@@ -4,11 +4,11 @@ $theQuotes = array();
 $theQuotes = $mdb_control->getController("quote")->getAllData();
 $num_theQuotes = count($theQuotes);
 
-echo "<h1 class='quotes'>Previous and Current Quotes of the Month</h1>";
-
 if((!is_null($theQuotes)) AND ($num_theQuotes > 0))
 {	
-	echo "<section class='quotes'>";
+	echo "<section class='quotes'>
+			<h1 class='quotes'>Previous and Current Quotes of the Month</h1>";
+			
 	for($i = 0; $i < $num_theQuotes; $i++) 
 	{
 		echo
@@ -17,7 +17,7 @@ if((!is_null($theQuotes)) AND ($num_theQuotes > 0))
 			<p> by " . $theQuotes[$i]->get_author() . "</p>
 		</article>";		
 	}	
-	echo "</section>";
+	echo "<br></section>";
 }
 
 ?>

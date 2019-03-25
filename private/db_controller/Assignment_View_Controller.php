@@ -2,7 +2,7 @@
 
 /***
 $assignment_id, $section_id, $tutorial_lab_id, $assignment_name, 
-$date_assigned, $date_due, $points_possible, $notes,
+$date_assigned, $date_due, $points_possible, 
 $section_name, $professor_id, $professor_first_name, $professor_last_name, $school_name,
 $tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
 ***/
@@ -23,7 +23,7 @@ class Assignment_View_Controller extends DatabaseController {
 				$assignment_view = new Assignment_View();
 				$assignment_view->initializeView($row['assignment_id'], $row['section_id'], 
 						$row['tutorial_lab_id'],  $row['assignment_name'], $row['date_assigned'], 
-						$row['date_due'], $row['points_possible'], $row['notes'],
+						$row['date_due'], $row['points_possible'], 
 						$row['section_name'], $row['professor_id'], 
 						$row['professor_first_name'], $row['professor_last_name'], 
 						$row['school_name'], 
@@ -46,7 +46,7 @@ class Assignment_View_Controller extends DatabaseController {
 		updates the given key with the new value in the database 
 	
 		$assignment_id, $section_id, $tutorial_lab_id, $date_assigned, 
-		$assignment_name, $date_due, $points_possible, $notes,
+		$assignment_name, $date_due, $points_possible, 
 		$section_name, $professor_id, $professor_first_name, $school_name,
 		$tutorial_lab_name, $tutorial_lab_introduction, $tutorial_lab_web_link
 	***/
@@ -92,11 +92,6 @@ class Assignment_View_Controller extends DatabaseController {
 			case 'points_possible':
 				$value = $assignment_view->get_points_possible();	
 				$query = "update $table set points_possible = '$value' 
-							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
-				break;
-			case 'notes':
-				$value = $assignment_view->get_notes();	
-				$query = "update $table set notes = '$value' where 
 							where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
 				break;
 			case 'section_name':

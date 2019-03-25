@@ -8,18 +8,20 @@ class Section {
 	private $professor_id;
 	private $start_date;
 	private $end_date;
+	private $section_description;
 	
 	public function __construct() {}
 	
 	
 	public function initialize($section_id, $section_name, $professor_id, 
-								$start_date, $end_date)
+								$start_date, $end_date, $section_description = "")
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
 		$this->professor_id = $professor_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
+		$this->section_description = $section_description;
 	}
 	
 	
@@ -71,6 +73,16 @@ class Section {
 	public function set_end_date($end_date)
 	{
 		$this->end_date = $end_date;
+	}
+	
+	public function get_section_description()
+	{
+		return $this->section_description;
+	}
+
+	public function set_section_description($section_description)
+	{
+		$this->section_description = $section_description;
 	}
 	
 }

@@ -33,24 +33,51 @@
 
 <?php
 	include('html-includes/template/header.php'); 
-	include('html-includes/template/main-navigation-and-quote.php'); 
+	include('html-includes/navigation/main-navigation-and-quote.php'); 
 ?>
 
 <section class="main-content">
 <?php 
-	include('html-includes/template/logo-statement.php'); 	
+	include('html-includes/template/logo-statement.html'); 	
+	
+	$loggedIn = isset($_SESSION['member_id']);
 	
 	$form_type = $_GET["form_type"];
 		
 		if($form_type == "login")
 		{
-			include('../private/login/login-action.php'); 
-			include('html-includes/login/login-form.html'); 
+			if($loggedIn)
+			{
+				echo
+				'<br><br>
+				<div class="form-errors">
+					<h1> Sorry, please sign out before signing in. </h1>
+					<a href="html-includes/login/logout.php"><h1>Sign Out</h1></a>
+				</div>';
+			}
+			else
+			{
+				include('../private/login/login-action.php'); 
+				include('html-includes/login/login-form.html'); 
+			}
 		}
 		if($form_type == "register")
 		{
-			include('../private/login/register-action.php'); 
-			include('html-includes/login/register-form.html'); 
+			if($loggedIn)
+			{
+				echo 
+				'<br><br>
+				<div class="form-errors">
+					<h1> Sorry, please sign out before registering 
+						as a new user. </h1>
+					<a href="html-includes/login/logout.php"><h1>Sign Out</h1></a>
+				</div>';
+			}
+			else
+			{
+				include('../private/login/register-action.php'); 
+				include('html-includes/login/register-form.html'); 
+			}
 		}	
 ?>
 </section>

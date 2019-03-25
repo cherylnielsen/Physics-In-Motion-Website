@@ -54,15 +54,6 @@ p {
 	margin: 0.5em 0;
 }
 
-
-a#top {
-	margin: 0;
-	padding: 0;
-	height: 115px;
-	width: 150%;
-	text-decoration: none;
-}
-
 header{ 
 	height: 125px;
 	border-bottom: 2px solid #03AA0D;
@@ -71,32 +62,48 @@ header{
 	text-align: center;
 }
 
+a#cornerLogo {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+img.cornerLogo {	
+	height: 125px;	
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	position: absolute;
+	top: 0;
+	left: 0;	
+}
+
+
 div.logo {	
 	height: 125px;
-	background: url("../images/3D logo Physics in Motion 12 2 18.png");
+	background: url("../images/logo words 3 19 19.png");
 	background-origin: content-box;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size:  50% 80%;	
+	background-size:  60% 95%;	
+	padding-right: 70px;
 }
 
-/**
-div.logo {	
-	height: 125px;
-	text-align: center;	
-	font-family: "Times New Roman", "serif";
-	font-size: 5em;
+a#top {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
 }
-**/
 
-h1.logo-print-view {
+h1.logo {
+	/**display: inline-block;**/
 	display: none;
-}
-
-div.logo-summary {
-	position: absolute;
-	top: 80px;
-	
+	text-align: center;	
+	margin: 0;
+	padding: 15px;
+	font-family: "Times New Roman", "serif";
+	font-size: 2em;
+	color: black;
 }
 
 div.sign-in {
@@ -111,7 +118,7 @@ div.sign-in {
 	font-size: 1em;
 	font-weight: 600;
 	height: 101px;
-	width: 15.5%;
+	width: 15%;
 }
 
 div.sign-in > * {
@@ -126,42 +133,20 @@ input[type=button] {
 	background-color: #A7DAFA;
 }
 
-aside.nav-quote {
-	float: left;
-	width: 15%;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-	background-color: #A7DAFA;
-	position: relative;
-	left: -2px;
-	top: -2px;
+section.main-body {
+	clear: both;
 }
 
-a.navigation {
-	display: inline-block;
-	padding: 1em;
-	width: 83%;
-}
-
-hr {
-	border: 1px solid #03AA0D;
-}
-
-div.quote {
-	padding: 1em;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-	background-color: lightyellow;
-}
-
-div.quote > h2 {
-	margin: 0 0 1em 0;
-}
 
 section.main-content {
 	float: left;
-	width: 55%;
+	width: 54%;
 	padding: 0 0 1% 2%;
+}
+
+div.logo-summary {
+	position: absolute;
+	top: 80px;	
 }
 
 section.new-labs {
@@ -201,6 +186,16 @@ h1.development-status, h1.green {
 }
 
 h1.new-status {
+	color: red;
+}
+
+img.templinkpageimg {
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+}
+
+div.form-errors {
+	text-align: center;
 	color: red;
 }
 

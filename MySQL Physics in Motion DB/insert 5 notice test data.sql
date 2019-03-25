@@ -13,11 +13,6 @@ values (1, 1, null, "2019-02-04 14:00:00", "subject 1", "notice text 1 more text
 
 SELECT * FROM notice;
 
-insert into notice_attachment (notice_attachment_id, notice_id, attachment)
-values (1, 1, "notice 1 attachment"), (2, 2, "notice 2 attachment"), (3, 5, "notice 5 attachment");
-
-SELECT * FROM notice_attachment;
-
 insert into notice_to_member (notice_id, to_member_id)
 values (5, 4), (6, 1);
 

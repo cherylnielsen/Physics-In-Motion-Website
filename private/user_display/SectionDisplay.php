@@ -26,7 +26,7 @@ class SectionDisplay
 	}
 	
 	
-	public function sectionMembershipRow($section_view, $member_type)
+	public function sectionMembershipRow($section_view, $member_type, $mdb_control)
 	{
 		$section_id = $section_view->get_section_id();
 		$section_name = $section_view->get_section_name();
@@ -39,21 +39,43 @@ class SectionDisplay
 		$date_time = $section_view->get_end_date();
 		$end_date = $this->displayUtility->displayDateLong($date_time);
 		
-		$link = "";
-		
+		$link = "";	
+		$dropped_section = false;
+				
 		switch ($member_type)
 		{
 			case "student":
-				$link = "<a href='student-section-page.php?section_id=$section_id'>";
+				$student_id = $_SESSION['student_id'];
+				$link = "<a href='student-home-page.php?section_id=$section_id'>";
+				
+				$controller = $mdb_control->getController("section_student");
+				$section_student = $controller->getByPrimaryKeys(
+											"section_id", $section_id, "student_id", $student_id);
+				$dropped_section = $section_student->get_dropped_section();
 				break;
+				
 			case "professor":
-				$link = "<a href='professor-section-page.php?section_id=$section_id'>";
+				$link = "<a href='professor-home-page.php?section_id=$section_id'>";
 				break;
 		}
 		
+		$today = new DateTime("now");
+		$end = new DateTime($end_date);
+		$start = new DateTime($start_date);
+		
+		$status = " ";		
+		if($dropped_section) { $status = "Dropped"; }
+			else if($end < $today) { $status = "Completed"; }
+				else if($today < $start) { $status = "To Be Done"; }
+					else if(($start <= $today) && ($today <= $end))
+							{ $status = "In Progress"; }
+			
+		
 		$row = "<td>$link" . "Section $section_id&nbsp:&nbsp$section_name</a></td>		
 				<td>$first_name&nbsp&nbsp$last_name</td> 
-				<td>$school_name</td><td>$start_date</td><td>$end_date</td>";
+				<td>$school_name</td>
+				<td>$start_date</td><td>$end_date</td>
+				<td>$status</td>";
 		
 		return $row;
 	}
@@ -63,23 +85,24 @@ class SectionDisplay
 	{
 		echo "<table class='summary'>
 				<caption>Click on a section to view.</caption>
-				<tr><th colspan='5'><h2>Section Memberships</h2></th></tr>";
+				<tr><th colspan='10'><h2>Section Memberships</h2></th></tr>";
 				
 		$num_sections = count($section_list);
 		
 		if($num_sections <= 0)
 		{
-			echo "<tr><td colspan='5'>Not currently in any sections</td></tr>";
+			echo "<tr><td colspan='10'>Not currently in any sections</td></tr>";
 		}
 		else
 		{
 			echo "<tr><th>Section</th><th>Professor</th><th>School</th>
-					<th>Start Date</th><th>End Date</th></tr>";
+					<th>Start Date</th><th>End Date</th><th>Status</th></tr>";
 			
 			for($i = 0; $i < $num_sections; $i++)
 			{			
 				$section_id = $section_list[$i]->get_section_id();
-				$tableRow = $this->sectionMembershipRow($section_list[$i], $member_type);
+				$tableRow = $this->sectionMembershipRow($section_list[$i], 
+											$member_type, $mdb_control);
 				
 				echo "<tr>$tableRow</tr>";
 			}
@@ -89,38 +112,49 @@ class SectionDisplay
 	}
 	
 	
-	public function displaySectionShortList($section_list, $mdb_control, $member_type)
+	public function getSectionShortList($section_list, $mdb_control, $member_type)
 	{			
 		$num_sections = count($section_list);
-		$link = "";
+		$short_list = array();
 		
 		if($num_sections <= 0)
 		{
-			echo "<tr><td colspan='5'>Not currently in any sections</td></tr>";
-		}
-		else
-		{
-			for($i = 0; $i < $num_sections; $i++)
-			{			
-				$section_id = $section_list[$i]->get_section_id();
-				$section_name = $section_list[$i]->get_section_name();
-				
-				switch ($member_type)
-				{
-					case "student":
-						$link = "<a href='student-section-page.php?section_id=$section_id' 
-								class='member-link'>";
-						break;
-					case "professor":
-						$link = "<a href='professor-section-page.php?section_id=$section_id' 
-								class='member-link'>";
-						break;
-				}
-				
-				$tableRow = "<td>$link" . "Section $section_id&nbsp:&nbsp$section_name</a></td>";
-				echo "<tr>$tableRow</tr>";
+			return $short_list;
+		}		
+		
+		for($i = 0; $i < $num_sections; $i++)
+		{	
+			$section_id = $section_list[$i]->get_section_id();
+			$section_name = $section_list[$i]->get_section_name();
+			$today = new DateTime("now");
+			
+			$date_time = $section_list[$i]->get_start_date();
+			$start_date = $this->displayUtility->displayDateLong($date_time);
+			$start = new DateTime($start_date);
+			
+			$date_time = $section_list[$i]->get_end_date();
+			$end_date = $this->displayUtility->displayDateLong($date_time);
+			$end = new DateTime($end_date);		
+			$dropped_section = false;
+					
+			if($member_type == "student")
+			{						
+				$student_id = $_SESSION['student_id'];
+				$controller = $mdb_control->getController("section_student");
+				$section_student = $controller->getByPrimaryKeys(
+									"section_id", $section_id, "student_id", $student_id);
+				$dropped_section = $section_student->get_dropped_section();
 			}
+			
+			if((!$dropped_section) && ($start <= $today) && ($today <= $end))
+			{
+				$short_list[$i]['id'] = $section_id;
+				$short_list[$i]['name'] = $section_name;
+			}			
 		}
+		
+			return $short_list;	
+			
 	}
 	
 	
