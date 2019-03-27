@@ -11,6 +11,10 @@ h1.form, h2.form {
 	margin: 0.5em 0.5em 0.5em 0;
 }
 
+.center {
+	text-align: center;
+}
+
 h1.welcome {
 	padding: 0.5em 0 0 0.5em;
 }
@@ -44,6 +48,10 @@ fieldset {
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
 	background-color: #A7DAFA;
+}
+
+div.clear-both {
+	clear: both;
 }
 
 input[type=text],  textarea {
@@ -173,6 +181,35 @@ div.form-select select {
 	font-size: 1em;
 	width: 300px;
 }
+
+/** star ratings **/
+
+div.rating {
+	float: left;
+	padding: 10px;
+}
+
+div.rating span {
+	font-size: 2em;
+	color: gray;
+	cursor: pointer;
+}
+
+div.rating {
+	padding-left: 0;
+}
+
+div.rating input[type=radio] {
+	width: 2em; 
+	height: 2em;
+	margin: 0.5em 0;
+	opacity: 0;
+	cursor: pointer;
+	position: relative;
+	left: -36px;
+	top: 2px;
+}
+
 
 @media screen and (max-width: 950px) {
 	

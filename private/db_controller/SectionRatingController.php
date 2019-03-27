@@ -6,7 +6,7 @@ class SectionRatingController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//($section_rating_id, $section_id, $date_posted, $rating, $comments, $flag_for_review)
+	//($section_rating_id, $section_id, $member_id, $date_posted, $rating, $comments, $flag_for_review)
 	
 
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,8 @@ class SectionRatingController extends DatabaseController {
 			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 			{
 				$section_rating = new Section_Rating();
-				$section_rating->initialize($row['section_rating_id'], $row['section_id'],  
+				$section_rating->initialize($row['section_rating_id'], $row['section_id'], 
+							$row['member_id'], 
 							$row['date_posted'], $row['rating'], $row['comments'], 
 							$row['flag_for_review']);
 				// pushes each object onto the end of the array
@@ -40,20 +41,25 @@ class SectionRatingController extends DatabaseController {
 		$db_connection = get_db_connection();
 		$sucess = true;
 		$section_id = $section_rating->get_section_id();
+		$member_id = $section_rating->get_member_id();
+		$date_posted = $section_rating->get_date_posted();
 		$rating = $section_rating->get_rating();
 		$comments = $section_rating->get_comments();
-		$flag = $section_rating->get_flag_for_review();
+		$flag_for_review = $section_rating->get_flag_for_review();
+		$flag_for_review = ($flag_for_review ? 1 : 0);
 		$table = $this->getTableName();
 		
 		// The section_rating_id will be auto-generated.
-		$query = "insert into $table (section_id, date_posted, rating, comments, flag_for_review) 
-				values('$section_id', 'now()', '$rating', '$comments', '$flag')";
+		$query = "insert into $table (section_id, member_id, date_posted, rating, 
+						comments, flag_for_review) 
+				values('$section_id', '$member_id', '$date_posted', '$rating', 
+						'$comments', '$flag_for_review')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
-			$section_rating->set_section_rating_id(mysql_insert_id($db_connection));	
+			$section_rating->set_section_rating_id(mysqli_insert_id($db_connection));	
 		}
 		else
 		{
@@ -84,6 +90,10 @@ class SectionRatingController extends DatabaseController {
 			case 'section_id':
 				$value = $section_rating->get_section_id();	
 				$query = "update $table set section_id = '$value' where section_rating_id = '$section_rating_id'";
+				break;
+			case 'member_id':
+				$value = $section_rating->get_member_id();	
+				$query = "update $table set member_id = '$value' where section_rating_id = '$section_rating_id'";
 				break;
 			case 'date_posted':
 				$value = $section_rating->get_date_posted();	

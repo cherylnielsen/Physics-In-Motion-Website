@@ -11,7 +11,7 @@ include('../private/user_display/AssignmentDisplay.php');
 include('../private/user_action/SectionAction.php'); 
 include('../private/user_action/NoticeAction.php'); 
 include('../private/user_action/AssignmentAction.php');
-	
+include('../private/user_action/RatingAction.php');	
 	
 // set of helper classes for the display and action classes
 $displayUtility = new DisplayUtility();
@@ -24,5 +24,6 @@ $assignmentDisplay = new AssignmentDisplay();
 $sectionAction = new SectionAction();
 $noticeAction = new NoticeAction();
 $assignmentAction = new AssignmentAction();
+$ratingAction = new RatingAction();
 
 ?>

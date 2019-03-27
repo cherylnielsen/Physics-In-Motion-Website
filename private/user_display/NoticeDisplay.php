@@ -389,10 +389,9 @@ class NoticeDisplay
 		$sent_to_members = $this->getNoticeToMemberNames($notice_id, $mdb_control);
 		$sent_to_sections = $this->getNoticeToSectionIDs($notice_id, $mdb_control);
 		
-		$flag_for_review = $notice_view->get_flag_for_review();
-		$flagged = $flag_for_review ? "flagged" : " &nbsp ";
-		$num = count($attachments);
-		$has_attachments = ($num >= 1) ? "attachments" : " ";
+		$flagged = $notice_view->get_flag_for_review();
+		$number_attachments = count($attachments);
+		$has_attachments = ($number_attachments >= 1) ? true : false;
 		
 		$divID = $notice_type . '_' . $notice_id;
 		
@@ -405,27 +404,47 @@ class NoticeDisplay
 		if($notice_type == "sent") // sent to someone else
 		{
 			echo '<td><button class="showNoticeButton" 
-				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
-				$sent_to_members . ' ' . $sent_to_sections . '</button></td>';	
+					onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+					$sent_to_members . ' ' . $sent_to_sections . '</button></td>';	
 		}
 		else // in box or section
 		{
 			echo '<td><button class="showNoticeButton" 
-				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
-				$from_first_name . '&nbsp&nbsp' . $from_last_name . '</button></td>';
+					onclick="showSelectedNotice(\'' . $divID . '\')">' . 
+					$from_first_name . '&nbsp&nbsp' . $from_last_name . 
+					'</button></td>';
 		}
 		
 		echo '<td><button class="showNoticeButton" 
 				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
 				$notice_subject . '</button></td>';	
 		
-		echo '<td><button class="showNoticeButton" 
-				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
-				$has_attachments . '</button></td>';
-				
-		echo '<td><button class="showNoticeButton" 
-				onclick="showSelectedNotice(\'' . $divID . '\')">' . 
-				$flagged . '</button></td>';
+		if($has_attachments)
+		{
+			echo '<td><button class="showNoticeButton" 
+					onclick="showSelectedNotice(\'' . $divID . '\')">
+					<span class="fas fa-paperclip"></span> &nbsp ' .
+					$number_attachments . ' files</button></td>';
+		}
+		else
+		{
+			echo '<td><button class="showNoticeButton" 
+					onclick="showSelectedNotice(\'' . $divID . '\')">
+					&nbsp </button></td>';
+		}
+		
+		if($flagged)
+		{
+			echo '<td><button class="showNoticeButton" 
+					onclick="showSelectedNotice(\'' . $divID . '\')">
+					<span class="fas fa-eye-slash red"></span></button></td>';
+		}
+		else
+		{
+			echo '<td><button class="showNoticeButton" 
+					onclick="showSelectedNotice(\'' . $divID . '\')">
+					&nbsp </button></td>';
+		}
 		
 		echo "</tr>";
 		
@@ -450,8 +469,7 @@ class NoticeDisplay
 		
 		$notice_subject = $notice_view->get_notice_subject();
 		$notice_text = $notice_view->get_notice_text();
-		$flag_for_review = $notice_view->get_flag_for_review();
-		$flagged = $flag_for_review ? "flagged" : " &nbsp ";
+		$flagged = $notice_view->get_flag_for_review();
 		
 		$sent_to_members = $this->getNoticeToMemberNames($notice_id, $mdb_control);
 		$sent_to_sections = $this->getNoticeToSectionIDs($notice_id, $mdb_control);
@@ -464,27 +482,37 @@ class NoticeDisplay
 			$filepath = $attachments[$i]->get_filepath();
 			$filename = $attachments[$i]->get_filename();
 			$url = $this->filebase . "/$filepath/$filename";
-			$attachment_link = "<a href='$url' download 
-					class='notice_link'>$filename</a>";
+			$attachment_link = "<a href='$url' download class='notice_link'>
+					$filename</a>";
 			$attachment_string .= $attachment_link . ', ';
 		}
 		
 		echo "<table class='selectedNotice'>";
 				
 		echo "<tr><td class='bold'>$notice_subject</td><td class='right'>$date_sent</td></tr>
-				<tr><td class='bold'>
-						From: $from_first_name&nbsp&nbsp$from_last_name</td>
-						<td class='flag-for-review right'>$flagged</td></tr>
-				<tr><td colspan='2'>To: $sent_to_members, $sent_to_sections</td></tr>
+				<tr><td class='bold'>From: $from_first_name&nbsp&nbsp$from_last_name</td>";
+				
+		if($flagged)
+		{
+			echo "<td class='flag-for-review right'>
+					<span class='fas fa-eye-slash red'></span></td>";
+		}
+		else
+		{
+			echo "<td class='flag-for-review right'> &nbsp </span></td>";
+		}
+						
+		echo "</tr><tr><td colspan='2'>To: $sent_to_members, $sent_to_sections</td></tr>
 				<tr><td colspan='2'><hr></td></tr>";
 				
 		if($num_attachments > 0)
 		{
-			echo "<tr><td colspan='2'>$attachment_string</td></tr>
+			echo "<tr><td colspan='2'><span class='fas fa-paperclip'></span>
+					&nbsp $attachment_string</td></tr>
 					<tr><td colspan='2'><hr></td></tr>";
 		}
 				
-		echo "<tr><td colspan='2'>$notice_text</td></tr>";		
+		echo "<tr><td colspan='2'><br>$notice_text<br><br></td></tr>";		
 		echo "</table>";
 		
 	}

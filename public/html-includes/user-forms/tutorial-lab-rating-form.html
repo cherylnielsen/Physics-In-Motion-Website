@@ -1,0 +1,125 @@
+
+<?php	
+		
+	$date_posted = date("m/d/Y");
+	$first_name = $_SESSION["first_name"];
+	$last_name = $_SESSION["last_name"];	
+	$member_id = $_SESSION["member_id"];
+	
+	// checks GET and POST and etc.	
+	$tutorial_lab_id = $ratingAction->getSectionID();
+	$tutorial_lab_name = $ratingAction->getSectionName();	
+	$rating = $ratingAction->getRating();
+	$comments = $ratingAction->getComments();
+	//$flag_for_review = false;	
+	
+	$tutorial_lab_list = array();
+	
+	// for students, get the assigned tutorial labs only		
+	if(isset($_SESSION["student_id"]))
+	{
+		$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames_ByStudent(
+						$sectionDisplay, $student_id, $mdb_control);
+	}
+	else
+	{
+		$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
+	}
+	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";	
+	
+?>
+
+<form id='section_rating_form' method='POST'>
+	
+	<fieldset>
+		
+		<input type="hidden" name="date_posted" value="<?php echo "$date_posted" ?>" >				
+		<input type="hidden" name="member_id" value="<?php echo "$member_id" ?>" >
+		<input type="hidden" name="first_name" value="<?php echo "$first_name" ?>" >
+		<input type="hidden" name="last_name" value="<?php echo "$last_name" ?>" >
+		<input type="hidden" name="flag_for_review" value="false" >
+		
+		<h1 class="form center">Tutorial Lab Rating</h1>	
+			<p>Date: &nbsp&nbsp <?php echo "$date_posted" ?></p>		
+			<p>From: &nbsp <?php echo "$first_name&nbsp&nbsp$last_name"; ?></p>
+		<br class="form">
+		
+		<label>Tutorial Lab: &nbsp&nbsp 
+			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
+				<option value='' ></option>
+				<?php
+					for($i = 0; $i < count($tutorial_lab_list); $i++)
+					{
+						$lab_id = $tutorial_lab_list[$i]['id'];
+						$name = $tutorial_lab_list[$i]['name'];
+						$str = "<option value='$lab_id' >$name</option>";
+						
+						if(strcmp($tutorial_lab_id, $lab_id) === 0)
+						{
+							$str = "<option value='$lab_id' selected >$name</option>";
+						}
+						
+						echo "$str";
+					}				
+				?>
+			</select></div>
+		</label>
+		
+		
+		<div class="rating">		
+			<p>Rating: </p>
+			
+			<span class="fa fa-star" id="star-1" onclick="ratingClicked(1)"
+				onmouseover="ratingOnMouseOver(1)" 
+				onmouseout="ratingOnMouseOut(1)"> 
+				<input type="radio" id="radio-star-1" name="rating" value="1" required 
+					<?php if ($rating == 1) echo "checked";?>>
+			</span>
+					
+			<span class="fa fa-star" id="star-2" onclick="ratingClicked(2)"
+				onmouseover="ratingOnMouseOver(2)" 
+				onmouseout="ratingOnMouseOut(2)">
+			<input type="radio" id="radio-star-2" name="rating" value="2" 
+				<?php if ($rating == 2) echo "checked";?>>
+			</span>	
+					
+			<span class="fa fa-star" id="star-3" onclick="ratingClicked(3)"
+				onmouseover="ratingOnMouseOver(3)" 
+				onmouseout="ratingOnMouseOut(3)"> 
+			<input type="radio" id="radio-star-3" name="rating" value="3" 
+				<?php if ($rating == 3) echo "checked";?>>
+			</span>
+					
+			<span class="fa fa-star" id="star-4" onclick="ratingClicked(4)"
+				onmouseover="ratingOnMouseOver(4)" 
+				onmouseout="ratingOnMouseOut(4)">
+			<input type="radio" id="radio-star-4" name="rating" value="4" 
+				<?php if ($rating == 4) echo "checked";?>>
+			</span>
+					
+			<span class="fa fa-star" id="star-5" onclick="ratingClicked(5)"
+				onmouseover="ratingOnMouseOver(5)" 
+				onmouseout="ratingOnMouseOut(5)"> 
+			<input type="radio" id="radio-star-5" name="rating" value="5" 
+				<?php if ($rating == 5) echo "checked";?>>
+			</span>
+			
+		</div>
+		<br class="form">
+		
+		
+		<div class="clear-both">
+			<label>Comments: <br><textarea name="comments" rows="10" cols="50" 
+				spellcheck="true" ><?php echo "$comments"; ?></textarea>
+			</label><br class="form">
+		</div>
+		
+		<div class="formButtonDiv">
+			<input type="submit" value="Send">	
+			<a href='<?php echo "$doneURL" ?>' class='button'>Cancel</a>
+		</div>
+				
+	</fieldset>
+	
+</form>
