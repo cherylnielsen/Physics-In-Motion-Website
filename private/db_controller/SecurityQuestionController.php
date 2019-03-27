@@ -46,7 +46,7 @@ class SecurityQuestionController extends DatabaseController {
 				values('$member_id', '$question', '$answer')";
 		$result = mysqli_query($db_connection, $query);
 
-		if($result)
+		if(!$result)
 		{
 			$sucess = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';

@@ -26,7 +26,7 @@ function isNamePattern(data)
 	data = data.trim();
 	
 	// Names can only contain alphnumeric or -.' or space.
-	var pattern = /^[a-zA-Z0-9 \-\'\.]+$/;
+	var pattern = /^[a-zA-Z0-9 .'\-]+$/;
 	ok = !(pattern.test(data));
 	
 	return ok;
@@ -131,7 +131,7 @@ function validateMatches(theform, errors)
 function validateRegistration(theform, errors)
 {
 	var list = theform.getElementsByTagName("input");
-	var name, name_replaced, value, i;
+	var name, name_split, value, i;
 	
 	var email = "";
 	var email2 = "";
@@ -143,13 +143,13 @@ function validateRegistration(theform, errors)
 	for (i = 0; i < list.length; i++)
 	{	
 		name = list.elements[i].getAttribute("name");
-		name_replaced = name.replace("_", " ");
+		name_split = name.replace("_", " ");
 		value = list.elements[i].value;
 		value = value.trim();
 		
 		if(value.length < 1)
 		{
-			errors.push("Please enter " + name_replaced + "."); 
+			errors.push("Please enter " + name_split + "."); 
 			list.elements[i].classList.add("invalid");
 		}
 		else
@@ -159,10 +159,14 @@ function validateRegistration(theform, errors)
 				case "first_name":
 				case "last_name":
 				case "school":
+				case "question_1":
+				case "answer_1":
+				case "question_2":
+				case "answer_2":
 				
 					if(!isNamePattern(value))
 					{ 
-						errors.push("Invalid name_replaced, please check spelling."); 
+						errors.push("Invalid name_split, please check spelling."); 
 						list.elements[i].classList.add("invalid");
 					}					
 					break;
@@ -172,7 +176,7 @@ function validateRegistration(theform, errors)
 					
 					if(!isEmailPattern(value)) 
 					{ 
-						errors.push("Invalid name_replaced, please check spelling."); 
+						errors.push("Invalid name_split, please check spelling."); 
 						list.elements[i].classList.add("invalid");
 					}
 					break;
@@ -182,7 +186,7 @@ function validateRegistration(theform, errors)
 					
 					if(!isPasswordPattern(value)) 
 					{ 
-						errors.push("Invalid name_replaced, please check list of requirements."); 
+						errors.push("Invalid name_split, please check list of requirements."); 
 						list.elements[i].classList.add("invalid");
 					}					
 					break;
@@ -192,7 +196,7 @@ function validateRegistration(theform, errors)
 					
 					if(!isPasswordPattern(value)) 
 					{ 
-						errors.push("Invalid name_replaced, please check list of requirements."); 
+						errors.push("Invalid name_split, please check list of requirements."); 
 						list.elements[i].classList.add("invalid");
 					}
 					break;
