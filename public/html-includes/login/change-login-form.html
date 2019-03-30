@@ -1,0 +1,49 @@
+<?php
+
+	$member = new Member();
+	$member_control = $mdb_control->getController("member");
+	$member = $member_control->getByPrimaryKey("member_id", $_SESSION['member_id']);
+	$member_name = $member->get_member_name();
+	$first_name = $_SESSION['first_name'];
+	$last_name = $_SESSION['last_name'];
+	
+?>
+
+<form id="changelogin" method="post" 
+	action="login-register-page.php?form_type=changelogin">	
+	
+	<fieldset id="member_found">		
+		<h2>Changing Password for: <?php echo "$first_name $last_name" ?></h2>
+		<h2>Member Name: <?php echo "$member_name"; ?></h2>		
+		<a href="html-includes/login/logout.php">
+				<p>If this is not you, Sign Out.</p>
+		</a>
+		<input type="hidden" name="member_name" value="<?php echo "$member_name" ?>" >
+		
+		
+		
+		<p>Please choose a new Password with:</p>
+		<ul>
+			<li>at least one uppercase letter,</li>
+			<li>at least one lowercase letter,</li>
+			<li>at least one number,</li>
+			<li>at least 8 characters,</li>
+			<li>and it cannot contain spaces.</li>
+		</ul>
+		<br>
+		
+		<label>Password<br>
+		<input type="password" name="password" id="password"
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<br>
+		
+		<label>Confirm Password<br>
+			<input type="password" name="password_confirm" id="password_confirm" 
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<br>
+		
+		<input type="submit" value="Submit" id="save_new_password">	
+	</fieldset>	
+</form>
+
+

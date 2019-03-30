@@ -6,7 +6,7 @@ class SectionStudentController extends DatabaseController {
 
 	
 	public function __construct() {}
-	//($section_id, $student_id, $dropped_section, $reviewed_section)
+	//($section_id, $student_id, $dropped_section)
 	
 	
 	protected function getData($db_result, $db_connection)
@@ -18,7 +18,7 @@ class SectionStudentController extends DatabaseController {
 			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section_student = new Section_Student();
-				$section_student->initialize($row['section_id'], $row['student_id'], $row['dropped_section'], $row['reviewed_section']);
+				$section_student->initialize($row['section_id'], $row['student_id'], $row['dropped_section']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student;
 			}
@@ -40,11 +40,10 @@ class SectionStudentController extends DatabaseController {
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
 		$dropped_section = $section_student->get_dropped_section();
-		$reviewed_section = $section_student->get_reviewed_section();
 		$table = $this->getTableName();
 		
-		$query = "insert into $table (section_id, student_id, dropped_section, reviewed_section) 
-				values('$section_id', '$student_id', '$dropped_section', '$reviewed_section')";
+		$query = "insert into $table (section_id, student_id, dropped_section) 
+				values('$section_id', '$student_id', '$dropped_section')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -59,7 +58,7 @@ class SectionStudentController extends DatabaseController {
 	
 	
 	// updates the given key with the new value in the database
-	//($section_id, $student_id, $dropped_section, $reviewed_section)
+	//($section_id, $student_id, $dropped_section)
 	public function updateAttribute($section_student, $key)
 	{
 		$db_connection = get_db_connection();
@@ -78,10 +77,7 @@ class SectionStudentController extends DatabaseController {
 				$value = $section_student->get_dropped_section();	
 				$query = "update $table set dropped_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
 				break;
-			case 'reviewed_section':
-				$value = $section_student->get_reviewed_section();	
-				$query = "update $table set reviewed_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
-				break;
+			
 		}
 		
 		$result = mysqli_query($db_connection, $query);
@@ -107,11 +103,9 @@ class SectionStudentController extends DatabaseController {
 		
 		// data to be updated			
 		$dropped_section = $student->get_dropped_section();
-		$reviewed_section = $student->get_reviewed_section();
 					
 		$query = "UPDATE $table 
-					SET dropped_section = '$dropped_section',
-						reviewed_section = '$reviewed_section'
+					SET dropped_section = '$dropped_section'
 					WHERE (section_id = '$section_id') AND (student_id = '$student_id')";
 						
 		$result = mysqli_query($db_connection, $query);
@@ -136,6 +130,7 @@ class SectionStudentController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where (section_id = $section_id) AND (student_id = $student_id)";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

@@ -4,10 +4,16 @@
 	{
 		if(isset($_POST['grade_homework_id']))
 		{
-			$id = $_POST['grade_homework_id'];
-			$grade = $_POST["grade_$id"]; 
-			$sucess = $assignmentAction->gradeHomework($id, $grade, $mdb_control);
+			$hmwk_id = $_POST['grade_homework_id'];
+			$grade = $_POST["grade_$hmwk_id"]; 
+			$sucess = $assignmentAction->gradeHomework($hmwk_id, $grade, $mdb_control);
 		}		
+		
+		if(isset($_POST['delete_assignment']))
+		{
+			$id = $_POST['delete_assignment'];
+			$sucess = $assignmentAction->deleteAssignment($id, $mdb_control);
+		}	
 	}
 		
 ?>

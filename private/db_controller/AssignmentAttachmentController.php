@@ -143,6 +143,7 @@ class assignmentAttachmentController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where assignment_attachment_id = $assignment_attachment_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

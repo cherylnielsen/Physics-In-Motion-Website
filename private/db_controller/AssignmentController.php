@@ -59,7 +59,7 @@ class AssignmentController extends DatabaseController {
 		if($result)
 		{
 			// get the newly generated assignment_id
-			$assignment->set_assignment_id(mysql_insert_id($db_connection));		
+			$assignment->set_assignment_id(mysqli_insert_id($db_connection));		
 		}
 		else
 		{
@@ -173,7 +173,8 @@ class AssignmentController extends DatabaseController {
 		$assignment_id = $assignment->get_assignment_id();
 		$table = $this->getTableName();
 		
-		$query = "delete from $table where (assignment_id = '$assignment_id') AND (section_id = '$section_id')";
+		$query = "delete from $table where (assignment_id = $assignment_id)";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

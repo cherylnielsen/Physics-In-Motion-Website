@@ -4,16 +4,24 @@
 	<meta charset="ISO-8859-1">
 	
 	<?php
-		$form_type = $_GET["form_type"];
+		$form_type = $_GET["form_type"];    
 		
-		if($form_type == "login")
+		switch ($form_type)
 		{
-			echo '<title>Physics in Motion: Sign In</title>';
+			case "login":
+				echo '<title>Physics in Motion: Sign In</title>';
+				break;
+			case "register":
+				echo '<title>Physics in Motion: Registration</title>';
+				break;
+			case "forgotlogin":
+				echo '<title>Physics in Motion: Forgotten Sign In</title>';
+				break;
+			case "changelogin";
+				echo '<title>Physics in Motion: Change Sign In</title>';
+				break;
 		}
-		if($form_type == "register")
-		{
-			echo '<title>Physics in Motion: Registration</title>';
-		}
+		
 	?>
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Physics in Motion uses today’s powerful interactive online 3D gaming technologies to create a new type of science tutorial. Not as game, but as truly visual, immersive, and hands on learning experience. The Student can analyze the collected data with interactive graphs and math calculations done inside the tutorial lab. Along the way, the Automated Mentor will explain topics and give hints. Web pages for Students and Professors provide multiple additional services.">
@@ -37,48 +45,55 @@
 ?>
 
 <section class="main-content">
+
 <?php 
 	include('html-includes/template/logo-statement.html'); 	
 	
+	$form_type = $_GET["form_type"];
 	$loggedIn = isset($_SESSION['member_id']);
 	
-	$form_type = $_GET["form_type"];
-		
-		if($form_type == "login")
+	if ($loggedIn)
+	{
+		if($form_type == "changelogin")
 		{
-			if($loggedIn)
-			{
-				echo
-				'<br><br>
-				<div class="form-errors">
-					<h1> Sorry, please sign out before signing in. </h1>
-					<a href="html-includes/login/logout.php"><h1>Sign Out</h1></a>
-				</div>';
-			}
-			else
-			{
+			include('../private/login/change-login-action.php'); 
+			include('html-includes/login/change-login-form.html');
+		}
+		else
+		{
+			echo '<br><br>
+			<div class="form-errors">
+				<h1> You are already signed in. </h1>
+				<a href="html-includes/login/logout.php"><h1>Sign Out?</h1></a>
+			</div>';
+		}
+	}
+	else
+	{
+		switch ($form_type)
+		{
+			case "login":
 				include('../private/login/login-action.php'); 
 				include('html-includes/login/login-form.html'); 
-			}
-		}
-		if($form_type == "register")
-		{
-			if($loggedIn)
-			{
-				echo 
-				'<br><br>
-				<div class="form-errors">
-					<h1> Sorry, please sign out before registering 
-						as a new user. </h1>
-					<a href="html-includes/login/logout.php"><h1>Sign Out</h1></a>
-				</div>';
-			}
-			else
-			{
+				break;
+				
+			case "register":
 				include('../private/login/register-action.php'); 
 				include('html-includes/login/register-form.html'); 
-			}
-		}	
+				break;
+			
+			case "forgotlogin":
+				include('../private/login/forgot-login-action.php'); 
+				include('html-includes/login/forgot-login-form.html'); 
+				break;
+				
+			case "changelogin":
+				include('../private/login/change-login-action.php');  
+				include('html-includes/login/change-login-form.html');
+				break;
+		}
+	}
+		
 ?>
 </section>
 

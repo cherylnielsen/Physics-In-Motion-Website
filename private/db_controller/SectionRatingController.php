@@ -13,9 +13,9 @@ class SectionRatingController extends DatabaseController {
 	{
 		$dataArray = array();
 		
-		if($result)
+		if($db_result)
 		{
-			while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($db_result, MYSQLI_ASSOC))
 			{
 				$section_rating = new Section_Rating();
 				$section_rating->initialize($row['section_rating_id'], $row['section_id'], 
@@ -167,6 +167,7 @@ class SectionRatingController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where section_rating_id = $section_rating_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

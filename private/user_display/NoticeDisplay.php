@@ -154,7 +154,7 @@ class NoticeDisplay
 				}
 				else
 				{
-					echo "<tr><th colspan='10'>No Section $section_id Notices</th></tr>";
+					echo "<tr><td colspan='10'><h2>No Section $section_id Notices</h2></td></tr>";
 				}
 			}
 		}
@@ -437,7 +437,8 @@ class NoticeDisplay
 		{
 			echo '<td><button class="showNoticeButton" 
 					onclick="showSelectedNotice(\'' . $divID . '\')">
-					<span class="fas fa-eye-slash red"></span></button></td>';
+					<span class="fa fa-warning red">Possible inappropriate content!
+					</span></button></td>';
 		}
 		else
 		{
@@ -495,11 +496,17 @@ class NoticeDisplay
 		if($flagged)
 		{
 			echo "<td class='flag-for-review right'>
-					<span class='fas fa-eye-slash red'></span></td>";
+					<span class='fa fa-warning red'>Under review for possible inappropriate content!
+					</span></td>";
 		}
 		else
 		{
-			echo "<td class='flag-for-review right'> &nbsp </span></td>";
+			echo "<td class='flag-for-review right'>
+					<button class='table-flag-button table-button' 
+						name='notice-flag-for-review' value='$notice_id'>
+						Report inappropriate content.
+						<span class='fa fa-warning red'></span>
+					</button></td>";
 		}
 						
 		echo "</tr><tr><td colspan='2'>To: $sent_to_members, $sent_to_sections</td></tr>

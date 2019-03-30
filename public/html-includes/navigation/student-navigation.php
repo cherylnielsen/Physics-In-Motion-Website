@@ -57,14 +57,16 @@ if(isset($_SESSION["student_id"]) && isset($_SESSION["member_type"]))
 		}	
 ?>
 		<h2 class='navigation'>Actions</h2>
+		<a href="login-register-page.php?form_type=changelogin" 
+			class="navigation">Change Password</a>
 		<a href="student-home-page.php?notices=page" 
-				class="navigation">View Notices</a>
+			class="navigation">View Notices</a>
 		<a href="student-form-page.php?form_type=write_notice" 
-				class="navigation">Write Notice</a>
+			class="navigation">Write Notice</a>
 		<a href="student-form-page.php?form_type=section_rating" 
-				class="navigation">Section Rating</a>
+			class="navigation">Section Rating</a>
 		<a href="student-form-page.php?form_type=tutorial_lab_rating" 
-				class="navigation">Tutorial Lab Rating</a>
+			class="navigation">Tutorial Lab Rating</a>
 				
 </nav>
 <!-- end SESSION if blocks -->

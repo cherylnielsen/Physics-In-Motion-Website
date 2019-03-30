@@ -26,12 +26,11 @@
 <form id="addAssignmentForm" method="POST" enctype="multipart/form-data">
 	
 	<fieldset>
-	
-		<input type="hidden" name="date_assigned" value="<?php echo "$date_assigned" ?>" >	
-		
-		<h2 class="form">Add Assignment</h2>		
-		<p>Date: &nbsp&nbsp <?php echo date('m/d/Y');?></p>	
-		<br class="form">
+		<h2 class="form">Add Assignment</h2>	
+
+		<label>Date to be Assigned: <br><input type="date" name="date_assigned" required 
+			min=<?php echo date('m/d/Y'); ?>  value="<?php echo "$date_assigned"; ?>" >
+		</label><br class="form">
 		
 		<label>Assignment Name: <br><input type="text" name="assignment_name" required 
 			value="<?php echo "$assignment_name"; ?>" >
@@ -98,8 +97,8 @@
 		<div class="formButtonDiv">
 			<input type="submit" value="Save Assignment">		
 			<?php
-				$cancelURL = "professor-section-page.php?section_id=$section_id";
-				echo "<a href='$cancelURL' class='button'>Cancel</a>";
+				$returnURL = "professor-section-page.php?section_id=$section_id";
+				echo "<a href='$returnURL' class='button'>Cancel</a>";
 			?>		
 		</div>
 		

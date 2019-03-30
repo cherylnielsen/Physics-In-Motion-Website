@@ -123,6 +123,7 @@ class StudentController extends DatabaseController
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where student_id = $student_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

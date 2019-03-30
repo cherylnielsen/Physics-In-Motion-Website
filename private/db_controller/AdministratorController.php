@@ -123,6 +123,7 @@ class AdministratorController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where administrator_id = $administrator_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

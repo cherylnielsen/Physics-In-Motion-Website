@@ -36,15 +36,6 @@ class RatingAction
 							
 				$sucess = $controller->saveNew($theRating);
 				
-				if($sucess)
-				{
-					$controller = $mdb_control->getController("section_student");
-					$section_student = $controller->getByPrimaryKeys(
-							"student_id", $member_id, "section_id", $section_id);
-					$section_student->set_reviewed_section(true);
-					$controller->updateAttribute($section_student, "reviewed_section");
-				}				
-				
 				break;
 				
 			case "tutorial_lab_rating":

@@ -143,6 +143,7 @@ class NoticeAttachmentController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where notice_attachment_id = $notice_attachment_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

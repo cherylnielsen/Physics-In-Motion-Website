@@ -44,7 +44,7 @@ table.noticeSummary {
 	margin: 30px 0;
 }
 
-table.notice-table {
+table.notice-table, table.summary {
 	min-width: 70%;
 }
 
@@ -151,6 +151,15 @@ button.showNoticeButton {
   transform: translateX(-2px);
 }
 
+.table-flag-button {
+	background-color: Gold;
+	border-radius: 10px;
+}
+
+.table-flag-button:active {
+  transform: translateY(-1px);
+}
+
 input[type=number].table-input {
 	width: 4em;
 	height: 1.5em;
@@ -167,6 +176,11 @@ input[type=number].table-input {
 span.red {
 	color: red;
 }
+
 span.green {
 	color: green;
+}
+
+span.gray {
+	color: gray;
 }

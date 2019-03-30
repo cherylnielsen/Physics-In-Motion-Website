@@ -97,18 +97,22 @@ class DisplayUtility
 	{
 		$section_list = array();
 		$student_sections = array();
+		
 		$controller = $mdb_control->getController("section_student");
-		$student_sections = $controller->getByAttribute("student_id", $student_id);		
-		$controller = $mdb_control->getController("section");
+		$student_sections = $controller->getByAttribute("student_id", $student_id);	
+		
+		$section_controller = $mdb_control->getController("section");
+		$rating_controller = $mdb_control->getController("section_rating");
 				
 		for($i = 0; $i < count($student_sections); $i++)
 		{
-			$reviewed = $student_sections[$i]->get_reviewed_section();
+			$section_id = $student_sections[$i]->get_section_id();
+			$student_rating = $rating_controller->getByPrimaryKeys("section_id", 
+						$section_id, "member_id", $student_id);
 			
-			if(!$reviewed)
-			{
-				$section_id = $student_sections[$i]->get_section_id();
-				$section = $controller->getByPrimaryKey("section_id", $section_id);
+			if(!isset($student_rating))
+			{				
+				$section = $section_controller->getByPrimaryKey("section_id", $section_id);
 				$section_list[] = $section;
 			}
 		}

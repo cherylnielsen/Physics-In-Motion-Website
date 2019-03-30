@@ -168,6 +168,7 @@ class TutorialLabRatingController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where tutorial_lab_rating_id = $tutorial_lab_rating_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

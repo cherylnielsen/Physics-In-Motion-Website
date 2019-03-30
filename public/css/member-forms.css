@@ -94,7 +94,7 @@ input[type=date] {
 	padding-left: 7px;
 }
 
-input:invalid, textarea:invalid {
+input:invalid, textarea:invalid select:invalid {
 	border: 2px solid red;
 	border-radius: 5px;
 	background-color: #ffd4d4;
