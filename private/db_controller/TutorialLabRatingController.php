@@ -41,20 +41,22 @@ class TutorialLabRatingController extends DatabaseController {
 		$sucess = true;
 		$tutorial_lab_id = $tutorial_lab_rating->get_tutorial_lab_id();
 		$member_id = $tutorial_lab_rating->get_member_id();
+		$date_posted = $tutorial_lab_rating->get_date_posted();
 		$rating = $tutorial_lab_rating->get_rating();
 		$comments = $tutorial_lab_rating->get_comments();
-		$flag = $tutorial_lab_rating->get_flag_for_review();
+		$flag_for_review = $tutorial_lab_rating->get_flag_for_review();
+		$flag_for_review = ($flag_for_review ? 1 : 0);
 		$table = $this->getTableName();
 		
 		// The tutorial_lab_rating_id will be auto-generated.
 		$query = "insert into $table (tutorial_lab_id, member_id, date_posted, rating, comments, flag_for_review) 
-				values('$tutorial_lab_id', '$member_id', 'now()', '$rating', '$comments', '$flag')";
+				values('$tutorial_lab_id', '$member_id', '$date_posted', '$rating', '$comments', '$flag_for_review')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
-			$rating->set_tutorial_lab_rating_id(mysql_insert_id($db_connection));	
+			$tutorial_lab_rating->set_tutorial_lab_rating_id(mysqli_insert_id($db_connection));	
 		}
 		else
 		{
@@ -166,6 +168,7 @@ class TutorialLabRatingController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where tutorial_lab_rating_id = $tutorial_lab_rating_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

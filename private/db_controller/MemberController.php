@@ -236,6 +236,7 @@ class MemberController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where member_id = $member_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

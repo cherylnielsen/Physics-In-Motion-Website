@@ -220,6 +220,7 @@ class HomeworkController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where homework_id = '$homework_id'";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

@@ -118,7 +118,7 @@ class RegisterUtilities
 		else
 		{
 			// pattern match for required characters
-			if (!preg_match("/^[a-zA-Z0-9 \-\'\.]+$/", $name))
+			if (!preg_match("/^[a-zA-Z0-9 .'\-]+$/", $name))
 			{
 				$form_errors[] = "$data_type names can only contain letters, numbers, or - .' and spaces.";
 				$ok = false;
@@ -267,7 +267,8 @@ class RegisterUtilities
 	
 	
 	public function register_new_member($firstname, $lastname, $email, $school, 
-						$member_type, $membername, $password, $mdb_control)
+						$member_type, $membername, $password, $mdb_control,
+						$question_1, $answer_1, $question_2, $answer_2)
 	{
 		$ok = true;
 		// MySQL DATETIME format
@@ -276,28 +277,49 @@ class RegisterUtilities
 		$control = $mdb_control->getController("member");
 		$db_connect = get_db_connection();
 		
+		// escape member text input variables for quote marks, etc.
 		$membername = mysqli_real_escape_string($db_connect, $membername);
 		$password = mysqli_real_escape_string($db_connect, $password);
 		$firstname = mysqli_real_escape_string($db_connect, $firstname);
 		$lastname = mysqli_real_escape_string($db_connect, $lastname);
 		$email = mysqli_real_escape_string($db_connect, $email);
 		$school = mysqli_real_escape_string($db_connect, $school);
+		$question_1 = mysqli_real_escape_string($db_connect, $question_1);
+		$answer_1 = mysqli_real_escape_string($db_connect, $answer_1);
+		$question_2 = mysqli_real_escape_string($db_connect, $question_2);
+		$answer_2 = mysqli_real_escape_string($db_connect, $answer_2);
 		$complete = true;
 		
 		// save new member
 		$member = new Member();
 		$password = password_hash($password, PASSWORD_DEFAULT);
-		$member->initialize(null, $member_type, $membername, $password, $date_registered, null, null, $firstname, $lastname, $email, $complete);
+		$member->initialize(null, $member_type, $membername, $password, $date_registered, 
+							null, null, $firstname, $lastname, $email, $complete);
 		$ok = $control->saveNew($member);
-		$person = null;
+		
+		// save the security questions
+		if($ok) 
+		{	
+			$member_id = $member->get_member_id();
+			$control = $mdb_control->getController("security_question");
+			$question = new Security_Question();
+			$question->initialize(null, $member_id, $question_1, $answer_1);
+			$ok = $control->saveNew($question);
+			
+			if($ok)
+			{
+				$question = new Security_Question();
+				$question->initialize(null, $member_id, $question_2, $answer_2);	
+				$ok = $control->saveNew($question);
+			}
+		}
 		
 		// save member as student or professor
 		if($ok) 
 		{
-			$control = $mdb_control->getController($member_type);
 			$member_id = $member->get_member_id();
-			// escape member input variables for quote marks, etc.
-			// member_type dose not need escaping
+			$control = $mdb_control->getController($member_type);
+			$person = null;			
 			
 			switch ($member_type)
 			{

@@ -1,17 +1,17 @@
 <?php
 
+require_once('login-utilities.php');
 require_once('register-utilities.php'); 
 	
 If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$register = new RegisterUtilities();
 	$form_errors = array();
+	
 	$firstname = $_POST['first_name'];
 	$lastname = $_POST['last_name'];
 	$email = $_POST['email'];
 	$school = $_POST['school'];
-	$membername = $_POST['membername'];
-	$password = $_POST['password'];
 	$member_type = $_POST['member_type'];
 	
 	$question_1 = $_POST['question_1'];
@@ -29,14 +29,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	$register->validate_name($question_2, "Security Questions", $form_errors);
 	$register->validate_name($answer_2, "Security Answers", $form_errors);	
 	$register->validate_password($_POST['password'], $_POST['password_confirm'], $form_errors);
-	
-	$ok_name = $register->validate_membername($_POST['membername'], $_POST['membername_confirm'], $form_errors);
 	$ok_email = $register->validate_emails($_POST['email'], $_POST['email_confirm'], $form_errors);
-	
-	if($ok_name && $ok_email)
-	{
-		$register->uniqueness_test($email, $membername, $mdb_control, $form_errors);
-	}
 	
 	if(count($form_errors) != 0)
 	{
@@ -44,27 +37,44 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 	}
 	else
 	{
-		// Save the data to the database
-		$ok = $register->register_new_member($firstname, $lastname, $email, $school, 
-				$member_type, $membername, $password, $mdb_control, 
-				$question_1, $answer_1, $question_2, $answer_2);		
+		// *************  TO BE DONE **************  TO BE DONE  ******************
 		
-		if($ok) 
+		
+		// Find the member in the database
+		//$ok_personal_information = ?? ($firstname, $lastname, $email, $school, $member_type, $mdb_control);	
+		
+		
+		if(!$ok_personal_information)
 		{
-			// Redirect the new member to the login page
-			$url = "login-register-page.php?form_type=login";
-			header("Location: $url");
-			exit();
+			echo'<div class="form-errors">
+					<p>Sorry, the personal information did not match our records.</p>
+				</div>';
 		}
 		else
 		{
-			echo'<div class="form-errors">
-					<p>Sorry, we goofed!</p>
-					<p>Registration could not be saved. 
-						Please try again later.</p>
-				</div>';
+			// *************  TO BE DONE **************  TO BE DONE  ******************
+			
+			
+			// Check that the member security questions and answers match the found member's records.
+			// $member_id = found member
+			//$ok_question_1 = ?? ($member_id, $question_1, $answer_1, $mdb_control);
+			//$ok_question_2 = ?? ($member_id, $question_2, $answer_2, $mdb_control);
+			
+			if($ok_question_1 && $ok_question_2)
+			{
+				// Redirect the new member to the change of login page
+				$url = "login-register-page.php?form_type=changelogin";
+				header("Location: $url");
+				exit();
+				
+			}
+			else
+			{
+				echo'<div class="form-errors">
+					<p>Sorry, the security questions did not match our records.</p>
+					</div>';
+			}			
 		}
-		
 	}
 	
 }

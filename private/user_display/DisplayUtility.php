@@ -93,6 +93,42 @@ class DisplayUtility
 	}
 	
 	
+	public function getListSectionsNeedingReview_ByStudent($sectionDisplay, $student_id, $mdb_control)
+	{
+		$section_list = array();
+		$student_sections = array();
+		
+		$controller = $mdb_control->getController("section_student");
+		$student_sections = $controller->getByAttribute("student_id", $student_id);	
+		
+		$section_controller = $mdb_control->getController("section");
+		$rating_controller = $mdb_control->getController("section_rating");
+				
+		for($i = 0; $i < count($student_sections); $i++)
+		{
+			$section_id = $student_sections[$i]->get_section_id();
+			$student_rating = $rating_controller->getByPrimaryKeys("section_id", 
+						$section_id, "member_id", $student_id);
+			
+			if(!isset($student_rating))
+			{				
+				$section = $section_controller->getByPrimaryKey("section_id", $section_id);
+				$section_list[] = $section;
+			}
+		}
+		
+		for($i = 0; $i < count($section_list); $i++)
+		{
+			$sec_id = $section_list[$i]->get_section_id();
+			$sec_name = $section_list[$i]->get_section_name();
+			$section_names[$i]['id'] = "$sec_id"; 
+			$section_names[$i]['name'] = "Section $sec_id : $sec_name"; 
+		}
+		
+		return $section_names;
+	}
+	
+	
 	public function getListSectionIDNames_All($mdb_control)
 	{
 		$sections = array();
@@ -126,6 +162,34 @@ class DisplayUtility
 		}
 		
 		return $tutorial_lab_list;
+	}
+	
+	
+	public function getListTutorialLabIDNames_ByStudent($sectionDisplay, $student_id, $mdb_control)
+	{
+		$section_list = array();
+		$assignment_list = array();
+		$tutorial_lab_names = array();
+		
+		$section_list = $sectionDisplay->getSectionList_ByStudent($student_id, $mdb_control);
+						
+		for($i = 0; $i < count($section_list); $i++)
+		{
+			$section_id = $section_list[$i]->get_section_id();
+			$assignment_list = array();
+			$controller = $mdb_control->getController("assignment_view");
+			$assignment_list = $controller->getByAttribute("section_id", $section_id);
+			
+			for($j = 0; $j < count($assignment_list); $j++)
+			{
+				$lab_id = $assignment_list[$j]->get_tutorial_lab_id();
+				$lab_name = $assignment_list[$j]->get_tutorial_lab_name();
+				$tutorial_lab_names[$j]['name'] = "Tutorial Lab " . $lab_id . " : " . $lab_name;
+				$tutorial_lab_names[$j]['id'] = $lab_id;
+			}
+		}
+
+		return $tutorial_lab_names;
 	}
 	
 	

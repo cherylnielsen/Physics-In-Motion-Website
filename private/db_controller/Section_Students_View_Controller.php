@@ -7,7 +7,7 @@ class Section_Students_View_Controller extends DatabaseController {
 	public function __construct(){}
 	// ($section_id, $section_name, $start_date, $end_date,
 	//   $student_id, $first_name, $last_name, $school_name,
-	//   $dropped_section, $reviewed_section)
+	//   $dropped_section)
 	
 	protected function getData($db_result, $db_connection)
 	{
@@ -23,7 +23,7 @@ class Section_Students_View_Controller extends DatabaseController {
 										$row['start_date'], $row['end_date'], 
 										$row['student_id'], $row['student_first_name'], 
 										$row['student_last_name'], $row['school_name'], 
-										$row['dropped_section'], $row['reviewed_section']);
+										$row['dropped_section']);
 										
 				// pushes each object onto the end of the array
 				$dataArray[] = $section_student_view;
@@ -84,10 +84,7 @@ class Section_Students_View_Controller extends DatabaseController {
 				$value = $section_student_view->get_dropped_section();	
 				$query = "update $table set dropped_section = '$value' where section_id = '$section_id'";
 				break;
-			case 'reviewed_section':
-				$value = $section_student_view->get_reviewed_section();	
-				$query = "update $table set reviewed_section = '$value' where section_id = '$section_id'";
-				break;
+			
 		}
 		
 		$result = mysqli_query($db_connection, $query);

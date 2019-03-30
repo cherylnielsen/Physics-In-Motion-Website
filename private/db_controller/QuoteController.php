@@ -180,6 +180,7 @@ class QuoteController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where quote_id = $quote_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

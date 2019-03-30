@@ -80,6 +80,7 @@ class NoticeToSectionController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where where (notice_id = '$notice_id') AND (to_section_id = '$to_section_id')";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

@@ -2,6 +2,7 @@
 
 use physics_in_motion;
 
+
 insert into member (member_id, member_type, member_name, member_password, date_registered, first_name, last_name, email, registration_complete)
 values (1, 'professor', 'P1username', '$2y$10$yWJzq7UQkVbqmSKBKI7dbeMdV9H/At4bipJbBqdI9GSM4kD.tHiA.', '2019-02-05 06:17:29', 'P1first', 'P1last', 'p1@p1.p1', true),
 (2, 'student', 'S2username', '$2y$10$pl2TnpEJ4zmCeHNYbqgxou.7iPtwkAXbVvkawVbfOSQk8/fjtZYJC', '2019-02-05 06:18:40', 'S2first', 'S2last', 's2@s2.s2', true),
@@ -20,3 +21,9 @@ values (4, 'general');
 select * from professor;
 select * from student;
 select * from member;
+
+insert into security_question (security_question_id, member_id, question, answer)
+values(1, 1, 'q1', 'a1'), (2, 1, 'q2', 'a2'), (3, 2, 'q1', 'a1'), (4, 2, 'q2', 'a2'), 
+(5, 3, 'q1', 'a1'), (6, 3, 'q2', 'a2'), (7, 4, 'q1', 'a1'), (8, 4, 'q2', 'a2');
+
+select * from security_question;

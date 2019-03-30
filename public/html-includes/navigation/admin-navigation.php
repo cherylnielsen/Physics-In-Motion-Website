@@ -33,6 +33,8 @@
 		Flagged Reviews</button>	
 			
 	<h2 class='navigation'>Actions</h2>
+	<a href="login-register-page.php?form_type=changelogin" 
+		class="navigation">Change Password</a>
 	<a href="admin-form-page.php?form_type=write_notice" 
 		class="navigation">Write Notice</a>
 	<a href="admin-form-page.php?form_type=section_members" 

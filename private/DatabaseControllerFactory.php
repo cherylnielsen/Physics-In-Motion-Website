@@ -104,7 +104,7 @@ class DatabaseControllerFactory
 				$controller  = new TutorialLabController();
 				break;
 			case "tutorial_lab_rating" :
-				$controller = new LabRatingController();
+				$controller = new TutorialLabRatingController();
 				break;
 			case "tutorial_lab_rating_view" :
 				$controller = new Tutorial_Lab_Rating_View_Controller();

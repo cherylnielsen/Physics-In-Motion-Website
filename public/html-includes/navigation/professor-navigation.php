@@ -58,9 +58,16 @@ if(isset($_SESSION["professor_id"]) && isset($_SESSION["member_type"]))
 		}	
 ?>	
 		<h2 class='navigation'>Actions</h2>
-		<a href="professor-home-page.php?notices=page" class="navigation">View Notices</a>
-		<a href="professor-form-page.php?form_type=write_notice" class="navigation">Write Notice</a>
-		<a href="professor-form-page.php?form_type=add_assignment" class="navigation">Add Assignment</a>
+		<a href="login-register-page.php?form_type=changelogin" 
+			class="navigation">Change Password</a>
+		<a href="professor-home-page.php?notices=page" 
+			class="navigation">View Notices</a>
+		<a href="professor-form-page.php?form_type=write_notice" 
+			class="navigation">Write Notice</a>
+		<a href="professor-form-page.php?form_type=add_assignment" 
+			class="navigation">Add Assignment</a>
+		<a href="professor-form-page.php?form_type=tutorial_lab_rating" 
+			class="navigation">Tutorial Lab Rating</a>
 		
 </nav>
 <!-- end SESSION if blocks -->

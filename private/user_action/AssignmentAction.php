@@ -85,6 +85,19 @@ class AssignmentAction
 	}
 	
 	
+	public function deleteAssignment($assignment_id, $mdb_control)
+	{
+		$sucess = true;
+		$assignment = new Assignment();
+		
+		$controller = $mdb_control->getController("assignment");		
+		$assignment = $controller->getByPrimaryKey("assignment_id", $assignment_id);
+		$sucess = $controller->deleteFromDatabase($assignment);
+		
+		return $sucess;
+	}
+	
+	
 	public function submitHomework($homework_id, $mdb_control)
 	{
 		$sucess = true;
@@ -272,7 +285,7 @@ class AssignmentAction
 		{
 			$tutorial_lab_id = $_GET['tutorial_lab_id']; 
 		}
-		else if (isset($assignment_view))
+		else 
 		{
 			$tutorial_lab_id = $assignment_view->get_tutorial_lab_id();
 		}
@@ -293,7 +306,7 @@ class AssignmentAction
 		{
 			$section_name = $_GET['section_name']; 
 		}
-		else if (isset($assignment_view))
+		else 
 		{
 			$section_name = $assignment_view->get_section_name();
 		}
@@ -314,7 +327,7 @@ class AssignmentAction
 		{
 			$assignment_name = $_GET['assignment_name']; 
 		}
-		else if (isset($assignment_view))
+		else 
 		{
 			$assignment_name = $assignment_view->get_assignment_name();
 		}
@@ -335,11 +348,11 @@ class AssignmentAction
 		{
 			$date_assigned = $_GET['date_assigned']; 
 		}
-		else if (isset($assignment_view))
+		else 
 		{
 			$date_assigned = $assignment_view->get_date_assigned();
 			$time = strtotime($date_assigned);
-			$date_assigned = date("m/d/Y", $time);
+			$date_assigned = date("Y-m-d", $time);
 		}
 		
 		return $date_assigned;
@@ -358,7 +371,7 @@ class AssignmentAction
 		{
 			$date_due = $_GET['date_due']; 
 		}
-		else if (isset($assignment_view))
+		else 
 		{
 			$date_due = $assignment_view->get_date_due();
 			$time = strtotime($date_due);
@@ -381,7 +394,7 @@ class AssignmentAction
 		{
 			$points_possible = $_GET['points_possible']; 
 		}
-		else if (isset($assignment_view))
+		else 
 		{
 			$points_possible = $assignment_view->get_points_possible();
 		}

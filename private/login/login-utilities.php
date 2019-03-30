@@ -17,26 +17,20 @@ class LoginUtilities
 	public function get_user($member_id, $member_type, $mdb_control)
 	{		
 		// find in the database
-		$user_array = array();
 		$user = null;
 		$control = $mdb_control->getController($member_type);
 		
 		switch($member_type)
 		{
 			case 'student':
-				$user_array = $control->getByAttribute("student_id", $member_id);
+				$user = $control->getByPrimaryKey("student_id", $member_id);
 				break;
 			case 'professor':
-				$user_array = $control->getByAttribute("professor_id", $member_id);
+				$user = $control->getByPrimaryKey("professor_id", $member_id);
 				break;
 			case 'administrator':
-				$user_array = $control->getByAttribute("administrator_id", $member_id);
+				$user = $control->getByPrimaryKey("administrator_id", $member_id);
 				break;
-		}
-		
-		if(!is_null($user_array) && count($user_array) > 0) 
-		{
-			$user = $user_array[0];
 		}
 		
 		return $user;
@@ -46,11 +40,13 @@ class LoginUtilities
 	public function update_last_login($member, $mdb_control)
 	{
 		$success = false;
+		
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
 		$login_time = date($format, time());
+		
 		$member_control = $mdb_control->getController("member");
-		$success = $member_control->updateAttribute($member, "last_login", $login_time);
+		$success = $member_control->updateAttribute($member, "last_login");
 		
 		return $success;
 	}
@@ -59,18 +55,15 @@ class LoginUtilities
 	public function update_last_logout($member_id, $mdb_control)
 	{
 		$success = false;
+		
 		// MySQL DATETIME format
 		$format = date("Y-m-d H:i:s");
-		$logout_time = date($format, time());	
-		$member_control = $mdb_control->getController("member");
-		$member = array();
-		$member = $member_control->getByAttribute("member_id", $member_id);
+		$logout_time = date($format, time());
 		
-		if(count($member) > 0)
-		{
-			$member = $member[0];
-			$success = $member_control->updateAttribute($member, "last_logoff", $logout_time);
-		}
+		$member_control = $mdb_control->getController("member");
+		$member = new Member();
+		$member = $member_control->getByPrimaryKey("member_id", $member_id);
+		$success = $member_control->updateAttribute($member, "last_logoff");
 		
 		return $success;
 	}

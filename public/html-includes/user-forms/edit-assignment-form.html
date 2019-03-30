@@ -16,9 +16,10 @@
 
 	// checks GET and POST, if not set, returns the existing object values,
 	// if the assignment_view object is null, then returns the empty string
-	$date_assigned = $assignmentAction->getDateAssignedEdit($assignment_view);
+	
 	$assignment_name = $assignmentAction->getAssignmentNameEdit($assignment_view);
 	$section_name = $assignmentAction->getSectionNameEdit($assignment_view);
+	$date_assigned = $assignmentAction->getDateAssignedEdit($assignment_view);
 	$date_due = $assignmentAction->getDateDueEdit($assignment_view);
 	$points_possible = $assignmentAction->getPointsPossibleEdit($assignment_view);
 	$tutorial_lab_id = $assignmentAction->getTutorialLabIDEdit($assignment_view);
@@ -37,11 +38,8 @@
 		<input type="hidden" name="assignment_name" value="<?php echo "$assignment_name" ?>" >
 		<input type="hidden" name="section_id" value="<?php echo "$section_id" ?>" >
 		<input type="hidden" name="section_name" value="<?php echo "$section_name" ?>" >
-		<input type="hidden" name="date_assigned" value="<?php echo "$date_assigned" ?>" >
 		
 		<h2 class="form">Edit Assignment</h2>		
-		<p>Date Assigned: &nbsp&nbsp <?php echo "$date_assigned";?></p>	
-		<br class="form">
 		
 		<p>Section: &nbsp&nbsp
 			<?php echo "Section $section_id : $section_name"; ?>
@@ -51,11 +49,6 @@
 			<?php  echo "Assignment $assignment_id : $assignment_name"; ?>
 		</p><br class="form">
 		
-	</fieldset>
-	
-	<fieldset id="editAssignmentSet">
-		
-		<br>
 		<label>Assignment Name: <br><input type="text" name="assignment_name" required 
 			pattern="^[a-zA-Z0-9 \-\'\.]+$" value='<?php echo "$assignment_name"; ?>' >
 		</label><br class="form">
@@ -83,6 +76,10 @@
 			</select></div>
 		</label><br class="form"><br class="form">
 		
+		<label>Date Assigned: <br><input type="date" name="date_assigned" required 
+			value='<?php echo "$date_assigned"; ?>' >
+		</label><br class="form">
+		
 		<label>Date Due: <br><input type="date" name="date_due" required 
 			value='<?php echo "$date_due"; ?>' >
 		</label><br class="form">
@@ -103,7 +100,7 @@
 		<div class="formButtonDiv">
 			<input type="submit" value="Save Changes">		
 			<?php
-				echo "<a href='$cancelURL' class='button'>Cancel</a>";
+				echo "<a href='$returnURL' class='button'>Cancel</a>";
 			?>		
 		</div>
 	

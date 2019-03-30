@@ -80,6 +80,7 @@ class NoticeToMemberController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where (notice_id = '$notice_id') AND (to_member_id = '$to_member_id')";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

@@ -188,6 +188,7 @@ class NoticeController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		$query = "delete from $table where notice_id = $notice_id";
+		$result = mysqli_query($db_connection, $query);
 		
 		if(!$result)
 		{

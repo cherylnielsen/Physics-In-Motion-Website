@@ -20,29 +20,55 @@ class AssignmentDisplay
 		$num_assignments = count($assignment_list);
 		$row = array();
 		
-		echo "<table class='summary assignments'><tr>
-				<th colspan='15'><h2>Assignments</h2></th></tr>";
+		echo "<form id='assignmentTableForm' method='POST'>
+				<table class='summary assignments'><tr>
+					<th colspan='15'><h2>Assignments</h2></th></tr>";
 					
 		if($num_assignments > 0)
 		{						
 			for($i = 0; $i < $num_assignments; $i++)
 			{
-				$row[$i] = $this->displayAssignmentRow($assignment_list[$i], $for_profesor, $mdb_control);
+				$date_assigned = $assignment_list[$i]->get_date_assigned();
+				$assigned = new DateTime($date_assigned);
+				$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
+				$today = new DateTime("today");
+				
+				// If not a professor, then assumed to be a student.
+				// Then only show the assignment if it is the assigned date or later.
+				if($for_profesor)
+				{
+					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], $for_profesor, $mdb_control);
+				} 
+				else if($today >= $assigned)
+				{
+					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], $for_profesor, $mdb_control);
+				}
 			} 
 			
-			echo "<tr>" . $row[0]['header'] . "</tr>";
 			
-			for($i = 0; $i < $num_assignments; $i++)
+			if(!empty($row)) 
+			{ 				
+				echo "<tr>" . $row[0]['header'] . "</tr>";
+			
+				for($i = 0; $i < $num_assignments; $i++)
+				{
+					if(array_key_exists($i,$row))
+					{
+						echo "<tr>" . $row[$i]['data'] . "</tr>";
+					}
+				} 
+			}
+			else
 			{
-				echo "<tr>" . $row[$i]['data'] . "</tr>";
-			} 
+				echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
+			}
 		}
 		else
 		{
 			echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
 		}
 		
-		echo "</table>";
+		echo "</table></form>";
 		
 	}
 	
@@ -56,8 +82,8 @@ class AssignmentDisplay
 		$header = "";
 		
 		echo "<form id='professorHmwkTableForm' method='POST'>
-				<table class='summary'><tr>
-					<th colspan='18'><h2>Homework Submitted</h2></th></tr>";
+				<table class='summary'>
+					<tr><th colspan='18'><h2>Homework Submitted</h2></th></tr>";
 				
 		if($num_assignments === 0)
 		{
@@ -71,33 +97,34 @@ class AssignmentDisplay
 			$homework_list = $this->getHomeworkByAssignment($assignment_id, $section_id, $mdb_control);
 			$num_homework = count($homework_list);
 			
-			if($num_homework === 0)
+			if($num_homework == 0)
 			{
 				$assignment_name = $assignment_list[$i]->get_assignment_name();
-				if(isset($header)) { echo "<tr> $header </tr>"; }
 				
-				echo "<tr>
-					<td>$section_id</td><td>$assignment_id</td><td>$assignment_name</td>
-					<td colspan='15'>No homework for this assignment.</td></tr>";
+				echo "<tr><th>Section ID</th><th colspan='2'>Assignment</th>
+					<th colspan='10'> </th></tr>";
+				
+				echo "<tr><td>$section_id</td><td>$assignment_id</td><td>$assignment_name</td>
+					<td colspan='10'>No homework for this assignment yet.</td></tr>";
 			}
 			else
-			{						
+			{		
 				for($j = 0; $j < $num_homework; $j++)
 				{
-					$row[$j] = $this->displayProfessorHomeworkRow($homework_list[$j]);
-				} 
+					$row[$j] = $this->displayProfessorHomeworkRow($homework_list[$j]);	
+					
+					if($j == 0) 
+					{ 
+						$header =  "<tr>" . $row[0]['header'] . "</tr>"; 
+						echo "$header"; 
+					}	
 				
-				echo "<tr>" . $row[0]['header'] . "</tr>";
-				$header = $row[0]['header'];
-				
-				for($k = 0; $k < $num_homework; $k++)
-				{
-					echo "<tr>" . $row[$k]['data'] . "</tr>";
+					echo "<tr>" . $row[$j]['data'] . "</tr>";
 				} 
 			}
 		} 
 		
-		echo "</table>";
+		echo "</table></form>";
 	}
 
 
@@ -106,13 +133,16 @@ class AssignmentDisplay
 		$assignment_list = array();
 		$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
 		$num_assignments = count($assignment_list);
+		$homework_list = array();
+		$homework_list = $this->getHomeworkByStudent($student_id, $section_id, $mdb_control);
+		$num_homework = count($homework_list);
 		$row = array();
 		
 		echo "<form id='studentHmwkTableForm' method='POST'>
 				<table class='summary'><tr>
 					<th colspan='18'><h2>Homework</h2></th></tr>";
 				
-		if($num_assignments === 0)
+		if($num_assignments == 0  || $num_homework == 0)
 		{
 			echo "<tr><td colspan='18'>No assignments for this section.</td></tr>";
 		}
@@ -122,11 +152,7 @@ class AssignmentDisplay
 			$assignment_id = $assignment_list[$i]->get_assignment_id();
 			$homework = $this->getOneHomework($section_id, $assignment_id, $student_id, $mdb_control);
 			
-			if(!isset($homework))
-			{
-				echo "<tr><td colspan='18'>No homework for this assignment.</td></tr>";
-			}
-			else
+			if(!empty($homework))
 			{						
 				$row = $this->displayStudentHomeworkRow($homework);	
 				
@@ -245,9 +271,6 @@ class AssignmentDisplay
 		$dayOr2 = new DateTime("+2 day");
 		$yesterday = new DateTime("-1 day");
 		
-		//$date = $today->format('D, m/d/Y');
-		//echo "<br>today = $date<br>";
-		
 		for($i = 0; $i < $numAssignments; $i++)
 		{
 			$due = $assignment_list[$i]->get_date_due();		
@@ -266,6 +289,13 @@ class AssignmentDisplay
 	
 	public function displayAssignmentRow($assignment_view, $for_profesor, $mdb_control)
 	{
+		$date_assigned = $assignment_view->get_date_assigned();
+		$assigned = new DateTime($date_assigned);
+		$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
+		$today = new DateTime("today");
+		$date_due = $assignment_view->get_date_due();
+		$date_due = $this->displayUtility->displayDateShort($date_due);
+		
 		$assignment_id = $assignment_view->get_assignment_id();
 		$assignment_name = $assignment_view->get_assignment_name();
 		$section_id = $assignment_view->get_section_id();
@@ -277,11 +307,6 @@ class AssignmentDisplay
 		$lab_name = $assignment_view->get_tutorial_lab_name();
 		$lab_introduction = $assignment_view->get_tutorial_lab_introduction();
 		$lab_web_link = $assignment_view->get_tutorial_lab_web_link();
-		
-		$date_assigned = $assignment_view->get_date_assigned();
-		$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
-		$date_due = $assignment_view->get_date_due();
-		$date_due = $this->displayUtility->displayDateShort($date_due);
 		
 		$row = array();
 		
@@ -318,11 +343,34 @@ class AssignmentDisplay
 				
 		if($for_profesor)
 		{					
-			$url = "professor-form-page.php?form_type=edit_assignment";
-			$url .= "&assignment_id=$assignment_id&section_id=$section_id";
+			$url = "professor-form-page.php?form_type=edit_assignment
+					&assignment_id=$assignment_id&section_id=$section_id";
 			
-			$header = "<th>Edit Assignment</th>" . $header; 	
-			$dataEdit = "<td><a href='$url' class='assignment_button' >Edit</a></td>"; 					
+			$header = "<th> </th>" . $header; 	
+			
+			// If the date assigned is already today or before then 
+			// only make edit available.  
+			// We do not want to delete assignments that may 
+			// already be started by students.
+			if($today >= $assigned)
+			{
+				$dataEdit = "<td>
+						<a href='$url' class='table-button' >
+						<span class='fa fa-pencil'>&nbsp Edit</span></a>
+					</td>"; 
+			}
+			else
+			{
+				$dataEdit = "<td>
+						<a href='$url' class='table-button' >
+						<span class='fa fa-pencil'>&nbsp Edit</span></a>
+						<button class='table-button' name='delete_assignment'
+								value='$assignment_id'>
+						<span class='fa fa-remove red'>&nbsp Delete</span>
+						</button>
+					</td>"; 		
+			}		
+										
 			$data = $dataEdit . $data;	
 		}
 				
@@ -331,6 +379,7 @@ class AssignmentDisplay
 				
 		return $row;
 	}
+	
 	
 	
 	public function displayProfessorHomeworkRow($homework_view)
