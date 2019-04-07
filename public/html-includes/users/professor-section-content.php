@@ -2,20 +2,9 @@
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
-		if(isset($_POST['grade_homework_id']))
-		{
-			$hmwk_id = $_POST['grade_homework_id'];
-			$grade = $_POST["grade_$hmwk_id"]; 
-			$sucess = $assignmentAction->gradeHomework($hmwk_id, $grade, $mdb_control);
-		}		
-		
-		if(isset($_POST['delete_assignment']))
-		{
-			$id = $_POST['delete_assignment'];
-			$sucess = $assignmentAction->deleteAssignment($id, $mdb_control);
-		}	
-	}
-		
+		$sectionAction->processTableForms($mdb_control);
+	}		
+	
 ?>
 
 
@@ -30,14 +19,15 @@
 <?php
 	// List of students that are members of this section
 	// need to add grades and stats for each student (second or same table?)
-	$sectionDisplay->displaySectionStudentList($section_id, $mdb_control);
+	$studentTables->displayStudentList($section_id, $mdb_control);
 ?>
 </div>
+
 
 <div id='assignmentListDiv' class='overflow'>
 <?php
 	// List of assignments for this section
-	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, true);
+	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, "professor");
 ?>	
 </div>
 

@@ -31,7 +31,7 @@ if(isset($_SESSION["professor_id"]) && isset($_SESSION["member_type"]))
 			$section_name = $short_list[$i]['name'];
 			
 			echo "<a href='professor-home-page.php?section_id=$section_id' 
-					class='navigation'>Section $section_id&nbsp:&nbsp$section_name </a>";
+					class='navigation'>Section $section_id&nbsp;:&nbsp;$section_name </a>";
 		}
 	
 		if(!isset($_GET["form_type"]))

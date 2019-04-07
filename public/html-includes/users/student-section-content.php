@@ -4,13 +4,12 @@
 	{
 		if(isset($_POST['submit_homework']))
 		{
-			$homework2SubmitID = $_POST['submit_homework'];
-			$assignmentAction->submitHomework($homework2SubmitID, $mdb_control);
+			$hmwk_id = $_POST['submit_homework'];
+			$sectionAction->submitHomework($hmwk_id, $mdb_control);
 		}		
 	}
 		
 ?>
-
 
 <div>
 <?php
@@ -22,7 +21,7 @@
 <div id='assignmentListDiv' class='overflow'>
 <?php
 	// List of assignments for this section
-	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, false);
+	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, "student");
 ?>
 </div>
 

@@ -70,6 +70,7 @@ input[type=checkbox] {
 	margin: 0.5em 0;
 }
 
+
 input[type=number] {
 	width: 6em;
 	height: 1.5em;
@@ -94,7 +95,7 @@ input[type=date] {
 	padding-left: 7px;
 }
 
-input:invalid, textarea:invalid select:invalid {
+input:invalid, textarea:invalid, select:invalid {
 	border: 2px solid red;
 	border-radius: 5px;
 	background-color: #ffd4d4;
@@ -117,6 +118,11 @@ a.button {
 	border: 2px solid white;
 	border-style: outset;
 	color: black;
+}
+
+a.red {
+	background-color: red;
+	color: white;
 }
 
 input[type=submit] { 

@@ -130,6 +130,12 @@ class RatingAction
 	}
 	
 
+	public function flagRatingForReview($rating_id, $rating_type, $mdb_control)
+	{
+		
+		
+		
+	}
 }
 
 

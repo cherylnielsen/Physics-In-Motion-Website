@@ -4,7 +4,6 @@ class AssignmentDisplay
 {
 	private $displayUtility;
 	private $sectionDisplay;
-	private $filebase = "attachments";
 	
 	public function __construct() 
 	{
@@ -13,7 +12,7 @@ class AssignmentDisplay
 	}
 
 
-	public function displaySectionAssignments($section_id, $mdb_control, $for_profesor)
+	public function displaySectionAssignments($section_id, $mdb_control, $member_type)
 	{
 		$assignment_list = array();
 		$assignment_list = $this->getSectionAssignments($section_id, $mdb_control);
@@ -21,8 +20,8 @@ class AssignmentDisplay
 		$row = array();
 		
 		echo "<form id='assignmentTableForm' method='POST'>
-				<table class='summary assignments'><tr>
-					<th colspan='15'><h2>Assignments</h2></th></tr>";
+				<table class='summary assignments'><thead>
+					<tr><th colspan='15'><h2>Assignments</h2></th></tr>";
 					
 		if($num_assignments > 0)
 		{						
@@ -33,22 +32,22 @@ class AssignmentDisplay
 				$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
 				$today = new DateTime("today");
 				
-				// If not a professor, then assumed to be a student.
-				// Then only show the assignment if it is the assigned date or later.
-				if($for_profesor)
+				if($member_type === "professor")
 				{
-					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], $for_profesor, $mdb_control);
-				} 
-				else if($today >= $assigned)
+					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], 
+										$member_type, $mdb_control);
+				}
+				else if(($member_type === "student") && (($today >= $assigned)))
 				{
-					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], $for_profesor, $mdb_control);
+					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], 
+										$member_type, $mdb_control);
 				}
 			} 
 			
 			
 			if(!empty($row)) 
 			{ 				
-				echo "<tr>" . $row[0]['header'] . "</tr>";
+				echo "<tr>" . $row[0]['header'] . "</tr></thead><tbody>";
 			
 				for($i = 0; $i < $num_assignments; $i++)
 				{
@@ -60,15 +59,16 @@ class AssignmentDisplay
 			}
 			else
 			{
-				echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
+				echo "</thead><tbody><tr><td colspan='8'>No assignments for this section.</td></tr>";
 			}
+			
 		}
 		else
 		{
-			echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
+			echo "</thead><tbody><tr><td colspan='8'>No assignments for this section.</td></tr>";
 		}
 		
-		echo "</table></form>";
+		echo "</tbody></table></form>";
 		
 	}
 	
@@ -82,12 +82,12 @@ class AssignmentDisplay
 		$header = "";
 		
 		echo "<form id='professorHmwkTableForm' method='POST'>
-				<table class='summary'>
+				<table class='summary'><thead>
 					<tr><th colspan='18'><h2>Homework Submitted</h2></th></tr>";
 				
 		if($num_assignments === 0)
 		{
-			echo "<tr><td colspan='18'>No assignments for this section.</td></tr>";
+			echo "</thead><tbody><tr><td colspan='18'>No assignments for this section.</td></tr>";
 		}
 		
 		for($i = 0; $i < $num_assignments; $i++)
@@ -116,7 +116,7 @@ class AssignmentDisplay
 					if($j == 0) 
 					{ 
 						$header =  "<tr>" . $row[0]['header'] . "</tr>"; 
-						echo "$header"; 
+						echo "$header</thead><tbody>"; 
 					}	
 				
 					echo "<tr>" . $row[$j]['data'] . "</tr>";
@@ -124,7 +124,7 @@ class AssignmentDisplay
 			}
 		} 
 		
-		echo "</table></form>";
+		echo "</tbody></table></form>";
 	}
 
 
@@ -139,12 +139,12 @@ class AssignmentDisplay
 		$row = array();
 		
 		echo "<form id='studentHmwkTableForm' method='POST'>
-				<table class='summary'><tr>
-					<th colspan='18'><h2>Homework</h2></th></tr>";
+				<table class='summary'><thead>
+					<tr><th colspan='18'><h2>Homework</h2></th></tr>";
 				
 		if($num_assignments == 0  || $num_homework == 0)
 		{
-			echo "<tr><td colspan='18'>No assignments for this section.</td></tr>";
+			echo "</thead><tbody><tr><td colspan='18'>No assignments for this section.</td></tr>";
 		}
 		
 		for($i = 0; $i < $num_assignments; $i++)
@@ -158,14 +158,14 @@ class AssignmentDisplay
 				
 				if($i === 0)
 				{
-					echo "<tr>" . $row['header'] . "</tr>";
+					echo "<tr>" . $row['header'] . "</tr></thead><tbody>";
 				}
 				
 				echo "<tr>" . $row['data'] . "</tr>"; 
 			}
 		} 
 		
-		echo "</table></form>";
+		echo "</tbody></table></form>";
 	}
 	
 	
@@ -185,8 +185,8 @@ class AssignmentDisplay
 			$numDueSoon[$section_id] = $this->getAssignmentsDueSoon($assignment_list);
 		}
 		
-		$table_heading = "<table class='summary'>
-				<tr><th colspan='10'><h2>Assignment Summary</h2></th></tr>"; 	
+		$table_heading = "<table class='summary assignment-summary'><thead>
+				<tr><th colspan='10'><h2>Assignment Summary</h2></th></tr></thead><tbody>"; 	
 							
 		echo "$table_heading";		
 		
@@ -212,7 +212,7 @@ class AssignmentDisplay
 		echo "$table_heading";
 		echo "$row_24hr";
 		echo "$row_7day";		
-		echo "</table>";
+		echo "</tbody></table>";
 		
 	}	
 	
@@ -287,7 +287,7 @@ class AssignmentDisplay
 	}
 	
 	
-	public function displayAssignmentRow($assignment_view, $for_profesor, $mdb_control)
+	public function displayAssignmentRow($assignment_view, $member_type, $mdb_control)
 	{
 		$date_assigned = $assignment_view->get_date_assigned();
 		$assigned = new DateTime($date_assigned);
@@ -301,7 +301,6 @@ class AssignmentDisplay
 		$section_id = $assignment_view->get_section_id();
 		$section_name = $assignment_view->get_section_name();
 		$points_possible = $assignment_view->get_points_possible();
-		//$notes = $assignment_view->get_notes();
 		
 		$lab_id = $assignment_view->get_tutorial_lab_id();
 		$lab_name = $assignment_view->get_tutorial_lab_name();
@@ -319,7 +318,7 @@ class AssignmentDisplay
 		$data =  "<td>$section_id</td><td>$section_name</td>
 					<td>$assignment_id</td><td>$assignment_name</td>
 					<td>$date_assigned</td><td>$date_due</td>
-					<td>$lab_id&nbsp:&nbsp$lab_name <br>
+					<td>$lab_id&nbsp;:&nbsp;$lab_name <br>
 					<a href='templink.php' class='assignment_link'> Start Now </a></td>
 					<td>$points_possible Points</td>";
 					
@@ -333,7 +332,7 @@ class AssignmentDisplay
 			$attachment_id = $attachments[$i]->get_assignment_attachment_id();
 			$filepath = $attachments[$i]->get_filepath();
 			$filename = $attachments[$i]->get_filename();
-			$attachment_link = $this->filebase . "/$filepath/$filename";
+			$attachment_link = "$filepath/$filename";
 
 			$attachment_list .= "<a href='$attachment_link' download 
 								class='assignment_link'>$filename</a>";
@@ -341,7 +340,7 @@ class AssignmentDisplay
 					
 		$data .=  "<td>$attachment_list</td>";		
 				
-		if($for_profesor)
+		if($member_type == "professor")
 		{					
 			$url = "professor-form-page.php?form_type=edit_assignment
 					&assignment_id=$assignment_id&section_id=$section_id";
@@ -356,17 +355,17 @@ class AssignmentDisplay
 			{
 				$dataEdit = "<td>
 						<a href='$url' class='table-button' >
-						<span class='fa fa-pencil'>&nbsp Edit</span></a>
+						<span class='fa fa-pencil'>&nbsp; Edit</span></a>
 					</td>"; 
 			}
 			else
 			{
 				$dataEdit = "<td>
 						<a href='$url' class='table-button' >
-						<span class='fa fa-pencil'>&nbsp Edit</span></a>
+						<span class='fa fa-pencil'>&nbsp; Edit</span></a>
 						<button class='table-button' name='delete_assignment'
 								value='$assignment_id'>
-						<span class='fa fa-remove red'>&nbsp Delete</span>
+						<span class='fa fa-remove red'>&nbsp; Delete</span>
 						</button>
 					</td>"; 		
 			}		
@@ -391,8 +390,8 @@ class AssignmentDisplay
 		
 		$row['header'] = "<th>Section ID</th><th colspan='2'>Assignment</th>
 				<th>Tutorial Lab ID</th><th colspan='2'>Student</th>
-				<th>Date Submitted</th><th>Points Possible</th><th>Points Earned</th>
-				<th>Hours</th><th>Summary</th><th>Homework Set</th>";
+				<th>Date Submitted</th><th>Points Possible</th><th colspan='2'>Points Earned</th>
+				<th>Percent</th><th>Hours</th><th>Summary</th><th>Homework Set</th>";
 		
 		$homework_id = $homework_view->get_homework_id();
 		
@@ -407,18 +406,27 @@ class AssignmentDisplay
 		if(isset($date_submitted))
 		{
 			$summary = $homework_view->get_lab_summary();		
-			$points_earned = $homework_view->get_points_earned();		
+			$points_earned = $homework_view->get_points_earned();
 			$graded = $homework_view->get_was_graded();	
 			$hours = $homework_view->get_hours();
 			$points_possible = $homework_view->get_points_possible();
 			
 			$filepath = $homework_view->get_filepath();
-			$url = $this->filebase . "/$filepath/$summary";
+			$url = "$filepath/$summary";
 			$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
 			$homework_set = "homework_set_$homework_id.zip";
-			$url = $this->filebase . "/$filepath/$homework_set";
+			$url = "$filepath/$homework_set";
 			$homework_set_link = "<a href='$url' download 
 						class='assignment_link'>$homework_set</a>";
+						
+			if($graded & ($points_possible > 0))
+			{
+				$percent = (100.0 * $points_earned)/$points_possible;
+			}
+			else
+			{
+				$percent = " - ";
+			}
 			
 			if(!$graded)
 			{
@@ -426,15 +434,26 @@ class AssignmentDisplay
 									class='table-input' min='0' max='$points_possible'>
 									<button class='table-button' name='grade_homework_id'
 									value='$homework_id'>Grade</button>";
+									
+				$change_grade = " ";
 			}			
+			else
+			{
+				$change_grade = "<input type='number' name='change_grade_$homework_id' 
+									class='table-input' min='0' max='$points_possible'>
+									<button class='table-button' name='change_grade_homework_id'
+									value='$homework_id'>Change Grade</button>";
+			}
 			
 			$row['data'] = "<td>$section_id</td>
 				<td>$assignment_id</td><td>$assignment_name</td>
 				<td>$tutorial_lab_id</td><td>$student_id</td>
-				<td>$student_first_name&nbsp&nbsp$student_last_name</td>
+				<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
 				<td>$date_submitted</td>
 				<td class='center'>$points_possible</td>
 				<td class='center'>$points_earned</td>
+				<td class='center'>$change_grade</td>
+				<td class='center'>$percent</td>
 				<td>$hours hours</td>				
 				<td>$summary_link</td>
 				<td>$homework_set_link</td>";
@@ -444,7 +463,7 @@ class AssignmentDisplay
 			$row['data'] = "<td>$section_id</td><td>$assignment_id</td>
 				<td>$assignment_name</td>
 				<td>$tutorial_lab_id</td><td>$student_id</td>
-				<td>$student_first_name&nbsp&nbsp$student_last_name</td>
+				<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
 				<td colspan='12'>Not Submitted</td>";
 		}	
 
@@ -461,7 +480,7 @@ class AssignmentDisplay
 		$row['header'] = "<th>Section ID</th><th colspan='2'>Assignment</th>
 				<th>Tutorial Lab ID</th>
 				<th>Date Submitted</th><th>Points Possible</th><th>Points Earned</th>
-				<th>Hours</th><th>Summary</th><th>Homework Set</th>";
+				<th>Percent</th><th>Hours</th><th>Summary</th><th>Homework Set</th>";
 				
 		$homework_id = $homework_view->get_homework_id();		
 		$student_id = $homework_view->get_student_id();
@@ -476,9 +495,19 @@ class AssignmentDisplay
 		$points_earned = $homework_view->get_points_earned();		
 		$graded = $homework_view->get_was_graded();	
 		$points_earned = $graded ? $points_earned : "Not Graded";
+		$points_possible = $homework_view->get_points_possible();
+		$percent = 0.0;
 		
-		$hours = $homework_view->get_hours();
-		$points_possible = $homework_view->get_points_possible();			
+		if($graded & ($points_possible > 0))
+		{
+			$percent = (100.0 * $points_earned)/$points_possible;
+		}
+		else
+		{
+			$percent = " - ";
+		}
+		
+		$hours = $homework_view->get_hours();					
 		$date_submitted = $homework_view->get_date_submitted();		
 		
 		if(!isset($date_submitted))
@@ -492,10 +521,10 @@ class AssignmentDisplay
 		}
 			
 		$filepath = $homework_view->get_filepath();
-		$url = $this->filebase . "/$filepath/$summary";
+		$url = "$filepath/$summary";
 		$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
 		$homework_set = "homework_set_$homework_id.zip";
-		$url = $this->filebase . "/$filepath/$homework_set";
+		$url = "$filepath/$homework_set";
 		$homework_set_link = "<a href='$url' download 
 						class='assignment_link'>$homework_set</a>";
 						
@@ -504,14 +533,15 @@ class AssignmentDisplay
 			<td>$tutorial_lab_id</td>
 			<td>$date_submitted</td><td class='center'>$points_possible</td>
 			<td class='center'>$points_earned</td>
+			<td class='center'>$percent</td>
 			<td>$hours hours</td>
 			<td>$summary_link</td>
 			<td>$homework_set_link</td>";
 
 		return $row;
-		
+
 	}
-	
+
 
 	
 }

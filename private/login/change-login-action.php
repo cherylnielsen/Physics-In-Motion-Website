@@ -1,33 +1,31 @@
 <?php
 
-require_once('login-utilities.php');
 require_once('register-utilities.php'); 
+$registerUtil = new RegisterUtilities();
 
-If($_SERVER['REQUEST_METHOD'] == 'POST')
+require_once('change-login-utilities.php'); 
+$changeUtil = new ChangeLoginUtilities();
+
+$change_done = false;
+
+if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-	$register = new RegisterUtilities();
-	$loginUtil = new LoginUtilities();
-	$form_errors = array();
-	
-	$member = new Member();
-	$member_control = $mdb_control->getController("member");
-	$member = $member_control->getByPrimaryKey("member_id", $_SESSION['member_id']);
-
+	$form_errors = array();	
 	// validate and sanitize the member inputs
-	$password_OK = $register->validate_password($_POST['password'], $_POST['password_confirm'], $form_errors);
+	$success = $changeUtil->checkQandA($_POST['answer_1'], $_POST['answer_2'], $_SESSION['member_id'], 
+							$mdb_control, $registerUtil, $form_errors);	
+	$registerUtil->validate_password($_POST['password'], $_POST['password_confirm'], $form_errors);
 	
-	if(!$password_OK)
+	if(count($form_errors) != 0)
 	{
-		$register->display_errors($form_errors);
+		$registerUtil->display_errors($form_errors);
 	}
 	else
 	{
 		// Save the new password to the database
-		$db_connect= get_db_connection();
-		$password = mysqli_real_escape_string($db_connect, $_POST['password']);
-		$password = password_hash($password, PASSWORD_DEFAULT);
-		$member->set_member_password($password);
-		$success = $member_control->updateAttribute($member, "member_password");	
+		$db_connect = get_db_connection();
+		$password = $_POST['password'];
+		$success = $changeUtil->saveNewPassword($db_connect, $_SESSION['member_id'], $password, $mdb_control);	
 		
 		if($success) 
 		{
@@ -37,18 +35,20 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 				<h2>Thank you, your new password has been saved.</h2>
 				</br>
 			</div>';
+			
+			$change_done = true;
+			
 		}
 		else
 		{
 			echo'<div class="form-errors">
-					<p>Sorry, the password change could not be saved. 
+					<p>Sorry, the password could not be changed. 
 						Please try again later.</p>
 				</div>';
 		}
-		
-	}
-	
+	}	
 }
+
 
 
 ?>

@@ -5,6 +5,7 @@
 h1.logo-statement {
 	position: relative;
 	left: 1.5%;
+	padding: 10px 0;
 }
 
 h1.form, h2.form {
@@ -15,7 +16,6 @@ span {
 	color: red;
 }
 	
-
 a.login-link {
 	display: inline-block;
 	font-weight: 900;	
@@ -110,7 +110,6 @@ input[type=radio]:invalid {
 	}
 
 }
-
 
 @media screen and (max-width: 600px) {
 	

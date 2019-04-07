@@ -59,8 +59,7 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 		else
 		{
 			echo'<div class="form-errors">
-					<p>Sorry, we goofed!</p>
-					<p>Registration could not be saved. 
+					<p>Sorry, registration could not be saved. 
 						Please try again later.</p>
 				</div>';
 		}

@@ -50,16 +50,12 @@ img.left {
 	margin-bottom: 15px;
 }
 
-article.lab-info > div {
+article.lab-info div {
 	text-align: left;
 }
 
-article.lab-info > div > h2, article.lab-info > div > h1 {
+article h2, article h1 {
 	text-align: left;
-}
-
-a#bottom {
-	display: block;
 }
 
 .development-status {
@@ -70,6 +66,18 @@ a#bottom {
 	color: red;
 }
 
+article.lab-rating {
+	padding-left: 2em;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	width: 60%;
+}
 
+p.rating-comments {
+	background-color: #A7DAFA;
+	padding: 10px;
+	margin-right: 30px;
+	margin-bottom: 10px;
+}
 
 

@@ -1,0 +1,49 @@
+
+<?php
+
+$member = new Member();
+$member = $changeUtil->getMemberInfo($mdb_control, $_SESSION['found_member_id']);
+$first_name = $member->get_first_name();
+$last_name = $member->get_last_name();
+$member_name = $member->get_member_name();
+
+?>
+
+<form id="save_password" method="post">
+	<fieldset>	
+	
+		<h2>Changing Password for: <?php echo "$first_name $last_name" ?></h2>
+		
+		<h2>Found Member Name: <?php echo "$member_name"; ?></h2>		
+		
+		<h2 class='red'>If this information is wrong, Stop Now, and contact us.</h2>
+				
+	</fieldset>
+	<fieldset>
+		<h2>New Password: (part 3 of 3)</h2>
+		
+		<p>Please choose a new Password with:</p>		
+		<ul>
+			<li>at least one uppercase letter,</li>
+			<li>at least one lowercase letter,</li>
+			<li>at least one number,</li>
+			<li>at least 8 characters,</li>
+			<li>and it cannot contain spaces.</li>
+		</ul>
+		<br>
+		
+		<label>Password:<br>
+			<input type="password" name="password" id="password"
+				required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" >
+		</label>
+		<br>
+		
+		<label>Confirm Password:<br>
+			<input type="password" name="password_confirm" id="password_confirm" 
+				required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" >
+		</label>
+		<br>
+		
+		<input type="submit" value="Submit" name="save_password">	
+	</fieldset>	
+</form>

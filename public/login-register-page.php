@@ -84,12 +84,7 @@
 			
 			case "forgotlogin":
 				include('../private/login/forgot-login-action.php'); 
-				include('html-includes/login/forgot-login-form.html'); 
-				break;
-				
-			case "changelogin":
-				include('../private/login/change-login-action.php');  
-				include('html-includes/login/change-login-form.html');
+				include('html-includes/login/forgot-login-form.php'); 
 				break;
 		}
 	}

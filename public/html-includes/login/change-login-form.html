@@ -1,28 +1,59 @@
 <?php
 
-	$member = new Member();
-	$member_control = $mdb_control->getController("member");
-	$member = $member_control->getByPrimaryKey("member_id", $_SESSION['member_id']);
+	$member = $changeUtil->getMemberInfo($mdb_control, $_SESSION['member_id']);	
 	$member_name = $member->get_member_name();
 	$first_name = $_SESSION['first_name'];
 	$last_name = $_SESSION['last_name'];
+	// get the security questions and answers
+	$qAndA = array();
+	$qAndA = $changeUtil->getQandA($mdb_control, $_SESSION['member_id']);
+	$question_1 = $qAndA[1]['question'];
+	$question_2 = $qAndA[2]['question'];
 	
+	if($change_done == false)
+	{
 ?>
 
 <form id="changelogin" method="post" 
 	action="login-register-page.php?form_type=changelogin">	
 	
-	<fieldset id="member_found">		
+	<input type="hidden" name="member_name" value="<?php echo "$member_name" ?>" >
+	
+	<fieldset>	
+	
 		<h2>Changing Password for: <?php echo "$first_name $last_name" ?></h2>
-		<h2>Member Name: <?php echo "$member_name"; ?></h2>		
-		<a href="html-includes/login/logout.php">
-				<p>If this is not you, Sign Out.</p>
-		</a>
-		<input type="hidden" name="member_name" value="<?php echo "$member_name" ?>" >
 		
+		<h2>Found Member Name: <?php echo "$member_name"; ?></h2>		
 		
+		<h2 class='red'>If this information is wrong, 
+			<a href="html-includes/login/logout.php">
+				Sign Out,</a> and contact us.</h2>
+				
+	</fieldset>
+	<fieldset>
+	
+		<h2>Security Questions:</h2>
 		
-		<p>Please choose a new Password with:</p>
+		<label><p>Question 1: <?php echo "$question_1"; ?>
+			Answer 1: <br>
+			<input type="text" name="answer_1" id="answer_1"
+			value="<?php if (isset($_POST['answer_1'])) echo $_POST['answer_1']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label><p>Question 2: <?php echo "$question_2"; ?>
+			Answer 2: <br>
+			<input type="text" name="answer_2" id="answer_2"
+			value="<?php if (isset($_POST['answer_2'])) echo $_POST['answer_2']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+	
+	</fieldset>
+	<fieldset>
+	
+		<h2>New Password:</h2>
+		
+		<p>Please choose a new Password with:</p>		
 		<ul>
 			<li>at least one uppercase letter,</li>
 			<li>at least one lowercase letter,</li>
@@ -32,18 +63,23 @@
 		</ul>
 		<br>
 		
-		<label>Password<br>
-		<input type="password" name="password" id="password"
-			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<label>Password:<br>
+			<input type="password" name="password" id="password"
+				required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" >
+		</label>
 		<br>
 		
-		<label>Confirm Password<br>
+		<label>Confirm Password:<br>
 			<input type="password" name="password_confirm" id="password_confirm" 
-			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+				required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" >
+		</label>
 		<br>
 		
 		<input type="submit" value="Submit" id="save_new_password">	
 	</fieldset>	
 </form>
 
+<?php
+	} // end if change_done
+?>
 

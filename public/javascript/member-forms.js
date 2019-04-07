@@ -1,5 +1,8 @@
 /* JavaScript for member user forms. */
 
+/*  to be done later add filter for file types? and file sizes?*/
+
+
 /* Displays the names of files to be uploaded. */
 function showFileNames()
 {
@@ -18,8 +21,8 @@ function showFileNames()
 		for (var i = 0; i < attachments.files.length; i++) 
 		{
 			file = attachments.files[i];
-			fileListStr += "<li>" + file.name + "</li>";
-			//fileListStr += file.name + "<br>";
+			fileListStr += "<li>" + file.name + "  (" + file.size +" bytes)</li>";
+			
 		}
 		fileListStr += "</ul>";
 	}
@@ -27,11 +30,16 @@ function showFileNames()
 	document.getElementById("fileListing").innerHTML = fileListStr;
 }
 
+
 /* Clears the display of the names of files to be uploaded. */
 function clearText()
 {
 	document.getElementById("fileListing").innerHTML = "";
 }
+
+
+
+
 
 /* JavaScript for implementing a 5 star rating system by on click, 
 on mouse over, and on mouse out, where start = int values 1,2,3,4,5. */
