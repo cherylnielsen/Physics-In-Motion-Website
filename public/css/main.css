@@ -206,3 +206,29 @@ footer {
 	border-radius: 10px;
 	background-color: #A7DAFA;
 }
+
+span.star {
+	font-size: 1.5em;
+}
+
+span.full-star {
+	font-size: 1.7em;
+	position: relative;
+	top: 2px;
+}
+
+.green {
+	color: #03AA0D;
+}
+
+.gold {
+	color: Gold;
+}
+
+.gray {
+	color: Gray;
+}
+
+.red {
+	color: Red;
+}

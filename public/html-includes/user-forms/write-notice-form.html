@@ -5,23 +5,20 @@
 	$section_list = array();	
 	$section_list = $noticeAction->getSectionList($displayUtility, $sectionDisplay, $mdb_control);	
 	
-	//$flag_for_review = false;
-	$date_sent = date("m/d/Y");
+	$date_sent = date("m/d/Y H:i:s");
 	$from_first_name = $_SESSION["first_name"];
 	$from_last_name = $_SESSION["last_name"];	
 	$from_member_id = $_SESSION["member_id"];
 	
-	// checks GET and POST, if not set, returns empty string	
+	// checks POST, if not set, returns empty string	
 	$notice_subject = $noticeAction->getNoticeSubject();
 	$notice_text = $noticeAction->getNoticeText();
 	$to_section_id = $noticeAction->getToSectionID();
 	$to_member_id = $noticeAction->getToMemberID();		
-	$response_to_notice_id = $noticeAction->getResponseToNoticeID();
+	//$response_to_notice_id = null;
+	//$flag_for_review = false;	
 	
-	//$attachments or files? = $noticeAction->getAttachments();
-	
-	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
-	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";	
 ?>
 
 <form id='write_notice_form' method='POST' enctype='multipart/form-data'>
@@ -33,11 +30,11 @@
 		<input type="hidden" name="from_first_name" value="<?php echo "$from_first_name" ?>" >
 		<input type="hidden" name="from_last_name" value="<?php echo "$from_last_name" ?>" >
 		<input type="hidden" name="flag_for_review" value="false" >
-		<input type="hidden" name="response_to_notice_id" value="<?php echo "$response_to_notice_id" ?>" >
+		
 		
 		<h2 class="form">Write Notice</h2>		
-		<p>Date: &nbsp&nbsp <?php echo "$date_sent" ?></p>		
-		<p>From: &nbsp <?php echo "$from_first_name &nbsp $from_last_name"; ?></p>
+		<p>Date: &nbsp;&nbsp; <?php echo "$date_sent" ?></p>		
+		<p>From: &nbsp; <?php echo "$from_first_name &nbsp; $from_last_name"; ?></p>
 		<br class="form">
 				
 				
@@ -51,7 +48,7 @@
 						$name = $section_list[$i]['name'];
 						$str = "<option value='$sec_id' >$name</option>";
 						
-						if(strcmp($to_section_id, $sec_id) === 0)
+						if($to_section_id == $sec_id)
 						{
 							$str = "<option value='$sec_id' selected >$name</option>";
 						}
@@ -71,11 +68,11 @@
 					{
 						$member_id = $member_list[$i]['id'];
 						$name = $member_list[$i]['name'];
-						$str = "<option value='$member_id' >$name</option>";
+						$str = "<option value=$member_id >$name</option>";
 						
-						if(strcmp($to_member_id, $member_id) === 0)
+						if($to_member_id == $member_id)
 						{
-							$str = "<option value='$member_id' selected >$name</option>";
+							$str = "<option value=$member_id selected >$name</option>";
 						}
 						
 						echo "$str";
@@ -92,7 +89,7 @@
 				
 		<label>Attachments: Select one or more files. (Optional)
 			<div class="fileDiv"> 				
-				<input type="file" name="attachments" id="attachments" 
+				<input type="file" name="attachments[]" id="attachments" 
 					multiple onchange="showFileNames()">
 			</div>
 		</label>
@@ -106,7 +103,7 @@
 		
 		<div class="formButtonDiv">
 			<input type="submit" value="Send">	
-			<a href='<?php echo "$cancelURL" ?>' class='button'>Cancel</a>
+			<a href='<?php echo "$cancelURL" ?>' class='button red'>Cancel</a>
 		</div>
 				
 	</fieldset>

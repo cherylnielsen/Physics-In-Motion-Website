@@ -1,8 +1,7 @@
 
-<!--professor-form-page.php?form_type=edit_assignment& ... -->
+<!--professor-form-page.php?form_type=edit_assignment ... -->
 <?php
 
-	// checks GET and POST, if not set, returns empty string
 	$section_id = $assignmentAction->getSectionID();
 	$assignment_id = $assignmentAction->getAssignmentID();
 
@@ -14,16 +13,21 @@
 							"$assignment_id", "section_id", "$section_id");								
 
 
-	// checks GET and POST, if not set, returns the existing object values,
-	// if the assignment_view object is null, then returns the empty string
-	
+	// get any previously attached file information, 
+	// in case the professor wants to edit the list
+	$controller = $mdb_control->getController("assignment_attachment");
+	$attached_files = $controller->getByAttribute("assignment_id", $assignment_id);
+
+
+	// Checks GET and POST, if not set it returns the existing object values.
+	// If the assignment_view object is null, it returns the empty string.
 	$assignment_name = $assignmentAction->getAssignmentNameEdit($assignment_view);
 	$section_name = $assignmentAction->getSectionNameEdit($assignment_view);
 	$date_assigned = $assignmentAction->getDateAssignedEdit($assignment_view);
 	$date_due = $assignmentAction->getDateDueEdit($assignment_view);
 	$points_possible = $assignmentAction->getPointsPossibleEdit($assignment_view);
-	$tutorial_lab_id = $assignmentAction->getTutorialLabIDEdit($assignment_view);
-	//$attachments or files? = $assignmentAction->getAttachments();
+	$tutorial_lab_id = $assignmentAction->getTutorialLabIDEdit($assignment_view);	
+
 			
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	
@@ -41,11 +45,11 @@
 		
 		<h2 class="form">Edit Assignment</h2>		
 		
-		<p>Section: &nbsp&nbsp
+		<p>Section: &nbsp;&nbsp;
 			<?php echo "Section $section_id : $section_name"; ?>
 		</p><br class="form">
 		
-		<p>Assignment to Edit: &nbsp&nbsp
+		<p>Assignment to Edit: &nbsp;&nbsp;
 			<?php  echo "Assignment $assignment_id : $assignment_name"; ?>
 		</p><br class="form">
 		
@@ -53,7 +57,7 @@
 			pattern="^[a-zA-Z0-9 \-\'\.]+$" value='<?php echo "$assignment_name"; ?>' >
 		</label><br class="form">
 	
-		<label>Tutorial Lab: &nbsp&nbsp 
+		<label>Tutorial Lab: &nbsp;&nbsp;
 			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
 				<option value='' ></option>
 				
@@ -89,9 +93,29 @@
 			value='<?php echo "$points_possible"; ?>' >
 		</label><br class="form">
 		
-		<label>Attachments: Select one or more files.  (Optional)
+		<?php 
+		
+			if(count($attached_files) > 0) 
+			{
+				echo '<p>Edit Attachments: Do you want to delete any of the 
+						current attachments? (Optional)</p>';
+				
+				for ($i = 0; $i < count($attached_files); $i++)
+				{
+					$filename = $attached_files[$i]->get_filename();
+					
+					echo "<label><input type='checkbox' name='original_files[]' 
+						value='$filename' >&nbsp; $filename</label><br>";					
+				}
+				
+				echo '<br>';
+			}
+		
+		?>
+		
+		<label>New Attachments: Select one or more files. (Optional)
 			<div class="fileDiv"> 				
-				<input type="file" name="attachments" id="attachments" 
+				<input type="file" name="attachments[]" id="attachments" 
 					multiple onchange="showFileNames()">
 			</div>
 		</label>
@@ -99,9 +123,7 @@
 		
 		<div class="formButtonDiv">
 			<input type="submit" value="Save Changes">		
-			<?php
-				echo "<a href='$returnURL' class='button'>Cancel</a>";
-			?>		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 		</div>
 	
 	</fieldset>

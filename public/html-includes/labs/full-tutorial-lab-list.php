@@ -1,11 +1,13 @@
 <?php
 
-
+include('../private/user_display/RatingDisplay.php');
+	
+$ratingDisplay = new RatingDisplay();
 $labs = array();
 $labs = $mdb_control->getController("tutorial_lab")->getAllData();
 $length_labs = count($labs);
 
-echo '<h1 class="labs">Explore our Tutorial Labs!</h1>
+echo '<h1 class="labs">Explore our Tutorial Labs!</h1><br>
 	<div class="grid-container">';
 
 if((!is_null($labs)) AND ($length_labs > 0))
@@ -46,14 +48,23 @@ if((!is_null($labs)) AND ($length_labs > 0))
 		
 		echo '<div class="card-intro">
 				<h3 class="card-link">Learn More!</h3>
-				<p>' . $lab->get_tutorial_lab_introduction() . '</p></div>';
+				<p>' . $lab->get_tutorial_lab_introduction() . '</p></div>';				
 		
-		echo '<div class="card-ratings">
-				<h3 class="rating">Average Student Rating: ??</h3>
-				<h3 class="rating">Average Professor Rating: ??</h3>
-			</div>
-		</a>
-		</article>';
+		echo '<div class="card-ratings">';	
+		
+		$rating_info = $ratingDisplay->getAveLabRating($lab->get_tutorial_lab_id(), $mdb_control);
+		
+		if($rating_info['num'] > 0) 
+		{ 
+			$ratingDisplay->outputStars($rating_info);			
+		}	
+		else
+		{
+			echo "<h2 class='red'>Not yet rated.</h2>";
+		}
+		
+		
+		echo '</div></a></article>';
 	}
 	
 }

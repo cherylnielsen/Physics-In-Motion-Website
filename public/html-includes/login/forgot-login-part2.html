@@ -1,0 +1,30 @@
+
+<?php
+
+$qAndA = $changeUtil->getQandA($mdb_control, $_SESSION['found_member_id']);
+$question_1 = $qAndA[1]['question'];
+$question_2 = $qAndA[2]['question'];
+
+?>
+
+<form id="questions" method="post">
+	<fieldset>	
+		<h2>Security Questions: (part 2 of 3)</h2>
+		
+		<label><p>Question 1: <?php echo "$question_1"; ?>
+		Answer 1: <br>
+			<input type="text" name="answer_1" id="answer_1"
+			value="<?php if (isset($_POST['answer_1'])) echo $_POST['answer_1']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label><p>Question 2: <?php echo "$question_2"; ?>
+		Answer 2: <br>
+			<input type="text" name="answer_2" id="answer_2"
+			value="<?php if (isset($_POST['answer_2'])) echo $_POST['answer_2']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<input type="submit" value="Submit" name="questions">			
+	</fieldset>	
+</form>	

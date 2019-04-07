@@ -17,7 +17,6 @@
 	$date_due = $assignmentAction->getDateDue();
 	$points_possible = $assignmentAction->getPointsPossible();
 	$tutorial_lab_id = $assignmentAction->getTutorialLabID();
-	//$attachments or files? = $assignmentAction->getAttachments();
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	
@@ -36,7 +35,7 @@
 			value="<?php echo "$assignment_name"; ?>" >
 		</label><br class="form">
 		
-		<label>Section: &nbsp&nbsp 
+		<label>Section: &nbsp;&nbsp; 
 			<div class="form-select"><select id="section_id" name="section_id" required >
 				<option value='' ></option>
 				<?php
@@ -57,7 +56,7 @@
 			</select></div>
 		</label><br class="form"><br class="form">		
 	
-		<label>Tutorial Lab: &nbsp&nbsp 
+		<label>Tutorial Lab: &nbsp;&nbsp; 
 			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
 				<option value='' ></option>
 				<?php
@@ -86,9 +85,9 @@
 			min="0" max="1000" required  value="<?php echo "$points_possible"; ?>" >
 		</label><br class="form">
 		
-		<label>Attachments: Select one or more files.  (Optional)
+		<label>Attachments: Select one or more files. (Optional)
 			<div class="fileDiv"> 				
-				<input type="file" name="attachments" id="attachments" 
+				<input type="file" name="attachments[]" id="attachments" 
 					multiple onchange="showFileNames()">
 			</div>
 		</label>
@@ -96,10 +95,7 @@
 		
 		<div class="formButtonDiv">
 			<input type="submit" value="Save Assignment">		
-			<?php
-				$returnURL = "professor-section-page.php?section_id=$section_id";
-				echo "<a href='$returnURL' class='button'>Cancel</a>";
-			?>		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 		</div>
 		
 	</fieldset>

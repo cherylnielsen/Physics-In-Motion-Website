@@ -4,8 +4,10 @@ class AssignmentAction
 {
 	public function __construct() {}
 
-	public function processAssignmentForm($mdb_control, $form_type, &$form_errors)
-	{		
+	public function processAssignmentForm($mdb_control, $form_type, &$error_array)
+	{	
+		$fileActions = new FileAction();
+		
 		$section_id = $_POST['section_id'];		
 		$tutorial_lab_id = $_POST['tutorial_lab_id']; 
 		$points_possible = $_POST['points_possible'];
@@ -18,30 +20,29 @@ class AssignmentAction
 		$mysql_date_due = date('Y-m-d H:i:s', strtotime($date_due));
 		
 		$sucess = true;
-		$form_errors = " ";
 		
 		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $assignment_name)) 
 		{
-			$form_errors .=  "<p>Assignment Names can only contain letters, numbers, spaces, 
-					and the following characters .',-_&()</p>";  
+			$error_array[] =  "Assignment Names can only contain letters, numbers, spaces, 
+					and the following characters .',-_&()";  
 			$sucess = false;
 		}
 		
 		if (filter_var($points_possible, FILTER_VALIDATE_INT) === false) 
 		{
-			$form_errors .=  "<p>Points Possible must be a positive integer.</p>";  
+			$error_array[] = "Points Possible must be a positive integer.";  
 			$sucess = false;
 		}
 		else if($points_possible < 0)
 		{
-			$form_errors .=  "<p>Points Possible must be a positive integer.</p>";  
+			$error_array[] = "Points Possible must be a positive integer.";  
 			$sucess = false;
 		}
 		
 		if(!$sucess) 
 		{ 
-			$form_errors .=  "<p>Sorry, the system was unable to process the update.</p>";
-			$form_errors = "<h2>ERROR: </h2>" . $form_errors . "<br>";
+			$error_array[] = "Sorry, the system was unable to save the assignment.";
+			$error_array[] = "Please try again later.";
 			return false; 
 		}
 		
@@ -50,11 +51,7 @@ class AssignmentAction
 		$name = stripslashes(strip_tags(trim($assignment_name)));
 		$assignment_name = mysqli_real_escape_string($db_con, $name);
 		
-		//db_linked_files/assignment
-		//$new_notes = ??;	
-		// call function to test file types, etc.
-		$attachments = null;
-		
+		// save the new assignment or the edited assignment changes
 		$controller = $mdb_control->getController("assignment");
 		$assignment = new Assignment();
 		
@@ -65,7 +62,7 @@ class AssignmentAction
 				
 				$assignment->initialize($assignment_id, $section_id, $tutorial_lab_id, 
 							$assignment_name, $mysql_date_assigned, $mysql_date_due, 
-							$points_possible, $attachments);
+							$points_possible);
 							
 				$sucess = $controller->updateAll($assignment);
 				break;
@@ -75,62 +72,67 @@ class AssignmentAction
 				
 				$assignment->initialize($assignment_id, $section_id, $tutorial_lab_id, 
 							$assignment_name, $mysql_date_assigned, $mysql_date_due, 
-							$points_possible, $attachments);
+							$points_possible);
 							
 				$sucess = $controller->saveNew($assignment);
 				break;
 		}
 		
+		if(!$sucess) 
+		{ 
+			$error_array[] = "Sorry, the system was unable to save the assignment.";
+			$error_array[] = "Please try again later.";
+			return false; 
+		}
+		
+		// assignment attachments
+		
+		$assignment_id = $assignment->get_assignment_id(); 	
+		$year = date("Y", strtotime($date_assigned));
+		$uploads_dir = "attachments/assignment/$year/id_$assignment_id";	
+
+		// if edit remove any old attachments marked for deleting
+		if(isset($_POST['original_files']))
+		{
+			$original_files = array();
+			$original_files = $_POST['original_files'];			
+			$controller = $mdb_control->getController("assignment_attachment");			
+			
+			for($i = 0; $i < count($original_files); $i++)
+			{
+				$filename = $original_files[$i];
+				$attached_files = $controller->getByAttributes("assignment_id", 
+										$assignment_id, "filename", $filename);
+										
+				$fileActions->deleteFile($uploads_dir, $filename);	
+				
+				if(isset($attached_files))
+				{ 
+					$controller->deleteFromDatabase($attached_files[0]);
+				}
+			}
+		}
+		
+		
+		// save any new assignment attachments
+		// This will always be true, unless a transmission or server error occurred,
+		// because FILES is a multidimensional array with count = 5 even if empty
+		if(isset($_FILES["attachments"]))
+		{	
+			$sucess = $fileActions->processFileUploads("assignment", $assignment_id, 
+										$uploads_dir, $mdb_control, $error_array);
+			
+			if(!$sucess) 
+			{ 
+				$error_array[] = "Sorry, some or all of the file attachments were not saved.";
+				$error_array[] = "Please try again later.";
+				return false; 				
+			}
+		}
+		
 		return $sucess;				
 	}
 	
-	
-	public function deleteAssignment($assignment_id, $mdb_control)
-	{
-		$sucess = true;
-		$assignment = new Assignment();
-		
-		$controller = $mdb_control->getController("assignment");		
-		$assignment = $controller->getByPrimaryKey("assignment_id", $assignment_id);
-		$sucess = $controller->deleteFromDatabase($assignment);
-		
-		return $sucess;
-	}
-	
-	
-	public function submitHomework($homework_id, $mdb_control)
-	{
-		$sucess = true;
-		
-		$homework = new Homework();	
-		$hmwk_control = $mdb_control->getController("homework");
-		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
-		$homework->set_date_submitted(date("Y/m/d"));
-		
-		$sucess = $hmwk_control->updateAttribute($homework, "date_submitted");		
-		return $sucess;
-	}
-	
-	
-	public function gradeHomework($homework_id, $points_earned, $mdb_control)
-	{
-		$sucess = true;
-		
-		$homework = new Homework();	
-		$hmwk_control = $mdb_control->getController("homework");
-		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
-		$homework->set_points_earned($points_earned);
-		$homework->set_was_graded(true);
-		
-		$sucess = $hmwk_control->updateAttribute($homework, "points_earned");
-		
-		if($sucess) 
-		{ 
-			$sucess = $hmwk_control->updateAttribute($homework, "was_graded"); 
-		}
-		
-		return $sucess;
-	}
 	
 	
 	public function getSectionID()

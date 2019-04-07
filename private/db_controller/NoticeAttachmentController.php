@@ -41,7 +41,7 @@ class NoticeAttachmentController extends DatabaseController {
 		$table = $this->getTableName();
 		
 		// The notice_attachment_id will be auto-generated.
-		$query = "insert into $table (notice_id, attachment) 
+		$query = "insert into $table (notice_id, filename, filepath) 
 				values('$notice_id', '$filename', '$filepath')";
 		$result = mysqli_query($db_connection, $query);
 

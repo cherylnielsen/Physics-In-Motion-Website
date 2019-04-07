@@ -86,7 +86,7 @@ abstract class DatabaseController
 	
 	/***
 	Queries the database for an array of objects that all have $key = $value.
-	Input: $key1, $key2 = the collumns of the database table to search.
+	Input: $key1, $key2 = the columns of the database table to search.
 	Input: $value1, $value2 = the values of the keys to find.
 	Output: $dataArray = the array of object models created from each result row.
 	***/

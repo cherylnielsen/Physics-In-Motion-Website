@@ -71,8 +71,8 @@ class SectionDisplay
 							{ $status = "In Progress"; }
 			
 		
-		$row = "<td>$link" . "Section $section_id&nbsp:&nbsp$section_name</a></td>		
-				<td>$first_name&nbsp&nbsp$last_name</td> 
+		$row = "<td>$link" . "Section $section_id&nbsp;:&nbsp;$section_name</a></td>		
+				<td>$first_name&nbsp;&nbsp;$last_name</td> 
 				<td>$school_name</td>
 				<td>$start_date</td><td>$end_date</td>
 				<td>$status</td>";
@@ -84,7 +84,7 @@ class SectionDisplay
 	public function displaySectionMembershipTable($section_list, $mdb_control, $member_type)
 	{
 		echo "<table class='summary'>
-				<caption>Click on a section to view.</caption>
+				<caption>Click on a section to view.</caption><thead>
 				<tr><th colspan='10'><h2>Section Memberships</h2></th></tr>";
 				
 		$num_sections = count($section_list);
@@ -96,7 +96,8 @@ class SectionDisplay
 		else
 		{
 			echo "<tr><th>Section</th><th>Professor</th><th>School</th>
-					<th>Start Date</th><th>End Date</th><th>Status</th></tr>";
+					<th>Start Date</th><th>End Date</th><th>Status</th></tr>
+					</thead><tbody>";
 			
 			for($i = 0; $i < $num_sections; $i++)
 			{			
@@ -108,7 +109,7 @@ class SectionDisplay
 			}
 		}
 		
-		echo "</table>";
+		echo "</tbody></table>";
 	}
 	
 	
@@ -195,72 +196,7 @@ class SectionDisplay
 	}
 	
 	
-	public function displaySectionStudentList($section_id, $mdb_control)
-	{
-		echo "<table class='summary students'>
-				<tr><th colspan='5'><h2>Section $section_id Student Members</h2></th></tr>";
-		
-		$student_list = array();
-		$student_list = $this->getSectionStudentList($section_id, $mdb_control);
-		$num_students = count($student_list);
-		$header = "";
-		$rows = array();
-		
-		if($num_students > 0)
-		{				
-			for($i = 0; $i < $num_students; $i++)
-			{			
-				$studentRow = array();
-				
-				$student_id = $student_list[$i]->get_student_id();
-				$studentRow = $this->makeSectionStudentRow($student_list[$i]);
-				
-				if($i === 0) 
-				{ 
-					echo "<tr>" . $studentRow['header'] . "</tr>";
-				}
-				
-				echo "<tr>" . $studentRow['data'] . "</tr>";
-			}
-		}
-		else
-		{
-			echo "<tr><td colspan='5'>No students currently in this section.</td></tr>";
-		}
-
-		echo "</table>";
-	}
 	
-	
-	// Gets the list of all students in this section.
-	public function getSectionStudentList($section_id, $mdb_control)
-	{
-		$student_list = array();
-		$controller = $mdb_control->getController("section_students_view");
-		$student_list = $controller->getByAttribute("section_id", $section_id);
-		
-		return $student_list;
-	}
-	
-	
-	public function makeSectionStudentRow($section_students_view)
-	{
-		$section_id = $section_students_view->get_section_id();
-		$section_name = $section_students_view->get_section_name();
-		$student_id = $section_students_view->get_student_id();
-		$student_first_name = $section_students_view->get_student_first_name();
-		$student_last_name = $section_students_view->get_student_last_name();
-		$school_name = $section_students_view->get_school_name();
-		$dropped_section = $section_students_view->get_dropped_section();
-		$dropped = $dropped_section ? "Dropped" : "Enrolled";
-		
-		$row['header'] = "<th>Student ID</th><th>Student Name</th><th>School</th><th>Status</th>";
-		$row['data'] = "<td>$student_id</td><td>$student_first_name&nbsp&nbsp$student_last_name
-				</td><td>$school_name</td><td>$dropped</td>";
-
-		return $row;
-		
-	}
 
 
 	

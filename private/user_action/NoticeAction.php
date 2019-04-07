@@ -1,63 +1,35 @@
 <?php
 
 class NoticeAction
-{
-	public function __construct() {}
+{	
+	public function __construct() { }
 
-	public function processWriteNoticeForm($mdb_control, &$error)
+	public function processWriteNoticeForm($mdb_control, &$error_array)
 	{		
+		$fileActions = new FileAction();
 		$from_member_id = $_POST['from_member_id'];		
 		$to_section_id = $_POST['to_section_id']; 
 		$to_member_id = $_POST['to_member_id'];
 		$notice_subject = $_POST['notice_subject'];
 		$notice_text = $_POST['notice_text'];		
-		$response_to_notice_id = $_POST['response_to_notice_id'];  
+		//$response_to_notice_id = null;  
+		
 		// convert dates to mysql format
 		$date_sent = $_POST['date_sent'];	
-		$mysql_date_sent = date('Y-m-d H:i:s', strtotime($date_sent));				
-				
+		$mysql_date_sent = date('Y-m-d H:i:s', strtotime($date_sent));		
+		
+		// test that the input meets requirements		
 		$sucess = true;
-		$error = " ";
-		
-		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $notice_subject)) 
-		{
-			$error .= "<p>Subjects can only contain letters, numbers, spaces, 
-						and the following characters .',-_&()</p>";  
-			$sucess = false;
-		}
-		
-		if (!preg_match("/^[a-zA-Z0-9 .';,()?!&%_\-]*$/", $notice_text)) 
-		{
-			$error .= "<p>Messages can only contain letters, numbers, spaces, 
-						and the following characters .';,-_()?!&%</p>";   
-			$sucess = false;
-		}
-		
-		if (empty($to_section_id) && empty($to_member_id)) 
-		{
-			$error .= "<p>Please select a section and/or member to 
-						receive the notice.</p>";   
-			$sucess = false;
-		}
-		
-		if (empty($notice_subject)) 
-		{
-			$error .= "<p>A Subject is required for the notice.</p>";   
-			$sucess = false;
-		}
-		
-		if (empty($notice_text)) 
-		{
-			$error .= "<p>A Message is required for the notice.</p>";   
-			$sucess = false;
-		}
-		
+		$this->verifyInput($notice_subject, $notice_text, $to_section_id, 
+							$to_member_id, $error_array);
+							
 		if(!$sucess) 
 		{ 
-			$error .= "<p>Sorry, the system was unable to process the update.</p>";
-			$error = "<h2>ERROR: </h2>" . $error . "<br>";
+			$error_array[] = "<h2>Sorry, the Notice could not be sent.</h2>";
 			return false; 
 		}
+		
+		// save the new notice to the database
 		
 		// sanitize text box inputs for safety
 		$db_con = get_db_connection();		
@@ -65,51 +37,136 @@ class NoticeAction
 		$notice_subject = mysqli_real_escape_string($db_con, $str);	
 		$str = stripslashes(strip_tags(trim($notice_text)));
 		$notice_text = mysqli_real_escape_string($db_con, $str);
-		
-		//db_linked_files/assignment
-		//$new_notes = ??;	
-		// call function to test file types, etc.
-		$attachments = null;
-		
-		
-		$controller = $mdb_control->getController("notice");
+				
+		$notice_controller = $mdb_control->getController("notice");
 		$notice = new Notice();		
 		$notice_id = null; 
-		$flag_for_review = false;
+		//$flag_for_review = false;
+		
+		// save the notice data
 		
 		$notice->initialize($notice_id, $from_member_id, $mysql_date_sent, 
 							$notice_subject, $notice_text);
 					
-		$sucess = $controller->saveNew($notice);		
-		if(!$sucess) { return false; }				
-		$notice_id = $notice->get_notice_id(); 		
+		$sucess = $notice_controller->saveNew($notice);		
 		
-		
-		if(!empty($to_section_id))
-		{
-			$controller = $mdb_control->getController("notice_to_section");
-			$notice_to_section = new NoticeToSection();
-			$notice_to_section->initialize($notice_id, $to_section_id);
-			$sucess = $controller->saveNew($notice_to_section);
-			if(!$sucess) { return false; }
+		if(!$sucess) 
+		{ 
+			$error_array[] = "<h2>Sorry, the Notice could not be sent.</h2>";
+			return false; 
 		}
 		
-		if(!empty($to_member_id))
-		{
-			$controller = $mdb_control->getController("notice_to_member");
-			$notice_to_member = new NoticeToMember();
-			$notice_to_member->initialize($notice_id, $to_member_id);
-			$sucess = $controller->saveNew($notice_to_member);
-			if(!$sucess) { return false; }
-		}
+		$notice_id = $notice->get_notice_id(); 	
+		$year = date("Y");
+		$uploads_dir = "attachments/notice/$year/id_$notice_id";		
 		
-		if(isset($attachments))
-		{			
+		// save any notice attachments
+		
+		if(isset($_FILES["attachments"]))
+		{	
+			$sucess = $fileActions->processFileUploads("notice", $notice_id, 
+									$uploads_dir, $mdb_control, $error_array);
+			
+			if(!$sucess) 
+			{ 
+				$notice_controller->deleteFromDatabase($notice);
+				$fileActions->deleteDirectory($uploads_dir);
+				return false; 				
+			}
+		}
+				
+		// send the notice (by saving destination info to database)		
+		$sucess = $this->sendToDestinations($notice_id, $to_section_id, 
+											$to_member_id, $mdb_control);
+		
+		if(!$sucess) 
+		{ 
+			$error_array[] = "<h2>Sorry, the Notice could not be sent.</h2>";
+			$notice_controller->deleteFromDatabase($notice);
+			$fileActions->deleteDirectory($uploads_dir);
+			return false; 
 		}
 		
 		return $sucess;				
 	}
 
+
+
+	public function sendToDestinations($notice_id, $to_section_id, $to_member_id, $mdb_control)
+	{
+		$sucess = true;
+		$to_section_controller;
+		$notice_to_section;
+		$to_member_controller;
+		$notice_to_member;
+		
+		if(!empty($to_section_id))
+		{			
+			$to_section_controller = $mdb_control->getController("notice_to_section");
+			$notice_to_section = new NoticeToSection();
+			$notice_to_section->initialize($notice_id, $to_section_id);
+			$sucess = $to_section_controller->saveNew($notice_to_section);
+			
+			if(!$sucess) 
+			{ 
+				return false; 
+			}
+		}
+		
+		if(!empty($to_member_id))
+		{
+			$to_member_controller = $mdb_control->getController("notice_to_member");
+			$notice_to_member = new NoticeToMember();
+			$notice_to_member->initialize($notice_id, $to_member_id);
+			$sucess = $to_member_controller->saveNew($notice_to_member);
+			
+			if(!$sucess) 
+			{ 
+				if(!empty($to_section_id))
+					{ $to_section_controller->deleteFromDatabase($notice_to_section); }
+				
+				return false; 
+			}
+		}
+		
+		return $sucess;
+	}
+
+
+	public function verifyInput($notice_subject, $notice_text, $to_section_id, 
+							$to_member_id, &$error_array)
+	{
+		$sucess = true;
+		
+		if (!preg_match("/^[a-zA-Z0-9 .',&_\-]*$/", $notice_subject)) 
+		{
+			$error_array[] = "<p>Subjects can only contain letters, numbers, spaces, 
+						and the following characters .',-_&</p>";  
+			$sucess = false;
+		}
+		
+		if (empty($to_section_id) && empty($to_member_id)) 
+		{
+			$error_array[] = "<p>Please select a section and/or member to 
+						receive the notice.</p>";   
+			$sucess = false;
+		}
+		
+		if (empty($notice_subject)) 
+		{
+			$error_array[] = "<p>A Subject is required for the notice.</p>";   
+			$sucess = false;
+		}
+		
+		if (empty($notice_text)) 
+		{
+			$error_array[] = "<p>A Message is required for the notice.</p>";   
+			$sucess = false;
+		}
+		
+		return $sucess;
+	}
+	
 	
 	public function returnURL()
 	{
@@ -164,10 +221,6 @@ class NoticeAction
 		{
 			$to_section_id = $_POST['to_section_id']; 
 		}
-		else if (isset($_GET['to_section_id']))
-		{
-			$to_section_id = $_GET['to_section_id']; 
-		}
 		
 		return $to_section_id;
 	}
@@ -180,10 +233,6 @@ class NoticeAction
 		if (isset($_POST['to_member_id']))
 		{
 			$to_member_id = $_POST['to_member_id']; 
-		}
-		else if (isset($_GET['to_member_id']))
-		{
-			$to_member_id = $_GET['to_member_id']; 
 		}
 		
 		return $to_member_id;
@@ -198,10 +247,6 @@ class NoticeAction
 		{
 			$notice_subject = $_POST['notice_subject']; 
 		}
-		else if (isset($_GET['notice_subject']))
-		{
-			$notice_subject = $_GET['notice_subject']; 
-		}
 		
 		return $notice_subject;
 	}
@@ -214,10 +259,6 @@ class NoticeAction
 		if (isset($_POST['notice_text']))
 		{
 			$notice_text = $_POST['notice_text']; 
-		}
-		else if (isset($_GET['notice_text']))
-		{
-			$notice_text = $_GET['notice_text']; 
 		}
 		
 		return $notice_text;
@@ -232,10 +273,6 @@ class NoticeAction
 		{
 			$response_to_notice_id = $_POST['response_to_notice_id']; 
 		}
-		else if (isset($_GET['response_to_notice_id']))
-		{
-			$response_to_notice_id = $_GET['response_to_notice_id']; 
-		}
 		
 		return $response_to_notice_id;
 	}
@@ -243,9 +280,7 @@ class NoticeAction
 	
 	public function flagNoticeForReview($notice_id, $mdb_control)
 	{
-		
-		
-		
+		// feature to be added at a later date		
 	}
 	
 	

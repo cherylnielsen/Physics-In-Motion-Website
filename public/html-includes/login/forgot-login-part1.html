@@ -1,0 +1,41 @@
+
+<form id="find_member" method="post">
+	<fieldset>	
+		<h1 class="form">Forgotten Member Name or Password <span>- all fields are required</span>:</h1>
+		<h2>Personal Information: (part 1 of 3)</h2>
+		
+		<label>First Name<br><input type="text" name="first_name" id="first_name"
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['first_name']; ?>" 
+			autofocus required pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label><br>
+		
+		<label>Last Name<br><input type="text" name="last_name" id="last_name"
+			value="<?php if (isset($_POST['last_name'])) echo $_POST['last_name']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label><br>
+		
+		<label>Email<br><input type="email" name="email" id="email"
+			value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" 
+			required>
+		</label><br>
+		
+		<label>School<br><input type="text" name="school" id="school"
+			value="<?php if (isset($_POST['school'])) echo $_POST['school']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label><br>
+		
+		<label><input type="radio" name="member_type" value="student" required 
+			<?php if (isset($_POST['member_type']) && 
+				(strcmp($_POST['member_type'], "student") == 0))
+				echo "checked";?> >&nbsp;Student
+		</label><br>
+			
+		<label><input type="radio" name="member_type" value="professor" 
+			<?php if (isset($_POST['member_type']) && 
+				(strcmp($_POST['member_type'], "professor") == 0))
+				echo "checked";?> >&nbsp;Professor
+		</label><br>
+		
+		<input type="submit" value="Submit" name="find_member">			
+	</fieldset>	
+</form>

@@ -16,7 +16,7 @@ class assignmentAttachmentController extends DatabaseController {
 			{
 				$assignment_attachment = new Assignment_Attachment();
 				$assignment_attachment->initialize($row['assignment_attachment_id'], 
-										$row['assignment_id'], $row['filename'], $row['filepath']);
+						$row['assignment_id'], $row['filename'], $row['filepath']);
 				// pushes each object onto the end of the array
 				$dataArray[] = $assignment_attachment;	
 			}

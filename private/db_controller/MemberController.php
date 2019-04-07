@@ -68,6 +68,30 @@ class MemberController extends DatabaseController {
 	}
 
 
+	/***
+	Queries the database for an array of objects that all have $key = $value.
+	Input: the set of keys and values to search for in the database table.
+	Output: $dataArray = the array of object models created from each result row.
+	***/
+	public function getByAttributeSet($key1, $value1, $key2, $value2, 
+										$key3, $value3, $key4, $value4)
+	{
+		$table = $this->getTableName();
+		$db_connection = get_db_connection();
+		$dataArray = array();
+		
+		$query = "select * from $table where ($key1 = '$value1') 
+						AND ($key2 = '$value2') AND ($key3 = '$value3') 
+						AND ($key4 = '$value4')";		
+		
+		$result = mysqli_query($db_connection, $query);
+		$dataArray = $this->getData($result, $db_connection);
+		mysqli_close($db_connection);	
+		
+		return $dataArray;
+	}
+	
+
 	// updates the given key with the new value in the database
 	//Member ($member_id, $member_type, $member_name, $member_password, $date_registered, $last_login, $last_logoff
 	//			$first_name, $last_name, $email, $registration_complete)

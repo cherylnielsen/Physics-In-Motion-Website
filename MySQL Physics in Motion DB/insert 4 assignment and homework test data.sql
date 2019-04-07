@@ -28,24 +28,14 @@ select * from homework;
 
 /* homework submission */
 update homework 
-set date_submitted = "2018-02-03 22:00:00", points_earned = 20, was_graded = true, hours = 3
+set date_submitted = "2019-02-03 22:00:00", points_earned = 20, was_graded = true, hours = 3
 where homework_id = 1;
 update homework 
-set date_submitted = "2018-02-04 12:00:00", points_earned = 0, was_graded = false, hours = 2
+set date_submitted = "2019-02-04 12:00:00", points_earned = 0, was_graded = false, hours = 2
 where homework_id = 3;
 
 select * from homework;
 
-/* ratings */
-insert into tutorial_lab_rating (tutorial_lab_id, member_id, date_posted, rating, comments)
-values 
-(101, 1, "2018-02-05 12:00:00", 5, "This lab is great!"),
-(101, 3, "2018-02-03 14:00:00", 5, "This lab is very good.");
-
-insert into tutorial_lab_rating (tutorial_lab_id, member_id, date_posted, rating)
-values (101, 2, "2018-02-05 12:00:00", 4);
-
-select * from tutorial_lab_rating;
 
 
 
