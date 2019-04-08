@@ -29,6 +29,15 @@ h1, h2 {
 	text-align: center;
 }
 
+h1.labs-title, h1.ratings-title {
+	padding: 0.5em;
+	margin: 0 0 10px 0;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	background-color: #A7DAFA;
+	text-align: center;
+}
+
 
 img.right {
 	float: right;

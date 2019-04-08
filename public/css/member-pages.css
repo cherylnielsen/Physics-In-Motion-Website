@@ -14,6 +14,7 @@ section.main-content {
 
 h1.welcome {
 	margin-bottom: 20px;
+	text-align: center;
 }
 
 table h2, table h1 {
@@ -34,13 +35,17 @@ a.assignment_link, a.notice_link {
 div.overflow {
 	overflow: auto;
 	margin: 30px 0;
-	max-height: 400px;
+	max-height: 500px;
 }
 
 table {
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
 	width: 100%;
+}
+
+table.notice-summary, table.assignment-summary {
+	width: 50%;
 }
 
 th {

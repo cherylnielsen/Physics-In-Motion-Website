@@ -7,6 +7,7 @@ function showSelectedNotice(rowID)
 	if( row.style.display == "none" )
 	{
 		row.style.display = "table-row";
+		row.scrollIntoView({behavior: "smooth"});
 	}
 	else
 	{
@@ -16,102 +17,49 @@ function showSelectedNotice(rowID)
 }
 		
 		
-function showStudentList()
+function showTable(tableID)
 {
-	var listDiv = document.getElementById("studentListDiv");
+	var table = document.getElementById(tableID);
 	
-	if( listDiv.style.display == "none" )
+	if( table.style.display == "none" )
 	{
-		listDiv.style.display = "block";
+		table.style.display = "block";
+		table.scrollIntoView({behavior: "smooth"});
 	}
 	else
 	{
-		listDiv.style.display = "none";
+		table.style.display = "none";
 	}
 }
 
 
-function showAssignmentList()
+// AJAX with POST
+function submitHomework(homework_id)
 {
-	var listDiv = document.getElementById("assignmentListDiv");
+	// the http request object
+	var xhttp = new XMLHttpRequest();
 	
-	if( listDiv.style.display == "none" )
+	// anonymous function to handle the http response
+	// because the response is not complicated for homework
+	xhttp.onreadystatechange = function() 
 	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-function showHomeworkList()
-{
-	var listDiv = document.getElementById("homeworkListDiv");
+		if (xhttp.readyState == 4 && xhttp.status == 200) 
+		{
+			var id = "submit_homework_" + homework_id;
+			document.getElementById(id).innerHTML = xhttp.responseText;
+		}
+	};
 	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-function showSectionNotices()
-{
-	var listDiv = document.getElementById("sectionNoticeDiv");
+	// the data to be sent in string format
+	var dataString = "submit_homework=" + homework_id;
+	// sending request by post to the file "" on the server
+	xhttp.open("POST", "javascript/ActionUtility.php", true);
+	// set header as www (Internet) form data type
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	// send the data string
+	xhttp.send(dataString);
 	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
 }
-
-
-function showMemberInBoxNotices()
-{
-	var listDiv = document.getElementById("memberInBoxNoticeDiv");
-	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-function showMemberSentNotices()
-{
-	var listDiv = document.getElementById("memberSentNoticeDiv");
-	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-
-
-
-
-
-
 
 
 

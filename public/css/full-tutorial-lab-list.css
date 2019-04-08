@@ -9,7 +9,8 @@ section.main-content {
 
 h1.logo-statement {
 	padding-left: 10px;
-	width: 100%;
+	width: 124%;
+	text-align: center;
 }
 
 /* grid style full lab list page */
@@ -77,6 +78,15 @@ a.card {
 
 h1, h2, h3 {
 	text-align: center;
+}
+
+h1.labs {
+	padding: 0.5em;
+	margin: 0 0 0 10px;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	background-color: #A7DAFA;
+	width: 124%;
 }
 
 .card-link {

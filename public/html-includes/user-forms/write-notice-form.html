@@ -3,7 +3,7 @@
 	$member_list = array();
 	$member_list = $displayUtility->getMemberList($mdb_control);		
 	$section_list = array();	
-	$section_list = $noticeAction->getSectionList($displayUtility, $sectionDisplay, $mdb_control);	
+	$section_list = $noticeAction->getSectionList($displayUtility, $sectionTables, $mdb_control);	
 	
 	$date_sent = date("m/d/Y H:i:s");
 	$from_first_name = $_SESSION["first_name"];

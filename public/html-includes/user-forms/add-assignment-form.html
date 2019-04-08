@@ -4,7 +4,7 @@
 	
 	$section_list = array();
 	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
-									$sectionDisplay, $professor_id, $mdb_control);
+									$sectionTables, $professor_id, $mdb_control);
 									
 	$tutorial_lab_list = array();
 	$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);

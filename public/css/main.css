@@ -35,6 +35,10 @@ a#bottom {
 	margin: 2em 0 0.5em 1.5em;
 }
 
+a#bottom-new-labs {
+	margin-top: 0.5em;
+}
+
 h1 {
 	font-size: 1.3em;
 	margin: 0.5em 0;
@@ -144,6 +148,19 @@ section.main-content {
 	padding: 0 0 1% 2%;
 }
 
+h1.logo-statement {
+	text-align: center;
+}
+
+h1.home-page-logo-statement {
+	padding: 0.5em;
+	margin: 20px 0;
+	border: 2px solid #03AA0D;
+	border-radius: 10px;
+	background-color: #A7DAFA;
+	text-align: center;
+}
+
 div.logo-summary {
 	position: absolute;
 	top: 80px;	
@@ -155,7 +172,7 @@ section.new-labs {
 	text-align: center;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-	padding-bottom: 1em;
+	padding: 0 0 1em 0;
 	background-color: #A7DAFA;
 	position: relative;
 	left: 2px;
@@ -168,6 +185,7 @@ article.new-labs {
 	background-color: #A7DAFA;
 	text-align: center;
 	border-bottom: 2px solid #03AA0D;
+	border-radius: 10px;
 }
 
 img.new-labs {
@@ -175,6 +193,14 @@ img.new-labs {
 	margin: auto;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
+}
+
+h1.new-labs-title {
+	border-bottom: 2px solid #03AA0D;
+	border-radius: 10px;
+	margin: 0;
+	padding: 0.5em 0;
+	background: lightyellow;
 }
 
 h1.new-labs {

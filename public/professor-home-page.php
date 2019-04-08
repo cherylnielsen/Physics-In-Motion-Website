@@ -43,7 +43,7 @@
 
 <section class="main-content">
 <?php 
-	echo "<h1 class=welcome>Welcome Professor $first_name $last_name!</h1>";
+	echo "<h1 class='welcome'>Welcome Professor $first_name $last_name!</h1>";
 	
 	if(isset($_GET["section_id"]))
 	{

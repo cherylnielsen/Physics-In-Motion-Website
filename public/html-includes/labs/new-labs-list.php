@@ -1,8 +1,8 @@
 <?php
 
-	include('../private/user_display/RatingDisplay.php');
+	include('../private/user_display/RatingTables.php');
 	
-	$ratingDisplay = new RatingDisplay();
+	$ratingTables = new RatingTables();
 	$labs_new = array();
 	$labs_control = $mdb_control->getController("tutorial_lab");
 	$labs_new = $labs_control->getByAttribute("lab_status", "New");
@@ -14,7 +14,7 @@
 	{	
 		echo '<section class="new-labs">
 		<a id="new-labs" href="index.php">return to top</a>	
-		<h1 class="new-status">New Tutorial Labs!</h1><hr>';
+		<h1 class="new-labs-title">New Tutorial Labs!</h1>';
 		
 		for($i = 0; $i < $length_labs_new; $i++) 
 		{	
@@ -30,11 +30,11 @@
 						alt="image of the lab" height="100">
 				<p>' . $intro . '</p>';
 				
-			$rating_info = $ratingDisplay->getAveLabRating($lab_id, $mdb_control);	
+			$rating_info = $ratingTables->getAveLabRating($lab_id, $mdb_control);	
 			
 			if($rating_info['num'] > 0) 
 			{ 
-				$ratingDisplay->outputStars($rating_info);			
+				$ratingTables->outputStars($rating_info);			
 			}	
 			else
 			{
@@ -46,7 +46,7 @@
 			echo '</article>';
 		}
 		
-		echo '<a id="bottom" href="index.php">return to top</a></section>';
+		echo '<a id="bottom-new-labs" href="index.php">return to top</a></section>';
 	}
 
 

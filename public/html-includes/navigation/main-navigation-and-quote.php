@@ -17,6 +17,7 @@
 		<?php	include('html-includes/navigation/professor-navigation.php');  ?>
 		<?php	include('html-includes/navigation/student-navigation.php');	 ?>
 		<?php	include('html-includes/navigation/admin-navigation.php');  ?>	
+		
 	</nav>	
 	
 	<div class='quote'>

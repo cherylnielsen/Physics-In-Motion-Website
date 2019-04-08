@@ -57,7 +57,7 @@
 
 <section class="main-content-forms">
 <?php 
-	echo "<h1 class=welcome>Welcome Professor $first_name $last_name!</h1>";
+	echo "<h1 class='welcome'>Welcome Professor $first_name $last_name!</h1>";
 	include($form_file_name);
 ?>
 </section>

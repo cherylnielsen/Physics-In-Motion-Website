@@ -29,6 +29,23 @@ class SectionAction
 	}		
 	
 	
+	public function submitHomework($homework_id, $mdb_control)
+	{
+		$sucess = true;
+		
+		$homework = new Homework();	
+		$hmwk_control = $mdb_control->getController("homework");
+		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
+		
+		$datetime = date("Y/m/d");
+		$datetime2 = date("D, m/d/y");		
+		$homework->set_date_submitted($datetime);		
+		$sucess = $hmwk_control->updateAttribute($homework, "date_submitted");	
+		
+		return $datetime2;
+	}
+	
+	
 	public function deleteAssignment($assignment_id, $mdb_control)
 	{
 		$sucess = true;
@@ -62,20 +79,6 @@ class SectionAction
 	}
 	
 	
-	public function submitHomework($homework_id, $mdb_control)
-	{
-		$sucess = true;
-		
-		$homework = new Homework();	
-		$hmwk_control = $mdb_control->getController("homework");
-		$homework = $hmwk_control->getByPrimaryKey("homework_id", $homework_id);
-		$homework->set_date_submitted(date("Y/m/d"));
-		
-		$sucess = $hmwk_control->updateAttribute($homework, "date_submitted");		
-		return $sucess;
-	}
-	
-	
 	public function gradeHomework($homework_id, $points_earned, $mdb_control)
 	{
 		$sucess = true;
@@ -95,6 +98,7 @@ class SectionAction
 		
 		return $sucess;
 	}
+	
 	
 	
 	

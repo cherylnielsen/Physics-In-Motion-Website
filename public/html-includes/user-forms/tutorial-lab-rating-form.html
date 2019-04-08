@@ -19,7 +19,7 @@
 	if(isset($_SESSION["student_id"]))
 	{
 		$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames_ByStudent(
-						$sectionDisplay, $student_id, $mdb_control);
+						$sectionTables, $student_id, $mdb_control);
 	}
 	else
 	{

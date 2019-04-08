@@ -1,6 +1,6 @@
 <?php
-include('../private/user_display/RatingDisplay.php');
-$ratingDisplay = new RatingDisplay();
+include('../private/user_display/RatingTables.php');
+$ratingTables = new RatingTables();
 
 $web_link = $_GET["lab"];
 $tutorial_lab_id = $_GET["num"];
@@ -10,7 +10,7 @@ if(isset($lab))
 {	
 	$status = $lab->get_lab_status();
 	$introduction = $lab->get_tutorial_lab_introduction();
-	$ave_time = $ratingDisplay->averageTimeToComplete($tutorial_lab_id, $mdb_control);
+	$ave_time = $ratingTables->averageTimeToComplete($tutorial_lab_id, $mdb_control);
 	
 	switch(	$status )
 	{
@@ -25,7 +25,7 @@ if(isset($lab))
 			break;
 	}
 	
-	echo '<h1 class="labs">Tutorial Lab ' . $tutorial_lab_id . ' : ' . 
+	echo '<h1 class="labs-title">Tutorial Lab ' . $tutorial_lab_id . ' : ' . 
 			$lab->get_tutorial_lab_name() . '</h1>';
 	
 	echo
@@ -38,11 +38,11 @@ if(isset($lab))
 	echo'<p>' . $introduction . '</p>
 			<h2>Average Time to Complete = ' . $ave_time . ' hours</h2>';
 			
-			$rating_info = $ratingDisplay->getAveLabRating($tutorial_lab_id, $mdb_control);	
+			$rating_info = $ratingTables->getAveLabRating($tutorial_lab_id, $mdb_control);	
 			
 			if($rating_info['num'] > 0) 
 			{ 
-				$ratingDisplay->outputStars($rating_info);			
+				$ratingTables->outputStars($rating_info);			
 			}	
 			else
 			{
@@ -94,9 +94,9 @@ if(isset($lab))
 	echo 
 	'<article class="lab-info">
 		<div id="list-ratings">
-			<h1>Tutorial Lab Ratings</h1><br>';
+			<h1 class="ratings-title">Tutorial Lab Ratings</h1><br>';
 			$lab_name = $lab->get_tutorial_lab_name();
-			$ratingDisplay->displayFullLabRatings($tutorial_lab_id, $lab_name, $mdb_control);
+			$ratingTables->displayFullLabRatings($tutorial_lab_id, $lab_name, $mdb_control);
 			
 	echo '</div></article>';
 		

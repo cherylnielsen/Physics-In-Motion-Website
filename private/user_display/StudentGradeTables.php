@@ -2,18 +2,18 @@
 
 class StudentGradeTables
 {
-	private $assignmentDisplay;
+	private $assignmentTables;
 		
 	public function __construct() 
 	{
-		$this->assignmentDisplay = new AssignmentDisplay();
+		$this->assignmentTables = new AssignmentTables();
 	}
 
 	
-	public function displayStudentList($section_id, $mdb_control)
+	public function displayStudentGrades($section_id, $mdb_control)
 	{
 		echo "<table class='summary students'><thead>
-				<tr><th colspan='15'><h2>Section $section_id Student Members</h2></th></tr>";
+				<tr><th colspan='15'><h2>Section $section_id Student Grades</h2></th></tr>";
 		
 		$student_list = array();
 		$student_list = $this->getStudentList($section_id, $mdb_control);
@@ -54,6 +54,43 @@ class StudentGradeTables
 				{
 					echo "<td>No grades yet.</td></tr>";
 				}
+			}
+		}
+		else
+		{
+			echo "<tr><td colspan='5'>No students currently in this section.</td></tr>";
+		}
+
+		echo "</tbody></table>";
+	}
+	
+	
+	public function displayStudents($section_id, $mdb_control)
+	{
+		echo "<table class='summary students'><thead>
+				<tr><th colspan='15'><h2>Section $section_id Student Members</h2></th></tr>";
+		
+		$student_list = array();
+		$student_list = $this->getStudentList($section_id, $mdb_control);
+		$num_students = count($student_list);
+		$header = "";
+		$rows = array();
+		
+		if($num_students > 0)
+		{				
+			for($i = 0; $i < $num_students; $i++)
+			{			
+				$studentRow = array();				
+				$student_id = $student_list[$i]->get_student_id();
+				$studentRow = $this->makeStudentRow($student_list[$i]);
+				
+				if($i === 0) 
+				{ 
+					echo "<tr>" . $studentRow['header'] . "</tr></thead><tbody>"; 
+				}
+				
+				echo "<tr>" . $studentRow['data'] . "</tr>";
+				
 			}
 		}
 		else
@@ -172,7 +209,7 @@ class StudentGradeTables
 		$percent = 0;
 		
 		$assignment_list = array();
-		$assignment_list = $this->assignmentDisplay->getSectionAssignments($section_id, $mdb_control);
+		$assignment_list = $this->assignmentTables->getSectionAssignments($section_id, $mdb_control);
 		$num_assignments = count($assignment_list);
 		$num_gradeSets = 0;
 		
@@ -183,7 +220,7 @@ class StudentGradeTables
 				$assignment_id = $assignment_list[$i]->get_assignment_id();
 				$points_possible = $assignment_list[$i]->get_points_possible();
 				$homework = new Homework_View();
-				$homework = $this->assignmentDisplay->getOneHomework(
+				$homework = $this->assignmentTables->getOneHomework(
 							$section_id, $assignment_id, $student_id, $mdb_control);
 					
 				if(isset($homework))

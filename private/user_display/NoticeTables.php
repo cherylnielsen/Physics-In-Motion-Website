@@ -1,12 +1,10 @@
 <?php
 
-class NoticeDisplay
+class NoticeTables
 {
-	private $displayUtility;
 	
 	public function __construct() 
 	{
-		$this->displayUtility = new DisplayUtility();
 	}
 	
 	
@@ -36,18 +34,20 @@ class NoticeDisplay
 			<tr><th> </th><th>In Box</th><th>Sent</th>"; 				
 				
 		// section notices & table headings continued
-		
-		$numSections = count($section_list);
-		
-		for($i = 0; $i < $numSections; $i++)
+		if(isset($section_list))
 		{
-			$section_id = $section_list[$i]->get_section_id();
-			$table_heading = $table_heading . "<th>Section $section_id</th>";
+			$numSections = count($section_list);
 			
-			// section notices			
-			$notices = array();
-			$notices = $this->getSectionNotices($section_id, $mdb_control);						
-			$numOfNoticesArray[$section_id] = $this->numberNotices($notices);
+			for($i = 0; $i < $numSections; $i++)
+			{
+				$section_id = $section_list[$i]->get_section_id();
+				$table_heading = $table_heading . "<th>Section $section_id</th>";
+				
+				// section notices			
+				$notices = array();
+				$notices = $this->getSectionNotices($section_id, $mdb_control);						
+				$numOfNoticesArray[$section_id] = $this->numberNotices($notices);
+			}
 		}
 		
 		// display the table 
@@ -62,17 +62,20 @@ class NoticeDisplay
 		$row_total = "<tr><th>Total Notices</th><td>" . $numOfNoticesArray['inbox']['total'] . "</td>
 						<td>" . $numOfNoticesArray['sent']['total'] . "</td>";
 		
-		for($i = 0; $i < $numSections; $i++)
+		if(isset($section_list))
 		{
-			$section_id = $section_list[$i]->get_section_id();
-			
-			$day = $numOfNoticesArray[$section_id]['oneDay'];
-			$week = $numOfNoticesArray[$section_id]['oneWeek'];
-			$total = $numOfNoticesArray[$section_id]['total'];
-			
-			$row_24hr .= "<td>$day</td>";
-			$row_7day .= "<td>$week</td>";
-			$row_total .= "<td>$total</td>";
+			for($i = 0; $i < $numSections; $i++)
+			{
+				$section_id = $section_list[$i]->get_section_id();
+				
+				$day = $numOfNoticesArray[$section_id]['oneDay'];
+				$week = $numOfNoticesArray[$section_id]['oneWeek'];
+				$total = $numOfNoticesArray[$section_id]['total'];
+				
+				$row_24hr .= "<td>$day</td>";
+				$row_7day .= "<td>$week</td>";
+				$row_total .= "<td>$total</td>";
+			}
 		}
 			
 		$row_24hr .= "</tr>";

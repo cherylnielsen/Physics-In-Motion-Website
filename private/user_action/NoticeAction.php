@@ -189,7 +189,7 @@ class NoticeAction
 	}
 	
 	
-	public function getSectionList($displayUtility, $sectionDisplay, $mdb_control)
+	public function getSectionList($displayUtility, $sectionTables, $mdb_control)
 	{
 		$sectionList = "";
 		
@@ -197,11 +197,11 @@ class NoticeAction
 		{
 			case "professor":
 				$sectionList = $displayUtility->getListSectionIDNames_ByProfessor(
-						$sectionDisplay, $_SESSION['professor_id'], $mdb_control);	
+						$sectionTables, $_SESSION['professor_id'], $mdb_control);	
 				break;
 			case "student":
 				$sectionList = $displayUtility->getListSectionIDNames_ByStudent(
-						$sectionDisplay, $_SESSION['student_id'], $mdb_control);
+						$sectionTables, $_SESSION['student_id'], $mdb_control);
 				break;
 			case "administrator":
 				$sectionList = $displayUtility->getListSectionIDNames_All($mdb_control);

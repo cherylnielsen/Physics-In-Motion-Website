@@ -1,14 +1,13 @@
 <?php
 
-class AssignmentDisplay
+class AssignmentTables
 {
-	private $displayUtility;
-	private $sectionDisplay;
+
+	private $sectionTables;
 	
 	public function __construct() 
 	{
-		$this->displayUtility = new DisplayUtility();
-		$this->sectionDisplay = new SectionDisplay();
+		$this->sectionTables = new SectionTables();
 	}
 
 
@@ -29,7 +28,7 @@ class AssignmentDisplay
 			{
 				$date_assigned = $assignment_list[$i]->get_date_assigned();
 				$assigned = new DateTime($date_assigned);
-				$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
+				$date_assigned = date("D, m/d/y", strtotime($date_assigned));
 				$today = new DateTime("today");
 				
 				if($member_type === "professor")
@@ -291,10 +290,10 @@ class AssignmentDisplay
 	{
 		$date_assigned = $assignment_view->get_date_assigned();
 		$assigned = new DateTime($date_assigned);
-		$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
+		$date_assigned = date("D, m/d/y", strtotime($date_assigned));
 		$today = new DateTime("today");
 		$date_due = $assignment_view->get_date_due();
-		$date_due = $this->displayUtility->displayDateShort($date_due);
+		$date_due = date("D, m/d/y", strtotime($date_due));
 		
 		$assignment_id = $assignment_view->get_assignment_id();
 		$assignment_name = $assignment_view->get_assignment_name();
@@ -384,12 +383,12 @@ class AssignmentDisplay
 	public function displayProfessorHomeworkRow($homework_view)
 	{		
 		$date_submitted = $homework_view->get_date_submitted();
-		$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
+		$date_submitted = date("D, m/d/y", strtotime($date_submitted));
 		$row = array();
 		$row['data'] = "";
 		
 		$row['header'] = "<th>Section ID</th><th colspan='2'>Assignment</th>
-				<th>Tutorial Lab ID</th><th colspan='2'>Student</th>
+				<th>Tutorial Lab ID</th><th colspan='2'>Student</th><th>Date Due</th>
 				<th>Date Submitted</th><th>Points Possible</th><th colspan='2'>Points Earned</th>
 				<th>Percent</th><th>Hours</th><th>Summary</th><th>Homework Set</th>";
 		
@@ -410,11 +409,13 @@ class AssignmentDisplay
 			$graded = $homework_view->get_was_graded();	
 			$hours = $homework_view->get_hours();
 			$points_possible = $homework_view->get_points_possible();
-			
+			$date_due = $homework_view->get_date_due();		
+			$date_due = date("D, m/d/y", strtotime($date_due));
+		
 			$filepath = $homework_view->get_filepath();
 			$url = "$filepath/$summary";
 			$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
-			$homework_set = "homework_set_$homework_id.zip";
+			$homework_set = "homework_set.zip";
 			$url = "$filepath/$homework_set";
 			$homework_set_link = "<a href='$url' download 
 						class='assignment_link'>$homework_set</a>";
@@ -449,7 +450,7 @@ class AssignmentDisplay
 				<td>$assignment_id</td><td>$assignment_name</td>
 				<td>$tutorial_lab_id</td><td>$student_id</td>
 				<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
-				<td>$date_submitted</td>
+				<td>$date_due</td><td>$date_submitted</td>
 				<td class='center'>$points_possible</td>
 				<td class='center'>$points_earned</td>
 				<td class='center'>$change_grade</td>
@@ -478,7 +479,7 @@ class AssignmentDisplay
 		$row['data'] = "";
 		
 		$row['header'] = "<th>Section ID</th><th colspan='2'>Assignment</th>
-				<th>Tutorial Lab ID</th>
+				<th>Tutorial Lab ID</th><th>Date Due</th>
 				<th>Date Submitted</th><th>Points Possible</th><th>Points Earned</th>
 				<th>Percent</th><th>Hours</th><th>Summary</th><th>Homework Set</th>";
 				
@@ -507,31 +508,42 @@ class AssignmentDisplay
 			$percent = " - ";
 		}
 		
-		$hours = $homework_view->get_hours();					
-		$date_submitted = $homework_view->get_date_submitted();		
+		$hours = $homework_view->get_hours();			
+		$date_submitted = $homework_view->get_date_submitted();	
+		$date_due = $homework_view->get_date_due();		
+		$date_due = date("D, m/d/y", strtotime($date_due));
 		
 		if(!isset($date_submitted))
 		{
+			/**
 			$date_submitted = "<button class='table-button' name='submit_homework'
-								value='$homework_id'>Submit Homework</button>";
+								value='$homework_id'>Submit</button>";
+			**/
+			$date_submitted = "<button type='button' 
+								class='table-button' 
+								name='submit_homework' 
+								value='$homework_id' 
+								onclick='submitHomework($homework_id)' >
+								Submit</button>";
+			
 		}
 		else
 		{
-			$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
+			$date_submitted = date("D, m/d/y", strtotime($date_submitted));
 		}
 			
 		$filepath = $homework_view->get_filepath();
 		$url = "$filepath/$summary";
 		$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
-		$homework_set = "homework_set_$homework_id.zip";
+		$homework_set = "homework_set.zip";
 		$url = "$filepath/$homework_set";
 		$homework_set_link = "<a href='$url' download 
 						class='assignment_link'>$homework_set</a>";
 						
 		$row['data'] = "<td>$section_id</td>
 			<td>$assignment_id</td><td>$assignment_name</td>
-			<td>$tutorial_lab_id</td>
-			<td>$date_submitted</td><td class='center'>$points_possible</td>
+			<td>$tutorial_lab_id</td><td>$date_due</td>
+			<td id='submit_homework_$homework_id' >$date_submitted</td><td class='center'>$points_possible</td>
 			<td class='center'>$points_earned</td>
 			<td class='center'>$percent</td>
 			<td>$hours hours</td>

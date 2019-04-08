@@ -1,46 +1,49 @@
 <?php
 
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$sectionAction->processTableForms($mdb_control);
-	}		
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+	$sectionAction->processTableForms($mdb_control);
+}		
 	
-?>
+echo "<div>";
 
-
-<div>
-<?php
 	// Welcome headings
-	$sectionDisplay->displaySectionWelcome($section_id, $mdb_control);	
-?>	
-</div>
+	$welcome = $sectionTables->getSectionWelcome($section_id, $mdb_control);	
 
-<div id='studentListDiv' class='overflow'>
-<?php
+echo "$welcome</div>";
+
+echo "<div id='studentDiv' class='overflow'>";
+
 	// List of students that are members of this section
 	// need to add grades and stats for each student (second or same table?)
-	$studentTables->displayStudentList($section_id, $mdb_control);
-?>
-</div>
+	$studentTables->displayStudents($section_id, $mdb_control);
 
+echo "</div>";
 
-<div id='assignmentListDiv' class='overflow'>
-<?php
+echo "<div id='assignmentDiv' class='overflow'>";
+
 	// List of assignments for this section
-	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, "professor");
-?>	
-</div>
+	$assignmentTables->displaySectionAssignments($section_id, $mdb_control, "professor");
 
-<div id='homeworkListDiv' class='overflow'>
-<?php
+echo "</div>";
+
+echo "<div id='homeworkDiv' class='overflow'>";
+
 	// List of homework submitted for this section with links to view or download
-	$assignmentDisplay->displaySubmittedHomework($section_id, $mdb_control);
+	$assignmentTables->displaySubmittedHomework($section_id, $mdb_control);
+
+echo "</div>";
+
+echo "<div id='studentGradeDiv' class='overflow'>";
+
+	// List of students that are members of this section
+	// with the grades and stats for each student
+	$studentTables->displayStudentGrades($section_id, $mdb_control);
+
+echo "</div>";
+
+echo "<a id='bottom' href='#top'>return to top</a>";
+
 ?>
-</div>
-
-
-<a id="bottom" href="#top">return to top</a>
-
-
 
 
