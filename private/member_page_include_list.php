@@ -11,6 +11,7 @@ include('../private/user_action/NoticeAction.php');
 include('../private/user_action/AssignmentAction.php');
 include('../private/user_action/RatingAction.php');	
 include('../private/user_display/StudentGradeTables.php'); 	
+include('../private/user_display/MemberDataUtility.php'); 
 
 // display and action classes for the forms used by members
 $fileAction = new FileAction();
@@ -23,6 +24,7 @@ $assignmentAction = new AssignmentAction();
 $ratingAction = new RatingAction();
 $ratingTables = new RatingTables();
 $studentTables = new StudentGradeTables();
+$dataUtility = new MemberDataUtility();
 
 // AJAX helper for the display and action classes
 //include('../private/user_action/ActionUtility.php'); 

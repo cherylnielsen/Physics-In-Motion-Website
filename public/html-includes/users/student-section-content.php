@@ -1,15 +1,5 @@
 <?php
 
-	/**
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		if(isset($_POST['submit_homework']))
-		{
-			$hmwk_id = $_POST['submit_homework'];
-			$sectionAction->submitHomework($hmwk_id, $mdb_control);
-		}		
-	}
-	**/
 
 echo "<div>";
 

@@ -64,6 +64,7 @@ if(isset($_SESSION["student_id"]) && isset($_SESSION["member_type"]))
 		}	
 ?>
 		<h2 class='navigation'>Actions</h2>
+		
 		<a href="login-register-page.php?form_type=changelogin" 
 			class="navigation">Change Password</a>
 		<a href="student-home-page.php?notices=page" 

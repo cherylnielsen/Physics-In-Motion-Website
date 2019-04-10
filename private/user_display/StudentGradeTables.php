@@ -12,7 +12,7 @@ class StudentGradeTables
 	
 	public function displayStudentGrades($section_id, $mdb_control)
 	{
-		echo "<table class='summary students'><thead>
+		echo "<table class='summary students'>
 				<tr><th colspan='15'><h2>Section $section_id Student Grades</h2></th></tr>";
 		
 		$student_list = array();
@@ -34,7 +34,7 @@ class StudentGradeTables
 				if($i === 0) 
 				{ 
 					echo "<tr>" . $studentRow['header'] . "<th colspan='10' class='center'>
-							Grades</th></tr></thead><tbody>"; 
+							Grades</th></tr>"; 
 				}
 				
 				echo "<tr>" . $studentRow['data'] ;
@@ -61,13 +61,13 @@ class StudentGradeTables
 			echo "<tr><td colspan='5'>No students currently in this section.</td></tr>";
 		}
 
-		echo "</tbody></table>";
+		echo "</table>";
 	}
 	
 	
 	public function displayStudents($section_id, $mdb_control)
 	{
-		echo "<table class='summary students'><thead>
+		echo "<table class='summary students'>
 				<tr><th colspan='15'><h2>Section $section_id Student Members</h2></th></tr>";
 		
 		$student_list = array();
@@ -86,7 +86,7 @@ class StudentGradeTables
 				
 				if($i === 0) 
 				{ 
-					echo "<tr>" . $studentRow['header'] . "</tr></thead><tbody>"; 
+					echo "<tr>" . $studentRow['header'] . "</tr>"; 
 				}
 				
 				echo "<tr>" . $studentRow['data'] . "</tr>";
@@ -98,7 +98,7 @@ class StudentGradeTables
 			echo "<tr><td colspan='5'>No students currently in this section.</td></tr>";
 		}
 
-		echo "</tbody></table>";
+		echo "</table>";
 	}
 	
 	

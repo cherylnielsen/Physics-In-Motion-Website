@@ -3,20 +3,26 @@
 require_once('../../private/DatabaseControllerFactory.php'); 
 require_once('../../private/user_action/SectionAction.php');
 
-// helper code for the redirection of AJAX requests
+//echo " you are now inside of ActionUtility.php ";
+//echo " data sent was homework id is " . $_GET['submit_homework'];
+//echo " data sent was homework id is " . $_POST['submit_homework'];
+
 function ajaxSubmitHomework()
 {
-	if(isset($_POST['submit_homework']))
-	{
-		$mdb_control = new DatabaseControllerFactory();	
-		$action = new SectionAction();
-		$homework_id = $_POST['submit_homework'];
-		$success = $action->submitHomework($homework_id, $mdb_control);
-	}
+	//echo " inside ajaxSubmitHomework  ";
+	$mdb_control = new DatabaseControllerFactory();	
+	$formAction = new SectionAction();
+	$result = $formAction->processTableForms($mdb_control);
 	
-	return $success;
+	return $result;
 }
+
+// The echo string of the result is then automatically returned
+// as the AJAX response to the xhttp request.
 
 echo ajaxSubmitHomework();
 
+
+
 ?>
+

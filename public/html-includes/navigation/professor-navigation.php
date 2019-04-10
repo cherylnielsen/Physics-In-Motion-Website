@@ -11,8 +11,7 @@ if(isset($_SESSION["professor_id"]) && isset($_SESSION["member_type"]))
 	{		
 	?>	
 		<nav class='second-navigation'>	
-			<h2 class='navigation'>Current Sections</h2>	
-			
+			<h2 class='navigation'>Current Sections</h2>				
 	<?php
 	
 		$section_list = array();

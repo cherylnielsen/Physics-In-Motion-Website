@@ -86,6 +86,51 @@ class MemberDataUtility
 	}
 
 	
+	public function getListTutorialLabIDNames($mdb_control)
+	{
+		$labs = array();
+		$labs = $mdb_control->getController("tutorial_lab")->getAllData();
+		$tutorial_lab_list = array();
+		
+		for($i = 0; $i < count($labs); $i++)
+		{
+			$lab_id = $labs[$i]->get_tutorial_lab_id();
+			$lab_name = $labs[$i]->get_tutorial_lab_name();
+			$tutorial_lab_list[$i]['name'] = "Tutorial Lab " . $lab_id . " : " . $lab_name;
+			$tutorial_lab_list[$i]['id'] = $lab_id;
+		}
+		
+		return $tutorial_lab_list;
+	}
+	
+	
+	public function getListTutorialLabIDNames_ByStudent($sectionTables, $student_id, $mdb_control)
+	{
+		$section_list = array();
+		$assignment_list = array();
+		$tutorial_lab_names = array();
+		
+		$section_list = $sectionTables->getSectionList_ByStudent($student_id, $mdb_control);
+						
+		for($i = 0; $i < count($section_list); $i++)
+		{
+			$section_id = $section_list[$i]->get_section_id();
+			$assignment_list = array();
+			$controller = $mdb_control->getController("assignment_view");
+			$assignment_list = $controller->getByAttribute("section_id", $section_id);
+			
+			for($j = 0; $j < count($assignment_list); $j++)
+			{
+				$lab_id = $assignment_list[$j]->get_tutorial_lab_id();
+				$lab_name = $assignment_list[$j]->get_tutorial_lab_name();
+				$tutorial_lab_names[$j]['name'] = "Tutorial Lab " . $lab_id . " : " . $lab_name;
+				$tutorial_lab_names[$j]['id'] = $lab_id;
+			}
+		}
+
+		return $tutorial_lab_names;
+	}
+	
 	
 	
 }

@@ -3,11 +3,11 @@
 <?php	
 	
 	$section_list = array();
-	$section_list = $displayUtility->getListSectionIDNames_ByProfessor(
-									$sectionTables, $professor_id, $mdb_control);
+	$section_list = $sectionTables->getListSectionIDNames_ByProfessor(
+									$professor_id, $mdb_control);
 									
 	$tutorial_lab_list = array();
-	$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
+	$tutorial_lab_list = $dataUtility->getListTutorialLabIDNames($mdb_control);
 	
 	// checks GET and POST, if not set, returns empty string
 	$section_id = $assignmentAction->getSectionID();
