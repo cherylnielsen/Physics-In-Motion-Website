@@ -1,5 +1,12 @@
 /* JavaScript for member pages. */
 
+const actions = {
+    SUBMIT_HOMEWORK: 1,
+    GRADE_HOMEWORK: 2,
+    CHANGE_GRADE: 3,
+    DELETE_ASSIGNMENT: 4
+}
+
 function showSelectedNotice(rowID)
 {
 	// get the row where the notice is to be show
@@ -35,13 +42,19 @@ function showTable(tableID)
 	}
 }
 
-
-// AJAX with POST
-function submitHomework(homework_id)
+ 
+/**
+	AJAX with POST
+	set dataString as the data to be sent in string format
+	set url as the file to process the request on the server
+	set request type as POST
+	set request header as www form data
+	send the request and the POST data
+	This ONLY works in the exact order of: 
+	new xhttp request, onready function, open, set header, send.
+**/	
+function homeworkActions(item_id, action)
 {
-	// the table cell that requested action
-	var cellID = "submit_" + homework_id;
-	// the http request object
 	var xhttp = new XMLHttpRequest();
 	
 	// anonymous function to handle the http response
@@ -49,35 +62,42 @@ function submitHomework(homework_id)
 	{
 		if (this.readyState == 4 && this.status == 200) 
 		{
-			document.getElementById(cellID).innerHTML = this.responseText;
+			if(this.responseText != -1)
+			{
+				switch(action)
+				{
+					case actions.SUBMIT_HOMEWORK:
+						var cellID = "submit_" + item_id;
+						document.getElementById(cellID).innerHTML = this.responseText;
+					break;
+					
+					case actions.DELETE_ASSIGNMENT:
+						var rowID = "assignment_" + item_id;
+						document.getElementById(rowID).style.display = "none";
+					break;
+				}
+			}
 		}
 	};
 	
-	/**
-	// using GET - this works
-	var dataString = "submit_homework=" + homework_id;
-	var url = "javascript/ActionUtility.php?" + dataString;
-	xhttp.open("GET", url, true);
-	xhttp.send();
-	**/
+	var dataString;
 	
-	/**
-		set dataString as the data to be sent in string format
-		set url as the file to process the request on the server
-		set request type as POST
-		set request header as www form data
-		send the request and the POST data
-	**/
+	switch(action)
+	{
+		case actions.SUBMIT_HOMEWORK:
+			dataString = "submit_homework=" + item_id;
+		break;
 		
-	var dataString = "submit_homework=" + homework_id;
+		case actions.DELETE_ASSIGNMENT:
+			var dataString = "delete_assignment=" + item_id;
+		break;
+	}
+	
 	var url = "javascript/ActionUtility.php";
 	xhttp.open("POST", url, true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send(dataString);
 
 }
-
-
-
 
 

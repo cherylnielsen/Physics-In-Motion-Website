@@ -2,8 +2,12 @@
 
 class AssignmentTables
 {
-
 	private $sectionTables;
+	private $submitHomework = 1;
+	private $gradeHomework = 2;
+	private $changeGrade = 3;
+	private $deleteAssignment = 4;
+	
 	
 	public function __construct() 
 	{
@@ -356,13 +360,15 @@ class AssignmentTables
 			}
 			else
 			{
+				$actionID = $this->deleteAssignment;
+				
 				$dataEdit = "<td>
 						<a href='$url' class='table-button' >
 						<span class='fa fa-pencil'>&nbsp; Edit</span></a>
-						<button type='button' 
-							class='table-button' 
-							name='delete_assignment'
-							value='$assignment_id'>
+						
+						<button type='button' class='table-button' 
+							name='delete_assignment' value='$assignment_id' 
+							onclick='homeworkActions($assignment_id, $actionID);' >
 							<span class='fa fa-remove red'>&nbsp; Delete</span>
 						</button>
 					</td>"; 		
@@ -378,11 +384,8 @@ class AssignmentTables
 	}
 	
 	
-	
 	public function displayProfessorHomeworkRow($homework_view)
 	{		
-		$date_submitted = $homework_view->get_date_submitted();
-		$date_submitted = date("D, m/d/y", strtotime($date_submitted));
 		$row = array();
 		$row['data'] = "";
 		
@@ -400,7 +403,7 @@ class AssignmentTables
 		$tutorial_lab_id = $homework_view->get_tutorial_lab_id();
 		
 		$homework_id = $homework_view->get_homework_id();
-		
+		$date_submitted = $homework_view->get_date_submitted();
 			
 		if(!isset($date_submitted))
 		{			
@@ -412,7 +415,8 @@ class AssignmentTables
 			return $row;
 		}		
 			
-				
+		$date_submitted = date("D, m/d/y", strtotime($date_submitted));
+		
 		$points_earned = $homework_view->get_points_earned();
 		$graded = $homework_view->get_was_graded();	
 		$hours = $homework_view->get_hours();
@@ -439,32 +443,38 @@ class AssignmentTables
 		
 		if(!$graded)
 		{
+			$actionID = $this->gradeHomework;
+			
 			$points_earned = "<input type='number' class='table-input' 
-								name='points_$homework_id' 							
+								name='grade_$homework_id' 						
 								min='0' max='$points_possible' >
-							<button type='button' class='table-button' 
-								name='grade' value='$homework_id'
-								> Grade </button>";
+								
+							<button class='table-button' 
+								name='grade_homework' value='$homework_id' >
+								Grade </button>";
 								
 			$change_grade = " ";
 		}			
 		else
 		{
+			$actionID = $this->changeGrade;
+			
 			$change_grade = "<input type='number' class='table-input' 
-								name='change_grade_$homework_id'  
+								name='grade_$homework_id' id='grade_$homework_id' 
 								min='0' max='$points_possible' >
-							<button type='button' class='table-button' 								
-								name='change_grade' value='$homework_id'  
-								> Change Grade </button>";
+								
+							<button class='table-button' 								
+								name='grade_homework' value='$homework_id' >
+								Change </button>";
 		}
 		
 		$row['data'] = "<td>$assignment_name</td>
 			<td>$tutorial_lab_id</td><td>$student_id</td>
 			<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
 			<td>$date_due</td><td>$date_submitted</td>
-			<td class='center'>$points_possible</td>
-			<td class='center' id='points_$homework_id' >$points_earned</td>
-			<td class='center' id='change_$homework_id' >$change_grade</td>
+			<td class='center' id='points_possible_$homework_id'>$points_possible</td>
+			<td class='center' id='points_earned_$homework_id' >$points_earned</td>
+			<td class='center' id='change_grade_$homework_id' >$change_grade</td>
 			<td class='center' id='percent_$homework_id' >$percent</td>
 			<td>$hours hours</td>				
 			<td>$summary_link</td>
@@ -516,12 +526,11 @@ class AssignmentTables
 		
 		if(!isset($date_submitted))
 		{
-			$responseFunction = "submitHomework";
-			$actionType = "submit_homework";
+			$actionID = $this->submitHomework;
 			
 			$date_submitted = "<button type='button' class='table-button' 								
 								name='submit_homework' value='$homework_id' 								
-								onclick='submitHomework($homework_id);' >
+								onclick='homeworkActions($homework_id, $actionID);' >
 								Submit</button>";
 		}
 		else

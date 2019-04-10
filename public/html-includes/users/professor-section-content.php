@@ -1,9 +1,9 @@
 <?php
 
-if($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-	$sectionAction->processTableForms($mdb_control);
-}		
+//if($_SERVER['REQUEST_METHOD'] == 'POST')
+//{
+//	$sectionAction->processTableForms($mdb_control);
+//}	
 	
 echo "<div>";
 

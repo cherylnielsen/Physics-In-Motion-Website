@@ -6,44 +6,20 @@ class SectionAction
 	
 	public function processTableForms($mdb_control)
 	{
-		$result = 0;
+		$result;
 		
 		if(isset($_POST['submit_homework']))
 		{
-			$mdb_control = new DatabaseControllerFactory();	
 			$homework_id = $_POST['submit_homework'];
-			$result = $this->submitHomework($homework_id, $mdb_control);
+			$result = $this->submitHomework($homework_id, $mdb_control);	
 		}
 
-		return $result;
-			
-	}
-		
-		
-		
-		
-		/**
-		else
-		{
-			echo "post is not set , ";
-		}
-		
-		
 		if(isset($_POST['grade_homework']))
 		{
 			$homework_id = $_POST['grade_homework'];
 			$grade = $_POST["grade_$homework_id"]; 
 			$result = $this->gradeHomework($homework_id, $grade, $mdb_control);
-		}		
-		
-
-		if(isset($_POST['change_grade']))
-		{
-			$homework_id = $_POST['change_grade'];
-			$grade = $_POST["change_grade_$homework_id"]; 
-			$result = $this->gradeHomework($homework_id, $grade, $mdb_control);
 		}	
-
 		
 		if(isset($_POST['delete_assignment']))
 		{
@@ -51,11 +27,9 @@ class SectionAction
 			$result = $this->deleteAssignment($assignment_id, $mdb_control);
 		}
 		
-		return $result;
+		return $result;		
+	}
 		
-		**/
-		
-	
 	
 	public function submitHomework($homework_id, $mdb_control)
 	{
@@ -75,7 +49,7 @@ class SectionAction
 			return $datetime2; 
 		}
 		
-		return 0;
+		return -1;
 	}
 	
 	
@@ -96,20 +70,20 @@ class SectionAction
 			$success = $hmwk_control->updateAttribute($homework, "was_graded"); 
 		}
 		
-		if($success) 
-		{ 
-			$gradeString = "points_earned=" . $points_earned . "&was_graded=1";
-			return $gradeString; 
-		}
+		if(!$success) { return -1; }
 		
-		return 0;
+		$homework = new Homework_View();	
+		$hmwk_control = $mdb_control->getController("homework_view");
+		$points_possible = $homework->get_points_possible();
+		$percent = ($points_earned * 100.0)/$points_possible;
+		
+		return $percent;		
 	}
 	
 	
 	public function deleteAssignment($assignment_id, $mdb_control)
 	{
 		$success = true;
-		$filesDeleted = 0;
 		$assignment = new Assignment();
 		$fileAction = new FileAction();
 		
@@ -124,12 +98,14 @@ class SectionAction
 			if(!is_null($attachments) && (count($attachments) > 0))
 			{
 				$filepath = $attachments[0]->get_filepath();
-				$fileAction->deleteDirectory($filepath);
+				$url = '../../public/' . $filepath;
 				
 				for($i = 0; $i < count($attachments); $i++)
 				{	
 					$attachment_controller->deleteFromDatabase($attachments[$i]);
-				}				
+				}	
+				
+				$fileAction->deleteDirectory($url);
 			}
 			
 			// This will fail automatically if any of the attachments could not be deleted 
@@ -137,7 +113,10 @@ class SectionAction
 			$success = $assignment_controller->deleteFromDatabase($assignment);
 		}
 		
-		return $success;
+		if(!$success) { return -1; }
+		
+		return 100;
+		
 	}
 	
 	
