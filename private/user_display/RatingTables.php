@@ -1,6 +1,6 @@
 <?php
 
-class RatingDisplay
+class RatingTables
 {
 	public function __construct() {}
 	

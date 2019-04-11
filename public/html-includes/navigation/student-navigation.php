@@ -16,8 +16,8 @@ if(isset($_SESSION["student_id"]) && isset($_SESSION["member_type"]))
 	<?php
 	
 		$section_list = array();
-		$section_list = $sectionDisplay->getSectionList_ByStudent($student_id, $mdb_control);
-		$short_list = $sectionDisplay->getSectionShortList($section_list, $mdb_control, "student");
+		$section_list = $sectionTables->getSectionList_ByStudent($student_id, $mdb_control);
+		$short_list = $sectionTables->getSectionShortList($section_list, $mdb_control, "student");
 		$num_sections = count($short_list);
 		
 		if($num_sections == 0)
@@ -39,24 +39,32 @@ if(isset($_SESSION["student_id"]) && isset($_SESSION["member_type"]))
 			if(isset($_GET["section_id"]))
 			{
 			?>	
-				<h2 class='navigation'>Show / Hide</h2>
-				<button class='navigation' onclick='showAssignmentList();'>Assignment List</button>
-				<button class='navigation' onclick='showHomeworkList();'>Homework List</button>					
+				<h2 class='navigation'>Show/Hide Tables</h2>
+				
+				<button class='navigation' 
+					onclick='showTable("assignmentDiv");'>Assignment List</button>
+				<button class='navigation' 
+					onclick='showTable("homeworkDiv");'>Homework List</button>					
 			<?php
 			}
 			
 			if(isset($_GET["notices"]))
 			{
 			?>
-				<h2 class='navigation'>Show / Hide</h2>
-				<button class='navigation' onclick='showSectionNotices();'>Section Notices</button>
-				<button class='navigation' onclick='showMemberInBoxNotices();'>Member In Box</button>
-				<button class='navigation' onclick='showMemberSentNotices();'>Member Sent</button>
+				<h2 class='navigation'>Show/Hide Tables</h2>
+				
+				<button class='navigation' 
+					onclick='showTable("sectionNoticeDiv");'>Section Notices</button>
+				<button class='navigation' 
+					onclick='showTable("memberInBoxNoticeDiv");'>Member In Box</button>
+				<button class='navigation' 
+					onclick='showTable("memberSentNoticeDiv");'>Member Sent</button>
 			<?php
 			}
 		}	
 ?>
 		<h2 class='navigation'>Actions</h2>
+		
 		<a href="login-register-page.php?form_type=changelogin" 
 			class="navigation">Change Password</a>
 		<a href="student-home-page.php?notices=page" 

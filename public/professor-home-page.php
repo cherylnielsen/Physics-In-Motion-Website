@@ -1,3 +1,17 @@
+<?php
+
+require_once('../private/DatabaseControllerFactory.php');
+require_once('../private/member_page_include_list.php');
+
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+	$mdb_control = new DatabaseControllerFactory();
+	$sectionAction->processTableForms($mdb_control);
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +24,7 @@
 		
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
-		require_once('../private/member_page_include_list.php');
+		
 	?>
 
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
@@ -43,7 +57,7 @@
 
 <section class="main-content">
 <?php 
-	echo "<h1 class=welcome>Welcome Professor $first_name $last_name!</h1>";
+	echo "<h1 class='welcome'>Welcome Professor $first_name $last_name!</h1>";
 	
 	if(isset($_GET["section_id"]))
 	{

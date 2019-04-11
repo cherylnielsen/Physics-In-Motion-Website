@@ -1,14 +1,17 @@
 <?php
 
-class AssignmentDisplay
+class AssignmentTables
 {
-	private $displayUtility;
-	private $sectionDisplay;
+	private $sectionTables;
+	private $submitHomework = 1;
+	private $gradeHomework = 2;
+	private $changeGrade = 3;
+	private $deleteAssignment = 4;
+	
 	
 	public function __construct() 
 	{
-		$this->displayUtility = new DisplayUtility();
-		$this->sectionDisplay = new SectionDisplay();
+		$this->sectionTables = new SectionTables();
 	}
 
 
@@ -20,8 +23,8 @@ class AssignmentDisplay
 		$row = array();
 		
 		echo "<form id='assignmentTableForm' method='POST'>
-				<table class='summary assignments'><thead>
-					<tr><th colspan='15'><h2>Assignments</h2></th></tr>";
+				<table class='summary assignments'>
+					<tr><th colspan='15'><h2>Section $section_id Assignments</h2></th></tr>";
 					
 		if($num_assignments > 0)
 		{						
@@ -29,46 +32,44 @@ class AssignmentDisplay
 			{
 				$date_assigned = $assignment_list[$i]->get_date_assigned();
 				$assigned = new DateTime($date_assigned);
-				$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
+				$date_assigned = date("D, m/d/y", strtotime($date_assigned));
 				$today = new DateTime("today");
 				
 				if($member_type === "professor")
 				{
+					$assignment_id = $assignment_list[$i]->get_assignment_id();
+					$row_id = "assignment_row_" . $assignment_id;
 					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], 
 										$member_type, $mdb_control);
+					if($i == 0) 
+					{ 
+						echo "<tr id='$row_id'>" . $row[0]['header'] . "</tr>"; 
+					}
+					
+					echo "<tr id='$row_id'>" . $row[$i]['data'] . "</tr>";
+					
 				}
 				else if(($member_type === "student") && (($today >= $assigned)))
 				{
 					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], 
 										$member_type, $mdb_control);
+										
+					if(($i == 0) && !empty($row))
+					{ 
+						echo "<tr>" . $row[0]['header'] . "</tr>"; 
+					}
+					
+					echo "<tr>" . $row[$i]['data'] . "</tr>";
 				}
 			} 
-			
-			
-			if(!empty($row)) 
-			{ 				
-				echo "<tr>" . $row[0]['header'] . "</tr></thead><tbody>";
-			
-				for($i = 0; $i < $num_assignments; $i++)
-				{
-					if(array_key_exists($i,$row))
-					{
-						echo "<tr>" . $row[$i]['data'] . "</tr>";
-					}
-				} 
-			}
-			else
-			{
-				echo "</thead><tbody><tr><td colspan='8'>No assignments for this section.</td></tr>";
-			}
-			
-		}
-		else
-		{
-			echo "</thead><tbody><tr><td colspan='8'>No assignments for this section.</td></tr>";
 		}
 		
-		echo "</tbody></table></form>";
+		if(($num_assignments == 0) || (empty($row))) 
+		{
+			echo "<tr><td colspan='8'>No assignments for this section.</td></tr>";
+		}
+		
+		echo "</table></form>";
 		
 	}
 	
@@ -82,12 +83,12 @@ class AssignmentDisplay
 		$header = "";
 		
 		echo "<form id='professorHmwkTableForm' method='POST'>
-				<table class='summary'><thead>
-					<tr><th colspan='18'><h2>Homework Submitted</h2></th></tr>";
+				<table class='summary'>
+					<tr><th colspan='18'><h2>Section $section_id Homework Submitted</h2></th></tr>";
 				
 		if($num_assignments === 0)
 		{
-			echo "</thead><tbody><tr><td colspan='18'>No assignments for this section.</td></tr>";
+			echo "<tr><td colspan='18'>No assignments for this section.</td></tr>";
 		}
 		
 		for($i = 0; $i < $num_assignments; $i++)
@@ -111,20 +112,22 @@ class AssignmentDisplay
 			{		
 				for($j = 0; $j < $num_homework; $j++)
 				{
+					$hmwk_id = $homework_list[$j]->get_homework_id();
+					$row_id = "homework_row_$hmwk_id";
 					$row[$j] = $this->displayProfessorHomeworkRow($homework_list[$j]);	
 					
 					if($j == 0) 
 					{ 
 						$header =  "<tr>" . $row[0]['header'] . "</tr>"; 
-						echo "$header</thead><tbody>"; 
+						echo "$header"; 
 					}	
 				
-					echo "<tr>" . $row[$j]['data'] . "</tr>";
+					echo "<tr id='$row_id'>" . $row[$j]['data'] . "</tr>";
 				} 
 			}
 		} 
 		
-		echo "</tbody></table></form>";
+		echo "</table></form>";
 	}
 
 
@@ -139,12 +142,12 @@ class AssignmentDisplay
 		$row = array();
 		
 		echo "<form id='studentHmwkTableForm' method='POST'>
-				<table class='summary'><thead>
-					<tr><th colspan='18'><h2>Homework</h2></th></tr>";
+				<table class='summary'>
+					<tr><th colspan='18'><h2>Section $section_id Homework</h2></th></tr>";
 				
 		if($num_assignments == 0  || $num_homework == 0)
 		{
-			echo "</thead><tbody><tr><td colspan='18'>No assignments for this section.</td></tr>";
+			echo "<tr><td colspan='18'>No assignments for this section.</td></tr>";
 		}
 		
 		for($i = 0; $i < $num_assignments; $i++)
@@ -154,18 +157,20 @@ class AssignmentDisplay
 			
 			if(!empty($homework))
 			{						
+				$hmwk_id = $homework->get_homework_id();
+				$row_id = "homework_row_$hmwk_id";
 				$row = $this->displayStudentHomeworkRow($homework);	
 				
 				if($i === 0)
 				{
-					echo "<tr>" . $row['header'] . "</tr></thead><tbody>";
+					echo "<tr>" . $row['header'] . "</tr>";
 				}
 				
-				echo "<tr>" . $row['data'] . "</tr>"; 
+				echo "<tr id='$row_id'>" . $row['data'] . "</tr>"; 
 			}
 		} 
 		
-		echo "</tbody></table></form>";
+		echo "</table></form>";
 	}
 	
 	
@@ -185,8 +190,8 @@ class AssignmentDisplay
 			$numDueSoon[$section_id] = $this->getAssignmentsDueSoon($assignment_list);
 		}
 		
-		$table_heading = "<table class='summary assignment-summary'><thead>
-				<tr><th colspan='10'><h2>Assignment Summary</h2></th></tr></thead><tbody>"; 	
+		$table_heading = "<table class='summary assignment-summary'>
+				<tr><th colspan='10'><h2>Assignment Summary</h2></th></tr>"; 	
 							
 		echo "$table_heading";		
 		
@@ -212,7 +217,7 @@ class AssignmentDisplay
 		echo "$table_heading";
 		echo "$row_24hr";
 		echo "$row_7day";		
-		echo "</tbody></table>";
+		echo "</table>";
 		
 	}	
 	
@@ -291,10 +296,10 @@ class AssignmentDisplay
 	{
 		$date_assigned = $assignment_view->get_date_assigned();
 		$assigned = new DateTime($date_assigned);
-		$date_assigned = $this->displayUtility->displayDateShort($date_assigned);
+		$date_assigned = date("D, m/d/y", strtotime($date_assigned));
 		$today = new DateTime("today");
 		$date_due = $assignment_view->get_date_due();
-		$date_due = $this->displayUtility->displayDateShort($date_due);
+		$date_due = date("D, m/d/y", strtotime($date_due));
 		
 		$assignment_id = $assignment_view->get_assignment_id();
 		$assignment_name = $assignment_view->get_assignment_name();
@@ -309,15 +314,14 @@ class AssignmentDisplay
 		
 		$row = array();
 		
-		$header = "<th colspan='2'>Section</th>
-					<th colspan='2'>Assignment</th>
+		$header = "<th>Assignment</th>
 					<th>Date Assigned</th><th>Date Due</th>
 					<th>Tutorial Lab</th><th>Points Possible</th>
 					<th>Attachments</th>";
 		
-		$data =  "<td>$section_id</td><td>$section_name</td>
-					<td>$assignment_id</td><td>$assignment_name</td>
-					<td>$date_assigned</td><td>$date_due</td>
+		$data =  "<td>$assignment_name</td>
+					<td>$date_assigned</td>
+					<td>$date_due</td>
 					<td>$lab_id&nbsp;:&nbsp;$lab_name <br>
 					<a href='templink.php' class='assignment_link'> Start Now </a></td>
 					<td>$points_possible Points</td>";
@@ -360,12 +364,16 @@ class AssignmentDisplay
 			}
 			else
 			{
+				$actionID = $this->deleteAssignment;
+				
 				$dataEdit = "<td>
 						<a href='$url' class='table-button' >
 						<span class='fa fa-pencil'>&nbsp; Edit</span></a>
-						<button class='table-button' name='delete_assignment'
-								value='$assignment_id'>
-						<span class='fa fa-remove red'>&nbsp; Delete</span>
+						
+						<button type='button' class='table-button' 
+							name='delete_assignment' value='$assignment_id' 
+							onclick='homeworkActions($assignment_id, $actionID);' >
+							<span class='fa fa-remove red'>&nbsp; Delete</span>
 						</button>
 					</td>"; 		
 			}		
@@ -380,20 +388,15 @@ class AssignmentDisplay
 	}
 	
 	
-	
 	public function displayProfessorHomeworkRow($homework_view)
 	{		
-		$date_submitted = $homework_view->get_date_submitted();
-		$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
 		$row = array();
 		$row['data'] = "";
 		
-		$row['header'] = "<th>Section ID</th><th colspan='2'>Assignment</th>
-				<th>Tutorial Lab ID</th><th colspan='2'>Student</th>
+		$row['header'] = "<th>Assignment</th><th>Tutorial Lab ID</th>
+				<th colspan='2'>Student</th><th>Date Due</th>
 				<th>Date Submitted</th><th>Points Possible</th><th colspan='2'>Points Earned</th>
 				<th>Percent</th><th>Hours</th><th>Summary</th><th>Homework Set</th>";
-		
-		$homework_id = $homework_view->get_homework_id();
 		
 		$student_id = $homework_view->get_student_id();
 		$student_first_name = $homework_view->get_student_first_name();
@@ -402,73 +405,86 @@ class AssignmentDisplay
 		$assignment_name = $homework_view->get_assignment_name();
 		$section_id = $homework_view->get_section_id();
 		$tutorial_lab_id = $homework_view->get_tutorial_lab_id();
+		
+		$homework_id = $homework_view->get_homework_id();
+		$date_submitted = $homework_view->get_date_submitted();
 			
-		if(isset($date_submitted))
-		{
-			$summary = $homework_view->get_lab_summary();		
-			$points_earned = $homework_view->get_points_earned();
-			$graded = $homework_view->get_was_graded();	
-			$hours = $homework_view->get_hours();
-			$points_possible = $homework_view->get_points_possible();
-			
-			$filepath = $homework_view->get_filepath();
-			$url = "$filepath/$summary";
-			$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
-			$homework_set = "homework_set_$homework_id.zip";
-			$url = "$filepath/$homework_set";
-			$homework_set_link = "<a href='$url' download 
-						class='assignment_link'>$homework_set</a>";
-						
-			if($graded & ($points_possible > 0))
-			{
-				$percent = (100.0 * $points_earned)/$points_possible;
-			}
-			else
-			{
-				$percent = " - ";
-			}
-			
-			if(!$graded)
-			{
-				$points_earned = "<input type='number' name='grade_$homework_id' 
-									class='table-input' min='0' max='$points_possible'>
-									<button class='table-button' name='grade_homework_id'
-									value='$homework_id'>Grade</button>";
-									
-				$change_grade = " ";
-			}			
-			else
-			{
-				$change_grade = "<input type='number' name='change_grade_$homework_id' 
-									class='table-input' min='0' max='$points_possible'>
-									<button class='table-button' name='change_grade_homework_id'
-									value='$homework_id'>Change Grade</button>";
-			}
-			
-			$row['data'] = "<td>$section_id</td>
-				<td>$assignment_id</td><td>$assignment_name</td>
-				<td>$tutorial_lab_id</td><td>$student_id</td>
-				<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
-				<td>$date_submitted</td>
-				<td class='center'>$points_possible</td>
-				<td class='center'>$points_earned</td>
-				<td class='center'>$change_grade</td>
-				<td class='center'>$percent</td>
-				<td>$hours hours</td>				
-				<td>$summary_link</td>
-				<td>$homework_set_link</td>";
-		}
-		else
+		if(!isset($date_submitted))
 		{			
-			$row['data'] = "<td>$section_id</td><td>$assignment_id</td>
-				<td>$assignment_name</td>
+			$row['data'] = "<td>$assignment_name</td>
 				<td>$tutorial_lab_id</td><td>$student_id</td>
 				<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
 				<td colspan='12'>Not Submitted</td>";
-		}	
-
-		return $row;
+				
+			return $row;
+		}		
+			
+		$date_submitted = date("D, m/d/y", strtotime($date_submitted));
 		
+		$points_earned = $homework_view->get_points_earned();
+		$graded = $homework_view->get_was_graded();	
+		$hours = $homework_view->get_hours();
+		$points_possible = $homework_view->get_points_possible();
+		$percent = " - ";
+		
+		$date_due = $homework_view->get_date_due();		
+		$date_due = date("D, m/d/y", strtotime($date_due));
+	
+		$filepath = $homework_view->get_filepath();
+		
+		$summary = $homework_view->get_lab_summary();
+		$url = "$filepath/$summary";
+		$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
+							
+		$homework_set = "homework_set.zip";
+		$url = "$filepath/$homework_set";
+		$homework_set_link = "<a href='$url' download class='assignment_link'>$homework_set</a>";
+		
+		if($graded & ($points_possible > 0))
+		{
+			$percent = (100.0 * $points_earned)/$points_possible;
+		}
+		
+		if(!$graded)
+		{
+			$actionID = $this->gradeHomework;
+			
+			$points_earned = "<input type='number' class='table-input' 
+								name='grade_$homework_id' 						
+								min='0' max='$points_possible' >
+								
+							<button class='table-button' 
+								name='grade_homework' value='$homework_id' >
+								Grade </button>";
+								
+			$change_grade = " ";
+		}			
+		else
+		{
+			$actionID = $this->changeGrade;
+			
+			$change_grade = "<input type='number' class='table-input' 
+								name='grade_$homework_id' id='grade_$homework_id' 
+								min='0' max='$points_possible' >
+								
+							<button class='table-button' 								
+								name='grade_homework' value='$homework_id' >
+								Change </button>";
+		}
+		
+		$row['data'] = "<td>$assignment_name</td>
+			<td>$tutorial_lab_id</td><td>$student_id</td>
+			<td>$student_first_name&nbsp;&nbsp;$student_last_name</td>
+			<td>$date_due</td><td>$date_submitted</td>
+			<td class='center' id='points_possible_$homework_id'>$points_possible</td>
+			<td class='center' id='points_earned_$homework_id' >$points_earned</td>
+			<td class='center' id='change_grade_$homework_id' >$change_grade</td>
+			<td class='center' id='percent_$homework_id' >$percent</td>
+			<td>$hours hours</td>				
+			<td>$summary_link</td>
+			<td>$homework_set_link</td>";		
+
+		return $row;		
 	}
 
 
@@ -477,8 +493,8 @@ class AssignmentDisplay
 		$row = array();
 		$row['data'] = "";
 		
-		$row['header'] = "<th>Section ID</th><th colspan='2'>Assignment</th>
-				<th>Tutorial Lab ID</th>
+		$row['header'] = "<th>Assignment</th>
+				<th>Tutorial Lab ID</th><th>Date Due</th>
 				<th>Date Submitted</th><th>Points Possible</th><th>Points Earned</th>
 				<th>Percent</th><th>Hours</th><th>Summary</th><th>Homework Set</th>";
 				
@@ -507,31 +523,37 @@ class AssignmentDisplay
 			$percent = " - ";
 		}
 		
-		$hours = $homework_view->get_hours();					
-		$date_submitted = $homework_view->get_date_submitted();		
+		$hours = $homework_view->get_hours();			
+		$date_submitted = $homework_view->get_date_submitted();	
+		$date_due = $homework_view->get_date_due();		
+		$date_due = date("D, m/d/y", strtotime($date_due));
 		
 		if(!isset($date_submitted))
 		{
-			$date_submitted = "<button class='table-button' name='submit_homework'
-								value='$homework_id'>Submit Homework</button>";
+			$actionID = $this->submitHomework;
+			
+			$date_submitted = "<button type='button' class='table-button' 								
+								name='submit_homework' value='$homework_id' 								
+								onclick='homeworkActions($homework_id, $actionID);' >
+								Submit</button>";
 		}
 		else
 		{
-			$date_submitted = $this->displayUtility->displayDateShort($date_submitted);
+			$date_submitted = date("D, m/d/y", strtotime($date_submitted));
 		}
 			
 		$filepath = $homework_view->get_filepath();
 		$url = "$filepath/$summary";
 		$summary_link = "<a href='$url' download class='assignment_link'>$summary</a>";
-		$homework_set = "homework_set_$homework_id.zip";
+		$homework_set = "homework_set.zip";
 		$url = "$filepath/$homework_set";
-		$homework_set_link = "<a href='$url' download 
-						class='assignment_link'>$homework_set</a>";
+		$homework_set_link = "<a href='$url' download class='assignment_link'>$homework_set</a>";
 						
-		$row['data'] = "<td>$section_id</td>
-			<td>$assignment_id</td><td>$assignment_name</td>
+		$row['data'] = "<td>$assignment_name</td>
 			<td>$tutorial_lab_id</td>
-			<td>$date_submitted</td><td class='center'>$points_possible</td>
+			<td>$date_due</td>
+			<td id='submit_$homework_id' >$date_submitted</td>
+			<td class='center'>$points_possible</td>
 			<td class='center'>$points_earned</td>
 			<td class='center'>$percent</td>
 			<td>$hours hours</td>

@@ -1,32 +1,30 @@
-
-<div id='sectionNoticeDiv' class='overflow'>
 <?php
+
+echo "<div id='sectionNoticeDiv' class='overflow'>";
+
 	// List of section notices 
 	$section_list = array();
-	$section_list = $sectionDisplay->getSectionList_ByProfessor($professor_id, $mdb_control);
-	$noticeDisplay->displaySectionNoticeTable($section_list, $mdb_control);
-?>
-</div>
+	$section_list = $sectionTables->getSectionList_ByProfessor($professor_id, $mdb_control);
+	$noticeTables->displaySectionNoticeTable($section_list, $mdb_control);
 
-<div id='memberInBoxNoticeDiv' class='overflow'>
-<?php
+echo "</div>";
+echo "<div id='memberInBoxNoticeDiv' class='overflow'>";
+
 	// List of member notices received 
 	$member_notice_list = array();
-	$member_notice_list = $noticeDisplay->getMemberInBoxNotices($professor_id, $mdb_control);
-	$noticeDisplay->displayMemberInBoxNoticeTable($member_notice_list, $mdb_control);
-?>
-</div>
+	$member_notice_list = $noticeTables->getMemberInBoxNotices($professor_id, $mdb_control);
+	$noticeTables->displayMemberInBoxNoticeTable($member_notice_list, $mdb_control);
 
-<div id='memberSentNoticeDiv' class='overflow'>
-<?php
+echo "</div>";
+echo "<div id='memberSentNoticeDiv' class='overflow'>";
+
 	// List of member notices sent 
 	$member_notice_list = array();
-	$member_notice_list = $noticeDisplay->getMemberSentNotices($professor_id, $mdb_control);
-	$noticeDisplay->displayMemberSentNoticeTable($member_notice_list, $mdb_control);
+	$member_notice_list = $noticeTables->getMemberSentNotices($professor_id, $mdb_control);
+	$noticeTables->displayMemberSentNoticeTable($member_notice_list, $mdb_control);
+
+echo "</div>";
+echo "<a id='bottom' href='#top'>return to top</a>";
+
 ?>
-</div>
-
-
-<a id="bottom" href="#top">return to top</a>
-
 

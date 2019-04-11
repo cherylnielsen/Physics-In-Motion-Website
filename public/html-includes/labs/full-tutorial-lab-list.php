@@ -1,8 +1,8 @@
 <?php
 
-include('../private/user_display/RatingDisplay.php');
+include('../private/user_display/RatingTables.php');
 	
-$ratingDisplay = new RatingDisplay();
+$ratingTables = new RatingTables();
 $labs = array();
 $labs = $mdb_control->getController("tutorial_lab")->getAllData();
 $length_labs = count($labs);
@@ -52,11 +52,11 @@ if((!is_null($labs)) AND ($length_labs > 0))
 		
 		echo '<div class="card-ratings">';	
 		
-		$rating_info = $ratingDisplay->getAveLabRating($lab->get_tutorial_lab_id(), $mdb_control);
+		$rating_info = $ratingTables->getAveLabRating($lab->get_tutorial_lab_id(), $mdb_control);
 		
 		if($rating_info['num'] > 0) 
 		{ 
-			$ratingDisplay->outputStars($rating_info);			
+			$ratingTables->outputStars($rating_info);			
 		}	
 		else
 		{

@@ -39,12 +39,11 @@
 
 	include('html-includes/template/header.php'); 
 	include('html-includes/navigation/main-navigation-and-quote.php');
-	include('html-includes/navigation/admin-navigation.php');
 ?>
 
 <section class="main-content">
 <?php 
-	echo "<h1 class=welcome>Welcome $first_name $last_name!</h1>";
+	echo "<h1 class='welcome'>Welcome $first_name $last_name!</h1>";
 	
 	if(isset($_GET["section"]))
 	{

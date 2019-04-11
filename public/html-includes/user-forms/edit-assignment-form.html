@@ -6,7 +6,7 @@
 	$assignment_id = $assignmentAction->getAssignmentID();
 
 	$tutorial_lab_list = array();
-	$tutorial_lab_list = $displayUtility->getListTutorialLabIDNames($mdb_control);
+	$tutorial_lab_list = $dataUtility->getListTutorialLabIDNames($mdb_control);
 
 	$controller = $mdb_control->getController("assignment_view");
 	$assignment_view = $controller->getByPrimaryKeys("assignment_id", 

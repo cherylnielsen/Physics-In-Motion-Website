@@ -193,6 +193,28 @@ class QuoteController extends DatabaseController {
 	}
 	
 
+	/***
+	Queries the database for an array of all rows in the database table.
+	Output: $dataArray = the array of object models created from each result row.
+	***/
+	public function getAllSortByDate()
+	{
+		$table = "";
+		$table = $this->getTableName();
+		$db_connection = get_db_connection();
+		$dataArray = array();
+		
+		$query = "select * from $table order by year_posted, month_posted";		
+		$result = mysqli_query($db_connection, $query);
+		$dataArray = $this->getData($result, $db_connection);
+		mysqli_close($db_connection);
+		
+		return $dataArray;
+	}
+	
+	
+	
+	
 }
 
 ?>

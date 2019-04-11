@@ -8,23 +8,27 @@ section.main-content {
 }
 
 h1.logo-statement {
-	padding-top: 0.5em;
+	padding: 0.5em 0;
 }
 
 h1.quotes {
 	padding: 0.5em;
 	margin: 0;
-	border-bottom: 2px solid #03AA0D;
+	border: 2px solid #03AA0D;
 	border-radius: 10px;
 	background-color: #A7DAFA;
 }
 
 section.quotes {
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
+	
 	text-align: center;
 }
 
 article.quotes {
 	padding-top: 1.5em;
+}
+
+hr.quotes {
+	width: 50%;
+	margin-left: 25%;
 }

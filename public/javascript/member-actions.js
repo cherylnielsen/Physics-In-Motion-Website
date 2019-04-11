@@ -1,117 +1,106 @@
 /* JavaScript for member pages. */
 
+// for use with the AJAX function below
+const actions = {
+    SUBMIT_HOMEWORK: 1,
+    GRADE_HOMEWORK: 2,
+    CHANGE_GRADE: 3,
+    DELETE_ASSIGNMENT: 4
+}
+
+
+
 function showSelectedNotice(rowID)
 {
+	// get the row where the notice is to be show
 	var row = document.getElementById(rowID);
 	
+	// toggle the row display on or off
 	if( row.style.display == "none" )
 	{
 		row.style.display = "table-row";
+		row.scrollIntoView({behavior: "smooth"});
 	}
 	else
 	{
 		row.style.display = "none";
 	}
-
 }
 		
 		
-function showStudentList()
+function showTable(tableID)
 {
-	var listDiv = document.getElementById("studentListDiv");
+	// get the div containing the table
+	var tableDiv = document.getElementById(tableID);
 	
-	if( listDiv.style.display == "none" )
+	// toggle the div table display on or off
+	if( tableDiv.style.display == "none" )
 	{
-		listDiv.style.display = "block";
+		tableDiv.style.display = "block";
+		tableDiv.scrollIntoView({behavior: "smooth"});
 	}
 	else
 	{
-		listDiv.style.display = "none";
+		tableDiv.style.display = "none";
 	}
 }
 
 
-function showAssignmentList()
+/**
+	AJAX with POST
+	set dataString as the data to be sent in string format
+	set url as the file to process the request on the server
+	set request type as POST
+	set request header as www form data
+	send the request and the POST data
+	This ONLY works in the exact order of: 
+	new xhttp request, onready function, open, set header, send.
+**/	
+function homeworkActions(item_id, action)
 {
-	var listDiv = document.getElementById("assignmentListDiv");
+	var xhttp = new XMLHttpRequest();
 	
-	if( listDiv.style.display == "none" )
+	// anonymous function to handle the http response
+	xhttp.onreadystatechange = function() 
 	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-function showHomeworkList()
-{
-	var listDiv = document.getElementById("homeworkListDiv");
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			if(this.responseText != -1)
+			{
+				switch(action)
+				{
+					case actions.SUBMIT_HOMEWORK:
+						var cellID = "submit_" + item_id;
+						document.getElementById(cellID).innerHTML = this.responseText;
+					break;
+					
+					case actions.DELETE_ASSIGNMENT:
+						var rowID = "assignment_" + item_id;
+						document.getElementById(rowID).style.display = "none";
+					break;
+				}
+			}
+		}
+	};
 	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-function showSectionNotices()
-{
-	var listDiv = document.getElementById("sectionNoticeDiv");
+	var dataString;
 	
-	if( listDiv.style.display == "none" )
+	switch(action)
 	{
-		listDiv.style.display = "block";
+		case actions.SUBMIT_HOMEWORK:
+			dataString = "submit_homework=" + item_id;
+		break;
+		
+		case actions.DELETE_ASSIGNMENT:
+			var dataString = "delete_assignment=" + item_id;
+		break;
 	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-function showMemberInBoxNotices()
-{
-	var listDiv = document.getElementById("memberInBoxNoticeDiv");
 	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
+	var url = "javascript/ActionUtility.php";
+	xhttp.open("POST", url, true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send(dataString);
+
 }
-
-
-function showMemberSentNotices()
-{
-	var listDiv = document.getElementById("memberSentNoticeDiv");
-	
-	if( listDiv.style.display == "none" )
-	{
-		listDiv.style.display = "block";
-	}
-	else
-	{
-		listDiv.style.display = "none";
-	}
-}
-
-
-
-
-
-
-
-
-
 
 

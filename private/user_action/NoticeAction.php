@@ -189,30 +189,6 @@ class NoticeAction
 	}
 	
 	
-	public function getSectionList($displayUtility, $sectionDisplay, $mdb_control)
-	{
-		$sectionList = "";
-		
-		switch($_SESSION['member_type'])
-		{
-			case "professor":
-				$sectionList = $displayUtility->getListSectionIDNames_ByProfessor(
-						$sectionDisplay, $_SESSION['professor_id'], $mdb_control);	
-				break;
-			case "student":
-				$sectionList = $displayUtility->getListSectionIDNames_ByStudent(
-						$sectionDisplay, $_SESSION['student_id'], $mdb_control);
-				break;
-			case "administrator":
-				$sectionList = $displayUtility->getListSectionIDNames_All($mdb_control);
-				break;
-		}
-			
-		return $sectionList;
-		
-	}
-	
-	
 	public function getToSectionID()
 	{
 		$to_section_id = "";

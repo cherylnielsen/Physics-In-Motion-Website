@@ -1,39 +1,30 @@
 <?php
 
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		if(isset($_POST['submit_homework']))
-		{
-			$hmwk_id = $_POST['submit_homework'];
-			$sectionAction->submitHomework($hmwk_id, $mdb_control);
-		}		
-	}
-		
-?>
+echo "<input type='hidden' id='section' name='section' value='$section_id' >";
+echo "<div>";
 
-<div>
-<?php
 	// Welcome headings
-	$sectionDisplay->displaySectionWelcome($section_id, $mdb_control);	
-?>	
-</div>
+	$welcome = $sectionTables->getSectionWelcome($section_id, $mdb_control);	
 
-<div id='assignmentListDiv' class='overflow'>
-<?php
+echo "$welcome</div>";
+
+echo "<div id='assignmentDiv' class='overflow'>";
+
 	// List of assignments for this section
-	$assignmentDisplay->displaySectionAssignments($section_id, $mdb_control, "student");
-?>
-</div>
+	$assignmentTables->displaySectionAssignments($section_id, $mdb_control, "student");
 
-<div id='homeworkListDiv' class='overflow'>
-<?php
+echo "</div>";
+echo "<div id='demo'> </div>";
+echo "<div id='homeworkDiv' class='overflow'>";
+
 	// List of homework submitted for this section with links to view or download
-	$assignmentDisplay->displayStudentHomework($section_id, $student_id, $mdb_control);
+	$assignmentTables->displayStudentHomework($section_id, $student_id, $mdb_control);
+
+echo "</div>";
+
+echo "<a id='bottom' href='#top'>return to top</a>";
+
 ?>
-</div>
-
-<a id="bottom" href="#top">return to top</a>
-
 
 
 

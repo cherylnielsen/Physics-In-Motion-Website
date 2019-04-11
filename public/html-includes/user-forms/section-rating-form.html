@@ -14,8 +14,8 @@
 	//$flag_for_review = false;	
 	
 	$section_list = array();
-	$section_list = $displayUtility->getListSectionsNeedingReview_ByStudent(
-							$sectionDisplay, $student_id, $mdb_control);
+	$section_list = $ratingAction->getListSectionsNeedingReview_ByStudent(
+									$student_id, $mdb_control);
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";	
 	

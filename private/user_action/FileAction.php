@@ -127,6 +127,17 @@ class FileAction
 	}
 	
 	
+	public function deleteFile($uploads_dir, $filename)
+	{	
+		$full_filename = "$uploads_dir/$filename";
+		
+		if(is_file($full_filename))
+		{
+			unlink($full_filename);
+		}
+	}
+	
+	
 	public function deleteDirectory($uploads_dir)
 	{	
 		// get all the file names in that directory
@@ -143,15 +154,18 @@ class FileAction
 	}
 	
 	
-	public function deleteFile($uploads_dir, $filename)
+	public function deleteDirectoryIfEmpty($uploads_dir)
 	{	
-		$full_filename = "$uploads_dir/$filename";
-		
-		if(is_file($full_filename))
+		$fullpath = $uploads_dir . "/*";
+		// get all the file names in that directory
+		// if list returns false or empty array then delete directory
+		if(($files = glob($fullpath)) || (count($files) == 0))
 		{
-			unlink($full_filename);
-		}
+			rmdir($uploads_dir);
+		} 
+		
 	}
+	
 	
 }
 

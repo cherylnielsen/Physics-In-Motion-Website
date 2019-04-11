@@ -9,14 +9,14 @@ class Homework_View extends Homework {
 	private $assignment_name; 
 	private $tutorial_lab_id; 
 	private $points_possible;
-	
+	private $date_due;
 	
 	public function __construct() {}
 	
 	public function initializeView($homework_id, $section_id, $assignment_id, 
 								$assignment_name, $tutorial_lab_id, $student_id, 
 								$lab_summary, $lab_data, $graphs, $math, $hints, $chat_session,
-								$date_submitted, $filepath, 
+								$date_due, $date_submitted, $filepath, 
 								$student_first_name, $student_last_name, $school_name,
 								$points_possible,
 								$points_earned = 0, $was_graded = false, $hours = 0)
@@ -31,6 +31,7 @@ class Homework_View extends Homework {
 		$this->assignment_name = $assignment_name; 
 		$this->tutorial_lab_id = $tutorial_lab_id; 
 		$this->points_possible = $points_possible; 
+		$this->date_due = $date_due;
 	}
 	
 	public function get_student_first_name()
@@ -91,6 +92,16 @@ class Homework_View extends Homework {
 	public function set_points_possible($points_possible)
 	{
 		$this->points_possible = $points_possible;
+	}
+	
+	public function get_date_due()
+	{
+		return $this->date_due;
+	}
+
+	public function set_date_due($date_due)
+	{
+		$this->date_due = $date_due;
 	}
 	
 }
