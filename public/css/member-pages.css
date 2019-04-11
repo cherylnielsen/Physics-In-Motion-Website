@@ -35,7 +35,7 @@ a.assignment_link, a.notice_link {
 div.overflow {
 	overflow: auto;
 	margin: 30px 0;
-	max-height: 500px;
+	max-height: 600px;
 }
 
 table {

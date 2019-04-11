@@ -1,11 +1,14 @@
 /* JavaScript for member pages. */
 
+// for use with the AJAX function below
 const actions = {
     SUBMIT_HOMEWORK: 1,
     GRADE_HOMEWORK: 2,
     CHANGE_GRADE: 3,
     DELETE_ASSIGNMENT: 4
 }
+
+
 
 function showSelectedNotice(rowID)
 {
@@ -42,7 +45,7 @@ function showTable(tableID)
 	}
 }
 
- 
+
 /**
 	AJAX with POST
 	set dataString as the data to be sent in string format

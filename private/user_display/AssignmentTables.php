@@ -38,12 +38,12 @@ class AssignmentTables
 				if($member_type === "professor")
 				{
 					$assignment_id = $assignment_list[$i]->get_assignment_id();
-					$row_id = "assignment_" . $assignment_id;
+					$row_id = "assignment_row_" . $assignment_id;
 					$row[$i] = $this->displayAssignmentRow($assignment_list[$i], 
 										$member_type, $mdb_control);
 					if($i == 0) 
 					{ 
-						echo "<tr>" . $row[0]['header'] . "</tr>"; 
+						echo "<tr id='$row_id'>" . $row[0]['header'] . "</tr>"; 
 					}
 					
 					echo "<tr id='$row_id'>" . $row[$i]['data'] . "</tr>";
@@ -112,6 +112,8 @@ class AssignmentTables
 			{		
 				for($j = 0; $j < $num_homework; $j++)
 				{
+					$hmwk_id = $homework_list[$j]->get_homework_id();
+					$row_id = "homework_row_$hmwk_id";
 					$row[$j] = $this->displayProfessorHomeworkRow($homework_list[$j]);	
 					
 					if($j == 0) 
@@ -120,7 +122,7 @@ class AssignmentTables
 						echo "$header"; 
 					}	
 				
-					echo "<tr>" . $row[$j]['data'] . "</tr>";
+					echo "<tr id='$row_id'>" . $row[$j]['data'] . "</tr>";
 				} 
 			}
 		} 
@@ -155,6 +157,8 @@ class AssignmentTables
 			
 			if(!empty($homework))
 			{						
+				$hmwk_id = $homework->get_homework_id();
+				$row_id = "homework_row_$hmwk_id";
 				$row = $this->displayStudentHomeworkRow($homework);	
 				
 				if($i === 0)
@@ -162,7 +166,7 @@ class AssignmentTables
 					echo "<tr>" . $row['header'] . "</tr>";
 				}
 				
-				echo "<tr>" . $row['data'] . "</tr>"; 
+				echo "<tr id='$row_id'>" . $row['data'] . "</tr>"; 
 			}
 		} 
 		

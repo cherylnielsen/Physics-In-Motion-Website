@@ -5,29 +5,35 @@ class SectionAction
 	public function __construct() {}
 	
 	public function processTableForms($mdb_control)
-	{
-		$result;
-		
+	{		
 		if(isset($_POST['submit_homework']))
 		{
 			$homework_id = $_POST['submit_homework'];
-			$result = $this->submitHomework($homework_id, $mdb_control);	
+			$result = $this->submitHomework($homework_id, $mdb_control);
+			return $result;			
 		}
 
-		if(isset($_POST['grade_homework']))
-		{
-			$homework_id = $_POST['grade_homework'];
-			$grade = $_POST["grade_$homework_id"]; 
-			$result = $this->gradeHomework($homework_id, $grade, $mdb_control);
-		}	
-		
 		if(isset($_POST['delete_assignment']))
 		{
 			$assignment_id = $_POST['delete_assignment'];
 			$result = $this->deleteAssignment($assignment_id, $mdb_control);
+			return $result;
 		}
 		
-		return $result;		
+		if(isset($_POST['grade_homework']))
+		{
+			$homework_id = $_POST['grade_homework'];
+			$grade = $_POST["grade_$homework_id"]; 
+			$row_id = "homework_row_$homework_id";
+			$section = $_GET['section_id'];
+			$success = $this->gradeHomework($homework_id, $grade, $mdb_control);
+			$returnURL = "professor-home-page.php?section_id=$section#";
+			$returnURL .= $row_id;
+			
+			header("Location: $returnURL");
+			exit();			
+		}	
+
 	}
 		
 	
@@ -70,14 +76,8 @@ class SectionAction
 			$success = $hmwk_control->updateAttribute($homework, "was_graded"); 
 		}
 		
-		if(!$success) { return -1; }
-		
-		$homework = new Homework_View();	
-		$hmwk_control = $mdb_control->getController("homework_view");
-		$points_possible = $homework->get_points_possible();
-		$percent = ($points_earned * 100.0)/$points_possible;
-		
-		return $percent;		
+		return $success;
+			
 	}
 	
 	
@@ -115,9 +115,11 @@ class SectionAction
 		
 		if(!$success) { return -1; }
 		
-		return 100;
+		return "ok";
 		
 	}
+	
+	
 	
 	
 }

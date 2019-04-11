@@ -38,9 +38,6 @@ function clearText()
 }
 
 
-
-
-
 /* JavaScript for implementing a 5 star rating system by on click, 
 on mouse over, and on mouse out, where start = int values 1,2,3,4,5. */
 

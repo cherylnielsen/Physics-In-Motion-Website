@@ -1,6 +1,6 @@
 <?php
 
-
+echo "<input type='hidden' id='section' name='section' value='$section_id' >";
 echo "<div>";
 
 	// Welcome headings

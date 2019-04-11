@@ -111,6 +111,8 @@ class AssignmentAction
 					$controller->deleteFromDatabase($attached_files[0]);
 				}
 			}
+			
+			$fileActions->deleteDirectoryIfEmpty($uploads_dir);
 		}
 		
 		

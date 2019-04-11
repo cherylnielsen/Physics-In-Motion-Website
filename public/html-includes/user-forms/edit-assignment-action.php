@@ -14,7 +14,13 @@
 		$section_id = $_GET['section_id']; 
 		$returnURL = "professor-home-page.php?section_id=$section_id";
 	}
-		
+	
+	if (isset($_POST['assignment_id']))
+	{
+		$assignment_id = $_POST['assignment_id']; 
+		$row_id = "assignment_row_" . $assignment_id;
+		$returnURL .= "#$row_id";
+	}
 	
 	
 

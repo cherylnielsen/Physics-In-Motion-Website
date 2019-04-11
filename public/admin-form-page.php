@@ -25,7 +25,7 @@
 	
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/member-forms.css" rel="stylesheet" type="text/css" media="screen">
-	<script src="javascript/member-actions.js" ></script>
+	<script src="javascript/member-form.js" ></script>
 	
 </head>
 <body>

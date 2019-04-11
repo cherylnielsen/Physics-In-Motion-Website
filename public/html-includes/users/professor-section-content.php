@@ -1,10 +1,9 @@
 <?php
 
-//if($_SERVER['REQUEST_METHOD'] == 'POST')
-//{
-//	$sectionAction->processTableForms($mdb_control);
-//}	
 	
+	
+echo "<input type='hidden' id='section' name='section' value='$section_id' >";
+
 echo "<div>";
 
 	// Welcome headings
