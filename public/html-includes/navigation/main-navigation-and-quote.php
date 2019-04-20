@@ -3,20 +3,30 @@
 	<nav class="navigation">	
 		<h2 class='navigation main-nav'>Main Navigation</h2>
 		
-		<a id="home_pg_link" href="index.php" class="navigation">Home Page</a>		
+		<a href="index.php" class="navigation">Home Page</a>		
 		
-		<a id="labs_pg_link" href="full-tutorial-labs-page.php" 
+		<a href="full-tutorial-labs-page.php" 
 				class="navigation">Tutorial Labs</a>		
 						
-		<a id="student_pg_link" href="student-home-page.php" 
+		<a href="student-home-page.php" 
 				class="navigation">Student Pages</a>				
 			
-		<a id="professor_pg_link" href="professor-home-page.php" 
-				class="navigation">Professor Pages</a>						
+		<a href="professor-home-page.php" 
+				class="navigation">Professor Pages</a>	
+
+		<?php
 		
-		<?php	include('html-includes/navigation/professor-navigation.php');  ?>
-		<?php	include('html-includes/navigation/student-navigation.php');	 ?>
-		<?php	include('html-includes/navigation/admin-navigation.php');  ?>	
+		if(isset($_SESSION['administrator_id']) && $_SESSION['admin_type'])
+		{		
+			echo "<a href='admin-home-page.php' 
+					class='navigation'>Administration Pages</a>";
+		}
+		
+		include('html-includes/navigation/admin-navigation.php');
+		include('html-includes/navigation/professor-navigation.php');  
+		include('html-includes/navigation/student-navigation.php');	 
+		
+		?>	
 		
 	</nav>	
 	

@@ -11,10 +11,13 @@
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
+		require_once('../private/admin_action/AdministrativeActions.php');
 	?>
 	
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/admin-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
+	
 	
 </head>
 <body>
@@ -45,17 +48,13 @@
 <?php 
 	echo "<h1 class='welcome'>Welcome $first_name $last_name!</h1>";
 	
-	if(isset($_GET["section"]))
+	if(isset($_GET["notices"]))
 	{
-		include('html-includes/users/admin-section-content.php');
-	}
-	else if(isset($_GET["notices"]))
-	{
-		include('html-includes/users/admin-notice-content.php');
+		include('html-includes/user-pages/admin-notice-content.php');
 	}
 	else
 	{
-		include('html-includes/users/admin-home-content.php'); 
+		include('html-includes/user-pages/admin-home-content.php'); 
 	}
 ?>
 </section>

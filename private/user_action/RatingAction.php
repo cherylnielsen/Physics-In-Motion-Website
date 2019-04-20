@@ -132,11 +132,11 @@ class RatingAction
 
 	public function getListSectionsNeedingReview_ByStudent($student_id, $mdb_control)
 	{
-		$section_list = array();
+		$sections_2b_rated = array();
 		$student_sections = array();
 		
-		$controller = $mdb_control->getController("section_student");
-		$student_sections = $controller->getByAttribute("student_id", $student_id);	
+		$section_controller = $mdb_control->getController("section_student");
+		$student_sections = $section_controller->getByAttribute("student_id", $student_id);	
 		
 		$section_controller = $mdb_control->getController("section");
 		$rating_controller = $mdb_control->getController("section_rating");
@@ -144,25 +144,21 @@ class RatingAction
 		for($i = 0; $i < count($student_sections); $i++)
 		{
 			$section_id = $student_sections[$i]->get_section_id();
-			$student_rating = $rating_controller->getByPrimaryKeys("section_id", 
+			$student_section_rating = $rating_controller->getByPrimaryKeys("section_id", 
 						$section_id, "member_id", $student_id);
 			
-			if(!isset($student_rating))
+			// if the student has not rated this section, add it to the list
+			if(!isset($student_section_rating))
 			{				
 				$section = $section_controller->getByPrimaryKey("section_id", $section_id);
-				$section_list[] = $section;
+				$sec_id = $section->get_section_id();
+				$sec_name = $section->get_section_name();
+				$sections_2b_rated[$i]['id'] = "$sec_id"; 
+				$sections_2b_rated[$i]['name'] = "Section $sec_id : $sec_name";
 			}
 		}
 		
-		for($i = 0; $i < count($section_list); $i++)
-		{
-			$sec_id = $section_list[$i]->get_section_id();
-			$sec_name = $section_list[$i]->get_section_name();
-			$section_names[$i]['id'] = "$sec_id"; 
-			$section_names[$i]['name'] = "Section $sec_id : $sec_name"; 
-		}
-		
-		return $section_names;
+		return $sections_2b_rated;		
 	}
 	
 

@@ -5,7 +5,7 @@
 class SectionController extends DatabaseController {
 
 	public function __construct(){}
-	//($section_id, $professor_id, $section_name, $start_date, $end_date)
+	//($section_id, $professor_id, $section_name, $start_date, $end_date, $section_description)
 	
 	protected function getData($db_result, $db_connection)
 	{
@@ -49,16 +49,16 @@ class SectionController extends DatabaseController {
 		// The id will be auto-generated, when the new object is added to the database table.
 		$query = "insert into $table (section_name, professor_id, 
 					start_date, end_date, section_description) 
-				values('$section_name', '$professor_id', '$text', 
-					'$start_date', '$end_date', '$section_description')";
+						values('$section_name', '$professor_id', '$start_date', 
+							'$end_date', '$section_description')";
 					
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
-			$section_id = mysql_insert_id($db_connection);
-			$section->set_section_id(section_id);				
+			$section_id = mysqli_insert_id($db_connection);
+			$section->set_section_id($section_id);				
 		}
 		else
 		{
@@ -133,6 +133,7 @@ class SectionController extends DatabaseController {
 		$professor_id = $section->get_professor_id();
 		$start_date = $section->get_start_date();
 		$end_date = $section->get_end_date();
+		$section_description = $section->get_section_description();
 					
 		$query = "UPDATE $table 
 					SET section_name = '$section_name',

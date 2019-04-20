@@ -5,7 +5,8 @@
 class Section_Students_View_Controller extends DatabaseController {
 
 	public function __construct(){}
-	// ($section_id, $section_name, $start_date, $end_date,
+	// ($section_id, $section_name, $start_date, $end_date, 
+	//  $section_description, 
 	//   $student_id, $first_name, $last_name, $school_name,
 	//   $dropped_section)
 	
@@ -21,6 +22,7 @@ class Section_Students_View_Controller extends DatabaseController {
 				
 				$section_student_view->initializeView($row['section_id'], $row['section_name'], 
 										$row['start_date'], $row['end_date'], 
+										$row['section_description'], 
 										$row['student_id'], $row['student_first_name'], 
 										$row['student_last_name'], $row['school_name'], 
 										$row['dropped_section']);
@@ -63,6 +65,10 @@ class Section_Students_View_Controller extends DatabaseController {
 			case 'end_date':
 				$value = $section_student_view->get_end_date();	
 				$query = "update $table set end_date = '$value' where section_id = '$section_id'";
+				break;
+			case 'section_description':
+				$value = $section_student_view->get_section_description();	
+				$query = "update $table set section_description = '$value' where section_id = '$section_id'";
 				break;
 			case 'student_id':
 				$value = $section_student_view->get_student_id();	

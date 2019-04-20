@@ -35,11 +35,11 @@
 		<h2 class="form">Write Notice</h2>		
 		<p>Date: &nbsp;&nbsp; <?php echo "$date_sent" ?></p>		
 		<p>From: &nbsp; <?php echo "$from_first_name &nbsp; $from_last_name"; ?></p>
-		<br class="form">
+		<br>
 				
 				
 		<label>To Section: 
-			<div class="form-select"><select id="to_section_id" name="to_section_id">
+			<select id="to_section_id" name="to_section_id">
 				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($section_list); $i++)
@@ -56,12 +56,12 @@
 						echo "$str";
 					}				
 				?>
-			</select></div>
-		</label><br class="form"><br class="form">
+			</select>
+		</label><br><br>
 		
 		
 		<label>To Member: 
-			<div class="form-select"><select id="to_member_id" name="to_member_id" >
+			<select id="to_member_id" name="to_member_id" >
 				<option value='' ></option> 
 				<?php
 					for($i = 0; $i < count($member_list); $i++)
@@ -78,27 +78,25 @@
 						echo "$str";
 					}
 				?>
-			</select></div>
-		</label><br class="form"><br class="form">
+			</select>
+		</label><br class="form"><br>
 				
 				
 		<label>Subject: <br><input type="text" name="notice_subject" required 
 			value='<?php echo "$notice_subject"; ?>' >
-		</label><br class="form">
+		</label><br><br>
 				
 				
-		<label>Attachments: Select one or more files. (Optional)
-			<div class="fileDiv"> 				
-				<input type="file" name="attachments[]" id="attachments" 
+		<label>Attachments: Select one or more files. (Optional) 				
+			<input type="file" name="attachments[]" id="attachments" 
 					multiple onchange="showFileNames()">
-			</div>
 		</label>
-		<p id="fileListing"></p><br class="form">
+		<p id="fileListing"></p><br>
 		
 		
 		<label>Message: <br><textarea name="notice_text" rows="10" cols="50" 
 			spellcheck="true" required ><?php echo "$notice_text"; ?></textarea>
-		</label><br class="form">	
+		</label><br>	
 		
 		
 		<div class="formButtonDiv">

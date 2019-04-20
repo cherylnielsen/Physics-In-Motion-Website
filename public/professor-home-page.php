@@ -23,8 +23,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	<meta name="Keywords" content="professor, professor services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
 		
 	<?php 
-		require_once('html-includes/template/common-db-and-css-links.php'); 	
-		
+		require_once('html-includes/template/common-db-and-css-links.php'); 
+		require_once('../private/member_page_include_list.php');
 	?>
 
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
@@ -62,15 +62,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	if(isset($_GET["section_id"]))
 	{
 		$section_id = $_GET["section_id"];
-		include('html-includes/users/professor-section-content.php');
+		include('html-includes/user-pages/professor-section-content.php');
 	}
 	else if(isset($_GET["notices"]))
 	{
-		include('html-includes/users/professor-notice-content.php');
+		include('html-includes/user-pages/professor-notice-content.php');
 	}
 	else
 	{
-		include('html-includes/users/professor-home-content.php'); 
+		include('html-includes/user-pages/professor-home-content.php'); 
 	}
 	
 ?>

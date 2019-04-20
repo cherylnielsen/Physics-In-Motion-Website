@@ -39,6 +39,10 @@ a#bottom-new-labs {
 	margin-top: 0.5em;
 }
 
+a.not-enabled {
+	color: gray;
+}
+
 h1 {
 	font-size: 1.3em;
 	margin: 0.5em 0;

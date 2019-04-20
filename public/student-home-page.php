@@ -49,15 +49,15 @@
 	if(isset($_GET["section_id"]))
 	{
 		$section_id = $_GET["section_id"];
-		include('html-includes/users/student-section-content.php'); 
+		include('html-includes/user-pages/student-section-content.php'); 
 	}
 	else if(isset($_GET["notices"]))
 	{
-		include('html-includes/users/student-notice-content.php');
+		include('html-includes/user-pages/student-notice-content.php');
 	}
 	else
 	{
-		include('html-includes/users/student-home-content.php'); 
+		include('html-includes/user-pages/student-home-content.php'); 
 	}
 	
 ?>

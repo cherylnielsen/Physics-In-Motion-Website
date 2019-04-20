@@ -12,8 +12,8 @@ class FileAction
 		https://www.w3schools.com/php7/php7_file_upload.asp 
 		as of 3/20/2019.	
 	**/	
-	public function processFileUploads($attachment_type, $id_number, $uploads_dir, 
-										$mdb_control, &$error_array)
+	public function processFileUploads($attachment_type, $id_number, 
+							$uploads_dir, $mdb_control, &$error_array)
 	{		
 		$success = true;
 		$controller;
@@ -31,7 +31,7 @@ class FileAction
 			$attachment = new Assignment_Attachment();
 		}
 		
-
+		
 		if(isset($_FILES["attachments"]))
 		{
 			foreach ($_FILES["attachments"]["error"] as $key => $error) 

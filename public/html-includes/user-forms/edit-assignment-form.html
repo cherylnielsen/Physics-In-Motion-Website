@@ -47,18 +47,18 @@
 		
 		<p>Section: &nbsp;&nbsp;
 			<?php echo "Section $section_id : $section_name"; ?>
-		</p><br class="form">
+		</p><br>
 		
 		<p>Assignment to Edit: &nbsp;&nbsp;
 			<?php  echo "Assignment $assignment_id : $assignment_name"; ?>
-		</p><br class="form">
+		</p><br>
 		
 		<label>Assignment Name: <br><input type="text" name="assignment_name" required 
 			pattern="^[a-zA-Z0-9 \-\'\.]+$" value='<?php echo "$assignment_name"; ?>' >
-		</label><br class="form">
+		</label><br>
 	
 		<label>Tutorial Lab: &nbsp;&nbsp;
-			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
+			<select id="tutorial_lab_id" name="tutorial_lab_id" required >
 				<option value='' ></option>
 				
 				<?php
@@ -77,21 +77,21 @@
 					}				
 				?>
 				
-			</select></div>
-		</label><br class="form"><br class="form">
+			</select>
+		</label><br><br>
 		
 		<label>Date Assigned: <br><input type="date" name="date_assigned" required 
 			value='<?php echo "$date_assigned"; ?>' >
-		</label><br class="form">
+		</label><br>
 		
 		<label>Date Due: <br><input type="date" name="date_due" required 
 			value='<?php echo "$date_due"; ?>' >
-		</label><br class="form">
+		</label><br>
 		
 		<label>Points Possible: <br><input type="number" name="points_possible"  
 			min="0" max="1000" required
 			value='<?php echo "$points_possible"; ?>' >
-		</label><br class="form">
+		</label><br>
 		
 		<?php 
 		
@@ -113,11 +113,9 @@
 		
 		?>
 		
-		<label>New Attachments: Select one or more files. (Optional)
-			<div class="fileDiv"> 				
-				<input type="file" name="attachments[]" id="attachments" 
+		<label>New Attachments: Select one or more files. (Optional)				
+			<input type="file" name="attachments[]" id="attachments" 
 					multiple onchange="showFileNames()">
-			</div>
 		</label>
 		<p id="fileListing"></p><br class="form">
 		
