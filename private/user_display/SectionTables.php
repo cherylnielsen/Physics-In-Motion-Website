@@ -74,21 +74,28 @@ class SectionTables
 		$link = "";	
 		$dropped_section = false;
 				
-		switch ($member_type)
+		if($member_type == "student")
 		{
-			case "student":
-				$student_id = $_SESSION['student_id'];
+			$student_id = $_SESSION['student_id'];
+			
+			$controller = $mdb_control->getController("section_student");
+			$section_student = $controller->getByPrimaryKeys(
+					"section_id", $section_id, "student_id", $student_id);
+			$dropped_section = $section_student->get_dropped_section();
+			
+			if($dropped_section)
+			{
+				$link = "<a href='' class='not-enabled'>";
+			}
+			else
+			{
 				$link = "<a href='student-home-page.php?section_id=$section_id'>";
+			}
+		}		
 				
-				$controller = $mdb_control->getController("section_student");
-				$section_student = $controller->getByPrimaryKeys(
-											"section_id", $section_id, "student_id", $student_id);
-				$dropped_section = $section_student->get_dropped_section();
-				break;
-				
-			case "professor":
-				$link = "<a href='professor-home-page.php?section_id=$section_id'>";
-				break;
+		if($member_type  == "professor")
+		{
+			$link = "<a href='professor-home-page.php?section_id=$section_id'>";
 		}
 		
 		$today = new DateTime("now");
@@ -117,11 +124,18 @@ class SectionTables
 	public function getSectionShortList($section_list, $mdb_control, $member_type)
 	{			
 		$num_sections = count($section_list);
-		$short_list = array();
+		$current_sections = array();
+		$previous_sections = array();
+		$future_sections = array();
+		$sections = array();
 		
+		$current_num = 0;
+		$previous_num = 0;
+		$future_num = 0;
+			
 		if($num_sections <= 0)
 		{
-			return $short_list;
+			return $sections;
 		}		
 		
 		for($i = 0; $i < $num_sections; $i++)
@@ -129,6 +143,8 @@ class SectionTables
 			$section_id = $section_list[$i]->get_section_id();
 			$section_name = $section_list[$i]->get_section_name();
 			$today = new DateTime("now");
+			$next2weeks = new DateTime("now");
+			$next2weeks->modify("+2 week");
 			
 			$date_time = $section_list[$i]->get_start_date();
 			$start_date = date("D, M d, Y", strtotime($date_time));
@@ -137,7 +153,6 @@ class SectionTables
 			$date_time = $section_list[$i]->get_end_date();
 			$end_date = date("D, M d, Y", strtotime($date_time));
 			$end = new DateTime($end_date);		
-			$dropped_section = false;
 					
 			if($member_type == "student")
 			{						
@@ -146,17 +161,73 @@ class SectionTables
 				$section_student = $controller->getByPrimaryKeys(
 									"section_id", $section_id, "student_id", $student_id);
 				$dropped_section = $section_student->get_dropped_section();
-			}
 			
-			if((!$dropped_section) && ($start <= $today) && ($today <= $end))
+			
+				if((!$dropped_section) && ($start <= $today) && ($today <= $end))
+				{
+					$current_sections[$current_num]['id'] = $section_id;
+					$current_sections[$current_num]['name'] = $section_name;
+					$current_num++;
+				}
+
+				if((!$dropped_section) && ($end < $today))
+				{
+					$previous_sections[$previous_num]['id'] = $section_id;
+					$previous_sections[$previous_num]['name'] = $section_name;
+					$previous_num++;
+				}
+				
+				// sections starting in the next 2 weeks
+				if((!$dropped_section) && ($today < $start) && ($start <= $next2weeks))
+				{
+					$future_sections[$future_num]['id'] = $section_id;
+					$future_sections[$future_num]['name'] = $section_name;
+					$future_num++;
+				}
+
+			}
+			else if($member_type == "professor")
 			{
-				$short_list[$i]['id'] = $section_id;
-				$short_list[$i]['name'] = $section_name;
-			}			
+				if(($start <= $today) && ($today <= $end))
+				{
+					$current_sections[$current_num]['id'] = $section_id;
+					$current_sections[$current_num]['name'] = $section_name;
+					$current_num++;
+				}
+				
+				if($end < $today)
+				{
+					$previous_sections[$previous_num]['id'] = $section_id;
+					$previous_sections[$previous_num]['name'] = $section_name;
+					$previous_num++;
+				}
+				
+				if($today < $start)
+				{
+					$future_sections[$future_num]['id'] = $section_id;
+					$future_sections[$future_num]['name'] = $section_name;
+					$future_num++;
+				}
+			}
 		}
 		
-			return $short_list;	
-			
+		if($member_type == "student")
+		{
+			$sections = array();
+			$sections['current'] = $current_sections;
+			$sections['previous'] = $previous_sections;
+			$sections['future'] = $future_sections;
+		}
+		
+		if($member_type == "professor")
+		{
+			$sections = array();
+			$sections['current'] = $current_sections;
+			$sections['previous'] = $previous_sections;
+			$sections['future'] = $future_sections;
+		}
+		
+		return $sections;
 	}
 	
 	
@@ -237,7 +308,7 @@ class SectionTables
 	{
 		$sections = array();
 		$section_names = array();
-		$sections = $mdb_control->getController("tutorial_lab")->getAllData();
+		$sections = $mdb_control->getController("section")->getAllData();
 		
 		for($i = 0; $i < count($sections); $i++)
 		{

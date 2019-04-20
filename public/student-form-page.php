@@ -49,19 +49,19 @@
 	$last_name = $_SESSION["last_name"];
 	$form_type = $_GET["form_type"];
 
-	include($form_processor);
-	include('html-includes/template/header.php'); 
-	include('html-includes/navigation/main-navigation-and-quote.php'); 
+	require_once($form_processor);
+	require_once('html-includes/template/header.php'); 
+	require_once('html-includes/navigation/main-navigation-and-quote.php'); 
 ?>
 
 <section class="main-content-forms">
 <?php 
 	echo "<h1 class='welcome'>Welcome $first_name $last_name!</h1>";
-	include($form_file_name);
+	require_once($form_file_name);
 ?>
 </section>
  	
-<?php include('html-includes/template/footer.html');  ?>
+<?php require_once('html-includes/template/footer.html');  ?>
 
 </div><!-- end div.wrapper -->	
 </body>

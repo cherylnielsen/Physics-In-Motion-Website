@@ -1,6 +1,6 @@
 <?php
 
-	include('../private/user_display/RatingTables.php');
+	require_once('../private/user_display/RatingTables.php');
 	
 	$ratingTables = new RatingTables();
 	$labs_new = array();

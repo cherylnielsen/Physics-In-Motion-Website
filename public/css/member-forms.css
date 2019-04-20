@@ -3,7 +3,7 @@
 
 section.main-content-forms {
 	float: left;
-	width: 54%;
+	width: 50%;
 	padding: 0 0 1% 2%;
 }
 
@@ -36,11 +36,6 @@ form > * {
 	margin: 0.5em;
 }
 
-br.form {
-	display: block;
-	margin: 4px 0;
-}
-
 fieldset {
 	display: block;
 	padding: 0 1em 1em 1em;
@@ -69,7 +64,6 @@ input[type=checkbox] {
 	height: 1.5em;
 	margin: 0.5em 0;
 }
-
 
 input[type=number] {
 	width: 6em;
@@ -122,6 +116,11 @@ a.button {
 
 a.red {
 	background-color: red;
+	color: black;
+}
+
+a.red:hover {
+	background-color: red;
 	color: white;
 }
 
@@ -135,41 +134,31 @@ input[type=submit] {
 	border-radius: 5px;
 }
 
-input[type=reset] { 
-	font-family: "Times New Roman", "serif";
-	font-size: 1em;
-	padding: 5px 25px ;
-	background-color: red;
+input[type=submit]:hover { 
 	color: white;
-	margin: 0.75em 0.5em;
-	font-weight: bold;
-	border-radius: 5px;
 }
 
 ul {
 	padding-left: 40px;
 }
 
-div.fileDiv {
+input[type=file] {
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;	
 	margin: 0.25em 0;
-	padding: 2px;
-	font-weight: bold;
 	border-radius: 5px;
 	border: 2px solid #03AA0D;
 	background-color: lightyellow;
-	width: 96%;
+	width: 98%;
 }
 
-
-input[type=file] {
-	font-family: "Times New Roman", "serif";
-	font-size: 1em;
+input[type=file]:invalid {
+	border: 2px solid red;
+	border-radius: 5px;
+	background-color: #ffd4d4;
 }
 
-
-div.form-select {
+select {
 	background-color: lightyellow;
 	color: black;
 	border-radius: 5px;
@@ -178,15 +167,15 @@ div.form-select {
 	padding: 3px;
 	text-align: right;
 	margin: 0.25em 0;
-}
-
-div.form-select select {
-	background: transparent;
-	border: none;
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
-	width: 300px;
+	text-align: left;
 }
+
+select option {
+	background-color: lightyellow;
+}
+
 
 /** star ratings **/
 

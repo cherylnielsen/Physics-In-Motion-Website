@@ -43,10 +43,10 @@
 		<h1 class="form center">Tutorial Lab Rating</h1>	
 			<p>Date: &nbsp;&nbsp; <?php echo "$date_posted" ?></p>		
 			<p>From: &nbsp; <?php echo "$first_name&nbsp;&nbsp;$last_name"; ?></p>
-		<br class="form">
+		<br>
 		
 		<label>Tutorial Lab: &nbsp;&nbsp;
-			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
+			<select id="tutorial_lab_id" name="tutorial_lab_id" required >
 				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($tutorial_lab_list); $i++)
@@ -63,7 +63,7 @@
 						echo "$str";
 					}				
 				?>
-			</select></div>
+			</select>
 		</label>
 		
 		
@@ -112,7 +112,7 @@
 		<div class="clear-both">
 			<label>Comments: <br><textarea name="comments" rows="10" cols="50" 
 				spellcheck="true" ><?php echo "$comments"; ?></textarea>
-			</label><br class="form">
+			</label><br>
 		</div>
 		
 		<div class="formButtonDiv">

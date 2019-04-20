@@ -75,6 +75,10 @@ tr:hover {
 	background-color: #81fd8a;
 }
 
+td.notice_text {
+	padding: 20px;
+	white-space: pre-wrap;
+}
 
 /* display selected notice */
 

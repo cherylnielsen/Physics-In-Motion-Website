@@ -2,7 +2,6 @@
 
 /*  to be done later add filter for file types? and file sizes?*/
 
-
 /* Displays the names of files to be uploaded. */
 function showFileNames()
 {

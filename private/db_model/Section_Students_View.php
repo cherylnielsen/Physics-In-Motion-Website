@@ -7,6 +7,7 @@ class Section_Students_View {
 	private $section_name;
 	private $start_date;
 	private $end_date;
+	private $section_description;
 	private $student_id;
 	private $student_first_name;
 	private $student_last_name;
@@ -17,15 +18,17 @@ class Section_Students_View {
 	public function __construct() {}
 	
 	
-	public function initializeView($section_id, $section_name, $start_date, $end_date,
-								$student_id, $student_first_name, $student_last_name, $school_name,
-								$dropped_section)
+	public function initializeView($section_id, $section_name, $start_date, $end_date, 
+								$section_description, 
+								$student_id, $student_first_name, $student_last_name, 
+								$school_name, $dropped_section)
 	{
 		$this->section_id = $section_id;
 		$this->section_name = $section_name;
 		$this->student_id = $student_id;
 		$this->start_date = $start_date;
 		$this->end_date = $end_date;
+		$this->section_description = $section_description;
 		$this->student_first_name = $student_first_name;
 		$this->student_last_name = $student_last_name;
 		$this->school_name = $school_name;
@@ -72,6 +75,16 @@ class Section_Students_View {
 	public function set_end_date($end_date)
 	{
 		$this->end_date = $end_date;
+	}
+	
+	public function get_section_description()
+	{
+		return $this->section_description;
+	}
+	
+	public function set_section_description($section_description)
+	{
+		$this->section_description = $section_description;
 	}
 			
 	public function get_student_id()

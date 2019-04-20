@@ -29,14 +29,14 @@
 
 		<label>Date to be Assigned: <br><input type="date" name="date_assigned" required 
 			min=<?php echo date('m/d/Y'); ?>  value="<?php echo "$date_assigned"; ?>" >
-		</label><br class="form">
+		</label><br >
 		
 		<label>Assignment Name: <br><input type="text" name="assignment_name" required 
 			value="<?php echo "$assignment_name"; ?>" >
-		</label><br class="form">
+		</label><br>
 		
 		<label>Section: &nbsp;&nbsp; 
-			<div class="form-select"><select id="section_id" name="section_id" required >
+			<select id="section_id" name="section_id" required >
 				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($section_list); $i++)
@@ -53,11 +53,11 @@
 						echo "$str";
 					}				
 				?>
-			</select></div>
-		</label><br class="form"><br class="form">		
+			</select>
+		</label><br><br>		
 	
 		<label>Tutorial Lab: &nbsp;&nbsp; 
-			<div class="form-select"><select id="tutorial_lab_id" name="tutorial_lab_id" required >
+			<select id="tutorial_lab_id" name="tutorial_lab_id" required >
 				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($tutorial_lab_list); $i++)
@@ -74,24 +74,22 @@
 						echo "$str";
 					}				
 				?>
-			</select></div>
-		</label><br class="form"><br class="form">
+			</select>
+		</label><br><br >
 		
 		<label>Date Due: <br><input type="date" name="date_due" required 
 			min=<?php echo date('m/d/Y'); ?>  value="<?php echo "$date_due"; ?>" >
-		</label><br class="form">
+		</label><br >
 		
 		<label>Points Possible: <br><input type="number" name="points_possible"  
 			min="0" max="1000" required  value="<?php echo "$points_possible"; ?>" >
-		</label><br class="form">
+		</label><br>
 		
-		<label>Attachments: Select one or more files. (Optional)
-			<div class="fileDiv"> 				
-				<input type="file" name="attachments[]" id="attachments" 
+		<label>Attachments: Select one or more files. (Optional) 				
+			<input type="file" name="attachments[]" id="attachments" 
 					multiple onchange="showFileNames()">
-			</div>
 		</label>
-		<p id="fileListing"></p><br class="form">
+		<p id="fileListing"></p><br>
 		
 		<div class="formButtonDiv">
 			<input type="submit" value="Save Assignment">		

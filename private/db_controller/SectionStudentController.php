@@ -39,7 +39,9 @@ class SectionStudentController extends DatabaseController {
 		$db_connection = get_db_connection();
 		$section_id = $section_student->get_section_id();
 		$student_id = $section_student->get_student_id();
-		$dropped_section = $section_student->get_dropped_section();
+		// by definition a new section student is adding the section
+		// using 0 instead of false
+		$dropped_section = 0;
 		$table = $this->getTableName();
 		
 		$query = "insert into $table (section_id, student_id, dropped_section) 

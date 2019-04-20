@@ -30,7 +30,7 @@ class NoticeTables
 		
 		// table headings		
 		$table_heading = "<table class='notice-summary summary'>
-			<tr><th colspan='10'><h2>Notice Summary</h2></th></tr>
+			<tr><th colspan='10'><h2 class='center'>Notice Summary</h2></th></tr>
 			<tr><th> </th><th>In Box</th><th>Sent</th>"; 				
 				
 		// section notices & table headings continued
@@ -498,7 +498,7 @@ class NoticeTables
 					<tr><td colspan='2'><hr></td></tr>";
 		}
 				
-		echo "<tr><td colspan='2'><br>$notice_text<br><br></td></tr>";		
+		echo "<tr><td colspan='2' class='notice_text'>$notice_text</td></tr>";		
 		echo "</table>";
 		
 	}

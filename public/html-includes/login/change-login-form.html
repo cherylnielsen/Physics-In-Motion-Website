@@ -34,15 +34,13 @@
 	
 		<h2>Security Questions:</h2>
 		
-		<label><p>Question 1: <?php echo "$question_1"; ?>
-			Answer 1: <br>
+		<label><p>Question 1: <?php echo "$question_1"; ?>?</p>
 			<input type="text" name="answer_1" id="answer_1"
 			value="<?php if (isset($_POST['answer_1'])) echo $_POST['answer_1']; ?>" 
 			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
 		<br>
 		
-		<label><p>Question 2: <?php echo "$question_2"; ?>
-			Answer 2: <br>
+		<label><p>Question 2: <?php echo "$question_2"; ?>?</p>
 			<input type="text" name="answer_2" id="answer_2"
 			value="<?php if (isset($_POST['answer_2'])) echo $_POST['answer_2']; ?>" 
 			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>

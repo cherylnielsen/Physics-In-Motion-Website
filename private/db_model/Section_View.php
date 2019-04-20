@@ -11,10 +11,13 @@ class Section_View extends Section {
 	public function __construct() {}
 	
 	
-	public function initializeView($section_id, $section_name, $start_date, $end_date,
-								$professor_id, $professor_first_name, $professor_last_name, $school_name)
+	public function initializeView($section_id, $section_name, $start_date, $end_date, 
+								$section_description, 
+								$professor_id, $professor_first_name, $professor_last_name, 
+								$school_name)
 	{
-		$this->initialize($section_id, $section_name, $professor_id, $start_date, $end_date);
+		$this->initialize($section_id, $section_name, $professor_id, $start_date, 
+							$end_date, $section_description);
 		$this->professor_first_name = $professor_first_name;
 		$this->professor_last_name = $professor_last_name;
 		$this->school_name = $school_name;

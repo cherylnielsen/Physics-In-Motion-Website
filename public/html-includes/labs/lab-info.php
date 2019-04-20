@@ -1,5 +1,5 @@
 <?php
-include('../private/user_display/RatingTables.php');
+require_once('../private/user_display/RatingTables.php');
 $ratingTables = new RatingTables();
 
 $web_link = $_GET["lab"];

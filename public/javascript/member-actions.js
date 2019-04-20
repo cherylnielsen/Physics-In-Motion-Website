@@ -9,7 +9,6 @@ const actions = {
 }
 
 
-
 function showSelectedNotice(rowID)
 {
 	// get the row where the notice is to be show
@@ -96,11 +95,10 @@ function homeworkActions(item_id, action)
 		break;
 	}
 	
-	var url = "javascript/ActionUtility.php";
+	var url = "javascript/ajaxHomework.php";
 	xhttp.open("POST", url, true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send(dataString);
-
 }
 
 

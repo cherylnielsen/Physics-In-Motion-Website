@@ -1,0 +1,127 @@
+<?php
+
+	include("html-includes/admin-section-forms/adminSectionAction.php");
+	
+	$editSection = new adminSectionAction();
+	$returnURL = "admin-home-page.php";
+	$form_errors = "";
+	
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		$result = array();
+		$result = $addSection->processForm($mdb_control);
+		$form_errors = $result['form_errors'];
+	}
+	
+	if((count($result) > 0) && ($result['success'] == true))
+	{
+		// form processing, done reset form to all clear for next use
+		$section_id = "";
+		$section_name = "";
+		$professor_id = "";
+		$start_date = "";
+		$end_date = "";
+		$description = "";
+	}
+	else
+	{
+		// checks GET and POST, if not set, returns empty string	
+		$section_id = $editSection->getSectionID();
+		$section_name = $editSection->getSectionName();
+		$professor_id = $editSection->getProfessorID();
+		$start_date = $editSection->getStartDate();
+		$end_date = $editSection->getEndDate();
+		$description = $editSection->getDescription();
+	}	
+	
+	$professor_list = array();
+	$professor_list = $dataUtility->getListProfessorIDName($mdb_control);
+	
+	$section_list = array();
+	$section_list = $dataUtility->getListSectionIDNames($mdb_control);
+	
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		$form_errors = $editSection->processForm($mdb_control);
+	}
+	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
+	
+?>
+
+<form id="editSectionForm" enctype="multipart/form-data" method="POST" >
+
+<fieldset>
+	<input type='hidden' name='action_type' value='edit'>
+	<h2 class="form">Edit Section</h2>	
+	
+	<label>Select Section: <br>
+		<select id="section_id" name="section_id" required 
+			onchange="populateForm('section')">
+			<option value='' ></option>
+			<?php
+				for($i = 0; $i < count($section_list); $i++)
+				{
+					$sec_id = $section_list[$i]['id'];
+					$name = $section_list[$i]['name'];
+					$str = "<option value='$sec_id' >$name</option>";
+					
+					if(strcmp($section_id, $sec_id) == 0)
+					{
+						$str = "<option value='$sec_id' selected >$name</option>";
+					}
+					
+					echo "$str";
+				}				
+			?>
+	</select></label><br>
+	
+	<label>Section Name: <br><input type="text" name="section_name" required 
+		value="<?php echo "$section_name"; ?>" >
+	</label><br>
+	
+	<label>Select Professor: <br>
+		<select id="professor_id" name="professor_id" required >
+			<option value='' ></option> 
+		<?php
+			for($i = 0; $i < count($professor_list); $i++)
+			{
+				$member_id = $professor_list[$i]['id'];
+				$name = $professor_list[$i]['name'];
+				$str = "<option value=$member_id >$name</option>";
+				
+				if(strcmp($professor_id, $member_id) == 0)
+				{
+					$str = "<option value=$member_id selected >$name</option>";
+				}
+				
+				echo "$str";
+			}
+		?>
+	</select></label><br>
+		
+	<label>Start Date: <br>
+		<input type="date" name="start_date" required 
+			min=<?php echo date('m/d/Y'); ?>  
+			value="<?php echo "$start_date"; ?>" >
+	</label><br>
+	
+	<label>End Date: <br> 
+		<input type="date" name="end_date"  required 
+			min=<?php echo date('m/d/Y'); ?>  
+			value="<?php echo "$end_date"; ?>" >
+	</label><br>
+	
+	<label>Section Description: <br>
+		<textarea name="description" rows="10" cols="50" 
+		spellcheck="true" required 
+		><?php echo "$description"; ?></textarea>
+	</label><br><br>
+	
+	<div class="formButtonDiv">
+		<input type="submit" value="Update Section">		
+		<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+	</div>
+		
+	</fieldset>
+</form>
