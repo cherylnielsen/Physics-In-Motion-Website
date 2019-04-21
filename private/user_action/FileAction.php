@@ -63,7 +63,7 @@ class FileAction
 						if (move_uploaded_file($tmp_name, $fullFileName)) 
 						{	
 							$attachment->initialize(null, $id_number, $filename, $uploads_dir);
-							$sucess = $controller->saveNew($attachment);							
+							$success = $controller->saveNew($attachment);							
 						} 
 						else 
 						{	
@@ -96,6 +96,80 @@ class FileAction
 	}	
 	
 	
+	// returns false on failure or an array of the csv file contents
+	public function uploadCSVfile(&$error_array)
+	{				
+		if ($_FILES["attachments"]["error"] != UPLOAD_ERR_OK) 
+		{	
+			$error_array[] = "The file could not be uploaded.";
+			return false;
+		}
+		
+		// the filename on the user's system
+		$filename = basename($_FILES["attachments"]["name"]);		
+		// the temporary file storage name
+		$tmp_name = $_FILES["attachments"]["tmp_name"];	
+		// Check file size is < 2MB max.
+		$size = $_FILES["attachments"]["size"];	
+		
+		// test for possible file upload attack
+		if (!is_uploaded_file($tmp_name))
+		{	
+			$error_array[] = "The file $filename could not be uploaded.";
+			return false;
+		}
+		
+		// Check file size is < 2MB max.
+		if ($size > 2100000) 
+		{	
+			$error_array[] = "The file $filename is too large. 
+								Files are limited to < 2MB.";
+			return false;
+		}		
+		
+		$uploads_dir = "temp";
+		$fullFileName = "$uploads_dir/$filename";
+		
+		if(!file_exists($uploads_dir)) 
+		{ 
+			mkdir($uploads_dir, true); 
+		}
+			
+		if (move_uploaded_file($tmp_name, $fullFileName)) 
+		{	
+			$result = array();
+			
+			// read the file into an array
+			if (($csvFile = fopen($fullFileName, 'r')) != false)
+			{
+				while (!feof($csvFile))
+				{
+					// break line into an array of data at the comas,
+					// as field separators and "quotes" as field enclosures
+					if(($dataline = fgetcsv($csvFile))!= false)
+					{
+						$result[] = $dataline;
+					}
+				}
+				
+				fclose($csvFile);
+			}
+			else
+			{
+				$error_array[] = "The file $filename could not be opened.";
+				return false;
+			}							
+		} 
+		else 
+		{	
+			$error_array[] = "The file $filename could not be uploaded.";
+			$success = false;
+		}
+				
+		return $result;
+	}	
+	
+	
 	public function filterFileUpload($tmp_name, $filename, $size, $fullFileName, &$error_array)
 	{		
 		$success = true;
@@ -125,7 +199,7 @@ class FileAction
 			
 		return $success;
 	}
-	
+
 	
 	public function deleteFile($uploads_dir, $filename)
 	{	

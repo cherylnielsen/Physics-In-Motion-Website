@@ -77,6 +77,7 @@ class SectionStudentController extends DatabaseController {
 				break;
 			case 'dropped_section':
 				$value = $section_student->get_dropped_section();	
+				$value = $value ? 1 : 0;
 				$query = "update $table set dropped_section = '$value' where (section_id = '$section_id') AND (student_id = '$student_id')";
 				break;
 			

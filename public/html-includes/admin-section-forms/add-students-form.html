@@ -5,11 +5,12 @@
 	$addStudentAction = new adminStudentAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
+	$result = array();
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$result = array();
-		$result = $addSection->processForm($mdb_control);
+		$result = $addStudentAction->processForm($mdb_control);
 		$form_errors = $result['form_errors'];
 	}
 	
@@ -31,11 +32,6 @@
 	$student_list = array();
 	$student_list = $dataUtility->getListStudentIDName($mdb_control);
 	
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$form_errors = $addStudentAction->processForm($mdb_control);
-	}
-	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	
 ?>
@@ -45,10 +41,35 @@
 	<fieldset>	
 	<input type='hidden' name='action_type' value='add'>
 	
-	<h2 class="form">Adding Students to a Section</h2>
+	<h2 class="form red">WARNING: Add one student OR a file, but not both.</h2>
+	
+	<h2 class="form">Add Multiple Students to Sections</h2>
+		
+		<label>File Listing Students to Add:
+		<ul>
+			<li><p>Comma delimited CSV file, with one student per line.</p></li>
+			<li><p>File format 5 values per line: section id, section name, 
+						student id, first name, last name</p></li>
+			<li><p>The file must have no heading, tile, 
+						or other information included.</p></li>
+			<li><p>The file must be less than 2MB in size.</p></li>
+		</ul>
+			<input type="file" name="attachments" id="attachments">
+		</label>
+		
+		<p id="fileListing"></p><br>
+			
+	<div class="formButtonDiv">
+			<input type="submit" value="Add Students">		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+		</div>
+	</fieldset>
+	
+	<fieldset>
+	<h2 class="form">Adding One Student to a Section</h2>
 	
 		<label>Select Section: &nbsp;&nbsp;
-			<select id="section_id" name="section_id" required >
+			<select id="section_id" name="section_id" >
 				<option value='' ></option>
 				<?php
 					for($i = 0; $i < count($section_list); $i++)
@@ -67,11 +88,7 @@
 				?>
 		</select></label><br>
 		
-		<h2 class="form red">WARNING: Add a single student OR a file, but not both.</h2>
-		
-		<h2 class="form">Add Single Student to Section</h2>	
-		
-		<label>Select Student: 
+		<label>Select Student: &nbsp;&nbsp;
 			<select id="student_id" name="student_id" >
 				<option value='' ></option> 
 				<?php
@@ -79,6 +96,7 @@
 					{
 						$member_id = $student_list[$i]['id'];
 						$name = $student_list[$i]['name'];
+						$name = "id $member_id : $name";
 						$str = "<option value=$member_id >$name</option>";
 						
 						if(strcmp($student_id, $member_id) == 0)
@@ -90,22 +108,9 @@
 					}
 				?>
 		</select></label><br>
-	
-		<h2 class="form">Add Multiple Students to Section</h2>
-		
-			<label>File Listing Students to Add:
-			<ul>
-				<li><p>Comma delimited ".csv" file, with one student per line.</p></li>
-				<li><p>File format 4 values per line: section id, student id, first name, last name</p></li>
-				<li><p>The file must have no heading, tile, or other information included.</p></li>
-			</ul>
-				<input type="file" name="attachments[]" id="attachments">
-			</label>
-			
-			<p id="fileListing"></p><br>
 		
 		<div class="formButtonDiv">
-			<input type="submit" value="Add Students">		
+			<input type="submit" value="Add Student">		
 			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 		</div>
 	</fieldset>

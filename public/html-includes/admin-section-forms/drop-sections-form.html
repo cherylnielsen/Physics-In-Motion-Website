@@ -2,50 +2,62 @@
 
 	include("html-includes/admin-section-forms/adminSectionAction.php");
 	
-	$editSection = new adminSectionAction();
+	$dropSection = new adminSectionAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
+	$result = array();
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$result = array();
-		$result = $addSection->processForm($mdb_control);
+		$result = $dropSection->processForm($mdb_control);
 		$form_errors = $result['form_errors'];
-	}
+	}	
 	
-	if((count($result) > 0) && ($result['success'] == true))
-	{
-		// form processing, done reset form to all clear for next use
-		$section_id = "";
-	}
-	else
-	{
-		// checks GET and POST, if not set, returns empty string
-		$section_id = $addStudentAction->getSectionID();
-	}
+	// checks GET and POST, if not set, returns empty string
+	$section_id = $dropSection->getSectionID();
 	
 	$section_list = array();
 	$section_list = $dataUtility->getListSectionIDNames($mdb_control);
-	
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$form_errors = $editSection->processForm($mdb_control);
-	}
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	
 ?>
 
-<form id="dropSectionForm" method="POST" >
+<form id="dropSectionForm" method="POST" enctype="multipart/form-data" >
 <fieldset>
 
 	<input type='hidden' name='action_type' value='drop'>
 	
-	<h2 class="form">DROP Section</h2>
 	<h2 class="form red">WARNING: This form will REMOVE the Section.</h2>		
 	<h2 class="form red">WARNING: Drop a single section OR a file, but not both.</h2>
-	<br>
+	
+	<h2 class="form">Drop Multiple Sections</h2>
+		<ul>
+			<li><p>Comma delimited ".csv" file, with one section per line.</p></li>
+			<li><p>File format 2 values per line: section id, section name </p></li>
+			<li><p>The file must have no heading, tile, 
+						or other information included.</p></li>
+			<li><p>The file must be less than 2MB in size.</p></li>
+		</ul>
+		
+		<br>
+		<label>File Listing Sections to Drop:
+			<input type="file" name="attachments" id="attachments">
+		</label>
+		
+		<p id="fileListing"></p><br>
+		
+	<div class="formButtonDiv">
+			<input type="submit" value="Drop Sections">		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+		</div>
+		
+	</fieldset>
+	<fieldset>
+	
 	<h2 class="form">Drop Single Section</h2>
+	
 	<label>Select Section: &nbsp;&nbsp;
 		<select id="section_id" name="section_id" >
 			<option value='' ></option>
@@ -67,21 +79,8 @@
 		</select>
 	</label><br><br>
 		
-	<h2 class="form">Drop Multiple Sections</h2>
-		
-		<label>File Listing Students to Drop:
-		<ul>
-			<li><p>Comma delimited ".csv" file, with one section per line.</p></li>
-			<li><p>File format 2 values per line: section id, section name</p></li>
-			<li><p>The file must have no heading, tile, or other information included.</p></li>
-		</ul>
-			<input type="file" name="attachments[]" id="attachments">
-		</label>
-		
-		<p id="fileListing"></p><br>
-		
 	<div class="formButtonDiv">
-		<input type="submit" value="DROP Student">		
+		<input type="submit" value="Drop Section">		
 		<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 	</div>
 		

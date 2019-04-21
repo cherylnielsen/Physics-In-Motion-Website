@@ -5,11 +5,12 @@
 	$dropStudentAction = new adminStudentAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
+	$result = array();
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$result = array();
-		$result = $addSection->processForm($mdb_control);
+		$result = $dropStudentAction->processForm($mdb_control);
 		$form_errors = $result['form_errors'];
 	}
 	
@@ -31,11 +32,6 @@
 	$student_list = array();
 	$student_list = $dataUtility->getListStudentIDName($mdb_control);
 	
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$form_errors = $dropStudentAction->processForm($mdb_control);
-	}
-
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	
 ?>
@@ -45,11 +41,37 @@
 
 	<input type='hidden' name='action_type' value='drop'>
 	
-	<h2 class="form">DROP Students from a Section</h2>
-	<h2 class="form red">WARNING: This form will REMOVE the Student from the Section.</h2>		
+	<h2 class="form red">WARNING: This form will REMOVE the Students from the Sections.</h2>
+	<h2 class="form red">WARNING: Drop one student OR a file, but not both.</h2>
+
+	<h2 class="form">Drop Multiple Students from Section</h2>
+		
+		<label>File Listing Students to Drop:
+		<ul>
+			<li><p>Comma delimited CSV file, with one student per line.</p></li>
+			<li><p>File format 5 values per line: section id, section name, 
+						student id, first name, last name</p></li>
+			<li><p>The file must have no heading, tile, 
+						or other information included.</p></li>
+			<li><p>The file must be less than 2MB in size.</p></li>
+		</ul>
+			<input type="file" name="attachments" id="attachments">
+		</label>
+		
+		<p id="fileListing"></p><br>	
+
+	<div class="formButtonDiv">
+		<input type="submit" value="DROP Students">		
+		<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+	</div>
+		
+	</fieldset>
+	
+	<fieldset>
+	<h2 class="form">Drop One Student from Section</h2>
 	
 	<label>Select Section: &nbsp;&nbsp;
-		<select id="section_id" name="section_id" required >
+		<select id="section_id" name="section_id" >
 			<option value='' ></option>
 			<?php
 				for($i = 0; $i < count($section_list); $i++)
@@ -69,10 +91,6 @@
 		</select>
 	</label><br><br>
 	
-	<h2 class="form red">WARNING: Drop a single student OR a file, but not both.</h2>
-	
-	<h2 class="form">Drop Single Student from Section</h2>
-	
 	<label>Select Student: &nbsp;&nbsp;
 		<select id="student_id" name="student_id" >
 			<option value='' ></option> 
@@ -81,6 +99,7 @@
 				{
 					$member_id = $student_list[$i]['id'];
 					$name = $student_list[$i]['name'];
+					$name = "id $member_id : $name";
 					$str = "<option value='$member_id' >$name</option>";
 					
 					if(strcmp($student_id, $member_id) === 0)
@@ -94,18 +113,7 @@
 		</select>
 	</label><br>
 	
-	<h2 class="form">Drop Multiple Students from Section</h2>
-		
-		<label>File Listing Students to Drop:
-		<ul>
-			<li><p>Comma delimited ".csv" file, with one student per line.</p></li>
-			<li><p>File format 4 values per line: section id, student id, first name, last name</p></li>
-			<li><p>The file must have no heading, tile, or other information included.</p></li>
-		</ul>
-			<input type="file" name="attachments[]" id="attachments">
-		</label>
-		
-		<p id="fileListing"></p><br>
+	
 		
 	<div class="formButtonDiv">
 		<input type="submit" value="DROP Student">		

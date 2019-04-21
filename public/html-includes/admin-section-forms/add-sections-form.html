@@ -5,6 +5,7 @@
 	$addSection = new adminSectionAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
+	$result = array();
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
@@ -13,25 +14,13 @@
 		$form_errors = $result['form_errors'];
 	}
 	
-	if((count($result) > 0) && ($result['success'] == true))
-	{
-		// form processing, done reset form to all clear for next use
-		$section_name = "";
-		$professor_id = "";
-		$start_date = "";
-		$end_date = "";
-		$description = "";
-	}
-	else
-	{
-		// checks GET and POST, if not set, returns empty string	
-		$section_name = $addSection->getSectionName();
-		$professor_id = $addSection->getProfessorID();
-		$start_date = $addSection->getStartDate();
-		$end_date = $addSection->getEndDate();
-		$description = $addSection->getDescription();
-	}	
-	
+	// checks GET and POST, if not set, returns empty string	
+	$section_name = $addSection->getSectionName();
+	$professor_id = $addSection->getProfessorID();
+	$start_date = $addSection->getStartDate();
+	$end_date = $addSection->getEndDate();
+	$description = $addSection->getDescription();
+		
 	$professor_list = array();
 	$professor_list = $dataUtility->getListProfessorIDName($mdb_control);
 	
@@ -47,14 +36,20 @@
 		<h2 class="form red">WARNING: Add single section OR a file, not both.</h2>
 		<h2 class="form">Add Multiple Sections</h2>
 		
-		<label>File Listing Sections to Add:
 		<ul>
-			<li><p>Comma delimited ".csv" file, with one section per line.</p></li>
-			<li><p>File format 5 values per line: section name, 
-					start date, end date, description</p></li>
-			<li><p>The file must have no heading, tile, or other information included.</p></li>
+			<li><p>Comma delimited csv file, with one section per line. </p></li>
+			<li><p>File format 7 values per line: section name, professor_id, 
+					first name, last name, start date, end date, 
+					"section description" </p></li>
+			<li><p>Dates should be yyyy-mm-dd. </p></li>
+			<li><p>The file must have no heading, tile, or 
+					other information included. </p></li>
+			<li><p>The file must be less than 2MB in size. </p></li>
 		</ul>
-			<input type="file" name="attachments[]" id="attachments">
+		
+		<br>		
+		<label>File Listing Sections to Add:
+			<input type="file" name="attachments" id="attachments">
 		</label>
 		
 		<p id="fileListing"></p><br>

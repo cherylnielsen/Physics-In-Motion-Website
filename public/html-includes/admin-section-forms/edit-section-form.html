@@ -5,6 +5,7 @@
 	$editSection = new adminSectionAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
+	$result = array();
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
@@ -39,11 +40,6 @@
 	
 	$section_list = array();
 	$section_list = $dataUtility->getListSectionIDNames($mdb_control);
-	
-	if($_SERVER['REQUEST_METHOD'] == 'POST')
-	{
-		$form_errors = $editSection->processForm($mdb_control);
-	}
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	

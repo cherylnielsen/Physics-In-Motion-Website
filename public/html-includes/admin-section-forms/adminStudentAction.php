@@ -97,18 +97,44 @@ class adminStudentAction
 	}
 	
 	
+	// dose not give an error if the student was already added to the section
 	public function addStudent($student_id, $section_id, $mdb_control, &$error_array)
 	{
-		$success = true;
-		
+		$success = true;		
 		$controller = $mdb_control->getController("section_student");
 		
 		if(isset($controller))
 		{
 			$section_student = new Section_Student();
-			// setting dropped_section = false
-			$section_student->initialize($section_id, $student_id, false);
-			$sucess = $controller->saveNew($section_student);
+			$section_student = $controller->getByPrimaryKeys("section_id", $section_id, 
+														"student_id", $student_id);
+			if(isset($section_student))
+			{
+				$success = false;
+				$dropped = $section_student->get_dropped_section();
+				if($dropped)
+				{
+					$error_array[] = "the student $student_id was previously 
+											dropped from section $section_id";
+				}
+				else
+				{
+					$error_array[] = "the student $student_id was previously 
+											added to section $section_id";
+				}	
+			}
+			else
+			{
+				// setting dropped_section = false
+				$section_student = new Section_Student();
+				$section_student->initialize($section_id, $student_id, false);
+				$sucess = $controller->saveNew($section_student);
+			}
+		}
+		else
+		{
+			$success = false;
+			$error_array[] = "error accessing database controller";
 		}
 		
 		return $success;
@@ -117,16 +143,40 @@ class adminStudentAction
 	
 	public function dropStudent($student_id, $section_id, $mdb_control, &$error_array)
 	{
-		$success = true;
-		
+		$success = true;		
 		$controller = $mdb_control->getController("section_student");
 		
 		if(isset($controller))
 		{
 			$section_student = new Section_Student();
-			// setting dropped_section = true
-			$section_student->initialize($section_id, $student_id, true);
-			$sucess = $controller->updateAttribute($section_student, "dropped_section");
+			$section_student = $controller->getByPrimaryKeys("section_id", $section_id, 
+														"student_id", $student_id);
+			if(isset($section_student))
+			{	
+				$dropped = $section_student->get_dropped_section();
+				if($dropped)
+				{
+					$success = false;
+					$error_array[] = "the student $student_id was previously 
+											dropped from section $section_id";
+				}
+				else
+				{
+					// setting dropped_section = true
+					$section_student->set_dropped_section(true);
+					$sucess = $controller->updateAttribute($section_student, "dropped_section");
+				}
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "student $student_id was not found in section $section_id";
+			}
+		}
+		else
+		{
+			$success = false;
+			$error_array[] = "error accessing database controller";
 		}
 		
 		return $success;

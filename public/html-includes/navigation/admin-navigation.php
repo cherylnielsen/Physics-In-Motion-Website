@@ -11,16 +11,18 @@
 
 <nav class='second-navigation'>		
 					
-	<h2 class='navigation'>Notices</h2>
+	<h2 class='navigation nav_show_hide' onclick="showHideNav('nav_notices')">Notices</h2>
 	
-	<a href="admin-home-page.php?notices=notices" 
-		class="navigation">View Notices</a>
-	<a href="admin-form-page.php?form_type=write_notice" 
-		class="navigation">Write a Notice</a>
-		
-	<h2 class='navigation'>Registration</h2>
+		<div id='nav_notices' class='nav_show_hide'>
+			<a href="admin-home-page.php?notices=notices" 
+				class="navigation">View Notices</a>
+			<a href="admin-form-page.php?form_type=write_notice" 
+				class="navigation">Write a Notice</a>
+		</div>
 	
-		<div id='admin_nav_registration'>
+	<h2 class='navigation nav_show_hide' onclick="showHideNav('nav_registration')">Registration</h2>
+	
+		<div id='nav_registration' class='nav_show_hide'>
 			
 			<a href="admin-form-page.php?form_type=professor_registration" 
 				class="navigation">Confirm Professor</a>	
@@ -31,37 +33,42 @@
 				
 		</div>
 	
-	<h2 class='navigation'>Sections</h2>
+	<h2 class='navigation nav_show_hide' onclick="showHideNav('nav_sections')">Sections</h2>
 
-		<div id='admin_nav_sections'>
-			<a href="admin-form-page.php?form_type=add_students" 
-				class="navigation">Add Students to Section</a>
-			<a href="admin-form-page.php?form_type=drop_students" 
-				class="navigation">Drop Students from Section</a>
+		<div id='nav_sections' class='nav_show_hide'>
 			<a href="admin-form-page.php?form_type=add_sections" 
 				class="navigation">Add New Sections</a>
-			<a href="admin-form-page.php?form_type=edit_section" 
-				class="navigation">Edit Section</a>
+			<!--<a href="admin-form-page.php?form_type=edit_section" -->
+			<a href="" class="navigation not-enabled">Edit Section</a>
 			<a href="admin-form-page.php?form_type=drop_sections" 
 				class="navigation">Drop Sections</a>
 		</div>
 	
-	<h2 class='navigation'>Tutorial Labs</h2>
+	<h2 class='navigation nav_show_hide' onclick="showHideNav('nav_students')">Students</h2>
+
+		<div id='nav_students' class='nav_show_hide'>
+			<a href="admin-form-page.php?form_type=add_students" 
+				class="navigation">Add Students to Section</a>
+			<a href="admin-form-page.php?form_type=drop_students" 
+				class="navigation">Drop Students from Section</a>
+		</div>
+		
+	<h2 class='navigation nav_show_hide' onclick="showHideNav('nav_labs')">Tutorial Labs</h2>
 	
-		<div id='admin_nav_labs'>			
+		<div id='nav_labs' class='nav_show_hide'>			
 			<a href="admin-form-page.php?form_type=add_tutorial_lab" 
 				class="navigation">Add New Tutorial Lab</a>
-			<a href="admin-form-page.php?form_type=edit_tutorial_lab" 
-				class="navigation">Edit Tutorial Lab</a>
+			<!--<a href="admin-form-page.php?form_type=edit_tutorial_lab" -->
+			<a href="" class="navigation not-enabled">Edit Tutorial Lab</a>
 		</div>
 	
-	<h2 class='navigation'>Reviews</h2>
+	<h2 class='navigation nav_show_hide' onclick="showHideNav('nav_reviews')">Reviews</h2>
 	
-		<div id='admin_nav_labs'>
-			<a href="admin-form-page.php?form_type=review_ratings" 
-				class="navigation">Review Ratings</a>
-			<a href="admin-form-page.php?form_type=review_content" 
-				class="navigation">Review Content Complaints</a>
+		<div id='nav_reviews' class='nav_show_hide'>
+			<!--<a href="admin-form-page.php?form_type=review_ratings"-->
+			<a href="" class="navigation not-enabled">Review Ratings</a>
+			<!--<a href="admin-form-page.php?form_type=review_content"-->
+			<a href="" class="navigation not-enabled">Review Content Complaints</a>
 		</div>
 		
 </nav>

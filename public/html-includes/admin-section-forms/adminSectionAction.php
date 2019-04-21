@@ -1,8 +1,10 @@
 <?php
 
 class adminSectionAction
-{
-	public function __construct() {}
+{	
+	public function __construct() 
+	{
+	}
 	
 	
 	public function processForm($mdb_control)
@@ -20,7 +22,8 @@ class adminSectionAction
 			{
 				case "add":
 				
-					if(isset($_FILES["attachments"]) && ($_FILES["attachments"]["error"] == UPLOAD_ERR_OK))
+					if(isset($_FILES['attachments']) && 
+						($_FILES['attachments']['error'] == UPLOAD_ERR_OK))
 					{
 						$success = $this->addMultiSections($mdb_control, $error_array);
 					}
@@ -33,9 +36,10 @@ class adminSectionAction
 				
 				case "drop":
 				
-					if(isset($_FILES["attachments"]) && ($_FILES["attachments"]["error"] == UPLOAD_ERR_OK))
+					if(isset($_FILES['attachments']) && 
+						$_FILES['attachments']['error'] == UPLOAD_ERR_OK)
 					{
-						$success = $this->dropMultiSections($mdb_control, $error_array);
+						$success = $this->dropMultiSections($mdb_control, $error_array);						
 					}
 					else
 					{
@@ -100,24 +104,82 @@ class adminSectionAction
 	}
 	
 	
-	public function editSection($mdb_control, $section_id, $error_array)
+	public function editSection($mdb_control, $section_id, &$error_array)
 	{
 		$success = true;		
 		$controller = $mdb_control->getController("section");
 		
 		if(isset($controller))
 		{
-			$section_name = $_POST["section_name"];
+			$section_id = $_POST["section_id"];
 			$professor_id = $_POST["professor_id"];
 			$start_date = $_POST["start_date"];
 			$end_date = $_POST["end_date"];
+			
+			if(strlen($section_id) == 0)
+			{
+				$error_array[] = "Please select a section.";
+				$success = false;
+			}
+			
+			if(strlen($professor_id) == 0)
+			{
+				$error_array[] = "Please select a professor.";
+				$success = false;
+			}
+			
+			if((strlen($start_date) == 0) || (strlen($start_date) == 0))
+			{
+				$error_array[] = "Please select a start date and end date.";
+				$success = false;
+			}			
+			
+			$start_date = date ("Y-m-d", strtotime($start_date));
+			$end_date = date ("Y-m-d", strtotime($end_date));
+			
+			// text inputs
+			$section_name = $_POST["section_name"];
 			$description = $_POST["description"];	
 			
-			$section = new Section();			
-			$section->initialize($section_id, $section_name, $professor_id, 
+			// only section name and description are text inputs so 
+			// they need to be safety filtered 
+			$section_name = $this->sanitizeTextInput($section_name);
+			$description = $this->sanitizeTextInput($description);
+			
+			if(strlen($section_name) == 0)
+			{
+				$error_array[] = "Please enter a section name.";
+				$success = false;
+			}
+			
+			if(strlen($description) == 0)
+			{
+				$error_array[] = "Please enter a section description.";
+				$success = false;
+			}
+			
+			if(!$this->filterTextInput($section_name, $error_array)) 
+			{ 
+				$success = false;
+				$error_array[] = "Section at line $line_number could not be added, 
+									due to incorrectly formated section name.";
+			}
+			
+			if(!$this->filterTextInput($description, $error_array)) 
+			{ 
+				$success = false;
+				$error_array[] = "Section at line $line_number could not be added, 
+									due to incorrectly formated section description.";
+			}
+			
+			if($success)
+			{
+				$section = new Section();			
+				$section->initialize($section_id, $section_name, $professor_id, 
 									$start_date, $end_date, $description);
 			
-			$sucess = $controller->updateAll($section);
+				$success = $controller->updateAll($section);
+			}
 		}
 		
 		return $success;
@@ -131,16 +193,68 @@ class adminSectionAction
 		
 		if(isset($controller))
 		{
-			$section_name = $_POST["section_name"];
 			$professor_id = $_POST["professor_id"];
 			$start_date = $_POST["start_date"];
 			$end_date = $_POST["end_date"];
-			$description = $_POST["description"];			
-			$section = new Section();			
-			$section->initialize(null, $section_name, $professor_id, 
-										$start_date, $end_date, $description);
 			
-			$sucess = $controller->saveNew($section);
+			if(strlen($professor_id) == 0)
+			{
+				$error_array[] = "Please select a professor.";
+				$success = false;
+			}
+			
+			if((strlen($start_date) == 0) || (strlen($start_date) == 0))
+			{
+				$error_array[] = "Please select a start date and end date.";
+				$success = false;
+			}			
+			
+			$start_date = date ("Y-m-d", strtotime($start_date));
+			$end_date = date ("Y-m-d", strtotime($end_date));
+					
+			// text inputs
+			$section_name = $_POST["section_name"];
+			$description = $_POST["description"];	
+
+			// only section name and description are text inputs so 
+			// they need to be safety filtered 
+			$section_name = $this->sanitizeTextInput($section_name);
+			$description = $this->sanitizeTextInput($description);
+			
+			if(strlen($section_name) == 0)
+			{
+				$error_array[] = "Please enter a section name.";
+				$success = false;
+			}
+			
+			if(strlen($description) == 0)
+			{
+				$error_array[] = "Please enter a section description.";
+				$success = false;
+			}
+			
+			if(!$this->filterTextInput($section_name, $error_array)) 
+			{ 
+				$success = false;
+				$error_array[] = "Section at line $line_number could not be added, 
+									due to incorrectly formated section name.";
+			}
+			
+			if(!$this->filterTextInput($description, $error_array)) 
+			{ 
+				$success = false;
+				$error_array[] = "Section at line $line_number could not be added, 
+									due to incorrectly formated section description.";
+			}
+			
+			if($success)
+			{
+				$section = new Section();			
+				$section->initialize(null, $section_name, $professor_id, 
+								$start_date, $end_date, $description);
+								
+				$success = $controller->saveNew($section);
+			}
 		}
 		
 		return $success;
@@ -150,19 +264,24 @@ class adminSectionAction
 	public function dropSection($mdb_control, $section_id, &$error_array)
 	{
 		$success = true;		
-		$section_name = $_POST["section_name"];
-		$section_controller = $mdb_control->getController("section");
+		$sec_controller = $mdb_control->getController("section");
 		$section = new Section();
-		$section = $section_controller->getByPrimaryKey("section_id", $section_id);
+		$section = $sec_controller->getByPrimaryKey("section_id", $section_id);
+		
+		if(!isset($section))
+		{
+			return false;
+		}
+		
 		$controller = $mdb_control->getController("section_student");
 		$section_students = $controller->getByAttribute("section_id", $section_id);
-
-		// if section has students do not delete it
-		if(count(section_students) > 0)
-		{
-			$student_total = count(section_students);
 			
-			for($i = 0; $i < count(section_students); $i++)
+		// if section has students do not delete it
+		if(isset($section_students))
+		{			
+			$student_total = count($section_students);
+			
+			for($i = 0; $i < count($section_students); $i++)
 			{
 				$dropped = $section_students[$i]->get_dropped_section();
 				if($dropped) { $student_total--; }
@@ -176,7 +295,7 @@ class adminSectionAction
 			}
 			else
 			{
-				for($i = 0; $i < count(section_students); $i++)
+				for($i = 0; $i < count($section_students); $i++)
 				{
 					$sectionStudent = $section_students[$i];
 					$controller->deleteFromDatabase($sectionStudent);
@@ -184,7 +303,15 @@ class adminSectionAction
 			}
 		}
 		
-		$sucess = $section_controller->deleteFromDatabase($section);
+		if(isset($section))
+		{
+			$success = $sec_controller->deleteFromDatabase($section);
+		}
+		else
+		{
+			$success = false;
+			$error_array[] = "";
+		}
 		
 		return $success;
 	}
@@ -193,23 +320,141 @@ class adminSectionAction
 	public function addMultiSections($mdb_control, &$error_array)
 	{
 		$success = true;
+		$section_name = "";
+		$professor_id = "";
+		$first_name = "";
+		$last_name = "";
+		$description = "";
+		$start_date = "";
+		$end_date = "";
 		
-		$controller = $mdb_control->getController("section");
-		
-		if(isset($controller) && isset($_FILES["attachments"]))
+		if(isset($_FILES["attachments"]))
 		{
-			// each file line = section name, start date, end date, description
-			// get the file, but do not save it?
-			// read the file, sanitize each line
-			// save line into an array (one csv line per student)
-			// section id matches section chosen in form
-			// check name and student id match database
-			// save each student that is ok
-			// output errors or list of students that could not be added
+			$fileAction = new FileAction();
+			$dataArray = $fileAction->uploadCSVfile($error_array);
 			
-			// call $ok = $this->addSection($mdb_control, &$error_array);
-			$success = false;
-			$error_array[] = "The mulit-section add feature is not yet available";
+			if($dataArray == false)
+			{
+				$error_array[] = "Sections could not be added due to error reading file.";
+				return false;
+			}
+			
+			$array_size = count($dataArray);
+			$line_number = 0;
+			
+			if(($dataArray != false) && (count($dataArray) > 0))
+			{				
+				foreach($dataArray as $dataLine)
+				{
+					if(count($dataLine) != 7)
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be dropped, 
+										due to incorrect number of data items.";
+					}
+					else
+					{						
+						$section_name = $this->sanitizeTextInput($dataLine[0]);
+						$professor_id = $this->sanitizeTextInput($dataLine[1]);
+						$first_name = $this->sanitizeTextInput($dataLine[2]);
+						$last_name = $this->sanitizeTextInput($dataLine[3]);
+						$description = $this->sanitizeTextInput($dataLine[6]);
+						$start_date = $this->sanitizeTextInput($dataLine[4]);
+						$end_date = $this->sanitizeTextInput($dataLine[5]);
+					}
+					
+					if((strlen($section_name) == 0) || (strlen($professor_id) == 0) 
+						|| (strlen($first_name) == 0) || (strlen($last_name) == 0) 
+						|| (strlen($description) == 0))
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be added, 
+											due to incorrectly formated data.";
+					}
+					
+					if(!$this->filterTextInput($section_name, $error_array) || 
+						!$this->filterTextInput($first_name, $error_array) || 
+						!$this->filterTextInput($last_name, $error_array) || 
+						!$this->filterTextInput($description, $error_array)) 
+					{ 
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be added, 
+											due to incorrectly formated data.";
+					}
+										
+					if((strlen($start_date) == 0) || (strlen($end_date) == 0))
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be added, 
+											due to incorrectly formated start or end dates.";
+					}
+					else
+					{
+						$start_date = date ("Y-m-d", strtotime($start_date));
+						$end_date = date ("Y-m-d", strtotime($end_date));
+						
+						if(!$start_date || !$end_date)
+						{
+							$success = false;
+							$error_array[] = "Section at line $line_number could not be added, 
+												due to incorrectly formated start or end dates.";
+						}
+					}
+					
+					$controller;
+					$professor;
+					
+					if(!is_numeric($professor_id))
+					{ 
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be added,
+											because the professor id is not an integer.";
+					}
+					else
+					{
+						$controller = $mdb_control->getController("member");
+						$professor = $controller->getByPrimaryKey("member_id", $professor_id);
+					}
+					
+					if(!isset($professor))
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be added,
+											because the professor id was not found in the database.";
+					}
+					else
+					{
+						$first = $professor->get_first_name();
+						$last = $professor->get_last_name();
+						
+						if((strcmp($first, $first_name) != 0) || (strcmp($last, $last_name) != 0))
+						{
+							$success = false;
+							$error_array[] = "Section at line $line_number could not be added,
+												because the professor name did not match the 
+												professor id found in the database.";
+						}
+					}
+					
+					if($success)
+					{
+						$section = new Section();			
+						$section->initialize(null, $section_name, $professor_id, 
+									$start_date, $end_date, $description);
+						$controller = $mdb_control->getController("section");
+						
+						$success = $controller->saveNew($section);
+					}
+					
+					if(!$success)
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be added.";
+					}
+					
+					$line_number++;
+				}
+			}
 		}
 		
 		return $success;
@@ -218,26 +463,105 @@ class adminSectionAction
 	
 	public function dropMultiSections($mdb_control, &$error_array)
 	{
-		$success = true;
+		$success = true;	
 		
-		$controller = $mdb_control->getController("section");
-		
-		if(isset($controller) && isset($_FILES["attachments"]))
+		if(isset($_FILES["attachments"]))
 		{
-			// each file line = section id, student id, first name, last name
-			// get the file, but do not save it?
-			// read the file, sanitize each line
-			// save line into an array (one csv line per student)
-			// section id matches section chosen in form
-			// check name and student id match database
-			// save each student that is ok
-			// output errors or list of students that could not be added
+			$fileAction = new FileAction();
+			$dataArray = $fileAction->uploadCSVfile($error_array);
+			$line_number = 0;
+			$controller;
+			$section;
+			$section_id;
+			$section_name;
 			
-			// call $ok = $this->dropSection($mdb_control, $section_id, &$error_array);		
-			$success = false;
-			$error_array[] = "The mulit-section delete feature is not yet available";
+			if(($dataArray != false) && (count($dataArray) > 0))
+			{
+				foreach($dataArray as $dataLine)
+				{					
+					if(count($dataLine) != 2)
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be dropped, 
+										due to incorrect number of data items.";
+					}
+					else
+					{
+						$section_id = $this->sanitizeTextInput($dataLine[0]);
+						$section_name = $this->sanitizeTextInput($dataLine[1]);
+						
+						if((strlen($section_id) == 0) || (strlen($section_name) == 0))
+						{
+							$success = false;
+							$error_array[] = "Section at line $line_number could not be 
+											dropped, due to incorrectly formated data.";
+						}
+					}
+					
+					if($success)
+					{
+						$controller = $mdb_control->getController("section");
+						$section = $controller->getByPrimaryKey("section_id", $section_id);
+						
+						if(isset($section))
+						{							
+							if($section->get_section_name() != $section_name)
+							{
+								$success = false;
+								$error_array[] = "Section at line $line_number could not be dropped,
+											because section name did not match the section number 
+											in the database.";
+							}
+						}
+						else
+						{
+							$success = false;
+							$error_array[] = "Section at line $line_number could not be dropped,
+										because section number was not found in the database.";
+						}
+					}
+					
+					if(isset($section))
+					{
+						$success = $this->dropSection($mdb_control, $section_id, $error_array);
+					}
+					
+					if(!$success)
+					{
+						$success = false;
+						$error_array[] = "Section at line $line_number could not be dropped.";
+					}
+					
+					$line_number++;
+				}
+			}
 		}
 		
+		return $success;
+	}
+	
+	
+	public function sanitizeTextInput($text)
+	{
+		$text = strip_tags($text);
+		$text = trim($text);
+		$db_connect = get_db_connection();
+		$text = mysqli_real_escape_string($db_connect, $text);
+		
+		return $text;
+	}
+	
+	public function filterTextInput($text, &$error_array)
+	{
+		$success = true;
+		
+		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $text)) 
+		{
+			$error_array[] =  "Names can only contain letters, numbers, spaces, 
+					and the following characters .',-_&()";  
+			$success = false;
+		}
+	
 		return $success;
 	}
 	

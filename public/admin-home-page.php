@@ -17,7 +17,7 @@
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/admin-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
-	
+	<script src="javascript/ajax-admin-forms.js" ></script>
 	
 </head>
 <body>
