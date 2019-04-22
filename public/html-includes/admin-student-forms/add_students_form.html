@@ -1,6 +1,6 @@
 <?php
 
-	include("html-includes/admin-section-forms/adminStudentAction.php");
+	include("html-includes/admin-student-forms/adminStudentAction.php");
 	
 	$addStudentAction = new adminStudentAction();
 	$returnURL = "admin-home-page.php";
@@ -14,18 +14,9 @@
 		$form_errors = $result['form_errors'];
 	}
 	
-	if((count($result) > 0) && ($result['success'] == true))
-	{
-		// form processing, done reset form to all clear for next use
-		$section_id = "";
-		$student_id = "";
-	}
-	else
-	{
-		// checks GET and POST, if not set, returns empty string
-		$section_id = $addStudentAction->getSectionID();
-		$student_id = $addStudentAction->getStudentID();
-	}
+	// checks GET and POST, if not set, returns empty string
+	$section_id = $addStudentAction->getSectionID();
+	$student_id = $addStudentAction->getStudentID();
 	
 	$section_list = array();
 	$section_list = $dataUtility->getListSectionIDNames($mdb_control);

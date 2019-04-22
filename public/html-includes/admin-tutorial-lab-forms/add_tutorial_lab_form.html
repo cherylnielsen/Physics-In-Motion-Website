@@ -1,29 +1,25 @@
 <?php
 
-	include("html-includes/admin-section-forms/adminLabAction.php");
+	include("html-includes/admin-tutorial-lab-forms/adminLabAction.php");
 	
 	$addLab = new adminLabAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
 	
 	// checks GET and POST, if not set, returns empty string
-	$tutorial_lab_id = $addLab->getLabID();
 	$tutorial_lab_name = $addLab->getLabName();
 	$web_link = $addLab->getWebLink();
 	$lab_status = $addLab->getLabStatus();
 	$introduction = $addLab->getIntroduction();
 	$prerequisites = $addLab->getPrerequisites();
 	$key_topics = $addLab->getKeyTopics();
-	$key_equations = $addLab->getKeyEquations();
-	$description = $addLab->getDescription();
-	$instructions = $addLab->getInstructions();
-	$data_available = $addLab->getDateAvailable();
-	$filepath = $addLab->getFilepath();
-	
+	//$key_equations = $addLab->getKeyEquations();
+	//$description = $addLab->getDescription();
+	//$instructions = $addLab->getInstructions();
+	$date_available = $addLab->getDateAvailable();
+		
 	$status_list = array();
 	$status_list = $addLab->getLabStatusOptions();	
-	$lab_list = array();
-	$lab_list = $dataUtility->getListTutorialLabIDNames($mdb_control);
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
@@ -35,7 +31,7 @@
 ?>
 
 
-<form id="addTutorialLabForm" enctype="multipart/form-data" method="POST" >
+<form id="addTutorialLabForm" method="POST" >
 
 <fieldset>
 	<input type='hidden' name='action_type' value='add'>
@@ -101,8 +97,8 @@
 	<p id="fileListing"></p><br>
 	
 	<label>Date First Available: (Optional)<br>
-		<input type="date" name="data_available" 
-			value="<?php echo "$start_date"; ?>" >
+		<input type="date" name="date_available" 
+			value="<?php echo "$date_available"; ?>" >
 	</label><br>
 	
 	<div class="formButtonDiv">

@@ -1,6 +1,6 @@
 <?php
 
-	include("html-includes/admin-section-forms/adminStudentAction.php");
+	include("html-includes/admin-student-forms/adminStudentAction.php");
 	
 	$dropStudentAction = new adminStudentAction();
 	$returnURL = "admin-home-page.php";
@@ -14,18 +14,9 @@
 		$form_errors = $result['form_errors'];
 	}
 	
-	if((count($result) > 0) && ($result['success'] == true))
-	{
-		// form processing, done reset form to all clear for next use
-		$section_id = "";
-		$student_id = "";
-	}
-	else
-	{
-		// checks GET and POST, if not set, returns empty string
-		$section_id = $dropStudentAction->getSectionID();
-		$student_id = $dropStudentAction->getStudentID();
-	}
+	// checks GET and POST, if not set, returns empty string
+	$section_id = $dropStudentAction->getSectionID();
+	$student_id = $dropStudentAction->getStudentID();
 
 	$section_list = array();
 	$section_list = $dataUtility->getListSectionIDNames($mdb_control);
@@ -36,7 +27,7 @@
 	
 ?>
 
-<form id="dropStudentForm" method="POST" >
+<form id="dropStudentForm" method="POST" enctype="multipart/form-data" >
 <fieldset>
 
 	<input type='hidden' name='action_type' value='drop'>
@@ -61,7 +52,7 @@
 		<p id="fileListing"></p><br>	
 
 	<div class="formButtonDiv">
-		<input type="submit" value="DROP Students">		
+		<input type="submit" value="Drop Students">		
 		<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 	</div>
 		
@@ -116,7 +107,7 @@
 	
 		
 	<div class="formButtonDiv">
-		<input type="submit" value="DROP Student">		
+		<input type="submit" value="Drop Student">		
 		<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 	</div>
 		

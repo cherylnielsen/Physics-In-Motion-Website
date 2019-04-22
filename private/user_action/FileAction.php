@@ -158,7 +158,9 @@ class FileAction
 			{
 				$error_array[] = "The file $filename could not be opened.";
 				return false;
-			}							
+			}	
+
+			$this->deleteFile($uploads_dir, $filename);
 		} 
 		else 
 		{	

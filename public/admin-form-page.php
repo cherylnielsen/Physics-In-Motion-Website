@@ -2,38 +2,51 @@
 		$form_type = $_GET["form_type"];
 		$form_name = "";
 		$form_file_name = "";
-		$form_processor	= "";
 		
-		if($form_type == "write_notice")
+		switch ($form_type)
 		{
-			$form_file_name = "html-includes/user-forms/write-notice-form.html";	
-			$form_processor	= "html-includes/user-forms/write-notice-action.php";
-			$form_name = "Write Notice";
-		}
-		else
-		{
-			$strArray = array();
-			$strArray = explode("_", $form_type);
-			$form_name = implode(" ", $strArray);
-			$form_name = ucwords($form_name);		
+			case "write_notice":
+				$form_file_name = "html-includes/user-forms/write-notice-form.html";
+				$form_name = "Write Notice";
+			break;
 			
-			if(in_array("review", $strArray))
-			{
+			case "review_ratings":
+			case "review_content":
 				$form_file_name = "html-includes/admin-review-forms/" . 
-								implode("-", $strArray) . "-form.html";
-			}
-			else if(in_array("registration", $strArray))
-			{
-				$form_file_name = "html-includes/admin-registration-forms/" . 
-								implode("-", $strArray) . "-form.html";
-			}	
-			else
-			{
-				$form_file_name = "html-includes/admin-section-forms/" . 
-								implode("-", $strArray) . "-form.html";
-			}
+									$form_type . "_form.html";
+			break;
 			
-		}		
+			case "professor_registration":
+			case "admin_registration":
+			case "edit_professor":
+			case "edit_administrator":
+			case "changelogin":
+				$form_file_name = "html-includes/admin-registration-forms/" . 
+								$form_type . "_form.html";
+			break;
+			
+			case "add_students":
+			case "drop_students":
+			case "edit_student":
+				$form_file_name = "html-includes/admin-student-forms/" . 
+									$form_type . "_form.html";
+			break;
+			
+			case "add_sections":
+			case "drop_sections":
+			case "edit_sections":
+				$form_file_name = "html-includes/admin-section-forms/" . 
+									$form_type . "_form.html";
+			break;
+			
+			case "add_tutorial_lab":
+			case "edit_tutorial_lab":
+				$form_file_name = "html-includes/admin-tutorial-lab-forms/" . 
+									$form_type . "_form.html";
+			break;
+			
+		}
+		
 	?>
 
 <!DOCTYPE html>
@@ -82,7 +95,6 @@
 	$last_name = $_SESSION["last_name"];
 	$form_type = $_GET["form_type"];
 
-	if(!empty($form_processor)) { include($form_processor); }
 	include('html-includes/template/header.php'); 
 	include('html-includes/navigation/main-navigation-and-quote.php'); 
 ?>

@@ -26,22 +26,20 @@ class adminLabAction
 				break;
 				
 				default:
-					$error_array[] = "Sorry, action type unknown, the request could not be 
-										processed at this time. Please try again later.";
+					$error_array[] = "Sorry, unknown action type, the request could not be processed.";
 					$success = false;
 			}
 		}
 		else
 		{
-			$error_array[] = "Sorry, action type not set, the request could not be 
-								processed at this time. Please try again later.";
+			$error_array[] = "Sorry, unknown action type, the request could not be processed.";
 			$success = false;
 		}
 		
 		if($success)
 		{	
-			header("Location: $url");
-			exit();
+			$form_errors = "<h2>SUCCESS: </h2>";
+			$form_errors .= "<p>The new Tutorial Lab has been saved.</p>";
 		}
 		else
 		{
@@ -57,49 +55,165 @@ class adminLabAction
 	}
 	
 	
+	public function addTutorialLab($mdb_control, &$error_array)
+	{
+		$success = true;		
+		$controller = $mdb_control->getController("tutorial_lab");
+		$filepath = "";
+		
+		if(!isset($controller))
+		{
+			$error_array[] = "Database controller error, the request 
+								could not be processed.";
+			return false;
+		}		
+		
+		$lab_name = $this->filterInputData("tutorial_lab_name", $error_array);
+		$web_link = $this->filterInputData("web_link", $error_array);
+		$lab_status = $this->filterInputData("lab_status", $error_array);
+		$introduction = $this->filterInputData("introduction", $error_array);
+		$prerequisites = $this->filterInputData("prerequisites", $error_array);
+		$key_topics = $this->filterInputData("key_topics", $error_array);
+		
+		if( is_null($lab_status) || is_null($introduction) || 
+			is_null($prerequisites) || is_null($key_topics))
+		{
+			$error_array[] = "The Tutorial Lab could not be added.";
+			$success = false;
+		}
+
+		$status_values = array('New', 'Updated', 'Available', 'Development', 'Discontinued');
+		
+		if(!in_array($lab_status, $status_values))
+		{
+			$error_array[] = "Lab Status was not an allowed value.";
+			$success = false;
+		}
+				
+		if(is_null($lab_name) || is_null($web_link))
+		{
+			$error_array[] = "The Tutorial Lab must have a name and web link.";
+			$success = false;
+		}
+		else
+		{
+			// lab_name and web_link must be unique
+			$links = array();
+			$links = $controller->getByAttribute("tutorial_lab_web_link", $web_link);
+			$names = array();
+			$names = $controller->getByAttribute("tutorial_lab_name", $lab_name);
+			
+			if(!empty($links) || !empty($names))
+			{
+				$error_array[] = "The lab name and web link must be unique
+									to this particular tutorial lab.";
+				$success = false;
+			}
+		}
+					
+		// file uploads not yet being done
+		$key_equations = "the key equations";
+		$description = "the lab description";
+		$instructions = "the lab instructions";
+			
+		// save the new tutorial lab to the database
+		if($success)
+		{
+			$tutorial_lab = new Tutorial_Lab();	
+		
+			$tutorial_lab->initialize(null, $lab_name, $web_link, $lab_status, 
+										$introduction);
+						
+			$tutorial_lab->initializePart2($prerequisites, $key_topics, $key_equations, 
+										$description, $instructions);	
+						
+			$success = $controller->saveNew($tutorial_lab);
+		}
+		
+		// set the filepath
+		if($success)
+		{
+			$id = $tutorial_lab->get_tutorial_lab_id();
+			$filepath = "tutorial_lab/id_" . $id;
+			$tutorial_lab->set_filepath($filepath);
+			$success = $controller->updateAttribute($tutorial_lab, "filepath");
+		}
+		
+		// date available is not required 		
+		if($success && isset($_POST["date_available"]))
+		{
+			// if date available put into mysql formate
+			$date_available = $_POST["date_available"];
+			$date_available = date("Y-m-d", strtotime($date_available));
+			$tutorial_lab->set_date_first_available($date_available);
+			$success = $controller->updateAttribute($tutorial_lab, "date_first_available");
+		}
+				
+		return $success;
+	}
+	
+	
 	public function editTutorialLab($mdb_control, $error_array)
 	{
 		$success = true;		
-		$controller = $mdb_control->getController("section");
+		$controller = $mdb_control->getController("tutorial_lab");
 		
 		if(isset($controller))
 		{
-			$section_name = $_POST["section_name"];
-			$professor_id = $_POST["professor_id"];
-			$start_date = $_POST["start_date"];
-			$end_date = $_POST["end_date"];
-			$description = $_POST["description"];	
-			
-			$section = new Section();			
-			$section->initialize(null, $section_name, $professor_id, 
-										$start_date, $end_date, $description);
-			
-			$sucess = $controller->updateAll($section);
+			$tutorial_lab = new Tutorial_Lab();			
+			$tutorial_lab->initialize();
+			$tutorial_lab->initialize2();
+			$success = $controller->updateAll($tutorial_lab);
 		}
 		
 		return $success;
 	}	
 	
 	
-	public function addTutorialLab($mdb_control, &$error_array)
+	public function filterInputData($data_type, &$error_array)
 	{
-		$success = true;		
-		$controller = $mdb_control->getController("section");
+		$data = $this->sanitizeTextInput($_POST[$data_type]);
 		
-		if(isset($controller))
-		{
-			$section_name = $_POST["section_name"];
-			$professor_id = $_POST["professor_id"];
-			$start_date = $_POST["start_date"];
-			$end_date = $_POST["end_date"];
-			$description = $_POST["description"];			
-			$section = new Section();			
-			$section->initialize(null, $section_name, $professor_id, 
-										$start_date, $end_date, $description);
-			
-			$sucess = $controller->saveNew($section);
+		if(strlen($data) == 0) 
+		{ 
+			$error_array[] = "Please enter a $data_type.";
+			return null;
 		}
 		
+		$ok = $this->filterTextInput($data, $error_array);
+		
+		if(!$ok)
+		{ 
+			$error_array[] = "$data_type is not properly formated.";
+			return null;
+		}
+		
+		return $data;		
+	}
+	
+	
+	public function sanitizeTextInput($text)
+	{
+		$text = strip_tags($text);
+		$text = trim($text);
+		$db_connect = get_db_connection();
+		$text = mysqli_real_escape_string($db_connect, $text);
+		
+		return $text;
+	}
+	
+	
+	public function filterTextInput($text, &$error_array)
+	{
+		$success = true;
+		
+		if (!preg_match("/^[a-zA-Z0-9 .',()&_\-]*$/", $text)) 
+		{
+			$error_array[] =  "Names can only contain letters, numbers, spaces, 
+					and the following characters .',-_&()";  
+			$success = false;
+		}
+	
 		return $success;
 	}
 	

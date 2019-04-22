@@ -76,6 +76,7 @@ div.quote > h2 {
 	margin: 0 0 1em 0;
 }
 
+/**
 div.nav_show_hide {
 	display: none;
 }
@@ -83,4 +84,4 @@ div.nav_show_hide {
 h2.nav_show_hide {
 	cursor: pointer;
 }
-
+**/

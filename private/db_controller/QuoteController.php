@@ -79,7 +79,7 @@ class QuoteController extends DatabaseController {
 		if($result)
 		{
 			// get the newly generated id
-			$quote_id = mysql_insert_id($db_connection);
+			$quote_id = mysqli_insert_id($db_connection);
 			$quote->set_quote_id(quote_id);				
 		}
 		else

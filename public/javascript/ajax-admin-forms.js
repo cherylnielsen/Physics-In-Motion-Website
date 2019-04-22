@@ -1,6 +1,6 @@
 /* JavaScript for member user forms. */
 
-
+/**
 function showHideNav(navID)
 {
 	// get the div containing the table
@@ -16,7 +16,7 @@ function showHideNav(navID)
 		navigationDiv.style.display = "none";
 	}
 }
-
+**/
 
 /* AJAX to populate a form for editing sections */
 /**

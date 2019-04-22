@@ -203,7 +203,7 @@ class adminSectionAction
 				$success = false;
 			}
 			
-			if((strlen($start_date) == 0) || (strlen($start_date) == 0))
+			if((strlen($start_date) == 0) || (strlen($end_date) == 0))
 			{
 				$error_array[] = "Please select a start date and end date.";
 				$success = false;
@@ -273,6 +273,7 @@ class adminSectionAction
 			return false;
 		}
 		
+		$section_name = $section->get_section_name();
 		$controller = $mdb_control->getController("section_student");
 		$section_students = $controller->getByAttribute("section_id", $section_id);
 			
@@ -289,7 +290,7 @@ class adminSectionAction
 			
 			if($student_total > 0)
 			{
-				$error_array[] = "Section $section_id : $section_name has active 
+				$error_array[] = "Section $section_id : $section_name : has active 
 									students, so it cannot be deleted.";
 				return false;
 			}
