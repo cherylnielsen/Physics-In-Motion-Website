@@ -27,8 +27,8 @@
 				class="navigation">Add New Sections</a>
 			<a href="admin-form-page.php?form_type=drop_sections" 
 				class="navigation">Drop Sections</a>
-			<!--<a href="admin-form-page.php?form_type=edit_section" -->
-			<a class="navigation not-enabled">Edit Section</a>		
+			<a href="admin-form-page.php?form_type=edit_section" 
+				class="navigation">Edit Section</a>		
 			<a href="admin-form-page.php?form_type=add_tutorial_lab" 
 				class="navigation">Add New Tutorial Lab</a>
 			<!--<a href="admin-form-page.php?form_type=edit_tutorial_lab" -->

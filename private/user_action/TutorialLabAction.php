@@ -21,39 +21,36 @@ class tutorialLabAction
 	}
 		
 	
-	public function getLabFromDatabase($mdb_control)
+	public function getLabFromDatabase($mdb_control, $tutorial_lab_id)
 	{
-		if(isset($_POST['get_lab']))
-		{
-			$tutorial_lab_id = $_POST['get_lab'];
-			$control = $mdb_control->getController("tutorial_lab");
-			$tutorial_lab = $hmwk_control->getByPrimaryKey("tutorial_lab_id", $tutorial_lab_id);
-			
-			$tutorial_lab_name = $tutorial_lab->get_tutorial_lab_name();
-			$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
-			$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
-			$prerequisites = $tutorial_lab->get_prerequisites();
-			$key_topics = $tutorial_lab->get_key_topics();
-			$key_equations = $tutorial_lab->get_key_equations();
-			$description = $tutorial_lab->get_section_description();
-			$instructions = $tutorial_lab->get_instructions();
-			$date_first_available = $tutorial_lab->get_date_first_available();
-			
-			$dataStr = "lab_id=" . $tutorial_lab_id . 
-						"&lab_name=" . $tutorial_lab_name . 
-						"&web_link=" . $tutorial_lab_web_link . 
-						"&lab_status=" . $lab_status . 
-						"&introduction=" . $tutorial_lab_introduction . 
-						"&filepath=" . $filepath . 
-						"&prerequisites=" . $prerequisites .
-						"&key_topics=" . $key_topics .
-						"&key_equations=" . $key_equations . 
-						"&description=" . $description .
-						"&instructions=" . $instructions .
-						"&date_first_available=" . $date_first_available;
-			
-			return $dataStr;
-		}
+		$tutorial_lab_id = $_POST['get_lab'];
+		$control = $mdb_control->getController("tutorial_lab");
+		$tutorial_lab = $hmwk_control->getByPrimaryKey("tutorial_lab_id", $tutorial_lab_id);
+		
+		$tutorial_lab_name = $tutorial_lab->get_tutorial_lab_name();
+		$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
+		$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
+		$prerequisites = $tutorial_lab->get_prerequisites();
+		$key_topics = $tutorial_lab->get_key_topics();
+		$key_equations = $tutorial_lab->get_key_equations();
+		$description = $tutorial_lab->get_section_description();
+		$instructions = $tutorial_lab->get_instructions();
+		$date_first_available = $tutorial_lab->get_date_first_available();
+		
+		$dataStr = "lab_id=" . $tutorial_lab_id . 
+					"&lab_name=" . $tutorial_lab_name . 
+					"&web_link=" . $tutorial_lab_web_link . 
+					"&lab_status=" . $lab_status . 
+					"&introduction=" . $tutorial_lab_introduction . 
+					"&filepath=" . $filepath . 
+					"&prerequisites=" . $prerequisites .
+					"&key_topics=" . $key_topics .
+					"&key_equations=" . $key_equations . 
+					"&description=" . $description .
+					"&instructions=" . $instructions .
+					"&date_first_available=" . $date_first_available;
+		
+		return $dataStr;
 	}
 	
 	
