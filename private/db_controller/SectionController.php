@@ -36,7 +36,7 @@ class SectionController extends DatabaseController {
 	// The id will be auto-generated, when the new object is added to the database table.
 	public function saveNew(&$section)
 	{
-		$sucess = true;
+		$success = true;
 		$db_connection = get_db_connection();
 		$section_name = $section->get_section_name();
 		$professor_id = $section->get_professor_id();
@@ -62,12 +62,12 @@ class SectionController extends DatabaseController {
 		}
 		else
 		{
-			$sucess = false;
+			$success = false;
 			echo '<p>' . mysqli_error($db_connection) . '</p>';
 		}
 
 		mysqli_close($db_connection);
-		return $sucess;
+		return $success;
 		
 	}
 	

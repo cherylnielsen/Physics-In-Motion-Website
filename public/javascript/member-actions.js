@@ -74,7 +74,7 @@ function homeworkActions(item_id, action)
 					break;
 					
 					case actions.DELETE_ASSIGNMENT:
-						var rowID = "assignment_" + item_id;
+						var rowID = "assignment_row_" + item_id;
 						document.getElementById(rowID).style.display = "none";
 					break;
 				}

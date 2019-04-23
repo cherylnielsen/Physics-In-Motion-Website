@@ -8,7 +8,7 @@ class TutorialLabController extends DatabaseController {
 	public function __construct() {}
 	// $tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, $lab_status, 
 	// $tutorial_lab_introduction, $prerequisites, $key_topics, 
-	// $key_equations, $description, $instructions, $date_first_available)
+	// $key_equations, $description, $instructions, $date_first_available, $filepath)
 
 	
 	protected function getData($db_result, $db_connection)
@@ -23,11 +23,11 @@ class TutorialLabController extends DatabaseController {
 				
 				$lab->initialize($row['tutorial_lab_id'], $row['tutorial_lab_name'], 
 						$row['tutorial_lab_web_link'], $row['lab_status'], 
-						$row['tutorial_lab_introduction'], $row['filepath']);
+						$row['tutorial_lab_introduction']);
 						
 				$lab->initializePart2($row['prerequisites'], $row['key_topics'], 
 						$row['key_equations'], $row['description'], 
-						$row['instructions'], $row['date_first_available']);
+						$row['instructions'], $row['date_first_available'], $row['filepath']);
 						
 				$dataArray[] = $lab;
 			}	
@@ -57,20 +57,19 @@ class TutorialLabController extends DatabaseController {
 		$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
 		$lab_status = $tutorial_lab->get_lab_status();
 		$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
-		$filepath = $tutorial_lab->get_filepath();
 		$table = $this->getTableName();
 		
 		// The id will be auto-generated
 		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, 
 				lab_status, tutorial_lab_introduction, filepath) 
 		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', 
-				'$tutorial_lab_introduction', '$filepath)";
+				'$tutorial_lab_introduction')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
-			$tutorial_lab_id = mysql_insert_id($db_connection);
+			$tutorial_lab_id = mysqli_insert_id($db_connection);
 			$tutorial_lab->set_tutorial_lab_id($tutorial_lab_id);	
 		}
 		else
@@ -94,28 +93,26 @@ class TutorialLabController extends DatabaseController {
 		$tutorial_lab_web_link = $tutorial_lab->get_tutorial_lab_web_link();
 		$lab_status = $tutorial_lab->get_lab_status();
 		$tutorial_lab_introduction = $tutorial_lab->get_tutorial_lab_introduction();
-		$filepath = $tutorial_lab->get_filepath();
 		$prerequisites = $tutorial_lab->get_prerequisites();
 		$key_topics = $tutorial_lab->get_key_topics();
 		$key_equations = $tutorial_lab->get_key_equations();
 		$description = $tutorial_lab->get_description();
 		$instructions = $tutorial_lab->get_instructions();
-		$date_first_available = $tutorial_lab->get_date_first_available();
-		$table = $this->getTableName();
 		
 		// The id will be auto-generated
-		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, lab_status, 
-				tutorial_lab_introduction, filepath, prerequisites, key_topics, key_equations, 
-				description, instructions, date_first_available) 
+		$query = "insert into tutorial_lab 
+				(tutorial_lab_name, tutorial_lab_web_link, lab_status, 
+				tutorial_lab_introduction, prerequisites, key_topics, 
+				key_equations, description, instructions) 
 		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', 
-				'$tutorial_lab_introduction', '$filepath', '$prerequisites', '$key_topics', 
-				'$key_equations', '$description', '$instructions', '$date_first_available')";
+				'$tutorial_lab_introduction', '$prerequisites', '$key_topics', 
+				'$key_equations', '$description', '$instructions')";
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
 		{
 			// get the newly generated id
-			$tutorial_lab_id = mysql_insert_id($db_connection);
+			$tutorial_lab_id = mysqli_insert_id($db_connection);
 			$tutorial_lab->set_tutorial_lab_id($tutorial_lab_id);	
 		}
 		else

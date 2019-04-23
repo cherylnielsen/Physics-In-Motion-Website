@@ -1,33 +1,29 @@
 <?php
 
-	include("html-includes/admin-section-forms/adminLabAction.php");
+	include("html-includes/admin-tutorial-lab-forms/adminLabAction.php");
 	
-	$editLab = new adminLabAction();
+	$addLab = new adminLabAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
 	
 	// checks GET and POST, if not set, returns empty string
-	$tutorial_lab_id = $editLab->getLabID();
-	$tutorial_lab_name = $editLab->getLabName();
-	$web_link = $editLab->getWebLink();
-	$lab_status = $editLab->getLabStatus();
-	$introduction = $editLab->getIntroduction();
-	$prerequisites = $editLab->getPrerequisites();
-	$key_topics = $editLab->getKeyTopics();
-	$key_equations = $editLab->getKeyEquations();
-	$description = $editLab->getDescription();
-	$instructions = $editLab->getInstructions();
-	$data_available = $editLab->getDateAvailable();
-	$filepath = $editLab->getFilepath();
-	
+	$tutorial_lab_name = $addLab->getLabName();
+	$web_link = $addLab->getWebLink();
+	$lab_status = $addLab->getLabStatus();
+	$introduction = $addLab->getIntroduction();
+	$prerequisites = $addLab->getPrerequisites();
+	$key_topics = $addLab->getKeyTopics();
+	//$key_equations = $addLab->getKeyEquations();
+	//$description = $addLab->getDescription();
+	//$instructions = $addLab->getInstructions();
+	$date_available = $addLab->getDateAvailable();
+		
 	$status_list = array();
-	$status_list = $editLab->getLabStatusOptions();	
-	$lab_list = array();
-	$lab_list = $dataUtility->getListTutorialLabIDNames($mdb_control);
+	$status_list = $addLab->getLabStatusOptions();	
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
-		$form_errors = $editLab->processForm($mdb_control, $returnURL);
+		$form_errors = $addLab->processForm($mdb_control, $returnURL);
 	}
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
@@ -35,39 +31,15 @@
 ?>
 
 
-<form id="editTutorialLabForm" enctype="multipart/form-data" method="POST" >
+<form id="addTutorialLabForm" method="POST" enctype="multipart/form-data" >
 
 <fieldset>
 	<input type='hidden' name='action_type' value='add'>
 	
-	<h2 class="form">Edit New Tutorial Lab</h2>	
+	<h2 class="form">Add New Tutorial Lab</h2>	
 	
-	<label>Tutorial Lab: <br>
-		<select id="tutorial_lab_id" name="tutorial_lab_id" required 
-			onchange="populateForm('section')">
-			
-			<option value='' ></option>
-			<?php
-				for($i = 0; $i < count($lab_list); $i++)
-				{
-					$lab_id = $lab_list[$i]['id'];
-					$name = $lab_list[$i]['name'];
-					$str = "<option value='$lab_id' >$name</option>";
-					
-					if(strcmp($tutorial_lab_id, $lab_id) == 0)
-					{
-						$str = "<option value='$lab_id' selected >$name</option>";
-					}
-					
-					echo "$str";
-				}				
-			?>
-			
-		</select>
-	</label><br>
-	
-	<label>Tutorial Lab Name: <br><textarea name="tutorial_lab_name" rows="10" cols="50" 
-		spellcheck="true" required ><?php echo "$tutorial_lab_name"; ?></textarea>
+	<label>Tutorial Lab Name: <br><input type="text" name="tutorial_lab_name" required 
+		value="<?php echo "$tutorial_lab_name"; ?>" >
 	</label><br>
 	
 	<label>Web Link: <br><input type="text" name="web_link" required 
@@ -125,12 +97,12 @@
 	<p id="fileListing"></p><br>
 	
 	<label>Date First Available: (Optional)<br>
-		<input type="date" name="data_available"  
-			value="<?php echo "$start_date"; ?>" >
+		<input type="date" name="date_available" 
+			value="<?php echo "$date_available"; ?>" >
 	</label><br>
 	
 	<div class="formButtonDiv">
-		<input type="submit" value="Update Tutorial Lab">		
+		<input type="submit" value="Add New Tutorial Lab">		
 		<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
 	</div>
 		

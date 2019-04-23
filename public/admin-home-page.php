@@ -11,13 +11,12 @@
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
-		require_once('../private/admin_action/AdministrativeActions.php');
 	?>
 	
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/admin-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-actions.js" ></script>
-	
+
 	
 </head>
 <body>

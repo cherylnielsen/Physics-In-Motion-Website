@@ -1,5 +1,23 @@
 /* JavaScript for member user forms. */
 
+/**
+function showHideNav(navID)
+{
+	// get the div containing the table
+	var navigationDiv = document.getElementById(navID);
+	
+	// toggle the div table display on or off
+	if( navigationDiv.style.display == "none" )
+	{
+		navigationDiv.style.display = "block";
+	}
+	else
+	{
+		navigationDiv.style.display = "none";
+	}
+}
+**/
+
 /* AJAX to populate a form for editing sections */
 /**
 	AJAX with POST
@@ -11,6 +29,7 @@
 	This ONLY works in the exact order of: 
 	new xhttp request, onready function, open, set header, send.
 **/	
+/**
 function populateForm(object_type)
 {
 	var xhttp = new XMLHttpRequest();
@@ -56,3 +75,4 @@ function populateForm(object_type)
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send(dataString);
 }
+**/
