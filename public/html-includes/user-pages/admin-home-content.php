@@ -1,7 +1,3 @@
-<?php
-	$adminActions = new AdministrativeActions();
-?>
-
 
 <?php
 	echo "<div id='noticeSummaryDiv' >";

@@ -65,7 +65,6 @@
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
-		require_once('../private/admin_action/AdministrativeActions.php');
 	?>
 	
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">

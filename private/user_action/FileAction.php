@@ -1,17 +1,18 @@
 <?php
 
+/**
+	This file upload class is based on code from
+	http://php.net/manual/en/function.move-uploaded-file.php
+	and
+	https://www.w3schools.com/php7/php7_file_upload.asp 
+	as of 3/20/2019.	
+**/	
 class FileAction
 {	
 	public function __construct() {}
 	
 	
-	/**
-		This file upload function is based on code from
-		http://php.net/manual/en/function.move-uploaded-file.php
-		and
-		https://www.w3schools.com/php7/php7_file_upload.asp 
-		as of 3/20/2019.	
-	**/	
+	// process multiple files uploaded at the same time from the same form input
 	public function processFileUploads($attachment_type, $id_number, 
 							$uploads_dir, $mdb_control, &$error_array)
 	{		
@@ -30,7 +31,6 @@ class FileAction
 			$controller = $mdb_control->getController("assignment_attachment");
 			$attachment = new Assignment_Attachment();
 		}
-		
 		
 		if(isset($_FILES["attachments"]))
 		{
@@ -74,34 +74,28 @@ class FileAction
 				} 
 				else // if error
 				{						
-					if($error == UPLOAD_ERR_INI_SIZE || $error == UPLOAD_ERR_FORM_SIZE)
-					{
-						$filename = basename($_FILES["attachments"]["filename"][$key]);
-						$error_array[] = "The file $filename is too large. Files are limited to < 7MB.";
-						$success = false;
-					}
-					else if($error != UPLOAD_ERR_NO_FILE) 
+					if($error != UPLOAD_ERR_NO_FILE) 
 					{ 	
-						// if error is not too large, and error is not no file
-						// technical errors, not user errors
+						$error_array[] = "The file encountered an error and was not uploaded.";
 						$success = false;
-					}					
+					}				
 				}
 				
 			} // end for each loop		
-			
 		}
 		
 		return $success;
 	}	
 	
 	
-	// returns false on failure or an array of the csv file contents
+	// Returns an 2D array of the CSV comma separated file contents
+	// with each line of file data forming a 1D array  
+	// returns false on failure
 	public function uploadCSVfile(&$error_array)
 	{				
 		if ($_FILES["attachments"]["error"] != UPLOAD_ERR_OK) 
 		{	
-			$error_array[] = "The file could not be uploaded.";
+			$error_array[] = "The file encountered an error, s it was not uploaded.";
 			return false;
 		}
 		
@@ -172,6 +166,57 @@ class FileAction
 	}	
 	
 	
+	public function tutorialLabFileUpload($uploads_dir, 
+					$attachment_type, $mdb_control, &$error_array)
+	{		
+		$success = true;	
+		
+		if(isset($_FILES[$attachment_type]))
+		{
+			if ($_FILES[$attachment_type]["error"] != UPLOAD_ERR_OK) 
+			{						
+				$error_array[] = "The file encountered an error, so it was not uploaded.";
+				return false;				
+			}
+			
+			// the temp storage name
+			$tmp_name = $_FILES[$attachment_type]["tmp_name"];				
+			// to prevent file system traversal attacks
+			$filename = basename($_FILES[$attachment_type]["name"]);
+			// get destination file path 					
+			$fullFileName = "$uploads_dir/$filename";
+			$size = $_FILES[$attachment_type]["size"];
+			
+			$success = $this->filterFileUpload($tmp_name, $filename, $size, $fullFileName, $error_array);
+			
+			if (!$success) 
+			{	
+				$error_array[] = "The file $filename could not be uploaded.";					
+			}			 
+			else // if everything is success, try to upload file
+			{
+				if(!file_exists($uploads_dir)) 
+				{ 
+					mkdir($uploads_dir, true); 
+				}
+					
+				if (move_uploaded_file($tmp_name, $fullFileName)) 
+				{	
+					$success = true;							
+				} 
+				else 
+				{	
+					$error_array[] = "The file $filename could not be saved.";
+					$success = false;
+				}
+			}										
+		}
+		
+		if($success) { return $filename; }
+		else { return ""; }
+	}	
+	
+	
 	public function filterFileUpload($tmp_name, $filename, $size, $fullFileName, &$error_array)
 	{		
 		$success = true;
@@ -193,7 +238,7 @@ class FileAction
 		
 		// Check file size, the standard limit for PHP post is 8MB.
 		// 8,000,000 < 1024 * 1024 * 8 = 8,388,608
-		if ($size > 8000000) 
+		if ($size > 8400000) 
 		{	
 			$error_array[] = "The file $filename is too large. Files are limited to < 7MB.";
 			$success = false;

@@ -2,7 +2,7 @@
 
 	include("html-includes/admin-section-forms/adminSectionAction.php");
 	
-	$editSection = new adminSectionAction();
+	$addSection = new adminSectionAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
 	$result = array();
@@ -14,32 +14,18 @@
 		$form_errors = $result['form_errors'];
 	}
 	
-	if((count($result) > 0) && ($result['success'] == true))
-	{
-		// form processing, done reset form to all clear for next use
-		$section_id = "";
-		$section_name = "";
-		$professor_id = "";
-		$start_date = "";
-		$end_date = "";
-		$description = "";
-	}
-	else
-	{
-		// checks GET and POST, if not set, returns empty string	
-		$section_id = $editSection->getSectionID();
-		$section_name = $editSection->getSectionName();
-		$professor_id = $editSection->getProfessorID();
-		$start_date = $editSection->getStartDate();
-		$end_date = $editSection->getEndDate();
-		$description = $editSection->getDescription();
-	}	
+	// checks GET and POST, if not set, returns empty string	
+	$section_name = $addSection->getSectionName();
+	$professor_id = $addSection->getProfessorID();
+	$start_date = $addSection->getStartDate();
+	$end_date = $addSection->getEndDate();
+	$description = $addSection->getDescription();
+		
+	$section_list = array();
+	$section_list = $dataUtility->getListSectionIDNames($mdb_control);
 	
 	$professor_list = array();
 	$professor_list = $dataUtility->getListProfessorIDName($mdb_control);
-	
-	$section_list = array();
-	$section_list = $dataUtility->getListSectionIDNames($mdb_control);
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
 	
