@@ -59,6 +59,12 @@ input[type=text],  textarea {
 	background-color: lightyellow;	
 }
 
+input[type=text].readonly {
+	width: 50%;
+	border: none;
+	background-color: #A7DAFA;	
+}
+
 input[type=checkbox] {
 	width: 1.5em; 
 	height: 1.5em;

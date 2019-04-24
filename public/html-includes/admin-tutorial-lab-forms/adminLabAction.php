@@ -17,12 +17,11 @@ class adminLabAction
 			switch ($action)
 			{
 				case "add":
-					$success = $this->addTutorialLab($mdb_control, $error_array);
+					$success = $this->addTutorialLab("add", $mdb_control, $error_array);
 				break;
 				
 				case "edit":
-					$section_id = $_POST["section_id"];
-					$success = $this->editTutorialLab($mdb_control, $error_array);
+					$success = $this->addTutorialLab("edit", $mdb_control, $error_array);
 				break;
 				
 				default:
@@ -55,11 +54,14 @@ class adminLabAction
 	}
 	
 	
-	public function addTutorialLab($mdb_control, &$error_array)
+	public function addTutorialLab($action_type, $mdb_control, &$error_array)
 	{
 		$success = true;		
 		$controller = $mdb_control->getController("tutorial_lab");
 		$filepath = "";
+		$uploads_dir = "";
+		$tutorial_lab = new Tutorial_Lab();
+		$files_uploaded_ok = true;
 		
 		if(!isset($controller))
 		{
@@ -90,18 +92,97 @@ class adminLabAction
 			$success = false;
 		}
 				
+		$ok = $this->check4Duplicates($action_type, $controller, $web_link, 
+										$lab_name, $error_array);
+		if(!$ok) { $success = false; }
+		
+		
+		// save the new tutorial lab to the database
+		if($success && ($action_type == "add"))
+		{					
+			$tutorial_lab->initialize(null, $lab_name, $web_link, 
+									$lab_status, $introduction);	
+			
+			// files not yet uploaded
+			$tutorial_lab->initializePart2($prerequisites, $key_topics, null, null, null);
+							
+			$success = $controller->saveNew($tutorial_lab);
+			
+			if($success )
+			{
+				$id = $tutorial_lab->get_tutorial_lab_id();
+				$year = date("Y");
+				$filepath = "tutorial_lab/$year/id_$id";
+				$uploads_dir = "attachments/$filepath";					
+				$tutorial_lab->set_filepath($filepath);
+				$controller->updateAttribute($tutorial_lab, "filepath");
+			}
+			
+			if($success)
+			{			
+				$files_uploaded_ok = $this->uploadFiles($tutorial_lab, 
+						$controller, $uploads_dir, $mdb_control, $error_array);
+			}			
+		}
+		
+		
+		// save the new tutorial lab to the database
+		if($success && ($action_type == "edit"))
+		{			
+			$lab_id = $_POST["tutorial_lab_id"];
+			
+			$tutorial_lab = $controller->getByPrimaryKey("tutorial_lab_id", $lab_id);
+			
+			// set the text fields with the new data
+			$tutorial_lab->initialize($lab_id, $lab_name, $web_link, 
+									$lab_status, $introduction);	
+			$tutorial_lab->set_prerequisites($prerequisites);
+			$tutorial_lab->set_key_topics($key_topics);			
+			
+			$success = $controller->updateAll($tutorial_lab);
+			
+			// get the original file path to update the files
+			$filepath = $tutorial_lab->get_filepath();
+			$uploads_dir = "attachments/$filepath";
+			
+			if($success)
+			{			
+				$files_uploaded_ok = $this->updateFiles($tutorial_lab, 
+						$controller, $uploads_dir, $mdb_control, $error_array);
+			}
+		}		
+		
+		
+		if(!$files_uploaded_ok)
+		{ 
+			$error_array[] = "The new Tutorial Lab was saved, but without 
+							some of the possible file attachments.
+							Please use Edit Tutorial Lab to add files later.";
+			$success = false; 
+		}
+			
+		return $success;
+	}
+	
+	
+	public function check4Duplicates($action_type, $lab_controller, 
+								$web_link, $lab_name, &$error_array)
+	{
+		$success = true;
+		
 		if(is_null($lab_name) || is_null($web_link))
 		{
 			$error_array[] = "The Tutorial Lab must have a name and web link.";
-			$success = false;
+			return false;
 		}
-		else
+		
+		if($action_type == "add")
 		{
-			// lab_name and web_link must be unique
+			// the lab_name and web_link must be unique
 			$links = array();
-			$links = $controller->getByAttribute("tutorial_lab_web_link", $web_link);
+			$links = $lab_controller->getByAttribute("tutorial_lab_web_link", $web_link);
 			$names = array();
-			$names = $controller->getByAttribute("tutorial_lab_name", $lab_name);
+			$names = $lab_controller->getByAttribute("tutorial_lab_name", $lab_name);
 			
 			if(!empty($links) || !empty($names))
 			{
@@ -110,109 +191,36 @@ class adminLabAction
 				$success = false;
 			}
 		}
-					
-		// file uploads are not required, in case the new lab is still under development
-		$key_equations = null;
-		$description = null;
-		$instructions = null;
-			
-		// save the new tutorial lab to the database
-		if($success)
+		
+		if($action_type == "edit")
 		{
-			$tutorial_lab = new Tutorial_Lab();	
-		
-			$tutorial_lab->initialize(null, $lab_name, $web_link, $lab_status, 
-										$introduction);
-						
-			$tutorial_lab->initializePart2($prerequisites, $key_topics, $key_equations, 
-										$description, $instructions);	
-						
-			$success = $controller->saveNew($tutorial_lab);
-		}
-		
-		// set the filepath based on the new lab id
-		if($success)
-		{
-			$id = $tutorial_lab->get_tutorial_lab_id();
-			$year = date("Y");
-			$filepath = "tutorial_lab/$year/id_$id";
-			$uploads_dir = "attachments/$filepath";
-			$tutorial_lab->set_filepath($filepath);
-			$success = $controller->updateAttribute($tutorial_lab, "filepath");
-		}
-		
-		$files_uploaded_ok = true;
-		
-		if($success)
-		{			
-			$ok = true;
-			$key_equations = $this->uploadFile($uploads_dir, "key_equations", 
-												$mdb_control, $error_array);
-			$description = $this->uploadFile($uploads_dir, "description", 
-												$mdb_control, $error_array);
-			$instructions = $this->uploadFile($uploads_dir, "instructions", 
-												$mdb_control, $error_array);
-						
-			if(!empty($key_equations))
+			// the lab_name and web_link must be unique
+			$tutorial_lab_id = $_POST["tutorial_lab_id"];
+			$links = array();
+			$links = $lab_controller->getByAttribute("tutorial_lab_web_link", $web_link);
+			$names = array();
+			$names = $lab_controller->getByAttribute("tutorial_lab_name", $lab_name);
+			
+			if(!empty($links))
 			{
-				$tutorial_lab->set_key_equations($key_equations);
-				$ok = $controller->updateAttribute($tutorial_lab, "key_equations");
+				$id = $links[0]->get_tutorial_lab_id();
+				if($id != $tutorial_lab_id)
+				{
+					$error_array[] = "The lab name must be unique
+										to this particular tutorial lab.";
+					$success = false;
+				}
 			}
 			
-			if(!$ok || empty($key_equations))
+			if(!empty($names))
 			{
-				$files_uploaded_ok = false;
-				$error_array[] = "No key equations file, or it could not be uploaded.";
-			}
-			
-			if(!empty($description))
-			{
-				$tutorial_lab->set_description($description);
-				$ok = $controller->updateAttribute($tutorial_lab, "description");
-			}
-			
-			if(!$ok || empty($description))
-			{
-				$files_uploaded_ok = false;
-				$error_array[] = "No description file, or it could not be uploaded.";
-			}
-			
-			if(!empty($instructions))
-			{
-				$tutorial_lab->set_instructions($instructions);
-				$ok = $controller->updateAttribute($tutorial_lab, "instructions");
-			}
-			
-			if(!$ok || empty($instructions))
-			{
-				$files_uploaded_ok = false;
-				$error_array[] = "No instructions file, or it could not be uploaded.";
-			}			
-		}		
-			
-		// date available is not required, this would be normally set when the 
-		// lab first becomes available to members for use as an assignment
-		if($success && isset($_POST["date_available"]))
-		{
-			// if date available put into mysql formate
-			$date_available = $_POST["date_available"];
-			if(!empty($date_available))
-			{
-				$date_available = date("Y-m-d", strtotime($date_available));
-				$tutorial_lab->set_date_first_available($date_available);
-				$success = $controller->updateAttribute($tutorial_lab, 
-											"date_first_available");
-			}
-		}
-				
-		if($success) 
-		{ 
-			if(!$files_uploaded_ok)
-			{ 
-				$error_array[] = "The new Tutorial Lab was saved, but without 
-								some of the possible file attachments.
-								Please use Edit Tutorial Lab to add files later.";
-				$success = false; 
+				$id = $names[0]->get_tutorial_lab_id();
+				if($id != $tutorial_lab_id)
+				{
+					$error_array[] = "The web link must be unique
+										to this particular tutorial lab.";
+					$success = false;
+				}
 			}
 		}
 		
@@ -220,37 +228,169 @@ class adminLabAction
 	}
 	
 	
-	public function editTutorialLab($mdb_control, $error_array)
-	{
-		$success = true;		
-		$controller = $mdb_control->getController("tutorial_lab");
-		
-		if(isset($controller))
-		{
-			$tutorial_lab = new Tutorial_Lab();			
-			$tutorial_lab->initialize();
-			$tutorial_lab->initialize2();
-			$success = $controller->updateAll($tutorial_lab);
-		}
-		
-		return $success;
-	}	
-	
-	
-	public function uploadFile($uploads_dir, $data_type, 
-								$mdb_control, &$error_array)
+	public function uploadFiles($tutorial_lab, $lab_controller, $uploads_dir, 
+										$mdb_control, &$error_array)
 	{		
-		$filename = null;
-		$fileAction = new FileAction();
+		$success = true;
+		$fileAction = new FileAction();		
+		$key_equations = "";
+		$description = "";
+		$instructions = "";
 		
-		if(isset($_FILES[$data_type]) && 
-				($_FILES[$data_type]['error'] == UPLOAD_ERR_OK))
+		if(isset($_FILES["key_equations"]) && 
+				($_FILES["key_equations"]['error'] == UPLOAD_ERR_OK))
 		{
-			$filename = $fileAction->tutorialLabFileUpload($uploads_dir, 
-						$data_type, $mdb_control, $error_array);
+			$key_equations = $fileAction->tutorialLabFileUpload($uploads_dir, 
+								"key_equations", $mdb_control, $error_array);
+								
+			if(!empty($key_equations))
+			{
+				$tutorial_lab->set_key_equations($key_equations);
+				$lab_controller->updateAttribute($tutorial_lab, "key_equations");
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "Key Equations file could not be uploaded.";
+			}
+		}
+			
+			
+		if(isset($_FILES["description"]) && 
+				($_FILES["description"]['error'] == UPLOAD_ERR_OK))
+		{
+			$description = $fileAction->tutorialLabFileUpload($uploads_dir, 
+								"description", $mdb_control, $error_array);
+								
+			if(!empty($description))
+			{
+				$tutorial_lab->set_description($description);
+				$lab_controller->updateAttribute($tutorial_lab, "description");
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "Description file could not be uploaded.";
+			}
 		}
 		
-		return $filename;
+		
+		if(isset($_FILES["instructions"]) && 
+				($_FILES["instructions"]['error'] == UPLOAD_ERR_OK))
+		{
+			$instructions = $fileAction->tutorialLabFileUpload($uploads_dir, 
+								"instructions", $mdb_control, $error_array);
+								
+			if(!empty($instructions))
+			{
+				$tutorial_lab->set_instructions($instructions);
+				$lab_controller->updateAttribute($tutorial_lab, "instructions");
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "Instructions file could not be uploaded.";
+			}
+		}	
+
+		return $success;
+	}
+	
+	
+	public function updateFiles($tutorial_lab, $lab_controller, $uploads_dir, 
+										$mdb_control, &$error_array)
+	{		
+		$success = true;
+		$fileAction = new FileAction();	
+		$key_equations_2 = "";
+		$description_2 = "";
+		$instructions_2 = "";
+		
+		if(isset($_FILES["key_equations_2"]) && 
+				($_FILES["key_equations_2"]['error'] == UPLOAD_ERR_OK))
+		{
+			$filename = $tutorial_lab->get_key_equations();
+			
+			if(!empty($filename))
+			{
+				$fileAction->deleteFile($uploads_dir, $filename);
+				$tutorial_lab->set_key_equations(null);
+				$lab_controller->updateAttribute($tutorial_lab, "key_equations");
+			}
+			
+			$key_equations_2 = $fileAction->tutorialLabFileUpload($uploads_dir, 
+								"key_equations_2", $mdb_control, $error_array);
+								
+			if(!empty($key_equations_2))
+			{
+				$tutorial_lab->set_key_equations($key_equations_2);
+				$lab_controller->updateAttribute($tutorial_lab, "key_equations");
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "Key Equations file could not be updated.";
+			}
+		}
+		
+		
+		if(isset($_FILES["description_2"]) && 
+				($_FILES["description_2"]['error'] == UPLOAD_ERR_OK))
+		{
+			$filename = $tutorial_lab->get_description();
+			
+			if(!empty($filename))
+			{
+				$fileAction->deleteFile($uploads_dir, $filename);
+				$tutorial_lab->set_description(null);
+				$lab_controller->updateAttribute($tutorial_lab, "description");
+			}
+			
+			$description_2 = $fileAction->tutorialLabFileUpload($uploads_dir, 
+								"description_2", $mdb_control, $error_array);
+								
+			if(!empty($description_2))
+			{
+				$tutorial_lab->set_description($description_2);
+				$lab_controller->updateAttribute($tutorial_lab, "description");
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "Description file could not be updated.";
+			}
+		}
+		
+		
+		if(isset($_FILES["instructions_2"]) && 
+				($_FILES["instructions_2"]['error'] == UPLOAD_ERR_OK))
+		{
+			$filename = $tutorial_lab->get_instructions();
+			
+			if(!empty($filename))
+			{
+				$fileAction->deleteFile($uploads_dir, $filename);
+				$tutorial_lab->set_instructions(null);
+				$lab_controller->updateAttribute($tutorial_lab, "instructions");
+			}
+			
+			$instructions_2 = $fileAction->tutorialLabFileUpload($uploads_dir, 
+								"instructions_2", $mdb_control, $error_array);
+								
+			if(!empty($instructions_2))
+			{
+				$tutorial_lab->set_instructions($instructions_2);
+				$lab_controller->updateAttribute($tutorial_lab, "instructions");
+			}
+			else
+			{
+				$success = false;
+				$error_array[] = "Instructions file could not be updated.";
+			}
+		}	
+		
+
+		return $success;
 	}
 	
 	
@@ -479,23 +619,6 @@ class adminLabAction
 	}
 	
 	
-	public function getDateAvailable()
-	{
-		$date_available = "";
-		
-		if (isset($_POST['date_available']))
-		{
-			$date_available = $_POST['date_available']; 
-		}
-		else if (isset($_GET['date_available']))
-		{
-			$date_available = $_GET['date_available']; 
-		}
-		
-		return $date_available;
-	}
-	
-	
 	public function getFilepath()
 	{
 		$filepath = "";
@@ -511,6 +634,7 @@ class adminLabAction
 		
 		return $filepath;
 	}
+	
 	
 }
 

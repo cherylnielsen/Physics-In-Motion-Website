@@ -31,8 +31,8 @@
 				class="navigation">Edit Section</a>		
 			<a href="admin-form-page.php?form_type=add_tutorial_lab" 
 				class="navigation">Add New Tutorial Lab</a>
-			<!--<a href="admin-form-page.php?form_type=edit_tutorial_lab" -->
-			<a class="navigation not-enabled">Edit Tutorial Lab</a>
+			<a href="admin-form-page.php?form_type=edit_tutorial_lab" 
+				class="navigation">Edit Tutorial Lab</a>
 		</div>
 	
 	<h2 class='navigation nav_show_hide'>Registration</h2>
@@ -42,18 +42,14 @@
 				class="navigation">Add Students to Section</a>
 			<a href="admin-form-page.php?form_type=drop_students" 
 				class="navigation">Drop Students from Section</a>
-			<!--<a href="admin-form-page.php?form_type=edit_student" -->
-			<a class="navigation not-enabled">Edit Student</a>
 			<a href="admin-form-page.php?form_type=professor_registration" 
 				class="navigation">Confirm Professor</a>	
-			<!--<a href="admin-form-page.php?form_type=edit_professor" -->
-			<a class="navigation not-enabled">Edit Professor</a>
 			<a href="admin-form-page.php?form_type=admin_registration" 
 				class="navigation">Register Administrator</a>
-			<!--<a href="admin-form-page.php?form_type=edit_administrator" -->
-			<a class="navigation not-enabled">Edit Administrator</a>
 			<a href="login-register-page.php?form_type=changelogin" 
-				class="navigation">Change Password</a>
+				class="navigation">Change My Password</a>
+			<!--<a href="student-form-page.php?form_type=update_member_info" 
+				class="navigation">Update My Information</a>-->
 		</div>
 	
 	<h2 class='navigation nav_show_hide'>Reviews</h2>

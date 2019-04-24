@@ -16,7 +16,6 @@ class Tutorial_Lab {
 	private $key_equations;	
 	private $description;
 	private $instructions;
-	private $date_first_available;
 	private $filepath;
 	
 	
@@ -157,16 +156,6 @@ class Tutorial_Lab {
 	public function set_instructions($instructions)
 	{
 		$this->instructions = $instructions;
-	}
-	
-	public function get_date_first_available()
-	{
-		return $this->date_first_available;
-	}
-
-	public function set_date_first_available($date_first_available)
-	{
-		$this->date_first_available = $date_first_available;
 	}
 	
 	public function get_filepath()
