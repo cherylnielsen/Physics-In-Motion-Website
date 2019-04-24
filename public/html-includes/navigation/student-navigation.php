@@ -91,7 +91,9 @@ if(isset($_SESSION["student_id"]) && isset($_SESSION["member_type"]))
 		<a href="student-form-page.php?form_type=tutorial_lab_rating" 
 			class="navigation">Rate Tutorial Lab</a>
 		<a href="login-register-page.php?form_type=changelogin" 
-			class="navigation">Change Password</a>	
+			class="navigation">Change My Password</a>
+		<!--<a href="student-form-page.php?form_type=update_member_info" 
+			class="navigation">Update My Information</a>-->
 			
 </nav>
 <!-- end SESSION if blocks -->

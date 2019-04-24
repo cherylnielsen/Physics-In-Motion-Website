@@ -8,7 +8,7 @@ class TutorialLabController extends DatabaseController {
 	public function __construct() {}
 	// $tutorial_lab_id, $tutorial_lab_name, $tutorial_lab_web_link, $lab_status, 
 	// $tutorial_lab_introduction, $prerequisites, $key_topics, 
-	// $key_equations, $description, $instructions, $date_first_available, $filepath)
+	// $key_equations, $description, $instructions, $filepath)
 
 	
 	protected function getData($db_result, $db_connection)
@@ -27,7 +27,9 @@ class TutorialLabController extends DatabaseController {
 						
 				$lab->initializePart2($row['prerequisites'], $row['key_topics'], 
 						$row['key_equations'], $row['description'], 
-						$row['instructions'], $row['date_first_available'], $row['filepath']);
+						$row['instructions']);
+						
+				$lab->set_filepath($row['filepath']);
 						
 				$dataArray[] = $lab;
 			}	
@@ -61,7 +63,7 @@ class TutorialLabController extends DatabaseController {
 		
 		// The id will be auto-generated
 		$query = "insert into tutorial_lab (tutorial_lab_name, tutorial_lab_web_link, 
-				lab_status, tutorial_lab_introduction, filepath) 
+				lab_status, tutorial_lab_introduction) 
 		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', 
 				'$tutorial_lab_introduction')";
 		$result = mysqli_query($db_connection, $query);
@@ -107,6 +109,7 @@ class TutorialLabController extends DatabaseController {
 		values ('$tutorial_lab_name', '$tutorial_lab_web_link', '$lab_status', 
 				'$tutorial_lab_introduction', '$prerequisites', '$key_topics', 
 				'$key_equations', '$description', '$instructions')";
+				
 		$result = mysqli_query($db_connection, $query);
 
 		if($result)
@@ -144,7 +147,6 @@ class TutorialLabController extends DatabaseController {
 		$key_equations = $tutorial_lab->get_key_equations();
 		$instructions = $tutorial_lab->get_instructions();
 		$description = $tutorial_lab->get_description();
-		$date_first_available = $tutorial_lab->get_date_first_available();
 			
 		$query = "UPDATE $table 
 					SET tutorial_lab_name = '$tutorial_lab_name',
@@ -153,11 +155,10 @@ class TutorialLabController extends DatabaseController {
 						tutorial_lab_introduction = '$tutorial_lab_introduction',
 						filepath = '$filepath',
 						prerequisites = '$prerequisites',
-						key_topics = '$key_topics'
+						key_topics = '$key_topics',
 						key_equations = '$key_equations',						
 						instructions = '$instructions',
 						description = '$description'
-						date_first_available = '$date_first_available'
 					WHERE tutorial_lab_id = '$tutorial_lab_id'";
 						
 		$result = mysqli_query($db_connection, $query);
@@ -227,10 +228,6 @@ class TutorialLabController extends DatabaseController {
 			case 'instructions':	
 				$value = $tutorial_lab->get_instructions();
 				$query = "update $table set instructions = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
-				break;
-			case 'date_first_available':	
-				$value = $tutorial_lab->get_date_first_available();
-				$query = "update $table set date_first_available = '$value' where tutorial_lab_id = '$tutorial_lab_id'";
 				break;
 		}
 		

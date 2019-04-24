@@ -1,16 +1,20 @@
 <?php
-
 require_once('../../private/DatabaseControllerFactory.php'); 
 require_once('../../private/user_action/SectionAction.php');
-require_once('../../private/user_action/FileAction.php');
 
 function ajaxSection()
 {
+	$dataString = "";
 	$mdb_control = new DatabaseControllerFactory();	
-	$formAction = new SectionAction();	
-	$result = $formAction->getSection($mdb_control);	
 	
-	return $result;
+	if(isset($_POST["get_section"]))
+	{
+		$section_id = $_POST["get_section"];
+		$action = new SectionAction();
+		$dataString = $action->getSection($mdb_control, $section_id);
+	}
+	
+	return $dataString;
 }
 
 // The echo string of the result is then automatically returned

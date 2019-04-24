@@ -4,30 +4,24 @@ class SectionAction
 {
 	public function __construct() {}
 	
-	public function getSection($mdb_control)
+	public function getSection($mdb_control, $section_id)
 	{
-		if(isset($_POST['get_section']))
-		{
-			$section_id = $_POST['get_section'];
-			$control = $mdb_control->getController("section_view");
-			$section = $hmwk_control->getByPrimaryKey("section_id", $section_id);
-			
-			$section_name = $section->get_section_name();
-			$start_date = $section->get_start_date();
-			$end_date = $section->get_end_date();
-			$description = $section->get_section_description();
-			$professor_id = $section->get_professor_id();
-			$first_name = $section->get_professor_first_name();
-			$last_name = $section->get_professor_last_name();
-			$professor_name = "$first_name $last_name";
-			
-			$dataStr = "section_id=" . $section_id . "&section_name=" . $section_name . 
-						"&start_date=" . $start_date . "&end_date=" . $end_date . 
-						"&description=" . $description .
-						"&professor_id=" . $professor_id . "&professor_name=" . $professor_name;
-			
-			return $dataStr;
-		}
+		$control = $mdb_control->getController("section_view");
+		$section = $control->getByPrimaryKey("section_id", $section_id);
+		
+		$section_name = $section->get_section_name();
+		$start_date = $section->get_start_date();
+		$end_date = $section->get_end_date();
+		$description = $section->get_section_description();
+		$professor_id = $section->get_professor_id();
+		
+		$dataStr = "section_name=" . $section_name . 
+					"&professor_id=" . $professor_id .
+					"&start_date=" . $start_date . 
+					"&end_date=" . $end_date . 
+					"&description=" . $description;
+		
+		return $dataStr;
 	}
 	
 	public function processTableForms($mdb_control)

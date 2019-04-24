@@ -212,8 +212,10 @@ class FileAction
 			}										
 		}
 		
-		if($success) { return $filename; }
-		else { return ""; }
+		if($success) 
+		{ return $filename; }
+		else 
+		{ return ""; }
 	}	
 	
 	

@@ -2,32 +2,31 @@
 
 	include("html-includes/admin-tutorial-lab-forms/adminLabAction.php");
 	
-	$editLab = new adminLabAction();
+	$addLab = new adminLabAction();
+	$util = new DataUtility();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
 	
 	// checks GET and POST, if not set, returns empty string
-	$tutorial_lab_id = $editLab->getLabID();
-	$tutorial_lab_name = $editLab->getLabName();
-	$web_link = $editLab->getWebLink();
-	$lab_status = $editLab->getLabStatus();
-	$introduction = $editLab->getIntroduction();
-	$prerequisites = $editLab->getPrerequisites();
-	$key_topics = $editLab->getKeyTopics();
-	$key_equations = $editLab->getKeyEquations();
-	$description = $editLab->getDescription();
-	$instructions = $editLab->getInstructions();
-	$data_available = $editLab->getDateAvailable();
-	$filepath = $editLab->getFilepath();
-	
+	$tutorial_lab_id = $addLab->getLabID();
+	$tutorial_lab_name = $addLab->getLabName();
+	$web_link = $addLab->getWebLink();
+	$lab_status = $addLab->getLabStatus();
+	$introduction = $addLab->getIntroduction();
+	$prerequisites = $addLab->getPrerequisites();
+	$key_topics = $addLab->getKeyTopics();
+	$key_equations = $addLab->getKeyEquations();
+	$description = $addLab->getDescription();
+	$instructions = $addLab->getInstructions();
+		
 	$status_list = array();
-	$status_list = $editLab->getLabStatusOptions();	
+	$status_list = $addLab->getLabStatusOptions();		
 	$lab_list = array();
-	$lab_list = $dataUtility->getListTutorialLabIDNames($mdb_control);
+	$lab_list = $util->getListTutorialLabIDNames($mdb_control);
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
-		$form_errors = $editLab->processForm($mdb_control, $returnURL);
+		$form_errors = $addLab->processForm($mdb_control, $returnURL);
 	}
 	
 	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
@@ -35,16 +34,17 @@
 ?>
 
 
-<form id="editTutorialLabForm" method="POST" >
+<form id="editTutorialLabForm" method="POST" enctype="multipart/form-data">
 
 <fieldset>
-	<input type='hidden' name='action_type' value='add'>
+	<input type='hidden' name='action_type' value='edit'>
 	
 	<h2 class="form">Edit New Tutorial Lab</h2>	
+	<br>
 	
 	<label>Tutorial Lab: <br>
 		<select id="tutorial_lab_id" name="tutorial_lab_id" required 
-			onchange="populateForm('section')">
+			onchange="fillForm('tutorial_lab')">
 			
 			<option value='' ></option>
 			<?php
@@ -64,15 +64,15 @@
 			?>
 			
 		</select>
-	</label><br>
+	</label><br><br>
 	
-	<label>Tutorial Lab Name: <br><textarea name="tutorial_lab_name" rows="10" cols="50" 
-		spellcheck="true" required ><?php echo "$tutorial_lab_name"; ?></textarea>
-	</label><br>
+	<label>Tutorial Lab Name: <br><input type="text" name="tutorial_lab_name" 
+		id="tutorial_lab_name" required value="<?php echo "$tutorial_lab_name"; ?>" >
+	</label><br><br>
 	
-	<label>Web Link: <br><input type="text" name="web_link" required 
+	<label>Web Link: <br><input type="text" name="web_link" id="web_link" required 
 		value="<?php echo "$web_link"; ?>" >
-	</label><br>
+	</label><br><br>
 	
 	<label>Lab Status: <br>
 		<select id="lab_status" name="lab_status" required 
@@ -95,39 +95,59 @@
 			?>
 			
 		</select>
+	</label><br><br>
+	
+	<label>Introduction: <br><textarea name="introduction" id="introduction" 
+		rows="10" cols="50" spellcheck="true" 
+		required ><?php echo "$introduction"; ?></textarea>
+	</label><br><br>
+	
+	<label>Prerequisites: <br><textarea name="prerequisites" id="prerequisites" 
+		rows="10" cols="50" spellcheck="true" 
+		required ><?php echo "$prerequisites"; ?></textarea>
+	</label><br><br>
+	
+	<label>Key Topics: <br><textarea name="key_topics" id="key_topics" 
+		rows="10" cols="50" spellcheck="true" 
+		required ><?php echo "$key_topics"; ?></textarea>
+	</label><br><br>
+	
+</fieldset>
+<fieldset>	
+	
+	<h2 class="form">Edit File Attachments (Optional)</h2>	
+	<h2 class="red">Select a new file, if that topic does not have a current file, 
+					or if you want to replace the current file for that topic.</h2>
+	<h2 class="red">WARNING: This will delete the current file for that topic if it exists!</h2>
+	
+	<br>
+			
+	<label>Current Key Equations File:
+		<input type="text" name="key_equations" id="key_equations" 
+			value="<?php echo "$key_equations"; ?>" readonly class="readonly">
 	</label><br>
+	<label>New Key Equations File: (Optional)
+		<input type="file" name="key_equations_2" onchange="showFileNames()">
+	</label><br><br>
 	
-	<label>Introduction: <br><textarea name="introduction" rows="10" cols="50" 
-		spellcheck="true" required ><?php echo "$introduction"; ?></textarea>
+
+	<label>Current Description File:  
+		<input type="text" name="description" id="description" 
+			value="<?php echo "$description"; ?>" readonly class="readonly">
 	</label><br>
+	<label>New Description File: (Optional)
+		<input type="file" name="description_2" onchange="showFileNames()">
+	</label><br><br>
 	
-	<label>Prerequisites: <br><textarea name="prerequisites" rows="10" cols="50" 
-		spellcheck="true" required ><?php echo "$prerequisites"; ?></textarea>
+
+	<label>Current Instructions File: 
+		<input type="text" name="instructions" id="instructions" 
+			value="<?php echo "$instructions"; ?>" readonly class="readonly">	
 	</label><br>
+	<label>New Instructions File: (Optional)
+		<input type="file" name="instructions_2" onchange="showFileNames()">
+	</label><br><br>
 	
-	<label>Key Topics: <br><textarea name="key_topics" rows="10" cols="50" 
-		spellcheck="true" required ><?php echo "$key_topics"; ?></textarea>
-	</label><br>
-	
-	<label>Key Equations: Select a file. (Optional) 				
-		<input type="file" name="key_equations" onchange="showFileNames()">
-	</label>
-	<p id="fileListing"></p><br>
-	
-	<label>Description: Select a file. (Optional) 				
-		<input type="file" name="description" onchange="showFileNames()">
-	</label>
-	<p id="fileListing"></p><br>
-	
-	<label>Instructions: Select a file. (Optional) 				
-		<input type="file" name="instructions" onchange="showFileNames()">
-	</label>
-	<p id="fileListing"></p><br>
-	
-	<label>Date First Available: (Optional)<br>
-		<input type="date" name="data_available"  
-			value="<?php echo "$start_date"; ?>" >
-	</label><br>
 	
 	<div class="formButtonDiv">
 		<input type="submit" value="Update Tutorial Lab">		

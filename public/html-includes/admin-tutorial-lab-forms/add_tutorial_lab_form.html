@@ -16,7 +16,6 @@
 	//$key_equations = $addLab->getKeyEquations();
 	//$description = $addLab->getDescription();
 	//$instructions = $addLab->getInstructions();
-	$date_available = $addLab->getDateAvailable();
 		
 	$status_list = array();
 	$status_list = $addLab->getLabStatusOptions();	
@@ -37,14 +36,15 @@
 	<input type='hidden' name='action_type' value='add'>
 	
 	<h2 class="form">Add New Tutorial Lab</h2>	
+	<br>
 	
 	<label>Tutorial Lab Name: <br><input type="text" name="tutorial_lab_name" required 
 		value="<?php echo "$tutorial_lab_name"; ?>" >
-	</label><br>
+	</label><br><br>
 	
 	<label>Web Link: <br><input type="text" name="web_link" required 
 		value="<?php echo "$web_link"; ?>" >
-	</label><br>
+	</label><br><br>
 	
 	<label>Lab Status: <br>
 		<select id="lab_status" name="lab_status" required 
@@ -67,19 +67,19 @@
 			?>
 			
 		</select>
-	</label><br>
+	</label><br><br>
 	
 	<label>Introduction: <br><textarea name="introduction" rows="10" cols="50" 
 		spellcheck="true" required ><?php echo "$introduction"; ?></textarea>
-	</label><br>
+	</label><br><br>
 	
 	<label>Prerequisites: <br><textarea name="prerequisites" rows="10" cols="50" 
 		spellcheck="true" required ><?php echo "$prerequisites"; ?></textarea>
-	</label><br>
+	</label><br><br>
 	
 	<label>Key Topics: <br><textarea name="key_topics" rows="10" cols="50" 
 		spellcheck="true" required ><?php echo "$key_topics"; ?></textarea>
-	</label><br>
+	</label><br><br>
 	
 	<label>Key Equations: Select a file. (Optional) 				
 		<input type="file" name="key_equations" onchange="showFileNames()">
@@ -95,11 +95,6 @@
 		<input type="file" name="instructions" onchange="showFileNames()">
 	</label>
 	<p id="fileListing"></p><br>
-	
-	<label>Date First Available: (Optional)<br>
-		<input type="date" name="date_available" 
-			value="<?php echo "$date_available"; ?>" >
-	</label><br>
 	
 	<div class="formButtonDiv">
 		<input type="submit" value="Add New Tutorial Lab">		
