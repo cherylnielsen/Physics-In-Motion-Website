@@ -4,9 +4,12 @@ class Administrator {
 	
 	protected $administrator_id;	// key
 	protected $admin_type;
-	protected $allowed_admin_types = array("general");
+	protected $allowed_admin_types = array();
 	
-	public function __construct() {}
+	public function __construct() 
+	{
+		$allowed_admin_types = array("general", "none");
+	}
 	
 	public function initialize($administrator_id, $admin_type = "general")
 	{

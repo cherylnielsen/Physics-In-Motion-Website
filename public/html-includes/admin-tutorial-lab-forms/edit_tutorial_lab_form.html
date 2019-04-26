@@ -40,7 +40,6 @@
 	<input type='hidden' name='action_type' value='edit'>
 	
 	<h2 class="form">Edit New Tutorial Lab</h2>	
-	<br>
 	
 	<label>Tutorial Lab: <br>
 		<select id="tutorial_lab_id" name="tutorial_lab_id" required 
@@ -64,15 +63,15 @@
 			?>
 			
 		</select>
-	</label><br><br>
+	</label><br>
 	
 	<label>Tutorial Lab Name: <br><input type="text" name="tutorial_lab_name" 
 		id="tutorial_lab_name" required value="<?php echo "$tutorial_lab_name"; ?>" >
-	</label><br><br>
+	</label><br>
 	
 	<label>Web Link: <br><input type="text" name="web_link" id="web_link" required 
 		value="<?php echo "$web_link"; ?>" >
-	</label><br><br>
+	</label><br>
 	
 	<label>Lab Status: <br>
 		<select id="lab_status" name="lab_status" required 
@@ -95,22 +94,26 @@
 			?>
 			
 		</select>
-	</label><br><br>
+	</label><br>
 	
+	</fieldset>
+	
+	<fieldset>
+	<br>
 	<label>Introduction: <br><textarea name="introduction" id="introduction" 
 		rows="10" cols="50" spellcheck="true" 
 		required ><?php echo "$introduction"; ?></textarea>
-	</label><br><br>
+	</label><br>
 	
 	<label>Prerequisites: <br><textarea name="prerequisites" id="prerequisites" 
 		rows="10" cols="50" spellcheck="true" 
 		required ><?php echo "$prerequisites"; ?></textarea>
-	</label><br><br>
+	</label><br>
 	
 	<label>Key Topics: <br><textarea name="key_topics" id="key_topics" 
 		rows="10" cols="50" spellcheck="true" 
 		required ><?php echo "$key_topics"; ?></textarea>
-	</label><br><br>
+	</label><br>
 	
 </fieldset>
 <fieldset>	
@@ -119,8 +122,6 @@
 	<h2 class="red">Select a new file, if that topic does not have a current file, 
 					or if you want to replace the current file for that topic.</h2>
 	<h2 class="red">WARNING: This will delete the current file for that topic if it exists!</h2>
-	
-	<br>
 			
 	<label>Current Key Equations File:
 		<input type="text" name="key_equations" id="key_equations" 
@@ -128,17 +129,15 @@
 	</label><br>
 	<label>New Key Equations File: (Optional)
 		<input type="file" name="key_equations_2" onchange="showFileNames()">
-	</label><br><br>
+	</label><br>
 	
-
 	<label>Current Description File:  
 		<input type="text" name="description" id="description" 
 			value="<?php echo "$description"; ?>" readonly class="readonly">
 	</label><br>
 	<label>New Description File: (Optional)
 		<input type="file" name="description_2" onchange="showFileNames()">
-	</label><br><br>
-	
+	</label><br>
 
 	<label>Current Instructions File: 
 		<input type="text" name="instructions" id="instructions" 
@@ -146,8 +145,7 @@
 	</label><br>
 	<label>New Instructions File: (Optional)
 		<input type="file" name="instructions_2" onchange="showFileNames()">
-	</label><br><br>
-	
+	</label><br>
 	
 	<div class="formButtonDiv">
 		<input type="submit" value="Update Tutorial Lab">		

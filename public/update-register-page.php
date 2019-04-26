@@ -8,14 +8,11 @@
 		
 		switch ($form_type)
 		{
-			case "login":
-				echo '<title>Physics in Motion: Sign In</title>';
+			case "change_login";
+				echo '<title>Physics in Motion: Change Sign In</title>';
 				break;
-			case "register":
-				echo '<title>Physics in Motion: Registration</title>';
-				break;
-			case "forgot_login":
-				echo '<title>Physics in Motion: Forgotten Sign In</title>';
+			case "update_my_information";
+				echo '<title>Physics in Motion: Update My Information</title>';
 				break;
 		}		
 	?>
@@ -30,6 +27,7 @@
 	?>
 	
 	<link href="css/register-login-form.css" rel="stylesheet" type="text/css" media="screen">
+	<link href="css/member-forms.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/register-login-form.js" ></script>
 	
 </head>
@@ -51,39 +49,24 @@
 	
 	if ($loggedIn)
 	{
-		if($form_type == "changelogin")
+		switch ($form_type)
 		{
-			include('../private/login/change-login-action.php'); 
-			include('html-includes/login/change-login-form.html');
-		}
-		else
-		{
-			echo '<br><br>
-			<div class="form-errors">
-				<h1> You are already signed in. </h1>
-				<a href="html-includes/login/logout.php"><h1>Sign Out?</h1></a>
-			</div>';
+			case "change_login":
+				include('../private/login/change-login-action.php'); 
+				include('html-includes/login/change-login-form.html'); 
+				break;
+				
+			case "update_my_information":
+				include('../private/login/update-action.php'); 
+				include('html-includes/login/update-my-information.html'); 
+				break;
 		}
 	}
 	else
 	{
-		switch ($form_type)
-		{
-			case "login":
-				include('../private/login/login-action.php'); 
-				include('html-includes/login/login-form.html'); 
-				break;
-				
-			case "register":
-				include('../private/login/register-action.php'); 
-				include('html-includes/login/register-form.html'); 
-				break;
-			
-			case "forgot_login":
-				include('../private/login/forgot-login-action.php'); 
-				include('html-includes/login/forgot-login-form.php'); 
-				break;
-		}
+		$url = "index.php";
+		header("Location: $url");
+		exit();
 	}
 		
 ?>

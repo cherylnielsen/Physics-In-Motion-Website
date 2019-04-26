@@ -23,7 +23,6 @@
 	}
 	
 	
-
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$is_ok = $assignmentAction->processAssignmentForm($mdb_control, $form_type, $error_array);

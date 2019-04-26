@@ -1,5 +1,6 @@
 <?php
 
+	$returnURL = $changeUtil->getReturnURL();
 	$member = $changeUtil->getMemberInfo($mdb_control, $_SESSION['member_id']);	
 	$member_name = $member->get_member_name();
 	$first_name = $_SESSION['first_name'];
@@ -21,9 +22,7 @@
 	
 	<fieldset>	
 	
-		<h2>Changing Password for: <?php echo "$first_name $last_name" ?></h2>
-		
-		<h2>Found Member Name: <?php echo "$member_name"; ?></h2>		
+		<h2>Changing Password for: <?php echo "$first_name  $last_name" ?></h2>	
 		
 		<h2 class='red'>If this information is wrong, 
 			<a href="html-includes/login/logout.php">
@@ -73,7 +72,10 @@
 		</label>
 		<br>
 		
-		<input type="submit" value="Submit" id="save_new_password">	
+		<div class="formButtonDiv">
+			<input type="submit" value="Submit" id="save_new_password">	
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>
+		</div>
 	</fieldset>	
 </form>
 

@@ -9,6 +9,7 @@ class adminLabAction
 	{	
 		$error_array = array();
 		$success = true;
+		$returnURL = "admin-home-page.php";
 		
 		if(isset($_POST["action_type"]))
 		{
@@ -39,6 +40,15 @@ class adminLabAction
 		{	
 			$form_errors = "<h2>SUCCESS: </h2>";
 			$form_errors .= "<p>The new Tutorial Lab has been saved.</p>";
+			
+			$homeURL = "http://localhost/Physics-in-Motion/" . $returnURL;
+			
+			echo "<script type='text/javascript'>
+					window.location.href = $homeURL;
+				</script>";
+			echo "<h2 class='center'>$form_errors</h2>";
+			
+			exit();
 		}
 		else
 		{

@@ -10,7 +10,14 @@
 		
 		if($is_ok)
 		{	
-			header("Location: $cancelURL");
+			$homeURL = "http://localhost/Physics-in-Motion/" . $cancelURL;
+			
+			echo "<script type='text/javascript'>
+					window.location = $homeURL;
+				</script>";
+			echo "<h2 class='center'>SUCCESS: The notice has been sent. </h2>";
+			
+			//header("Location: $cancelURL");
 			exit();
 		}
 		else

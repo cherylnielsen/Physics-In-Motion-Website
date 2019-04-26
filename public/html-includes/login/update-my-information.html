@@ -1,0 +1,101 @@
+<?php
+
+	require_once('register-utilities.php'); 
+	$registerUtil = new RegisterUtilities();
+
+	require_once('change-login-utilities.php'); 
+	$changeUtil = new ChangeLoginUtilities();
+
+	$member = $changeUtil->getMemberInfo($mdb_control, $_SESSION['member_id']);	
+	$member_name = $member->get_member_name();
+	$first_name = $_SESSION['first_name'];
+	$last_name = $_SESSION['last_name'];
+	// get the security questions and answers
+	$qAndA = array();
+	$qAndA = $changeUtil->getQandA($mdb_control, $_SESSION['member_id']);
+	$question_1 = $qAndA[1]['question'];
+	$question_2 = $qAndA[2]['question'];
+	
+	if($change_done == false)
+	{
+?>
+
+<form id="update-my-information" method="post" action="login-register-page.php?form_type=register">
+
+	<fieldset class="personal-info" id="personal-info">
+
+		<h2 class="form">Update My Personal Information:</h2>
+		
+		<label>First Name<br><input type="text" name="first_name" id="first_name"
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['first_name']; ?>" 
+			autofocus pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label>
+		<br>
+		
+		<label>Last Name<br><input type="text" name="last_name" id="last_name"
+			value="<?php if (isset($_POST['last_name'])) echo $_POST['last_name']; ?>" 
+			 pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label>
+		<br>
+		
+		<label>Email<br><input type="email" name="email" id="email"
+			value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" >
+		</label>
+		<br>
+		
+		<label>Confirm Email<br><input type="email" name="email_confirm" id="email_confirm" 
+			value="<?php if (isset($_POST['email_confirm'])) echo $_POST['email_confirm']; ?>" >
+		</label>
+		<br>
+		
+		<?php		
+		if(($_SESSION["member_type"] == "student") || 
+			($_SESSION["member_type"] == "professor"))
+		{
+		?>
+			<label>School<br><input type="text" name="school" id="school"
+				value="<?php if (isset($_POST['school'])) echo $_POST['school']; ?>" 
+				required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+			<br>
+		<?php
+		}		
+		?>
+		
+		<h2 class="form">Security Questions:</h2>
+		
+		<label>Question 1<br>
+		<input type="text" name="question_1" id="question_1"
+			value="<?php if (isset($_POST['question_1'])) echo $_POST['question_1']; ?>" 
+			pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label>
+		<br>
+		
+		<label>Answer 1<br>
+			<input type="text" name="answer_1" id="answer_1"
+			value="<?php if (isset($_POST['answer_1'])) echo $_POST['answer_1']; ?>" 
+			pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label>
+		<br>
+		
+		<label>Question 2<br>
+		<input type="text" name="question_2" id="question_2"
+			value="<?php if (isset($_POST['question_2'])) echo $_POST['question_2']; ?>"
+			pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label>
+		<br>
+		
+		<label>Answer 2<br>
+			<input type="text" name="answer_2" id="answer_2"
+			value="<?php if (isset($_POST['answer_2'])) echo $_POST['answer_2']; ?>"
+			pattern="^[a-zA-Z0-9 .'\-]+$" >
+		</label>
+		<br>
+		
+		<div class="formButtonDiv">
+			<input type="submit" value="Update My Information">		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+		</div>
+		
+	</fieldset>
+	
+</form>

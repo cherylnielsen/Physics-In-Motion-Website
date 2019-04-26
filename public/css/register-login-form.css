@@ -16,6 +16,15 @@ span {
 	color: red;
 }
 	
+div.formButtonDiv {
+	float: right;
+	padding-right: 2%;
+}
+
+div.centerButtonDiv {
+	text-align: center;
+}
+
 a.login-link {
 	display: inline-block;
 	font-weight: 900;	

@@ -17,11 +17,9 @@
 								$form_type . "_form.html";
 		break;
 		
-		case "professor_registration":
+		case "confirm_registration":
 		case "admin_registration":
-		case "edit_professor":
-		case "edit_administrator":
-		case "changelogin":
+		case "update_my_info":
 			$form_file_name = "html-includes/admin-registration-forms/" . 
 							$form_type . "_form.html";
 		break;
