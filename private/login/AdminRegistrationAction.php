@@ -5,10 +5,10 @@ class AdminRegistrationAction
 	public function __construct() {}
 	
 	
-	public function processForm($mdb_control)
+	public function processForm($mdb_control, $returnURL)
 	{
 		$register = new RegisterUtilities();
-		$form_errors = array();
+		$error_array = array();
 		$success = true;
 		
 		$member_type = "administrator";
@@ -32,35 +32,35 @@ class AdminRegistrationAction
 	
 		// validate the member inputs
 		
-		$register->validate_name($firstname, "First Name", $form_errors);
-		$register->validate_name($lastname, "Last Name", $form_errors);
+		$register->validate_name($firstname, "First Name", $error_array);
+		$register->validate_name($lastname, "Last Name", $error_array);
 		
-		$register->validate_name($question_1, "Security Questions", $form_errors);
-		$register->validate_name($answer_1, "Security Answers", $form_errors);
-		$register->validate_name($question_2, "Security Questions", $form_errors);
-		$register->validate_name($answer_2, "Security Answers", $form_errors);	
+		$register->validate_name($question_1, "Security Questions", $error_array);
+		$register->validate_name($answer_1, "Security Answers", $error_array);
+		$register->validate_name($question_2, "Security Questions", $error_array);
+		$register->validate_name($answer_2, "Security Answers", $error_array);	
 		
 		$ok_pw = $register->validate_password($_POST['password'], 
-								$_POST['password_confirm'], $form_errors);
+								$_POST['password_confirm'], $error_array);
 		
 		$ok_name = $register->validate_membername($_POST['membername'], 
-							$_POST['membername_confirm'], $form_errors);
+							$_POST['membername_confirm'], $error_array);
 							
 		$ok_email = $register->validate_emails($_POST['email'], 
-							$_POST['email_confirm'], $form_errors);
+							$_POST['email_confirm'], $error_array);
 	
 		if($ok_name && $ok_email)
 		{
-			$register->uniqueness_test($email, $membername, $mdb_control, $form_errors);
+			$register->uniqueness_test($email, $membername, $mdb_control, $error_array);
 		}
 		
-		if(count($form_errors) == 0)
+		if(count($error_array) == 0)
 		{
 			// Save the data to the database
-			$success = $register->register_new_member($firstname, 
-					$lastname, $email, $school, 
+			$success = $register->register_new_member(
+					$firstname, $lastname, $email, $school, 
 					$member_type, $membername, $password, $mdb_control, 
-					$question_1, $answer_1, $question_2, $answer_2);	
+					$question_1, $answer_1, $question_2, $answer_2);
 		}
 		else
 		{
@@ -70,8 +70,7 @@ class AdminRegistrationAction
 		if($success)
 		{
 			$form_success = "<h2>SUCCESS: </h2>";
-			$form_success .= "<p>The Members have been confirmed, 
-						and their registrations are now complete.</p>";
+			$form_success .= "<p>The new Administrator has been registered.</p>";
 								
 			$homeURL = "http://localhost/Physics-in-Motion/" . $returnURL;
 		
@@ -101,7 +100,8 @@ class AdminRegistrationAction
 		
 		return $result;
 	
-}
+	}
 
+}
 
 ?>

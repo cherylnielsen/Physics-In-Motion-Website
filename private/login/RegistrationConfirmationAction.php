@@ -5,7 +5,7 @@ class RegistrationConfirmationAction
 	public function __construct() {}
 	
 	
-	public function processForm($mdb_control)
+	public function processForm($mdb_control, $returnURL)
 	{
 		$register = new RegisterUtilities();
 		$error_array = array();
@@ -155,7 +155,8 @@ class RegistrationConfirmationAction
 					}
 				}
 			}
-					
+		}
+		
 		return $total_success;
 	}
 	
@@ -183,7 +184,7 @@ class RegistrationConfirmationAction
 	
 	public function setAdminType($administrator_id, $mdb_control, &$error_array)
 	{
-		if(isset($_POST['admin_type'])
+		if(isset($_POST['admin_type']))
 		{
 			$controller = $mdb_control->getController("administrator");
 			$admin = $controller->getByPrimaryKey("administrator_id", $administrator_id);
@@ -202,32 +203,16 @@ class RegistrationConfirmationAction
 		
 		return $success;
 	}		
-			
-		
-	public function getMembersNeedingConfirmation($member_type, $mdb_control)
-	{
-		$member_list = array();
-		$controller = $mdb_control->getController("member");
-		
-		if(isset($controller))
-		{
-			// false = 0 in database
-			$member_list = $controller->getByAttributes("registration_complete", 
-											0, "member_type", $member_type);
-		}
-		
-		return $member_list;		
-	}
 	
 	
 	public function getAdminTypes()
 	{
 		$types = array();
 		$admin = new Administrator();
-		$types = $admin->get_allowed_admin_types();
-		
+		$types = $admin->get_allowed_admin_types();		
 		return $types;
 	}
+	
 	
 	public function validateProfessor($professor_id, $firstname, $lastname, 
 										$school, $email, &$error_array)
@@ -293,6 +278,8 @@ class RegistrationConfirmationAction
 			
 		return $success;
 	}
+	
+	
 	
 }
 

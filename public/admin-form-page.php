@@ -21,6 +21,7 @@
 		require_once('../private/member_page_include_list.php');
 	?>
 	
+	<link href="css/register-login-form.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/member-forms.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-forms.js" ></script>

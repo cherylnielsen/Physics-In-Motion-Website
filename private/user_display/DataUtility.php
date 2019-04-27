@@ -150,6 +150,28 @@ class DataUtility
 	}
 	
 	
+	public function getMembersNeedingConfirmation($member_type, $mdb_control)
+	{
+		$member_list = array();
+		$member_names = array();
+		$controller = $mdb_control->getController("member");
+		$member_list = $controller->getByAttributes("registration_complete", 
+											0, "member_type", $member_type);
+		
+		$num_members = count($member_list);
+			
+		for($i = 0; $i < $num_members; $i++)
+		{
+			$member_id = $member_list[$i]->get_member_id();
+			$first_name = $member_list[$i]->get_first_name();
+			$last_name = $member_list[$i]->get_last_name();
+			$member_names[$i]['id'] = "$member_id"; 
+			$member_names[$i]['name'] = "id $member_id : $first_name $last_name"; 
+		}
+		
+		return $member_names;		
+	}
+	
 	
 }
 

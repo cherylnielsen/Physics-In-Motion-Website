@@ -96,8 +96,8 @@ class AdministratorController extends DatabaseController {
 	{
 		$db_connection = get_db_connection();
 		$sucess = true;
-		$administrator_id = $administrator_id->get_administrator_id();
-		$school = $administrator->get_school_name();
+		$administrator_id = $administrator->get_administrator_id();
+		$admin_type = $administrator->get_admin_type();
 		$table = $this->getTableName();
 		
 		$query = "insert into $table (administrator_id, admin_type) values('$administrator_id', '$admin_type')";

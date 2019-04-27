@@ -283,23 +283,24 @@ class RegisterUtilities
 		
 		
 		// if professor admin confirmation required to complete registration
-		if($member_type = "student")
+		if($member_type === "student")
 		{
-			$complete = true;
+			$complete = 1;
 		}
-		else if ($member_type = "professor")
+		else if ($member_type == "professor")
 		{
-			$complete = false;
+			$complete = 0;
 		}
-		else if ($member_type = "administrator")
+		else if ($member_type == "administrator")
 		{
-			$complete = false;
+			$complete = 0;
 		}
 		
 		
 		// save new member
 		$member = new Member();
 		$password = password_hash($password, PASSWORD_DEFAULT);
+		// null for member_id, last_login, last_logoff
 		$member->initialize(null, $member_type, $membername, $password, $date_registered, 
 							null, null, $firstname, $lastname, $email, $complete);
 		$ok = $control->saveNew($member);
@@ -346,8 +347,7 @@ class RegisterUtilities
 					
 				case "administrator":
 					$person = new Administrator();
-					$admin_type = "none";
-					$person->set_admin_type($admin_type);
+					$person->set_admin_type("none");
 					$person->set_administrator_id($member_id);
 					$ok = $control->saveNew($person);
 					break;

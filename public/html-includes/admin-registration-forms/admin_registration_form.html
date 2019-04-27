@@ -1,9 +1,9 @@
 <?php
 
-	include("html-includes/admin-registration-forms/AdminRegistrationActions.php");
-	include("../private/login/register-utilities.php");
+	require_once("../private/login/AdminRegistrationAction.php");
+	require_once("../private/login/register-utilities.php");
 	
-	$adminAction = new AdminRegistrationActions();
+	$adminAction = new AdminRegistrationAction();
 	$returnURL = "admin-home-page.php";
 	$form_errors = "";
 	$result = array();
@@ -11,7 +11,7 @@
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		$result = array();
-		$result = $adminAction->processConfirmRegistrationForm($mdb_control);
+		$result = $adminAction->processForm($mdb_control, $returnURL);
 		$form_errors = $result['form_errors'];
 	}
 	
@@ -37,7 +37,8 @@
 <form id="admin_register_form" method="POST" >
 
 	<fieldset>
-		<h2 class="form">Create Account <span>- all fields are required</span>:</h2>
+		<h2 class="form">Create Account for a new Physics in Motion Administrator</h2>
+		<h2 class="red">All fields are required.</h2>
 		<h2>Personal Information:</h2>
 		
 		<label>First Name<br><input type="text" name="first_name" id="first_name"
