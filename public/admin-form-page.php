@@ -12,15 +12,16 @@
 		echo "<title>Physics in Motion: Administrator $form_name</title>";
 	?>
 	
-	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Administrator services to be decided. Sending notices to administrators or Students.">
+	<meta name="Description" content="Administrator services for Professors and Students of Physics in Motion Tutorial Labs.">
 	
-	<meta name="Keywords" content="administrator, administrator services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
+	<meta name="Keywords" content="administrator, administrative services, physics in motion, tutorial lab">
 		
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	
 		require_once('../private/member_page_include_list.php');
 	?>
 	
+	<link href="css/register-login-form.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/member-pages.css" rel="stylesheet" type="text/css" media="screen">
 	<link href="css/member-forms.css" rel="stylesheet" type="text/css" media="screen">
 	<script src="javascript/member-forms.js" ></script>

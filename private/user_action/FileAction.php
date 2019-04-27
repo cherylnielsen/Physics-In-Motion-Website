@@ -121,6 +121,7 @@ class FileAction
 			return false;
 		}		
 		
+		$result = array();
 		$uploads_dir = "temp";
 		$fullFileName = "$uploads_dir/$filename";
 		
@@ -130,9 +131,7 @@ class FileAction
 		}
 			
 		if (move_uploaded_file($tmp_name, $fullFileName)) 
-		{	
-			$result = array();
-			
+		{				
 			// read the file into an array
 			if (($csvFile = fopen($fullFileName, 'r')) != false)
 			{

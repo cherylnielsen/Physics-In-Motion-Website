@@ -59,6 +59,29 @@ class ChangeLoginUtilities
 	}
 	
 	
+	public function getReturnURL()
+	{
+		$url = "";
+		$member_type = $_SESSION['member_type'];
+		
+		switch ($member_type)
+		{
+			case "student":
+				$url = "student-home-page.php";
+				break;
+			case "professor":
+				$url = "professor-home-page.php";
+				break;
+			case "administrator":
+				$url = "admin-home-page.php";
+				break;
+		}
+		
+		//$homeURL = "http://localhost/Physics-in-Motion/" . $returnURL;
+		
+		return $url;		
+	}
+	
 	public function validateMemberInput($registerUtil, &$form_errors)
 	{	
 		$success = true;

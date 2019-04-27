@@ -6,10 +6,12 @@ If($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	$register = new RegisterUtilities();
 	$form_errors = array();
+	
 	$firstname = $_POST['first_name'];
 	$lastname = $_POST['last_name'];
 	$email = $_POST['email'];
 	$school = $_POST['school'];
+	
 	$membername = $_POST['membername'];
 	$password = $_POST['password'];
 	$member_type = $_POST['member_type'];

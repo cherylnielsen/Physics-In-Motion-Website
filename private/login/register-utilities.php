@@ -66,7 +66,7 @@ class RegisterUtilities
 	{
 		if(!isset($member_type)) 
 		{ 
-			$form_errors[] = 'Enter student or professor.'; 
+			$form_errors[] = 'Enter Member Type.'; 
 		}
 		
 		return $member_type;
@@ -280,11 +280,27 @@ class RegisterUtilities
 		$answer_1 = mysqli_real_escape_string($db_connect, $answer_1);
 		$question_2 = mysqli_real_escape_string($db_connect, $question_2);
 		$answer_2 = mysqli_real_escape_string($db_connect, $answer_2);
-		$complete = true;
+		
+		
+		// if professor admin confirmation required to complete registration
+		if($member_type === "student")
+		{
+			$complete = 1;
+		}
+		else if ($member_type == "professor")
+		{
+			$complete = 0;
+		}
+		else if ($member_type == "administrator")
+		{
+			$complete = 0;
+		}
+		
 		
 		// save new member
 		$member = new Member();
 		$password = password_hash($password, PASSWORD_DEFAULT);
+		// null for member_id, last_login, last_logoff
 		$member->initialize(null, $member_type, $membername, $password, $date_registered, 
 							null, null, $firstname, $lastname, $email, $complete);
 		$ok = $control->saveNew($member);
@@ -331,8 +347,7 @@ class RegisterUtilities
 					
 				case "administrator":
 					$person = new Administrator();
-					$admin_type = "General";
-					$person->set_admin_type($admin_type);
+					$person->set_admin_type("none");
 					$person->set_administrator_id($member_id);
 					$ok = $control->saveNew($person);
 					break;

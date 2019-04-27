@@ -1,0 +1,140 @@
+<?php
+
+	require_once("../private/login/AdminRegistrationAction.php");
+	require_once("../private/login/register-utilities.php");
+	
+	$adminAction = new AdminRegistrationAction();
+	$returnURL = "admin-home-page.php";
+	$form_errors = "";
+	$result = array();
+	
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		$result = array();
+		$result = $adminAction->processForm($mdb_control, $returnURL);
+		$form_errors = $result['form_errors'];
+	}
+	
+	// member info
+	$firstname = isset($_POST['first_name']) ? $_POST['first_name'] : "" ;
+	$lastname = isset($_POST['last_name']) ? $_POST['last_name'] : "" ;
+	$email = isset($_POST['email']) ? $_POST['email'] : "" ;
+	
+	// login info
+	$membername = isset($_POST['membername']) ? $_POST['membername'] : "" ;
+	$password = isset($_POST['password']) ? $_POST['password'] : "" ;	
+	
+	// security info
+	$question_1 = isset($_POST['question_1']) ? $_POST['question_1'] : "" ;
+	$answer_1 = isset($_POST['answer_1']) ? $_POST['answer_1'] : "" ;
+	$question_2 = isset($_POST['question_2']) ? $_POST['question_2'] : "" ;
+	$answer_2 = isset($_POST['answer_2']) ? $_POST['answer_2'] : "" ;	
+	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
+
+?>
+
+<form id="admin_register_form" method="POST" >
+
+	<fieldset>
+		<h2 class="form">Create Account for a new Physics in Motion Administrator</h2>
+		<h2 class="red">All fields are required.</h2>
+		<h2>Personal Information:</h2>
+		
+		<label>First Name<br><input type="text" name="first_name" id="first_name"
+			value="<?php if (isset($_POST['first_name'])) echo $_POST['first_name']; ?>" 
+			autofocus required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label>Last Name<br><input type="text" name="last_name" id="last_name"
+			value="<?php if (isset($_POST['last_name'])) echo $_POST['last_name']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label>Email<br><input type="email" name="email" id="email"
+			value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" 
+			required></label>
+		<br>
+		
+		<label>Confirm Email<br><input type="email" name="email_confirm" id="email_confirm" 
+			value="<?php if (isset($_POST['email_confirm'])) echo $_POST['email_confirm']; ?>" 
+			required></label>
+		<br>
+					
+	</fieldset>
+	
+	<fieldset>	
+		<h2>Security Questions:</h2>
+		
+		<label>Question 1<br>
+		<input type="text" name="question_1" id="question_1"
+			value="<?php if (isset($_POST['question_1'])) echo $_POST['question_1']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label>Answer 1<br>
+			<input type="text" name="answer_1" id="answer_1"
+			value="<?php if (isset($_POST['answer_1'])) echo $_POST['answer_1']; ?>" 
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label>Question 2<br>
+		<input type="text" name="question_2" id="question_2"
+			value="<?php if (isset($_POST['question_2'])) echo $_POST['question_2']; ?>"
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+		<label>Answer 2<br>
+			<input type="text" name="answer_2" id="answer_2"
+			value="<?php if (isset($_POST['answer_2'])) echo $_POST['answer_2']; ?>"
+			required pattern="^[a-zA-Z0-9 .'\-]+$" ></label>
+		<br>
+		
+	</fieldset>
+	
+	<fieldset>
+	
+		<h2>Sign In Information:</h2>
+		<p>The Member Name and Password are required to have:</p>
+		<ul>
+			<li>at least one uppercase letter,</li>
+			<li>at least one lowercase letter,</li>
+			<li>at least one number,</li>
+			<li>at least 8 characters,</li>
+			<li>and they cannot contain spaces.</li>
+		</ul>
+		<br>
+		
+		<label>Member Name<br>
+		<input type="text" name="membername" id="membername"
+			value="<?php if (isset($_POST['membername'])) echo $_POST['membername']; ?>" 
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<br>
+		
+		<label>Confirm Member Name<br>
+			<input type="text" name="membername_confirm" id="membername_confirm"
+			value="<?php if (isset($_POST['membername_confirm'])) echo $_POST['membername_confirm']; ?>" 
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<br>
+		
+		<label>Password<br>
+		<input type="password" name="password" id="password"
+			value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>"
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<br>
+		
+		<label>Confirm Password<br>
+			<input type="password" name="password_confirm" id="password_confirm"
+			value="<?php if (isset($_POST['password_confirm'])) echo $_POST['password_confirm']; ?>"
+			required pattern="(?=\S*\d)(?=\S*[a-z])(?=\S*[A-Z])\S{8,}" ></label>
+		<br>
+		
+		<div class="centerButtonDiv">
+		<input type="submit" value="Create Account">
+		</div>
+		
+	</fieldset>
+	
+			
+	
+</form>

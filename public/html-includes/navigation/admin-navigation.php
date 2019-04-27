@@ -1,8 +1,5 @@
-
 <!-- Administrator links and related actions -->
-
 <?php	
-	
 	if(isset($_SESSION["administrator_id"]) && isset($_SESSION["member_type"]))
 	{
 		if(($_SESSION["member_type"] == "administrator"))
@@ -19,6 +16,17 @@
 			<a href="admin-form-page.php?form_type=write_notice" 
 				class="navigation">Write a Notice</a>
 		</div>
+		
+		<?php
+		if(isset($_GET["notices"]))
+		{
+		?>		
+			<button class='navigation' 
+				onclick='showTable("memberInBoxNoticeDiv");'>Show/Hide In Box</button>			
+			<button class='navigation' 
+				onclick='showTable("memberSentNoticeDiv");'>Show/Hide Sent</button>
+				
+		<?php } ?>
 	
 	<h2 class='navigation nav_show_hide'>Sections & Tutorial Labs</h2>
 
@@ -42,14 +50,14 @@
 				class="navigation">Add Students to Section</a>
 			<a href="admin-form-page.php?form_type=drop_students" 
 				class="navigation">Drop Students from Section</a>
-			<a href="admin-form-page.php?form_type=professor_registration" 
-				class="navigation">Confirm Professor</a>	
+			<a href="admin-form-page.php?form_type=confirm_registration" 
+				class="navigation">Confirm Registration</a>	
 			<a href="admin-form-page.php?form_type=admin_registration" 
 				class="navigation">Register Administrator</a>
-			<a href="login-register-page.php?form_type=changelogin" 
+			<a href="update-register-page.php?form_type=change_login" 
 				class="navigation">Change My Password</a>
-			<!--<a href="student-form-page.php?form_type=update_member_info" 
-				class="navigation">Update My Information</a>-->
+			<!--<a href="update-register-page.php?form_type=update_my_information" -->
+			<a class="navigation not-enabled">Update My Information</a>
 		</div>
 	
 	<h2 class='navigation nav_show_hide'>Reviews</h2>

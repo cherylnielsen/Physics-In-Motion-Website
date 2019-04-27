@@ -49,12 +49,12 @@ div.clear-both {
 	clear: both;
 }
 
-input[type=text],  textarea {
+input[type=text], input[type=email], textarea {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.3em;
 	padding-left: 7px;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
 }
@@ -75,7 +75,7 @@ input[type=number] {
 	width: 6em;
 	height: 1.5em;
 	margin: 0.5em 0;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
 	padding-left: 7px;
@@ -89,14 +89,14 @@ input[type=date] {
 	font-size: 1em;
 	height: 1.5em;
 	margin: 0.5em 0;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
 	padding-left: 7px;
 }
 
 input:invalid, textarea:invalid, select:invalid {
-	border: 2px solid red;
+	border: 1px solid red;
 	border-radius: 5px;
 	background-color: #ffd4d4;
 }
@@ -153,13 +153,13 @@ input[type=file] {
 	font-size: 1em;	
 	margin: 0.25em 0;
 	border-radius: 5px;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	background-color: lightyellow;
 	width: 98%;
 }
 
 input[type=file]:invalid {
-	border: 2px solid red;
+	border: 1px solid red;
 	border-radius: 5px;
 	background-color: #ffd4d4;
 }
@@ -168,7 +168,7 @@ select {
 	background-color: lightyellow;
 	color: black;
 	border-radius: 5px;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	width: 300px;
 	padding: 3px;
 	text-align: right;

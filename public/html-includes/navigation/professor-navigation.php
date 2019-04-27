@@ -93,10 +93,10 @@ if(isset($_SESSION["professor_id"]) && isset($_SESSION["member_type"]))
 			class="navigation">Add Assignment</a>
 		<a href="professor-form-page.php?form_type=tutorial_lab_rating" 
 			class="navigation">Rate Tutorial Lab</a>
-		<a href="login-register-page.php?form_type=changelogin" 
+		<a href="update-register-page.php?form_type=change_login" 
 			class="navigation">Change My Password</a>
-		<!--<a href="student-form-page.php?form_type=update_member_info" 
-			class="navigation">Update My Information</a>-->
+		<!--<a href="update-register-page.php?form_type=update_my_information" -->
+		<a class="navigation not-enabled">Update My Information</a>
 		
 </nav>
 <!-- end SESSION if blocks -->

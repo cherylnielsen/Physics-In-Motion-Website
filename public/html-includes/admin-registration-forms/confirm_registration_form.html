@@ -1,0 +1,163 @@
+<?php
+
+	require_once("../private/login/RegistrationConfirmationAction.php");
+	require_once("../private/login/register-utilities.php");
+	require_once("../private/user_display/DataUtility.php");
+	
+	$adminAction = new RegistrationConfirmationAction();
+	$dataUtility = new DataUtility();
+	$returnURL = "admin-home-page.php";
+	$form_errors = "";
+	$result = array();
+
+	if($_SERVER['REQUEST_METHOD'] == 'POST')
+	{
+		$result = array();
+		$result = $adminAction->processForm($mdb_control, $returnURL);
+		$form_errors = $result['form_errors'];
+	}
+	
+	$professor_id = isset($_POST['professor_id']) ? $_POST['professor_id'] : "" ;
+	$administrator_id = isset($_POST['administrator_id']) ? $_POST['administrator_id'] : "" ;
+	$admin_type = isset($_POST['admin_type']) ? $_POST['admin_type'] : "" ;
+	
+	$professor_list = array();
+	$professor_list = $dataUtility->getMembersNeedingConfirmation("professor", $mdb_control);
+	$administrator_list = array();
+	$administrator_list = $dataUtility->getMembersNeedingConfirmation("administrator", $mdb_control);
+	$admin_type_list = array();
+	$admin_type_list = $adminAction->getAdminTypes();	
+	
+	echo "<div class='form-errors' id='form_errors'> $form_errors </div>";
+
+?>
+
+<form id="confirm_form" enctype="multipart/form-data" method="POST" >
+
+	<fieldset>	
+	<input type='hidden' name='action_type' value='add'>
+	
+	<h2 class="form red center">WARNING: Either choose a Professor, OR choose an Administrator,</h2> 
+	<h2 class="form red center">OR upload a file. Do not combine these.</h2>
+	
+	<h2 class="form">Confirm Multiple Registrations (for Professors only)</h2>
+		
+		<label>File Listing Professors:
+		<ul>
+			<li><p>Comma delimited CSV file, with one Professor per line.</p></li>
+			<li><p>File format 5 values per line: professor id, first name, 
+						last name, email, school</p></li>
+			<li><p>The file must have no heading, tile, 
+						or other information included.</p></li>
+			<li><p>The file must be less than 2MB in size.</p></li>
+		</ul>
+			<input type="file" name="attachments" id="attachments">
+		</label>
+		
+		<p id="fileListing"></p>
+			
+	<div class="formButtonDiv">
+			<input type="submit" value="Confirm Professor Registrations">		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+		</div>
+	</fieldset>
+	
+	<fieldset>
+	<h2 class="form">Confirm One Professor</h2>
+	
+		<label>Select Professor:<br>
+			<select id="professor_id" name="professor_id" >
+				<option value='' ></option> 
+				<?php
+					for($i = 0; $i < count($professor_list); $i++)
+					{
+						$member_id = $professor_list[$i]['id'];
+						$name = $professor_list[$i]['name'];
+						$name = "id $member_id : $name";
+						$str = "<option value='$member_id' >$name</option>";
+						
+						if(strcmp($professor_id, $member_id) == 0)
+						{
+							$str = "<option value='$member_id' selected >$name</option>";
+						}
+						
+						echo "$str";
+					}
+				?>
+			</select>
+		</label><br>
+		
+		<label>
+			<input type="checkbox" name="confirm_professor" value="professor" 
+			<?php if(isset($_POST['confirm_professor'])) echo "checked='checked'"; ?> 
+			>&nbsp;&nbsp;This Professor has been confirmed by the school 
+			listed on their registration as an authorized Professor on Physics in Motion. 
+		</label>
+		<br>
+		
+		<div class="formButtonDiv">
+			<input type="submit" value="Confirm Professor Registration">		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+		</div>
+	</fieldset>
+	
+	<fieldset>
+	<h2 class="form">Confirm One Administrator</h2>
+	
+		<label>Select Administrator:<br>
+			<select id="administrator_id" name="administrator_id" >
+				<option value='' ></option> 
+				<?php
+					for($i = 0; $i < count($administrator_list); $i++)
+					{
+						$member_id = $administrator_list[$i]['id'];
+						$name = $administrator_list[$i]['name'];
+						$name = "id $member_id : $name";
+						$str = "<option value='$member_id' >$name</option>";
+						
+						if(strcmp($administrator_id, $member_id) == 0)
+						{
+							$str = "<option value='$member_id' selected >$name</option>";
+						}
+						
+						echo "$str";
+					}
+				?>
+			</select>
+		</label><br>
+		
+		<label>Select Administrator Type:<br>
+			<select id="admin_type" name="admin_type" >
+				<option value='' ></option> 
+				<?php
+					for($i = 0; $i < count($admin_type_list); $i++)
+					{
+						$adminType = $admin_type_list[$i];
+						$str = "<option value='$adminType'>$adminType</option>";
+						
+						if(strcmp($admin_type, $adminType) == 0)
+						{
+							$str = "<option value='$adminType' selected >$adminType</option>";
+						}
+						
+						echo "$str";
+					}
+				?>
+			</select>
+		</label><br>
+		
+		<label>
+			<input type="checkbox" name="confirm_administrator" value="administrator" 
+			<?php if(isset($_POST['confirm_administrator'])) echo "checked='checked'"; ?> 
+			>&nbsp;&nbsp;This Administrator has been confirmed 
+			by Human Resources Department as an Authorized Administrator 
+			for the above chosen Administrator type. 
+		</label>
+		<br>
+		
+		<div class="formButtonDiv">
+			<input type="submit" value="Confirm Administrator Registration">		
+			<a href='<?php echo "$returnURL" ?>' class='button red'>Cancel</a>		
+		</div>
+	</fieldset>
+</form>

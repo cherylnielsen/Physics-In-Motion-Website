@@ -4,11 +4,14 @@ class Administrator {
 	
 	protected $administrator_id;	// key
 	protected $admin_type;
-	protected $allowed_admin_types = array("general");
+	protected $allowed_admin_types = array();
 	
-	public function __construct() {}
+	public function __construct() 
+	{
+		$this->allowed_admin_types = array("general", "none");
+	}
 	
-	public function initialize($administrator_id, $admin_type = "general")
+	public function initialize($administrator_id, $admin_type)
 	{
 		$this->administrator_id = $administrator_id;
 		$this->set_admin_type($admin_type);
@@ -42,14 +45,10 @@ class Administrator {
 
 	public function set_admin_type($admin_type)
 	{
-		// Make sure value is an allowed value, otherwise use the default value of "general".
+		// Make sure value is an allowed value.
 		if(in_array($admin_type, $this->allowed_admin_types))
 		{
 			$this->admin_type = $admin_type;
-		}
-		else
-		{
-			$this->admin_type = "general";
 		}
 	}
 	

@@ -7,6 +7,7 @@ class adminStudentAction
 	
 	public function processForm($mdb_control)
 	{	
+		$returnURL = "admin-home-page.php";
 		$error_array = array();
 		$success = true;
 		$action = "";
@@ -77,6 +78,14 @@ class adminStudentAction
 			
 			$form_errors .= "<br>";
 			
+			$homeURL = "http://localhost/Physics-in-Motion/" . $returnURL;
+			
+			echo "<script type='text/javascript'>
+					window.location.href = $homeURL;
+				</script>";
+			echo "<h2 class='center'>$form_errors</h2>";
+			
+			exit();
 		}
 		else
 		{

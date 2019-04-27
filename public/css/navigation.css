@@ -41,6 +41,7 @@ a.navigation, button.navigation {
 
 a.not-enabled {
 	color: gray;
+	cursor: default;
 }
 
 hr {
@@ -76,12 +77,4 @@ div.quote > h2 {
 	margin: 0 0 1em 0;
 }
 
-/**
-div.nav_show_hide {
-	display: none;
-}
 
-h2.nav_show_hide {
-	cursor: pointer;
-}
-**/
