@@ -16,7 +16,7 @@
 	
 	<meta name="Description" content="Interactive 3D Tutorial Lab experiences for Students of Physics and Engineering. Student services include which Tutorial Labs each Student has been assigned or completed. The ability to download Tutorial Lab summaries, data, graphs, and math work submitted by Students. Commonly encountered problems, errors, and corrections for Tutorial Labs. Sending notices to Students or Students.">
 	
-	<meta name="Keywords" content="student, student services, services, physics in motion, tutorial, tutorial lab, lab, laboratory">
+	<meta name="Keywords" content="student services, physics in motion, tutorial lab, homework, assignments">
 		
 	<?php 
 		require_once('html-includes/template/common-db-and-css-links.php'); 	

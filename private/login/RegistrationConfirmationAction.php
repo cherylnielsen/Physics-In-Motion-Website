@@ -13,7 +13,7 @@ class RegistrationConfirmationAction
 		
 		if(isset($_FILES["attachments"]) && ($_FILES["attachments"]["error"] == UPLOAD_ERR_OK))
 		{
-			$success = $this->confirmMultipleProfessors($mdb_control, $error_array);
+			$success = $this->confirmMultipleProfessors($register, $mdb_control, $error_array);
 		}
 		else if(isset($_POST['professor_id']) && isset($_POST['confirm_professor']))
 		{
@@ -72,7 +72,7 @@ class RegistrationConfirmationAction
 	}
 	
 	
-	public function confirmMultipleProfessors($mdb_control, &$error_array)
+	public function confirmMultipleProfessors($register, $mdb_control, &$error_array)
 	{
 		$success = true;
 		$total_success = true;
@@ -104,6 +104,7 @@ class RegistrationConfirmationAction
 			{				
 				foreach($dataArray as $dataLine)
 				{
+					$line_number++;
 					$success = true;
 					
 					if(count($dataLine) != 5)
@@ -113,14 +114,9 @@ class RegistrationConfirmationAction
 							be confirmed, due to an incorrect number of data items.";
 					}
 					else
-					{
-						$professor_id = $dataLine[0]; 
-						$firstname = $dataLine[1]; 
-						$lastname = $dataLine[2];  
-						$email = $dataLine[3];
-						$school = $dataLine[4]; 
-						
-						// is $professor_id a number then
+					{			
+						$professor_id = $dataLine[0];
+						// is $professor_id a number
 						if(!is_numeric($professor_id))
 						{
 							$success = false;
@@ -130,8 +126,8 @@ class RegistrationConfirmationAction
 						
 						if($success)
 						{
-							$success = $this->validateProfessor($professor_id, $firstname, 
-									$lastname, $school, $email, $mdb_control, $error_array);
+							$success = $this->validateProfessor($dataLine, $register, 
+														$mdb_control, $error_array);
 									
 							if(!$success)
 							{
@@ -214,12 +210,20 @@ class RegistrationConfirmationAction
 	}
 	
 	
-	public function validateProfessor($professor_id, $firstname, $lastname, 
-										$school, $email, &$error_array)
+	public function validateProfessor($dataLine, $register, $mdb_control, &$error_array)
 	{
 		$success = true;
+		$professor_id = (int)$dataLine[0]; 
+		$firstname = trim($dataLine[1]); 
+		$lastname = trim($dataLine[2]);  
+		$email = trim($dataLine[3]);
+		$school = trim($dataLine[4]); 
+						
+		$member = new Member();
 		$controller = $mdb_control->getController("member");
 		$member = $controller->getByPrimaryKey("member_id", $professor_id);
+		
+		$professor = new Professor();
 		$controller = $mdb_control->getController("professor");
 		$professor = $controller->getByPrimaryKey("professor_id", $professor_id);
 		
@@ -229,53 +233,35 @@ class RegistrationConfirmationAction
 			return false;
 		}		
 		
-		$ok_first = $register->validate_name($firstname, "First Name", $error_array);
-		$ok_last = $register->validate_name($lastname, "Last Name", $error_array);
-		
-		if($ok_first && $ok_last) 
-		{ 
-			if(($firstname != $member->get_first_name()) ||
-				($firstname != $member->get_last_name()))
-			{
-				$success = false;
-				$error_array[] = "The Professor ID does not match the listed name.";
-			} 
-		}
-		else
-		{
-			$success = false;
-		}
-		
-		$ok = $register->validate_emails($email, $email, $error_array);
-		
-		if($ok) 
-		{ 
-			if($email != $member->get_email())
-			{
-				$success = false;
-				$error_array[] = "The Professor ID does not match the listed email.";
-			} 
-		}
-		else
-		{
-			$success = false;
-		}
-		
-		$ok = $register->validate_name($school, "School Name", $error_array);
-		
-		if($ok) 
-		{ 
-			if($school != $professor->get_school_name())
-			{
-				$success = false;
-				$error_array[] = "The Professor ID does not match the listed school.";
-			} 
-		}
-		else
-		{
-			$success = false;
-		}
+		$fname = $member->get_first_name();
+		$lname = $member->get_last_name();
 			
+		if(strcmp($firstname,$fname) !=0)
+		{
+			$success = false;
+			$error_array[] = "The Professor ID does not match the listed name.";
+			$error_array[] = "first $firstname, member first $fname.";
+		} 
+		
+		if(strcmp($lastname,$lname) !=0)
+		{
+			$success = false;
+			$error_array[] = "The Professor ID does not match the listed name.";
+			$error_array[] = "last $lastname, member last $lname.";
+		} 
+		
+		if($email != $member->get_email())
+		{
+			$success = false;
+			$error_array[] = "The Professor ID does not match the listed email.";
+		} 
+				
+		if($school != $professor->get_school_name())
+		{
+			$success = false;
+			$error_array[] = "The Professor ID does not match the listed school.";
+		} 
+					
 		return $success;
 	}
 	

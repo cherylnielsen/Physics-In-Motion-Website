@@ -4,10 +4,11 @@
 		$noticeTables->displayNoticeSummary($administrator_id, null, $mdb_control);
 	echo "</div>";
 	
+	/**
 	echo "<div id='adminSummaryDiv' >";
-		$noticeTables->displayAdminSummary($administrator_id, $mdb_control);
+		$adminTables->displayAdminSummary($administrator_id, $mdb_control);
 	echo "</div>";
-	
+	**/
 ?>
 
 <!--<a id='bottom' href='#top'>return to top</a>-->
