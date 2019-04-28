@@ -7,9 +7,8 @@ section.main-content {
 	width: 75%;
 }
 
-
 .flag-for-review {
-	color: red;
+	color: crimson;
 }
 
 h1.welcome {
@@ -60,7 +59,7 @@ td {
 }
 
 th {
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
 
 td.center {
@@ -91,7 +90,7 @@ td.notice_text {
 table.selectedNotice {
 	background-color: lightyellow;
 	border-collapse: collapse;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 10px;
 }
 
@@ -105,7 +104,7 @@ table.selectedNotice td {
 
 tr.selectedNotice {
 	display: none;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
 
 td.right {
@@ -118,9 +117,9 @@ td.bold {
 }
 
 th.sectionRowHeader {
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 5px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
 
 table hr {
@@ -157,7 +156,7 @@ button.showNoticeButton {
 	font-weight: bold;
 	border-radius: 5px;
 	text-decoration: none;
-	border: 2px solid white;
+	border: 1px solid white;
 	border-style: outset;
 	color: black;
 }
@@ -167,7 +166,7 @@ button.showNoticeButton {
 }
 
 .table-flag-button {
-	background-color: Gold;
+	background-color: #03AA0D;
 	border-radius: 10px;
 }
 
@@ -179,7 +178,7 @@ input[type=number].table-input {
 	width: 4em;
 	height: 1.5em;
 	margin: 0.25em 0;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
 	padding-left: 7px;
@@ -189,7 +188,7 @@ input[type=number].table-input {
 }
 
 span.red {
-	color: red;
+	color: crimson;
 }
 
 span.green {
@@ -199,3 +198,34 @@ span.green {
 span.gray {
 	color: gray;
 }
+
+@media screen and (max-width: 950px) {
+	
+	h1.logo-statement {
+		width: 70%;
+		position: relative;
+		left: 3%;
+	}
+	
+	section.main-content {
+		width: 60%;
+		padding: 0 0 0 5%;
+	}
+	
+}
+
+@media screen and (max-width: 600px) {
+	
+	h1.logo-statement {
+		width: 80%;
+		position: relative;
+		left: 3%;
+	}
+	
+	section.main-content {
+		width: 90%;
+		padding: 0 0 0 5%;	
+	}
+	
+}
+

@@ -2,10 +2,6 @@
 /* CSS Document */
 /* for all size screens */
 
-h1.logo-statement {
-	padding: 1em 0.25em;
-}
-
 .grid-container {
   display: grid;
   grid-column-gap: 10px;
@@ -13,47 +9,39 @@ h1.logo-statement {
   grid-template-columns: auto;
 }
 
+article.summary {
+	margin: 5px 0 10px 0;
+}
+
+article.summary:last-of-type {
+	margin-bottom: 30px;
+}
+
 img.summary {
 	display: block;
 	height: 200px;
 	width: 300px;
 	border: 2px solid #03AA0D;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 
 img.right {
 	float: right;
-	margin: 0 0 20px 20px;
+	margin: 0 0 0 20px;
 }
 
 img.left {
 	float: left;
-	margin: 0 20px 20px 0;
-}
-
-article.summary > div {
-	padding: 20px 0;
+	margin: 0 20px 0 0;
 }
 
 h1.summary {
-	margin: 0 1em 1em 0;
+	margin-bottom: 10px;
 }
 
 ul {
 	margin-left: 1em;
 }
 
-@media screen and (max-width: 950px) {
-	h1.logo-statement {
-		width: 80%;
-		position: relative;
-		left: 3%;
-	}
-	
-	.grid-container {
-	  display: block;
-	  
-	}
-	
-}
+
 

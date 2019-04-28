@@ -71,7 +71,7 @@ class RatingTables
 		$num_ratings = $rating_info['num'];
 		$pretty_ave = number_format($ave_rating, 2);
 		
-		echo "<h2 class='red'>Average of $num_ratings ratings is $pretty_ave stars.</h2>";
+		echo "<h2>Average of $num_ratings ratings is $pretty_ave stars.</h2>";
 		
 		for($i = 0; $i < $stars; $i++)
 		{

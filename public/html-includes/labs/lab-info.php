@@ -93,11 +93,10 @@ if(isset($lab))
 	
 	echo 
 	'<article class="lab-info">
-		<div id="list-ratings">
-			<h1 class="ratings-title">Tutorial Lab Ratings</h1><br>';
+		<h1 class="ratings-title">Tutorial Lab Ratings</h1><br>
+		<div id="list-ratings" class="grid-lab-ratings">';
 			$lab_name = $lab->get_tutorial_lab_name();
 			$ratingTables->displayFullLabRatings($tutorial_lab_id, $lab_name, $mdb_control);
-			
 	echo '</div></article>';
 		
 	echo '<a href="#top" class="top-link">return to top</a>';

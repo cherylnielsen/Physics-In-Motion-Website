@@ -20,7 +20,7 @@ h1.welcome {
 }
 
 div.form-errors {
-	color: red;
+	color: crimson;
 	font-weight: 900;
 	margin: 0 5em;
 }
@@ -42,7 +42,7 @@ fieldset {
 	margin-bottom: 1em;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
 
 div.clear-both {
@@ -62,7 +62,7 @@ input[type=text], input[type=email], textarea {
 input[type=text].readonly {
 	width: 50%;
 	border: none;
-	background-color: #A7DAFA;	
+	background-color: #00BFFF;	
 }
 
 input[type=checkbox] {
@@ -96,7 +96,7 @@ input[type=date] {
 }
 
 input:invalid, textarea:invalid, select:invalid {
-	border: 1px solid red;
+	border: 1px solid crimson;
 	border-radius: 5px;
 	background-color: #ffd4d4;
 }
@@ -115,18 +115,18 @@ a.button {
 	font-weight: bold;
 	border-radius: 5px;
 	text-decoration: none;
-	border: 2px solid white;
+	border: 1px solid white;
 	border-style: outset;
 	color: black;
 }
 
 a.red {
-	background-color: red;
+	background-color: crimson;
 	color: black;
 }
 
 a.red:hover {
-	background-color: red;
+	background-color: crimson;
 	color: white;
 }
 
@@ -159,7 +159,7 @@ input[type=file] {
 }
 
 input[type=file]:invalid {
-	border: 1px solid red;
+	border: 1px solid crimson;
 	border-radius: 5px;
 	background-color: #ffd4d4;
 }
@@ -211,7 +211,6 @@ div.rating input[type=radio] {
 	top: 2px;
 }
 
-
 @media screen and (max-width: 950px) {
 	
 	h1.logo-statement {
@@ -225,8 +224,13 @@ div.rating input[type=radio] {
 		padding: 0 0 0 5%;
 	}
 
+	section.main-content-forms {
+		float: left;
+		width: 70%;
+		padding: 0 0 1% 2%;
+	}
+	
 }
-
 
 @media screen and (max-width: 600px) {
 	
@@ -239,6 +243,12 @@ div.rating input[type=radio] {
 	section.main-content {
 		width: 90%;
 		padding: 0 0 0 5%;	
+	}
+	
+	section.main-content-forms {
+		float: left;
+		width: 90%;
+		padding: 0 0 1% 2%;
 	}
 	
 }

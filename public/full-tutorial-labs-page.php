@@ -15,19 +15,16 @@
 	
 	<link href="css/full-tutorial-lab-list.css" rel="stylesheet" type="text/css" media="screen">
 	
-	
 </head>
 <body>
 <div class="wrapper">
-
 <?php include('html-includes/template/header.php'); ?>
 <?php include('html-includes/navigation/main-navigation-and-quote.php'); ?>
 
 <section class="main-content">
-	<?php include('html-includes/template/logo-statement.html'); ?>
 	<?php include('html-includes/labs/full-tutorial-lab-list.php'); ?>
+	
 </section>
-			
 <?php include('html-includes/template/footer.html'); ?>
 
 </div><!-- end div.wrapper -->

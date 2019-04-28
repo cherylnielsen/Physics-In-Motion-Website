@@ -3,24 +3,25 @@
 
 section.main-content {
 	float: left;
-	min-width: 77%;
-	margin-bottom: 2em;		
+	width: 77%;
+	margin-bottom: 2em;	
+	margin-left: 1em;
 }
 
 /* grid style specific lab information page */
 
 .grid-lab-info {
+	display: grid;
+	grid-column-gap: 10px;
+	grid-row-gap: 10px;
+	grid-template-columns: auto;
+}
+
+.grid-lab-ratings {
   display: grid;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  grid-template-columns: auto;
-}
-
-
-@media screen and (max-width: 950px) {
-	.grid-lab-info {
-	  display: block;  
-	}
+  grid-template-columns: auto auto;
 }
 
 /* page style details */
@@ -34,7 +35,7 @@ h1.labs-title, h1.ratings-title {
 	margin: 0 0 10px 0;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 	text-align: center;
 }
 
@@ -72,21 +73,55 @@ article h2, article h1 {
 }
 
 .new-status {
-	color: red;
+	color: crimson;
 }
 
 article.lab-rating {
-	padding-left: 2em;
+	padding: 0 1em;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-	width: 60%;
 }
 
 p.rating-comments {
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 	padding: 10px;
 	margin-right: 30px;
 	margin-bottom: 10px;
 }
 
+@media screen and (max-width: 950px) {
+	.grid-lab-info {
+	  display: block;  
+	}
+	
+	section.main-content {
+		float: left;
+		width: 65%;
+		margin: 0 1.5em 1em 1em;		
+	}
+	
+	article.lab-rating {
+		width: 90%;
+	}
+}
 
+@media screen and (max-width: 600px) {
+	.grid-lab-info {
+	  display: block;  
+	}
+	
+	section.main-content {
+		width: 90%;
+		margin: 0 1.5em 1em 0;
+	}
+	
+	img.left, img.right {
+		width: 95%;
+		height: 100%;
+	}
+	
+	article.lab-rating {
+		width: 85%;
+	}
+	
+}

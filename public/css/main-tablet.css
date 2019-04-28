@@ -2,7 +2,6 @@
 /* CSS Document */
 /* changes to css for medium size screens */
 
-
 div.logo {
 	background-size:  40% 75%;
 }
@@ -15,9 +14,8 @@ div.sign-in {
 	padding: 1em 0.5em 0.5em 0.5em;
 }
 
-a#new-labs {
-	display: inline-block;
-	margin: 0.5em 0 0 1.5em;
+aside.nav-quote {
+	width: 25%;
 }
 
 section.main-content {
@@ -27,13 +25,43 @@ section.main-content {
 	margin-bottom: 1em;
 }
 
-section.new-labs {
-	clear: both;
-	float: none;
-	width: auto;
-	padding: 2% 0 2% 0;		
-	position: relative;
-	right: 0;
-	border-left: none;
-	border-right: none;
+/*  new labs side */
+
+a.top_link {
+	display: inline-block;
+	margin: 0.5em;
+}
+
+section.new_labs {
+	clear: both;	
+	width: 100%;
+	border: none;
+}
+
+img.new_labs {
+	width: 50%;
+	height: 100%;
+}
+
+article.new_labs:first-of-type {
+	border-top: 2px solid #03AA0D;
+}
+
+article.new_labs:last-of-type {
+	border-bottom: 2px solid #03AA0D;
+}
+
+/* full labs page and others*/
+
+img.card {
+	display: block;
+	width: 80%;
+	height: 100%;
+	margin: auto;
+	padding-bottom: 10px;	
+}
+
+section.quotes {
+	padding-top: 0;
+	margin-top: 0;
 }
