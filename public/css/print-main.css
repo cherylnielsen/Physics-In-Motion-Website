@@ -9,8 +9,9 @@ div.sign-in {
 
 h1.logo {
 	display: inline-block;
-	position: absolute;
-	top: 0;
+	font-size: 4em;
+	color: #03AA0D;
+	font-style: italic;
 }
 
 img.cornerLogo {
@@ -29,9 +30,42 @@ h1.summary {
 	position: relative;
 	top: 0;
 	left: 0;
-	font-size: 1.1em;
+	font-size: 2em;
 }
 
 #secondary-navigation{
 	display: none;
+}
+
+.secondary-navigation{
+	display: none;
+}
+
+.navigation{
+	display: none;
+}
+
+* {
+	font-size: 0.5;
+}
+
+h1 {
+	font-size: 1.1em;
+}
+
+h2 {
+	font-size: 1.0em;
+}
+
+h3 {
+	font-size: 0.9em;
+}
+
+tr.selectedNotice {
+	display: none;
+}
+
+table, td {
+	border: 1px solid black;
+	padding: 5px;
 }

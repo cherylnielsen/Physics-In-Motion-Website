@@ -6,15 +6,15 @@ section.new_labs {
 	float: right;
 	width: 25%;
 	text-align: center;
-	border-bottom: 2px solid #03AA0D;
-	border-left: 2px solid #03AA0D;
+	border-bottom: 2px solid gold;
+	border-left: 2px solid gold;
 	border-radius: 0 0 0 10px;
-	background: white;
+	background-color: #66ddaa;
 }
 
 article.new_labs {
 	text-align: center;
-	border-bottom: 2px solid #03AA0D;
+	border-bottom: 2px solid gold;
 }
 
 p.new_labs {
@@ -28,15 +28,16 @@ article.new_labs:last-of-type {
 img.new_labs {
 	display: block;
 	margin: auto;
-	margin-top: 14px;
-	margin-bottom: 14px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	width: 80%;
 	height: 100%;
-	border: none;
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
 }
 
 div.new_labs {
-	border-bottom: 2px solid #03AA0D;
+	border-bottom: 2px solid gold;
 }
 
 h2.new_labs {

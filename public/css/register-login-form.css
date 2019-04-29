@@ -51,7 +51,7 @@ fieldset {
 	display: block;
 	padding: 0 1em 1em 1em;
 	margin-bottom: 1em;
-	border: 2px solid #03AA0D;
+	border: 2px solid gold;
 	border-radius: 10px;
 	background-color: #00BFFF;
 }
@@ -93,7 +93,7 @@ input:invalid {
 }
 
 input[type=radio]:invalid {
-	outline: 1px solid crimson;
+	outline: 2px solid crimson;
 }
 
 .form-errors {

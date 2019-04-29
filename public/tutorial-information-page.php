@@ -8,8 +8,10 @@
 	
 	<meta name="Keywords" content="physics in motion, physics, engineering, tutorial, lab, laboratory, activities, experiments, 3d, 3-D, interactive, mentor, mentored, math, calculations, graphs">
 		
-	<?php include('html-includes/template/common-db-and-css-links.php'); ?>
-	
+	<?php 
+		require_once('html-includes/template/common-db-and-css-links.php'); 
+		require_once('../private/member_page_include_list.php');
+	?>
 	<link href="css/tutorial-lab.css" rel="stylesheet" type="text/css" media="screen">
 
 </head>

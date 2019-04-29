@@ -7,23 +7,25 @@
 aside.nav-quote {
 	float: left;
 	width: 16%;
-	border-right: 2px solid #03AA0D;
-	border-bottom: 2px solid #03AA0D;
+	border-right: 2px solid gold;
+	border-bottom: 2px solid gold;
 	border-radius: 0 0 10px 0;
+	background-color: #66ddaa;
 }
 
 h2.navigation {
 	padding: 0.5em 1.5em;
 	margin: 0;
 	background-color: #00BFFF;
-	border-top: 2px solid #03AA0D;
-	border-bottom: 2px solid #03AA0D;
+	border-top: 2px solid gold;
+	border-bottom: 2px solid gold;
 }
 
 h2.main-nav {
 	border-top: none;
 	padding: 0.5em 1.5em;
 }
+
 
 nav.second-navigation {
 	width: 100%;
@@ -35,7 +37,6 @@ a.navigation, button.navigation {
 	padding: 0.5em 1em;
 	width: 83%;
 	text-decoration: none;
-	background-color: inherit;
 	border: none;
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
@@ -45,6 +46,10 @@ a.navigation, button.navigation {
 	cursor: pointer;
 }
 
+button.navigation {
+	width: 100%;
+	background-color: #66ddaa;
+}
 
 a.not-enabled {
 	color: gray;
@@ -54,7 +59,7 @@ a.not-enabled {
 div.quote {
 	margin-top: 0.5em;
 	padding: 1em 1em 1em 0.5em;
-	border-top: 2px solid #03AA0D;
+	border-top: 2px solid gold;
 	border-radius: 0 0 10px 0;
 	background-color: #00BFFF;
 	text-align: center;
