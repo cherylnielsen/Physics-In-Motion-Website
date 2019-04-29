@@ -3,8 +3,6 @@
 
 
 h1.logo-statement {
-	position: relative;
-	left: 1.5%;
 	padding: 10px 0;
 }
 
@@ -13,7 +11,7 @@ h1.form, h2.form {
 }
 
 span {
-	color: red;
+	color: crimson;
 }
 	
 div.formButtonDiv {
@@ -53,9 +51,9 @@ fieldset {
 	display: block;
 	padding: 0 1em 1em 1em;
 	margin-bottom: 1em;
-	border: 2px solid #03AA0D;
+	border: 2px solid gold;
 	border-radius: 10px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
 
 legend {
@@ -70,7 +68,7 @@ input[type=text],  input[type=email], input[type=password] {
 	margin: 0.5em 0;
 	width: 96%;
 	padding: 0.3em;
-	border: 2px solid #03AA0D;
+	border: 1px solid #03AA0D;
 	border-radius: 5px;
 	background-color: lightyellow;	
 }
@@ -89,17 +87,17 @@ input[type=submit], input[type=button] {
 }
 
 input:invalid {
-	border: 2px solid red;
+	border: 1px solid crimson;
 	border-radius: 5px;
 	background-color: #ffd4d4;
 }
 
 input[type=radio]:invalid {
-	outline: 2px solid red;
+	outline: 2px solid crimson;
 }
 
 .form-errors {
-	color: red;
+	color: crimson;
 	font-weight: 900;
 	margin: 0 5em;
 }
@@ -108,13 +106,13 @@ input[type=radio]:invalid {
 @media screen and (max-width: 950px) {
 	
 	h1.logo-statement {
-		width: 80%;
+		width: 95%;
+		padding: 10px;
 		position: relative;
-		left: 3%;
 	}
 	
 	section.main-content {
-		width: 70%;
+		width: 65%;
 		padding: 0 0 0 5%;
 	}
 
@@ -123,9 +121,7 @@ input[type=radio]:invalid {
 @media screen and (max-width: 600px) {
 	
 	h1.logo-statement {
-		width: 80%;
-		position: relative;
-		left: 3%;
+		width: 90%;
 	}
 	
 	section.main-content {

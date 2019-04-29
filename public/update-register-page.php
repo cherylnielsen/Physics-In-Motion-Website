@@ -39,7 +39,7 @@
 	include('html-includes/navigation/main-navigation-and-quote.php'); 
 ?>
 
-<section class="main-content">
+<section class="main-content-forms">
 
 <?php 
 	include('html-includes/template/logo-statement.html'); 	

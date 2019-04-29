@@ -2,7 +2,7 @@
 /* CSS Document */
 /* for all size screens */
 
-/* remove preset brouser defaults */
+/* remove preset browser defaults */
 * {
 	margin: 0; 
 	padding: 0;
@@ -10,52 +10,7 @@
 
 /* outermost container inside body */
 div.wrapper { 
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
 	margin: 0px;
-	background: lightyellow;
-}
-
-/* Inner page link only shown on tablets, phones, 
-and other small screens. */
-a#new-labs {
-	display: none;
-}
-
-a {
-	display: inline-block;
-	font-weight: 900;	
-}
-
-a#quote-link {
-	margin: 0.5em;
-}
-
-a#bottom {
-	margin: 2em 0 0.5em 1.5em;
-}
-
-a#bottom-new-labs {
-	margin-top: 0.5em;
-}
-
-a.not-enabled {
-	color: gray;
-}
-
-h1 {
-	font-size: 1.3em;
-	margin: 0.5em 0;
-}
-
-h2 {
-	font-size: 1.1em;
-	margin: 0.5em 0;
-}
-
-h3 {
-	font-size: 1.0em;
-	margin: 0.5em 0;
 }
 
 p {
@@ -64,10 +19,10 @@ p {
 
 header{ 
 	height: 125px;
-	border-bottom: 2px solid #03AA0D;
-	border-radius: 10px;
-	background: #A7DAFA;
 	text-align: center;
+	/* border-bottom: 2px solid #03AA0D; my green */
+	background: #00BFFF;
+	border-bottom: 2px solid gold;
 }
 
 a#cornerLogo {
@@ -79,8 +34,8 @@ a#cornerLogo {
 
 img.cornerLogo {	
 	height: 125px;	
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
+	border-right: 2px solid gold;
+	border-radius: 0 10px 10px 0;
 	position: absolute;
 	top: 0;
 	left: 0;	
@@ -115,14 +70,14 @@ h1.logo {
 }
 
 div.sign-in {
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
+	border-left: 2px solid gold;
+	border-radius: 10px 0 0 10px;
 	text-align: center;
 	padding: 1em 0.5em 0.5em 0.5em;
 	position: absolute;
 	top: 0;
 	right: 0;
-	background-color: lightyellow;
+	background-color: #66ddaa;
 	font-size: 1em;
 	font-weight: 600;
 	height: 101px;
@@ -138,104 +93,37 @@ input[type=button] {
 	font-family: "Times New Roman", "serif";
 	font-size: 1em;
 	padding: 5px 25px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
-
-section.main-body {
-	clear: both;
-}
-
 
 section.main-content {
 	float: left;
 	width: 54%;
-	padding: 0 0 1% 2%;
+	padding: 0 2%;
 }
 
 h1.logo-statement {
+	border: 2px solid gold;
+	border-radius: 10px;
+	background-color: #00BFFF;
 	text-align: center;
-}
-
-h1.home-page-logo-statement {
 	padding: 0.5em;
-	margin: 20px 0;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-	background-color: #A7DAFA;
-	text-align: center;
-}
-
-div.logo-summary {
-	position: absolute;
-	top: 80px;	
-}
-
-section.new-labs {
-	float: right;
-	width: 25%;
-	text-align: center;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-	padding: 0 0 1em 0;
-	background-color: #A7DAFA;
-	position: relative;
-	left: 2px;
-	top: -2px;
-}
-
-article.new-labs {
-	padding: 1em;
-	margin-bottom: 0;
-	background-color: #A7DAFA;
-	text-align: center;
-	border-bottom: 2px solid #03AA0D;
-	border-radius: 10px;
-}
-
-img.new-labs {
-	display: block;
-	margin: auto;
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
-}
-
-h1.new-labs-title {
-	border-bottom: 2px solid #03AA0D;
-	border-radius: 10px;
-	margin: 0;
-	padding: 0.5em 0;
-	background: lightyellow;
-}
-
-h1.new-labs {
-	padding: 0.5em 1em;
-}
-
-h1.development-status, h1.green {
-	color: #03AA0D;
-}
-
-h1.new-status {
-	color: red;
-}
-
-img.templinkpageimg {
-	border: 2px solid #03AA0D;
-	border-radius: 10px;
+	margin-bottom: 1em;
 }
 
 div.form-errors {
 	text-align: center;
-	color: red;
+	color: crimson;
 }
 
 footer {  
 	clear: both;
-	padding: 2%;
-	border-top: 2px solid #03AA0D;
-	border-radius: 10px;
-	background-color: #A7DAFA;
+	padding: 2% 4%;
+	border-top: 2px solid gold;
+	background-color: #00BFFF;
 }
+
+/** other **/
 
 span.star {
 	font-size: 1.5em;
@@ -247,12 +135,41 @@ span.full-star {
 	top: 2px;
 }
 
+a {
+	display: inline-block;
+	font-weight: 900;	
+	margin: 0.5em;
+}
+
+a.top_link {
+	display: none;
+}
+
+a.not-enabled {
+	color: gray;
+}
+
+h1 {
+	font-size: 1.3em;
+	margin: 0.5em 0;
+}
+
+h2 {
+	font-size: 1.1em;
+	margin: 0.5em 0;
+}
+
+h3 {
+	font-size: 1.0em;
+	margin: 0.5em 0;
+}
+
 .green {
 	color: #03AA0D;
 }
 
-.gold {
-	color: Gold;
+.blue {
+	color: Blue;
 }
 
 .gray {
@@ -260,8 +177,10 @@ span.full-star {
 }
 
 .red {
-	color: Red;
+	color: crimson;
 }
 
-
+.gold {
+	color: gold;
+}
 

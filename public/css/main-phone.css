@@ -4,69 +4,86 @@
 
 @media screen and (max-width: 600px) {
 
-	header{ 
-		height: 125px;
-	}
+header{ 
+	height: 125px;
+}
 
-	div.logo {
-		background:  none;
-	}
+div.logo {
+	background:  none;
+}
 
-	a {
-		margin: 0.25em;
-		padding: 0;
-	}
+a {
+	margin: 0.25em;
+	padding: 0;
+}
 
-	div.sign-in {
-		position: absolute;
-		top: 0;
-		right: 0;	
-		width: 53%;
-		padding: 1em 0.5em 0.5em 0.5em;
-	}
+div.sign-in {
+	position: absolute;
+	top: 0;
+	right: 0;	
+	width: 53%;
+	padding: 1em 0.5em 0.5em 0.5em;
+}
 
-	aside.nav-quote {
-		clear: both;
-		float: none;
-		width: auto;
-		margin: auto;
-		left: 0;
-		padding: 2%;
-		border-left: none;
-		border-right: none;
-		
-	}
+aside.nav-quote {
+	clear: both;
+	float: none;
+	width: auto;
+	margin: auto;
+	left: 0;
+	border-left: none;
+	border-right: none;
+	border-radius: 0 0 0 0;
+}
 
-	div.quote {
-		display: none;
-	}
+div.quote {
+	display: none;
+}
 
-	nav.navigation > a {
-		display: inline-block;
-		padding: 0;
-	}
+a.navigation {
+	display: inline-block;
+	padding: 0 1em;
+}
 
-	a#new-labs {
-		display: inline-block;
-		margin: 0.5em 0 0 1.5em;
-	}
+section.main-content {
+	clear: both;
+	float: none;
+	width: auto;
+	padding: 2% 4% 6% 4%;
+}
 
-	section.main-content {
-		clear: both;
-		float: none;
-		width: auto;
-		padding: 2% 4% 6% 4%;
-	}
+a.top_link {
+	display: inline-block;
+	margin: 0.5em;
+}
 
-	section.new-labs {
-		clear: both;
-		float: none;
-		width: auto;
-		padding: 2% 0 2% 0;		
-		position: relative;
-		right: 0;
-		border-left: none;
-		border-right: none;
-	}
+section.new_labs {
+	clear: both;
+	width: 100%;
+	border: none;
+}
+
+article.new_labs:first-of-type {
+	border-top: 2px solid gold;
+}
+
+article.new_labs:last-of-type {
+	border-bottom: 2px solid gold;
+}
+
+img.summary {
+	margin-bottom: 1em;
+}
+
+img.card {
+	display: block;
+	width: 80%;
+	height: 100%;
+	margin: auto;
+	padding-bottom: 10px;	
+}
 
 }
+
+
+

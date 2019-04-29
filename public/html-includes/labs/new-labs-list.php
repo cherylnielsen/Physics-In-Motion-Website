@@ -12,9 +12,8 @@
 
 	if((!is_null($labs_new)) AND ($length_labs_new > 0))
 	{	
-		echo '<section class="new-labs">
-		<a id="new-labs" href="index.php">return to top</a>	
-		<h1 class="new-labs-title">New Tutorial Labs!</h1>';
+		echo "<section class='new_labs'>
+		<a id='new_labs' href='index.php' class='top_link'>return to top</a>";	
 		
 		for($i = 0; $i < $length_labs_new; $i++) 
 		{	
@@ -23,12 +22,14 @@
 			$intro = $labs_new[$i]->get_tutorial_lab_introduction();
 			$lab_id = $labs_new[$i]->get_tutorial_lab_id();
 			
-			echo '<article class="new-labs">';
-			echo '<h2>' . $name . '</h2>
-				<h1 class="new-status"> NEW! </h1>
-				<img class="new-labs" src="images/labs/' . $web . '.png" 
-						alt="image of the lab" height="100">
-				<p>' . $intro . '</p>';
+			echo "<article class='new_labs'>
+				<div class='new_labs'>
+				<h2 class='new_labs'>Tutorial Lab $lab_id<br>$name</h2>
+				<h1 class='red new_labs'>NEW!</h1>
+				</div>
+				<img class='new_labs' src='images/labs/$web.png' 
+						alt='image of the lab' height='100'>
+				<p class='new_labs'>$intro</p>";
 				
 			$rating_info = $ratingTables->getAveLabRating($lab_id, $mdb_control);	
 			
@@ -38,15 +39,15 @@
 			}	
 			else
 			{
-				echo "<h2 class='red'>Not yet rated.</h2>";
+				echo "<h2>Not yet rated.</h2>";
 			}
 			
-			echo '<p><a href="tutorial-information-page.php?num=' . $lab_id . 
-						'&lab=' . $web . '">Learn More</a></p>';
-			echo '</article>';
+			echo "<p><a href='tutorial-information-page.php?num=$lab_id" . 
+						"&lab=$web'>Learn More Now!</a></p>
+				</article>";
 		}
 		
-		echo '<a id="bottom-new-labs" href="index.php">return to top</a></section>';
+		echo "<a class='top_link' href='index.php'>return to top</a></section>";
 	}
 
 

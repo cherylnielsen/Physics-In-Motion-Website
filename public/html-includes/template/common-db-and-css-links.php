@@ -3,6 +3,7 @@
 
 <link href="css/main.css" rel="stylesheet" type="text/css" media="screen">
 <link href="css/navigation.css" rel="stylesheet" type="text/css" media="screen">
+<link href="css/new-labs-section.css" rel="stylesheet" type="text/css" media="screen">
 
 <link href="css/main-tablet.css" rel="stylesheet" type="text/css" 
 	  media="screen and (min-width: 601px) and (max-width: 950px)">

@@ -11,20 +11,21 @@ div#actionTaskDiv {
 	float: left;
 	margin-top: 0;
 	margin-right: 30px;
-	border: 2px solid #03AA0D;
+	border: 2px solid gold;
 	border-radius: 10px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 }
 
 div#noticeSummaryDiv {
-	width: 350px;
+	width: 300px;
 	float: left;
 	margin-top: 0;
+	margin-bottom: 2em;
 }
 
 h2.task {
 	text-align: center;
-	border-bottom: 2px solid #03AA0D;
+	border-bottom: 1px solid gold;
 	border-radius: 10px;
 	background-color: lightyellow;
 	padding: 5px;

@@ -1,0 +1,61 @@
+@charset "ISO-8859-1";
+/* CSS Document */
+/* for all size screens */
+
+section.new_labs {
+	float: right;
+	width: 25%;
+	text-align: center;
+	border-bottom: 2px solid gold;
+	border-left: 2px solid gold;
+	border-radius: 0 0 0 10px;
+	background-color: #66ddaa;
+}
+
+article.new_labs {
+	text-align: center;
+	border-bottom: 2px solid gold;
+}
+
+p.new_labs {
+	padding: 0 20px;
+}
+
+article.new_labs:last-of-type {
+	border-bottom: none;
+}
+
+img.new_labs {
+	display: block;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 80%;
+	height: 100%;
+	border: 2px solid #03AA0D;
+	border-radius: 5px;
+}
+
+div.new_labs {
+	border-bottom: 2px solid gold;
+}
+
+h2.new_labs {
+	margin: 0;
+	padding: 0.5em 0.5em 0 0.5em;
+	background: #00BFFF;
+}
+
+h1.new_labs {
+	margin: 0;
+	padding: 0.5em 0 0.5em 0.5em;
+	background: #00BFFF;
+}
+
+h1.green {
+	color: #03AA0D;
+}
+
+h1.red {
+	color: crimson;
+}

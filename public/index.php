@@ -21,13 +21,12 @@
 <div class="wrapper">
 <?php include('html-includes/template/header.php'); ?>
 
-<section class="main-body" >
-	<?php include('html-includes/navigation/main-navigation-and-quote.php'); ?>
-		<section class="main-content">	
-			<?php include('html-includes/template/home-page-project-summary.html'); ?>
-		</section>
-	<?php include('html-includes/labs/new-labs-list.php'); ?>	
-</section>	
+<?php include('html-includes/navigation/main-navigation-and-quote.php'); ?>
+	<section class="main-content">	
+		<?php include('html-includes/template/logo-statement.html'); ?>
+		<?php include('html-includes/template/home-page-project-summary.html'); ?>
+	</section>
+<?php include('html-includes/labs/new-labs-list.php'); ?>	
 
 <?php include('html-includes/template/footer.html'); ?>
 </div>

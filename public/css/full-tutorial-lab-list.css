@@ -3,13 +3,11 @@
 
 section.main-content {
 	float: left;
-	max-width: 100%;
+	width: 75%;
 	margin-bottom: 2em;		
 }
 
 h1.logo-statement {
-	padding-left: 10px;
-	width: 124%;
 	text-align: center;
 }
 
@@ -30,21 +28,51 @@ h1.logo-statement {
 }
 
 @media screen and (max-width: 950px) {
+	
 	.grid-container {
 	  grid-template-columns: auto auto;	  
+	}
+	
+	section.main-content {
+	float: left;
+	width: 70%;
+	margin-bottom: 2em;		
 	}
 }
 
 @media screen and (max-width: 700px) {
+	
+	.grid-container {
+	  grid-template-columns: auto auto;  
+	}
+	
+	section.main-content {
+	float: left;
+	width: 70%;
+	margin-bottom: 2em;		
+	}
+}
+
+@media screen and (max-width: 500px) {
+	
 	.grid-container {
 	  display: block;	  
+	}
+	
+	section.main-content {
+	float: left;
+	width: 90%;
+	margin-bottom: 2em;		
 	}
 }
 
 /* page style details */
 
 img.card {
-	max-height: 100px;
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: auto;
 	padding-bottom: 10px;	
 }
 
@@ -52,6 +80,7 @@ article.card {
 	padding: 1em;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
+	text-align: center;
 }
 
 div.card-title {
@@ -85,7 +114,7 @@ h1.labs {
 	margin: 0 0 0 10px;
 	border: 2px solid #03AA0D;
 	border-radius: 10px;
-	background-color: #A7DAFA;
+	background-color: #00BFFF;
 	width: 124%;
 }
 
@@ -105,7 +134,7 @@ a#bottom {
 }
 
 .new-status {
-	color: red;
+	color: crimson;
 }
 
 

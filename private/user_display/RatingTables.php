@@ -71,22 +71,22 @@ class RatingTables
 		$num_ratings = $rating_info['num'];
 		$pretty_ave = number_format($ave_rating, 2);
 		
-		echo "<h2 class='red'>Average of $num_ratings ratings is $pretty_ave stars.</h2>";
+		echo "<h2>Average of $num_ratings ratings is $pretty_ave stars.</h2>";
 		
 		for($i = 0; $i < $stars; $i++)
 		{
-			echo "<span class='fa fa-star full-star green'></span>";
+			echo "<span class='fa fa-star full-star gold'></span>";
 		}
 		
 		if($stars < $ave_rating)
 		{
-			echo "<span class='fas fa-star-half-alt star green'></span>";
+			echo "<span class='fas fa-star-half-alt star gold'></span>";
 			$stars++;
 		}
 		
 		for($i = $stars; $i < $max_rating; $i++)
 		{
-			echo "<span class='far fa-star star green'></span>";
+			echo "<span class='far fa-star star gold'></span>";
 		}	
 	}
 	
@@ -98,18 +98,18 @@ class RatingTables
 		
 		for($i = 0; $i < $stars; $i++)
 		{
-			echo "<span class='fa fa-star full-star green'></span>";
+			echo "<span class='fa fa-star full-star gold'></span>";
 		}
 		
 		if($stars < $rating)
 		{
-			echo "<span class='fas fa-star-half-alt star green'></span>";
+			echo "<span class='fas fa-star-half-alt star gold'></span>";
 			$stars++;
 		}
 		
 		for($i = $stars; $i < $max_rating; $i++)
 		{
-			echo "<span class='far fa-star star green'></span>";
+			echo "<span class='far fa-star star gold'></span>";
 		}	
 	}
 	

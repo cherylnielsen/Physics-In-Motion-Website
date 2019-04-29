@@ -47,8 +47,8 @@ function ratingClicked(star)
 	for(var i = 1; i <= star; i++)
 	{
 		var id = 'star-' + i;
-		document.getElementById(id).style.color = "#03AA0D";
-		starColor[i] = "#03AA0D";
+		document.getElementById(id).style.color = "gold";
+		starColor[i] = "gold";
 	}
 	
 	for(var i = 5; i > star; i--)

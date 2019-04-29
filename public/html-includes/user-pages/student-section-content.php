@@ -14,7 +14,7 @@ echo "<div id='assignmentDiv' class='overflow'>";
 	$assignmentTables->displaySectionAssignments($section_id, $mdb_control, "student");
 
 echo "</div>";
-echo "<div id='demo'> </div>";
+
 echo "<div id='homeworkDiv' class='overflow'>";
 
 	// List of homework submitted for this section with links to view or download
